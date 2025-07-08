@@ -1,0 +1,63 @@
+# ------------------------------------------------------------------------------
+#  @file        sysmon-ph.yaml
+#  @brief       Pumphouie System Monitor built on the ESP32S3 platform.
+#               Functions include:
+#               - ingress flow-monitoring
+#               - egress flow-monitoring
+#               - alarms and alerts
+#
+#  @author      Roland Tembo Hendel
+#  @email       rhendel@nexuslogic.com
+#  @license     GNU General Public License v3.0
+#               SPDX-License-Identifier: GPL-3.0-or-later
+#
+#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
+#               This program is free software: you can redistribute it and/or
+#               modify it under the terms of the GNU General Public License
+#               as published by the Free Software Foundation, either version 3
+#               of the License, or (at your option) any later version.
+#
+#               This program is distributed in the hope that it will be useful,
+#               but WITHOUT ANY WARRANTY; without even the implied warranty of
+#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#               GNU General Public License for more details.
+#
+#               You should have received a copy of the GNU General Public License
+#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+# ------------------------------------------------------------------------------
+
+substitutions:
+  version: !include ../VERSION
+  <<: !include config.yaml
+
+esphome:
+  name: ${node_name}
+  friendly_name: ${friendly_name}
+
+<<: !include ../common/wifi.yaml
+<<: !include ../common/ota.yaml
+<<: !include ../common/logging.yaml
+<<: !include ../common/web_server.yaml
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+
+text_sensor:
+  - platform: template
+    name: "Firmware Version"
+    lambda: |-
+      return {"${version}"};
+    update_interval: 24h
+
+output:
+  - platform: gpio
+    pin: GPIO48
+    id: led_output
+
+light:
+  - platform: binary
+    name: "ESP32S3 Onboard LED"
+    output: led_output
+

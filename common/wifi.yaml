@@ -1,0 +1,38 @@
+# ------------------------------------------------------------------------------
+#  @file        wifi.yaml
+#  @brief       Common esphome wifi subsystem configuration.
+#
+#  @author      Roland Tembo Hendel
+#  @email       rhendel@nexuslogic.com
+#  @license     GNU General Public License v3.0
+#               SPDX-License-Identifier: GPL-3.0-or-later
+#
+#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
+#               This program is free software: you can redistribute it and/or
+#               modify it under the terms of the GNU General Public License
+#               as published by the Free Software Foundation, either version 3
+#               of the License, or (at your option) any later version.
+#
+#               This program is distributed in the hope that it will be useful,
+#               but WITHOUT ANY WARRANTY; without even the implied warranty of
+#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#               GNU General Public License for more details.
+#
+#               You should have received a copy of the GNU General Public License
+#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+# ------------------------------------------------------------------------------
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  domain: .nexus
+  manual_ip:
+    static_ip: ${static_ip}
+    gateway: ${gateway}
+    subnet: ${subnet}
+    dns1: ${dns1}
+    dns2: ${dns2}
+  ap:
+    ssid: "${node_name} Fallback"
+    password: !secret fallback_password
+

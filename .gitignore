@@ -1,0 +1,44 @@
+# Compiled source / temporary files
+*.o
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.bak
+*.tmp
+
+# Python virtualenv
+.venv/
+env/
+venv/
+
+# ESPHome build artifacts
+.build/
+build/
+.esphome/
+
+# Secrets and local overrides
+secrets.yaml
+custom.yaml
+config.yaml
+vars.yaml
+
+# PlatformIO
+.pio/
+.pioenvs/
+.vscode/
+
+# Logs and dumps
+*.log
+*.core
+*.dmp
+
+# Generated files
+sysmon-ph/config.yaml
+
+# OS-specific
+.DS_Store
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
