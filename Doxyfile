@@ -1,0 +1,23 @@
+# Doxygen configuration for annotated ESPHome YAML
+PROJECT_NAME           = "Pumphouse Sysem Monitor"
+PROJECT_BRIEF          = "A Pumphouse System Monitor built on the ESP32S3 platform."
+OUTPUT_DIRECTORY       = docs
+INPUT                  = . common
+EXCLUDE_PATTERNS       = */secrets.yaml
+FILE_PATTERNS          = *.yaml *.md
+RECURSIVE              = NO
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = YES
+EXTRACT_STATIC         = YES
+MARKDOWN_SUPPORT       = YES
+OPTIMIZE_OUTPUT_FOR_C  = YES
+EXTENSION_MAPPING      = yaml=C++
+TAB_SIZE               = 2
+GENERATE_LATEX         = NO
+GENERATE_MAN           = NO
+GENERATE_RTF           = NO
+GENERATE_XML           = NO
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+USE_MDFILE_AS_MAINPAGE = README.md
+

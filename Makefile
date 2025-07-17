@@ -1,134 +1,205 @@
-################################################################################
+# ------------------------------------------------------------------------------
 #  @file        Makefile
-#  @brief       Joi ESPHome Master Makefile.
+#  @brief       Master Makefile for ESPHome-based device management
+#  @details     This Makefile drives the build, upload, and configuration
+#               process for ESPHome projects. It leverages a .makefile for per-device
+#               definitions and includes safety mechanisms to prevent destructive errors.
 #
 #  @author      Roland Tembo Hendel
 #  @email       rhendel@nexuslogic.com
+#
 #  @license     GNU General Public License v3.0
 #               SPDX-License-Identifier: GPL-3.0-or-later
+#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
+#               This program is free software: you can redistribute it and/or
+#               modify it under the terms of the GNU General Public License
+#               as published by the Free Software Foundation, either version 3
+#               of the License, or (at your option) any later version.
+#
+#               This program is distributed in the hope that it will be useful,
+#               but WITHOUT ANY WARRANTY; without even the implied warranty of
+#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#               GNU General Public License for more details.
+#
+#               You should have received a copy of the GNU General Public License
+#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#  @note        Co-developed with ChatGPT by OpenAI.
 # ------------------------------------------------------------------------------
-#
-# BUILD TARGETS:
-#   make         -  default is 'run' (build + upload + logs)
-#   make build   -  build image only
-#   make upload  -  upload (USB or OTA)
-#   make run     -  build + upload + logs
-#   make logs    -  stream logs from device
-#   make clean   -  remove build output
-#   make help    -  show help information
-#   make config  -  generate static IP settings yaml
-#   make check   -  validate config syntax
-#
-# EXAMPLE .makefile
-#   NODE_NAME      = sysmon-ph
-#   NODE_STATIC_IP = 192.168.1.2
-#   NODE_GATEWAY   = 192.168.1.1
-#   NODE_SUBNET    = 255.255.0.0
-#   NODE_DNS1      = 192.168.1.1
-#   NODE_DNS2      = 1.1.1.1
-#   COM_PORT       = COM1
-#   ESPHOME        = /path/to/esphome.exe
-#
-# NOTE: run configure.sh to create a .makefile
-#
-################################################################################
+
+# Load project version string
+VERSION := $(shell cat VERSION)
+
+# Default target — full pipeline: build + upload + logs
+.DEFAULT_GOAL := run
 
 
-# ==============================================================================
-# ***************************** BUILD DEFINITIONS ****************************** 
-# ==============================================================================
-
+# ----------------------------------------------------"a3yy--------------------------
+# Build Targets
+# ------------------------------------------------------------------------------
+ 
+# Load per-device config if available
 -include .makefile
 
-ESPHOME       ?= esphome
-VERSION       := $(shell cat VERSION)
+# _makefile target — ensures presence before dependent targets run
+.PHONY: _makefile
+_makefile:
+ifeq (,$(wildcard .makefile))
+	$(error .makefile not present. Run 'make configure' or 'bash ./configure.sh' before 'make $(MAKECMDGOALS))
+endif
 
-DEVICE_NAME   ?= $(NODE_NAME)
-DEVICE_DIR     = $(DEVICE_NAME)
-BUILD_DIR     := $(DEVICE_DIR)/.esphome
-CONFIG_FILE    = $(DEVICE_DIR)/config.yaml
-DEVICE_FILE    = $(DEVICE_DIR)/$(DEVICE_NAME).yaml
-DEVICE_PORT   ?= $(COM_PORT)
+# Run interactive configuration script to generate .makefile and YAML
+.PHONY: configure
+configure:
+	@./configure.sh
 
+# Compile the ESPHome firmware for the specified device
+.PHONY: build
+build: _makefile
+	@echo Building firmware for $(DEVICE_NAME)...
+	esphome compile $(DEVICE_NAME)/$(DEVICE_NAME).yaml
 
-# ==============================================================================
-# ********************************** TARGETS ***********************************
-# ==============================================================================
-
-.PHONY: all build upload run logs clean clobber help config check
-
-all: run
-
-config:
-	@echo ">>> Regenerating \"$(CONFIG_FILE)\"..."
-	@mkdir -p "$(DEVICE_DIR)"
-	@echo "node_name:     $(NODE_NAME)"         >  "$(CONFIG_FILE)"
-	@echo "friendly_name: $(FRIENDLY_NAME)"     >> "$(CONFIG_FILE)"
-	@echo "static_ip:     $(NODE_STATIC_IP)"    >> "$(CONFIG_FILE)"
-	@echo "gateway:       $(NODE_GATEWAY)"      >> "$(CONFIG_FILE)"
-	@echo "subnet:        $(NODE_SUBNET)"       >> "$(CONFIG_FILE)"
-	@echo "dns1:          $(NODE_DNS1)"         >> "$(CONFIG_FILE)"
-	@echo "dns2:          $(NODE_DNS2)"         >> "$(CONFIG_FILE)"
-
-build: config
-	@echo ">>> Building image for \"$(DEVICE_NAME)\" version $(VERSION)..."
-	"$(ESPHOME)" compile "$(DEVICE_FILE)"
-	@cp "$(DEVICE_DIR)/.esphome/build/$(DEVICE_NAME)/image.bin" "$(DEVICE_DIR)/$(DEVICE_NAME).bin"
-	@echo ">>> Image copied to \"$(DEVICE_DIR)/$(DEVICE_NAME).bin\""
-
-upload: config
-	@echo ">>> Uploading image to \"$(DEVICE_PORT)\"..."
-	"$(ESPHOME)" upload "$(DEVICE_FILE)" --device "$(DEVICE_PORT)"
-
-run: config
-	@echo ">>> Flashing and logging from \"$(DEVICE_PORT)\"..."
-	"$(ESPHOME)" run "$(DEVICE_FILE)" --device "$(DEVICE_PORT)"
-
-logs:
-	@echo ">>> Streaming logs from \"$(DEVICE_PORT)\"..."
-	"$(ESPHOME)" logs "$(DEVICE_FILE)" --device "$(DEVICE_PORT)"
-
-check:
-	@echo "🔍 Validating ESPHome configuration..."
-	@if [ ! -f $(DEVICE_FILE) ]; then \
-		echo "❌ Error: Device file '$(DEVICE_FILE)' not found."; exit 1; \
-	fi
-	@if [ ! -f .makefile ]; then \
-		echo "❌ Error: .makefile not found. Run ./configure.sh first."; exit 1; \
-	fi
-	@missing_vars=0; \
-	for var in NODE_NAME NODE_STATIC_IP NODE_GATEWAY NODE_SUBNET NODE_DNS1 COM_PORT; do \
-		if ! grep -q "$$var" .makefile; then \
-			echo "⚠️  Warning: Missing $$var in .makefile"; \
-			missing_vars=1; \
+# Generate documentation from YAML and save to docs/
+.PHONY: doc
+doc: _makefile
+	@echo "Generating documentation from all YAML files in common/..."
+	@mkdir -p docs
+	@for file in common/*.yaml; do \
+		name=$$(basename $$file .yaml); \
+		if [ "$$name" != "secrets" ]; then \
+			echo "→ $$file"; \
+			esphome compile $$file --only-generate > docs/$$name-doc.txt || echo "[WARN] Failed to generate docs for $$file"; \
+		else \
+			echo "[SKIP] Skipping secrets.yaml"; \
 		fi; \
-	done; \
-	if [ $$missing_vars -eq 1 ]; then \
-		echo "❌ Error: One or more required variables missing in .makefile"; \
-		exit 1; \
-	fi
-	@echo "✅ .makefile looks good."
-	@echo "🧪 Running ESPHome config check..."
-	@$(ESPHOME) config $(DEVICE_FILE)
+	done
+	@echo "Documentation saved to docs/*.txt"
 
+# Upload the compiled firmware to the device (USB or OTA)
+.PHONY: upload
+upload: _makefile
+	@echo Uploading firmware to $(DEVICE_NAME)...
+	esphome upload $(DEVICE_NAME)/$(DEVICE_NAME).yaml --device $(UPLOAD_PATH)
+
+# View live log output from the device
+.PHONY: logs
+logs: _makefile
+	@echo Streaming logs from $(DEVICE_NAME)...
+	esphome logs $(DEVICE_NAME)/$(DEVICE_NAME).yaml
+
+# Build, upload, and start logging in one step
+.PHONY: run
+run: build upload logs
+
+
+# ----------------------------------------------------"a3yy--------------------------
+# Documentation Targets
+# ------------------------------------------------------------------------------
+DOXYFILE = Doxyfile
+
+# Generate HTML and PDF from YAML documentation
+.PHONY: doxygen
+doxygen:
+	@echo "Generating HTML and PDF documentation from YAML files..."
+	@mkdir -p docs/html docs/latex
+	@doxygen $(DOXYFILE)
+	@echo "Building PDF from LaTeX..."
+	@$(MAKE) -C docs/latex > /dev/null 2>&1 || echo "[WARN] PDF build may have issues."
+	@echo "Done. View HTML at docs/html/index.html or PDF at docs/latex/refman.pdf"
+
+
+# ------------------------------------------------------------------------------
+# Cleanup Targets
+# Note: These targets are not dependent on the generated .makefile and may be
+#       called at any time, including after `distclean`.
+# ------------------------------------------------------------------------------
+
+# Remove only generated config and local build cache for local YAML
+.PHONY: clean
 clean:
-	@echo ">>> Cleaning build and config artifacts..."
-	@rm -f "$(CONFIG_FILE)"
-	@rm -rf "$(BUILD_DIR)"
-	@rm -rf "$(DEVICE_DIR)/$(DEVICE_NAME).bin"
+	@echo "Removing local YAML outputs local build cache elements..."
+	@if [ -n "$(DEVICE_NAME)" ]; then \
+		case "$(DEVICE_NAME)" in \
+			common|docs|build|src|include|.|/) \
+				echo "[WARN] Skipping cleanup for protected DEVICE_NAME: '$(DEVICE_NAME)'" ;; \
+			*) \
+				echo "Cleaning generated YAML for $(DEVICE_NAME)..."; \
+				rm -f "$(DEVICE_NAME)/$(DEVICE_NAME).yaml" ;; \
+		esac \
+	else \
+		echo "[WARN] DEVICE_NAME not set — skipping YAML cleanup"; \
+	fi
+	@if [ -d "$(DEVICE_NAME)/.esphome" ]; then \
+		find $(DEVICE_NAME)/.esphome -type f \( \( -name "$(DEVICE_NAME)*" -o -name "$(NODE_NAME)*" \) -a ! -name ".gitignore" \) -exec rm -v {} +; \
+	fi
 
+# Remove all compiled objects and the device directory
+.PHONY: clobber
 clobber: clean
+	@echo "Clobbering entire build cache..."
+	@if [ -n "$(DEVICE_NAME)" ]; then \
+		case "$(DEVICE_NAME)" in \
+			common|docs|build|src|include|.|/) \
+				echo "[ERROR] Refusing to delete protected directory: '$(DEVICE_NAME)'"; \
+				exit 1 ;; \
+			*) \
+				echo "Removing generated device directory: $(DEVICE_NAME)"; \
+				rm -rf "$(DEVICE_NAME)" ;; \
+		esac \
+	else \
+		echo "[WARN] DEVICE_NAME not set — skipping device dir cleanup"; \
+	fi
+	rm -rf $(DEVICE_NAME)/.esphome/
 
+# Remove all generated content including documentation and .makefile
+.PHONY: distclean
+distclean: clobber
+	@echo "Distcleaning all for archive/export..."
+	rm -f .makefile
+	rm -rf docs/
+
+
+# ------------------------------------------------------------------------------
+# Utility Targets
+# Note: These targets are not dependent on the generated .makefile and may be
+#       called at any time, including after `distclean`.
+# ------------------------------------------------------------------------------
+
+# Show the version of ESPHome currently installed
+.PHONY: version
+version:
+	@echo "Project Version: $(VERSION)"
+	@echo -n "ESPHome "
+	@esphome --version
+
+# Display the currently loaded configuration variables
+.PHONY: buildvars
+buildvars:
+	@echo "Device name:   $(DEVICE_NAME)"
+	@echo "Node name:     $(NODE_NAME)"
+	@echo "Friendly name: $(FRIENDLY_NAME)"
+	@echo "Upload path:   $(UPLOAF_PATH)"
+	@echo "WiFi IP:       $(if $(WIFI_STATIC_IP),$(WIFI_STATIC_IP),[ dynamic ])"
+	@echo "WiFi Gateway:  $(if $(WIFI_GATEWAY),$(WIFI_GATEWAY),[ dynamic ])"
+	@echo "WiFi Subnet:   $(if $(WIFI_SUBNET),$(WIFI_SUBNET),[ dynamic ])"
+	@echo "WiFi DNS1:     $(if $(WIFI_DNS1),$(WIFI_DNS1),[ dynamic ])"
+	@echo "WiFi DNS2:     $(if $(WIFI_DNS2),$(WIFI_DNS2),[ dynamic ])"
+
+# Print a list of available Makefile targets and descriptions
+.PHONY: help
 help:
 	@echo "Available targets:"
-	@echo "  make           - Build, upload, and logs (default)"
-	@echo "  make build     - Compile image only"
-	@echo "  make upload    - Upload via OTA or USB"
-	@echo "  make run       - Build, upload, and start logging"
-	@echo "  make logs      - Stream logs from device"
-	@echo "  make check     - Validate config syntax"
-	@echo "  make clean     - Remove build and cache directories"
-	@echo "  make clobber   - Same as clean"
-	@echo "  make help      - Show this message"
-	@echo "  make config    - Generate static IP YAML fragment"
+	@echo "  configure  Generate configuration (.makefile and YAML)"
+	@echo "  build      Compile firmware"
+	@echo "  upload     Upload firmware"
+	@echo "  logs       View device logs via the specified upload path"
+	@echo "  run        Build, upload, and stream logs"
+	@echo "  doxygen    Generate doxygen style documentation"
+	@echo "  doc        Generate ESPHome style documentation"
+	@echo "  clean      Remove local YAML outputs local build cache elements"
+	@echo "  clobber    Clobber entire build cache."
+	@echo "  distclean  Sanitize all generated files for archive/export"
+	@echo "  version    Show platform and ESPHome version"
+	@echo "  buildvars  Show current build configuration values"
+	@echo "  help       Show this message"
 

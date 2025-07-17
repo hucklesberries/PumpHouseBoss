@@ -4,9 +4,9 @@
 #
 #  @author      Roland Tembo Hendel
 #  @email       rhendel@nexuslogic.com
+#
 #  @license     GNU General Public License v3.0
 #               SPDX-License-Identifier: GPL-3.0-or-later
-#
 #  @copyright   Copyright (c) 2025 Roland Tembo Hendel
 #               This program is free software: you can redistribute it and/or
 #               modify it under the terms of the GNU General Public License
@@ -20,13 +20,18 @@
 #
 #               You should have received a copy of the GNU General Public License
 #               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#  @note        Co-developed with ChatGPT by OpenAI.
 # ------------------------------------------------------------------------------
 
+# @brief ESPHome logging subsystem
+# @details Enables serial and OTA log output, controls verbosity
 logger:
-  level: DEBUG
+  level: DEBUG           # @param level Global log level (NONE, ERROR, WARN, INFO, DEBUG, VERBOSE)
   logs:
-    main: DEBUG
+    main: DEBUG          # @param main Module-specific log level for 'main'
+
+  # @brief Action on log message reception
   on_message:
     - lambda: |-
         ESP_LOGI("main", "Firmware version: ${version}");
-

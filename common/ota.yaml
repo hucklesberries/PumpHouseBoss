@@ -4,9 +4,9 @@
 #
 #  @author      Roland Tembo Hendel
 #  @email       rhendel@nexuslogic.com
+#
 #  @license     GNU General Public License v3.0
 #               SPDX-License-Identifier: GPL-3.0-or-later
-#
 #  @copyright   Copyright (c) 2025 Roland Tembo Hendel
 #               This program is free software: you can redistribute it and/or
 #               modify it under the terms of the GNU General Public License
@@ -20,17 +20,23 @@
 #
 #               You should have received a copy of the GNU General Public License
 #               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#  @note        Co-developed with ChatGPT by OpenAI.
 # ------------------------------------------------------------------------------
 
+# @brief Enables OTA firmware upload over Wi-Fi
 ota:
-  password: !secret ota_password
-  platform: esphome
+  password: !secret ota_password  # @param password Load OTA password from secrets file
+  platform: esphome               # @param platform OTA platform (default: esphome)
+
+  # @brief Log message on OTA completion
   on_end:
     then:
       - logger.log: OTA update finished
 
+# @brief Safe Mode logging handler
+# @details Triggered when device boots into recovery mode
 safe_mode:
   on_safe_mode:
     then:
       - logger.log: Booted into safe mode
-

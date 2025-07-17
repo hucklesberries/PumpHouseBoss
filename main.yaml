@@ -1,0 +1,86 @@
+# ------------------------------------------------------------------------------
+#  @file        main.yaml
+#  @brief       Pumphouie System Monitor built on the ESP32S3 platform.
+#  @details     Functions include:
+#               - ingress flow-monitoring
+#               - egress flow-monitoring
+#               - alarms and alerts
+#
+#  @author      Roland Tembo Hendel
+#  @link        mailto:rhendel@nexuslogic.com
+#
+#  @license     GNU General Public License v3.0
+#               SPDX-License-Identifier: GPL-3.0-or-later
+#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
+#               This program is free software: you can redistribute it and/or
+#               modify it under the terms of the GNU General Public License
+#               as published by the Free Software Foundation, either version 3
+#               of the License, or (at your option) any later version.
+#
+#               This program is distributed in the hope that it will be useful,
+#               but WITHOUT ANY WARRANTY; without even the implied warranty of
+#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#               GNU General Public License for more details.
+#
+#               You should have received a copy of the GNU General Public License
+#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#  @note        Co-developed with ChatGPT by OpenAI.
+# ------------------------------------------------------------------------------
+
+substitutions:
+  node_name: __NODE_NAME__                      # @param node_name Node ID used in ESPHome and logs
+  friendly_name: __FRIENDLY_NAME__              # @param friendly_name Human-readable name for dashboards
+  version: __VERSION__                          # @param version Firmware version tag injected into logs and sensors
+
+# @brief Common package includes for modular configuration
+packages:
+  display:  !include ../common/display.yaml     # Display configuration (e.g., ST7789V panel)
+  wifi:     !include ../common/wifi.yaml        # Wi-Fi credentials, static IP, and fallback
+  ota:      !include ../common/ota.yaml         # OTA settings (port, auth)
+  web:      !include ../common/web_server.yaml  # Web interface (http://<device>.local)
+  logging:  !include ../common/logging.yaml     # USB/UART logging config (level, baud)
+
+# @brief ESPHome-specific metadata and on_boot logic
+esphome:
+  name: __NODE_NAME__
+  friendly_name: __FRIENDLY_NAME__
+  on_boot:
+    priority: -100
+    then:
+      - text_sensor.template.publish:
+          id: firmware_version
+          state: __VERSION__      # Publishes version string to Home Assistant on boot
+
+# @brief Target ESP32 board and Arduino framework declaration
+esp32:
+  board: esp32-s3-devkitc-1       # Target board: DevKitC-1 (8MB flash, no PSRAM)
+  framework:
+    type: arduino                 # Arduino core for ESP32-S3
+
+# @brief Template sensor exposing firmware version as Home Assistant text_sensor
+text_sensor:
+  - platform: template
+    name: "Firmware Version"      # User-visible sensor name in HA
+    id: firmware_version
+    icon: "mdi:tag"
+    update_interval: never        # Static value set only on boot
+    lambda: |-
+      return {"__VERSION__"};
+
+# @brief Uptime and flow rate sensors (hall-effect pulse counter)
+sensor:
+  - platform: uptime
+    name: "Uptime"                # Uptime in seconds since boot
+    id: uptime_sensor
+
+  - platform: pulse_counter
+    pin: GPIO04                   # Flow sensor input pin
+    name: "Flow Rate"
+    id: flow_rate_sensor
+    update_interval: 60s          # Sampling period
+    unit_of_measurement: "L/min"
+    accuracy_decimals: 2
+    filters:
+      - multiply: 0.1             # Calibration factor (pulses to L/min)
+
