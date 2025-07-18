@@ -2,6 +2,8 @@
 # ------------------------------------------------------------------------------
 #  @file        configure.sh
 #  @brief       Interactively generate a .makefile for the project
+#  @version     1.0.0
+#  @date        2025-07-18
 #  @details     This script interactively generates a .makefile and substitutes
 #               template variables in main.yaml to produce a customized ESPHome
 #               device configuration.
@@ -25,13 +27,14 @@
 #               You should have received a copy of the GNU General Public License
 #               along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
-#  @note        Co-developed with ChatGPT by OpenAI.
+#  @note        Co-developed with GitHub Copilot by OpenAI.
 # ------------------------------------------------------------------------------
 
 
 # Display friendly intro for the user
 echo "This script will generate a new .makefile for your ESPHome device."
 echo "Press Enter to skip optional values."
+
 
 # Create the .makefile with header notice
 # Why? Because we're about to overwrite it — and we want users to know it's generated.
@@ -41,9 +44,11 @@ echo "# ------------------------------------------------------------------------
 echo "" >> .makefile
 echo "" >> .makefile
 
+
 # Define sensible defaults for unattended users
 default_device_name="sysmon-ph"
 default_friendly_name="Pumphouse System Monitor"
+
 
 # Prompt for device name
 read -p "Device Name (no spaces) [default: ${default_device_name}]: " DEVICE_NAME
@@ -61,11 +66,12 @@ FRIENDLY_NAME="${FRIENDLY_NAME:-${default_friendly_name}}"
 echo "FRIENDLY_NAME  = ${FRIENDLY_NAME}" >> .makefile
 
 # Prompt for upload path
-read -p "Upload path [node_address (FQDN or IP) or serial port, default: COM1]: " UPLOAD_PATH
+read -p "Upload path [node_address (FQDN or IP) or serial port, default: ${DEVICE_NAME}.local]: " UPLOAD_PATH
 UPLOAD_PATH="${UPLOAD_PATH:-${DEVICE_NAME}.local}"
-echo "UPLOAD_PATH    = $UPLOAD_PATH" >> .makefile
+echo "UPLOAD_PATH    = ${UPLOAD_PATH}" >> .makefile
 
-# Optional static IP config
+
+# Optional static IP configuration
 read -p "Do you want to configure static network settings? [y/N]: " USE_STATIC
 USE_STATIC=$(echo "$USE_STATIC" | tr '[:upper:]' '[:lower:]')
 
@@ -73,19 +79,21 @@ USE_STATIC=$(echo "$USE_STATIC" | tr '[:upper:]' '[:lower:]')
 if [ "$USE_STATIC" = "y" ] || [ "$USE_STATIC" = "yes" ]; then
     echo ""
     read -p "Static IP Address: " WIFI_STATIC_IP
-    [ ! -z "$WIFI_STATIC_IP" ] && echo "WIFI_STATIC_IP = $WIFI_STATIC_IP" >> .makefile
+    [ ! -z "$WIFI_STATIC_IP" ] && echo "WIFI_STATIC_IP = ${WIFI_STATIC_IP}" >> .makefile
 
     read -p "Gateway: " WIFI_GATEWAY
-    [ ! -z "$WIFI_GATEWAY" ] && echo "WIFI_GATEWAY   = $WIFI_GATEWAY" >> .makefile
+    [ ! -z "$WIFI_GATEWAY" ] && echo "WIFI_GATEWAY   = ${WIFI_GATEWAY}" >> .makefile
 
     read -p "Subnet: " WIFI_SUBNET
-    [ ! -z "$WIFI_SUBNET" ] && echo "WIFI_SUBNET    = $WIFI_SUBNET" >> .makefile
+    [ ! -z "$WIFI_SUBNET" ] && echo "WIFI_SUBNET    = ${WIFI_SUBNET}" >> .makefile
 
     read -p "Primary DNS: " WIFI_DNS1
-    [ ! -z "$WIFI_DNS1" ] && echo "WIFI_DNS1      = $WIFI_DNS1" >> .makefile
+    [ ! -z "$WIFI_DNS1" ] && echo "WIFI_DNS1      = ${WIFI_DNS1}" >> .makefile
 
     read -p "Secondary DNS: " WIFI_DNS2
-    [ ! -z "$WIFI_DNS2" ] && echo "WIFI_DNS2      = $WIFI_DNS2" >> .makefile
+    [ ! -z "$WIFI_DNS2" ] && echo "WIFI_DNS2      = ${WIFI_DNS2}" >> .makefile
 fi
 
+
+# Configuration complete
 echo ".makefile created successfully."

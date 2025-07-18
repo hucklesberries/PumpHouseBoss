@@ -1,0 +1,176 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Make Help",
+			"type": "shell",
+			"command": "cd /home/rhendel/git/AW-Toolbox/joi/esphome && make help",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": false,
+			"options": {
+				"shell": {
+					"executable": "C:\\cygwin64\\bin\\zsh.exe",
+					"args": ["--login", "-c"]
+				},
+				"env": {
+					"LANG": "en_US.UTF-8",
+					"LC_ALL": "en_US.UTF-8",
+					"TERM": "xterm-256color"
+				}
+			}
+		},
+		{
+			"label": "Make Version",
+			"type": "shell",
+			"command": "cd /home/rhendel/git/AW-Toolbox/joi/esphome && make version",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": false,
+			"options": {
+				"shell": {
+					"executable": "C:\\cygwin64\\bin\\zsh.exe",
+					"args": ["--login", "-c"]
+				},
+				"env": {
+					"LANG": "en_US.UTF-8",
+					"LC_ALL": "en_US.UTF-8",
+					"TERM": "xterm-256color"
+				}
+			}
+		},
+		{
+			"label": "Make Configure",
+			"type": "shell",
+			"command": "cd /home/rhendel/git/AW-Toolbox/joi/esphome && make configure",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": false,
+			"options": {
+				"shell": {
+					"executable": "C:\\cygwin64\\bin\\zsh.exe",
+					"args": ["--login", "-c"]
+				},
+				"env": {
+					"LANG": "en_US.UTF-8",
+					"LC_ALL": "en_US.UTF-8",
+					"TERM": "xterm-256color"
+				}
+			}
+		},
+		{
+			"label": "Make Build",
+			"type": "shell",
+			"command": "cd /home/rhendel/git/AW-Toolbox/joi/esphome && make build",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": false,
+			"options": {
+				"shell": {
+					"executable": "C:\\cygwin64\\bin\\zsh.exe",
+					"args": ["--login", "-c"]
+				},
+				"env": {
+					"LANG": "en_US.UTF-8",
+					"LC_ALL": "en_US.UTF-8",
+					"TERM": "xterm-256color"
+				}
+			}
+		},
+		{
+			"label": "Make Upload",
+			"type": "shell",
+			"command": "cd /home/rhendel/git/AW-Toolbox/joi/esphome && make upload",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": false,
+			"options": {
+				"shell": {
+					"executable": "C:\\cygwin64\\bin\\zsh.exe",
+					"args": ["--login", "-c"]
+				},
+				"env": {
+					"LANG": "en_US.UTF-8",
+					"LC_ALL": "en_US.UTF-8",
+					"TERM": "xterm-256color"
+				}
+			}
+		},
+		{
+			"label": "Make Logs",
+			"type": "shell",
+			"command": "cd /home/rhendel/git/AW-Toolbox/joi/esphome && make logs",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": true,
+			"options": {
+				"shell": {
+					"executable": "C:\\cygwin64\\bin\\zsh.exe",
+					"args": ["--login", "-c"]
+				},
+				"env": {
+					"LANG": "en_US.UTF-8",
+					"LC_ALL": "en_US.UTF-8",
+					"TERM": "xterm-256color"
+				}
+			}
+		},
+		{
+			"label": "Make Run",
+			"type": "shell",
+			"command": "cd /home/rhendel/git/AW-Toolbox/joi/esphome && make run",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": true,
+			"options": {
+				"shell": {
+					"executable": "C:\\cygwin64\\bin\\zsh.exe",
+					"args": ["--login", "-c"]
+				},
+				"env": {
+					"LANG": "en_US.UTF-8",
+					"LC_ALL": "en_US.UTF-8",
+					"TERM": "xterm-256color"
+				}
+			}
+		},
+		{
+			"label": "Make Build Vars",
+			"type": "shell",
+			"command": "cd /home/rhendel/git/AW-Toolbox/joi/esphome && make buildvars",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": false,
+			"options": {
+				"shell": {
+					"executable": "C:\\cygwin64\\bin\\zsh.exe",
+					"args": ["--login", "-c"]
+				},
+				"env": {
+					"LANG": "en_US.UTF-8",
+					"LC_ALL": "en_US.UTF-8",
+					"TERM": "xterm-256color"
+				}
+			}
+		},
+		{
+			"label": "Make Clean",
+			"type": "shell",
+			"command": "cd /home/rhendel/git/AW-Toolbox/joi/esphome && make clean",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": false,
+			"options": {
+				"shell": {
+					"executable": "C:\\cygwin64\\bin\\zsh.exe",
+					"args": ["--login", "-c"]
+				},
+				"env": {
+					"LANG": "en_US.UTF-8",
+					"LC_ALL": "en_US.UTF-8",
+					"TERM": "xterm-256color"
+				}
+			}
+		}
+	]
+}
