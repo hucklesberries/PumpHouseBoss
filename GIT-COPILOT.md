@@ -155,6 +155,14 @@ wifi:
 4. **Debug**: `make logs` (stream live logs)
 5. **Full Pipeline**: `make run` (build + upload + logs)
 
+### Check-in Process
+1. **Pre-Commit**: Follow `CHECKIN-CHECKLIST.md` validation steps
+2. **Clean Build**: `make clean && make build` (verify no warnings)
+3. **Version Bump**: Update `VERSION` file and Makefile header
+4. **Archive Test**: `make distclean` (ensure clean workspace)
+5. **Commit**: Use structured commit message format
+6. **Post-Commit**: Update continuity files (KIBO.md, GIT-COPILOT.md)
+
 ### Documentation Generation
 1. **All Docs**: `make docs` (ESPHome + Doxygen)
 2. **ESPHome Only**: `make docs-esphome` (component documentation)

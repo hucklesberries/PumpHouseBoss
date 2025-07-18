@@ -11,6 +11,8 @@
 # Ignore build artifacts and logs
 build.log
 *.log
+logs/
+*.sed*
 
 # Ignore generated documentation
 docs/
@@ -28,4 +30,7 @@ docs/
 .idea/
 .DS_Store
 Thumbs.db
+
+# Ignore AI memory logs (KIBO.md is personal AI continuity, not project code)
+KIBO.md
 

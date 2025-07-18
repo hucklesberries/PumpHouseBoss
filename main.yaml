@@ -32,6 +32,15 @@ substitutions:
   node_name: __NODE_NAME__                      # @param node_name Node ID used in ESPHome and logs
   friendly_name: __FRIENDLY_NAME__              # @param friendly_name Human-readable name for dashboards
   version: __VERSION__                          # @param version Firmware version tag injected into logs and sensors
+  
+  # @brief Pin assignments for hardware configuration
+  flow_sensor_pin: "GPIO04"                     # Primary flow sensor pulse counter input
+  test_output_pin: "GPIO05"                     # GPIO test and verification pin
+  
+  # @brief Watchdog configuration parameters
+  watchdog_timeout: "30s"                       # Hardware watchdog timeout period
+  watchdog_trigger_pin: "GPIO07"                # External watchdog trigger output
+  watchdog_early_trigger: "25s"                 # Early trigger before timeout
 
 # @brief Common package includes for modular configuration
 packages:
@@ -40,6 +49,7 @@ packages:
   ota:      !include ../common/ota.yaml         # OTA settings (port, auth)
   web:      !include ../common/web_server.yaml  # Web interface (http://<device>.local)
   logging:  !include ../common/logging.yaml     # USB/UART logging config (level, baud)
+  watchdog: !include ../common/watchdog.yaml    # System reliability watchdog component
 
 # @brief ESPHome-specific metadata and on_boot logic
 esphome:
@@ -75,12 +85,33 @@ sensor:
     id: uptime_sensor
 
   - platform: pulse_counter
-    pin: GPIO04                   # Flow sensor input pin
+    pin: 
+      number: ${flow_sensor_pin}   # Configurable flow sensor input pin
+      mode:
+        input: true
+        pullup: true              # Standard pull-up configuration
     name: "Flow Rate"
     id: flow_rate_sensor
-    update_interval: 60s          # Sampling period
+    update_interval: 1s           # Fast update to catch transitions
+    count_mode:
+      rising_edge: INCREMENT      # Count rising edges
+      falling_edge: DISABLE       # Ignore falling edges
+    internal_filter: 1us          # Very fast filter to catch high-frequency signals
     unit_of_measurement: "gpm"
     accuracy_decimals: 2
     filters:
       - multiply: 0.1             # Calibration factor (pulses to L/min)
+
+# @brief GPIO test output to verify pin mapping
+output:
+  - platform: gpio
+    pin: ${test_output_pin}       # Configurable test output pin
+    id: test_output
+
+# @brief Test switch to toggle GPIO for pin verification
+switch:
+  - platform: output
+    name: "GPIO Test Toggle"
+    output: test_output
+    id: gpio_test_switch
 

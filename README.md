@@ -1,6 +1,60 @@
 # ESPHome Device Configuration Framework
 
-This repository contains a structured, reusable ESPHome configuration and build system for managing multiple embedded devices with professional-grade automation and comprehensive development workflow.
+This repository contains a structured, reusable ESPHome configuration and build system for managing multiple embedded devices with professional-grade---
+
+## 🔧 Hardware Configuration & Development Workflow
+
+### **Current GPIO Configuration**
+```text
+ESP32-S3 DevKitC-1 (Freenove Board)
+├── GPIO04: Pulse counter input (primary flow sensor)
+├── GPIO05: Test output pin 
+├── All pins tested: GPIO04, GPIO05, GPIO18, GPIO45, GPIO21
+├── LED interference: Confirmed on all GPIO pins
+└── PWM test signal: 4kHz, 50% duty cycle, 2.99V
+```
+
+### **Development Workflow Patterns**
+
+#### **AI Assistant Workflow** (Non-blocking)
+```bash
+make build && make upload       # Verifiable steps with clear output
+tail -10 logs/sysmon-ph.log    # Quick non-blocking log check
+# Use separate terminals for commands to avoid blocking
+```
+
+#### **Human Developer Workflow** (Interactive)
+```bash
+make run                       # Interactive: build + upload + live logs
+make logs-follow              # Dedicated log following terminal
+make logs-stop               # Stop background log processes
+```
+
+> **Key Insight**: `make run` is optimized for human interaction, not AI assistance
+
+### **Component Architecture Evolution**
+
+#### **Modular Component System**
+- **Created**: `../common/watchdog.yaml` reusable component
+- **Pin assignments**: Via substitutions in `main.yaml`
+- **Component includes**: Via packages section for clean modularity
+
+#### **Professional Standards Established**
+- **Consistent GPL v3.0 headers** across all files
+- **Documentation style**: `@brief`/`@details`/`@author` format
+- **Component startup logging** with tags and severity levels
+- **Configurable pins** via substitutions pattern
+
+#### **Component Benefits**
+- **Hardware portability**: Change pins in main.yaml only
+- **Component reusability**: Across different projects
+- **Independent control**: Enable/disable components individually  
+- **Team development**: Different developers, different components
+- **Professional logging**: Tagged output for debugging
+
+---
+
+## ✅ Quality Assurancetomation and comprehensive development workflow.
 
 ---
 
@@ -187,6 +241,30 @@ make docs-doxygen   # Doxygen HTML/PDF → docs/html/, docs/latex/
 - **Professional Makefile**: 24 targets with enterprise-grade functionality
 - **Comprehensive testing**: Flash verification and hardware validation
 - **Quality assurance**: Systematic code review and formatting standards
+- **Check-in process**: Structured validation via `CHECKIN-CHECKLIST.md`
+
+---
+
+## 🔍 Quality Assurance
+
+### **Check-in Process**
+Follow the comprehensive validation checklist in `CHECKIN-CHECKLIST.md`:
+- **Pre-commit validation**: Build verification, code standards, documentation
+- **Version management**: Consistent versioning across all components  
+- **Repository hygiene**: Clean commits, proper file permissions
+- **Archive readiness**: `make distclean` validation for clean workspace
+
+### **Quick Validation Commands**
+```bash
+# Pre-commit validation
+make clean && make build    # Clean build test
+make help                   # Verify target documentation
+make docs                   # Documentation generation test
+
+# Post-commit validation  
+make distclean && git status # Archive readiness test
+make configure && make build # Fresh build validation
+```
 
 ---
 

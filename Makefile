@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 #  @file        Makefile
 #  @brief       Master Makefile for ESPHome-based device management
-#  @version     0.3.0
+#  @version     0.4.0
 #  @date        2025-07-18
 #  @details     This Makefile drives the build, upload, and configuration
 #               process for ESPHome projects. It leverages a .makefile for per-device
@@ -31,6 +31,9 @@
 
 # Load project version string
 VERSION := $(shell cat VERSION)
+
+# Configurable log file (can be overridden in .makefile or command line)
+LOGFILE ?= logs/$(DEVICE_NAME)-$(shell date +%Y%m%d_%H%M%S).log
 
 # Auto-detect Python executable with esptool module
 PYTHON_WITH_ESPTOOL := $(shell \
@@ -133,12 +136,46 @@ upload: _makefile
 # View live log output from the device
 .PHONY: logs
 logs: _makefile
+	@mkdir -p logs
+	@echo "Stopping any existing logging sessions..."
+	@pkill -f "esphome logs.*$(DEVICE_NAME)" 2>/dev/null || echo "No previous logging processes found"
+	@echo "Starting fresh logging session to $(LOGFILE)..."
+	@esphome logs $(DEVICE_NAME)/$(DEVICE_NAME).yaml > $(LOGFILE) 2>&1 &
+	@echo "Creating symlink to latest log file..."
+	@cd logs && ln -sf $(shell basename $(LOGFILE)) $(DEVICE_NAME).log
+	@echo "Logs are being written to: $(LOGFILE)"
+	@echo "Latest log accessible via: logs/$(DEVICE_NAME).log"
+	@echo "Use 'tail -f logs/$(DEVICE_NAME).log' to follow logs, or 'make logs-follow' for convenience"
+	@echo "Use 'make logs-stop' to stop background logging"
+
+# Follow log output in real-time
+.PHONY: logs-follow
+logs-follow:
+	@echo "Following logs from logs/$(DEVICE_NAME).log..."
+	@tail -f logs/$(DEVICE_NAME).log
+
+# Stop background logging
+.PHONY: logs-stop  
+logs-stop:
+	@echo "Stopping background logging processes..."
+	@pkill -f "esphome logs.*$(DEVICE_NAME)" 2>/dev/null || echo "No logging processes found"
+
+# Interactive logs (old behavior, blocks terminal)
+.PHONY: logs-interactive
+logs-interactive: _makefile
 	@echo Streaming logs from $(DEVICE_NAME)...
 	@esphome logs $(DEVICE_NAME)/$(DEVICE_NAME).yaml
 
+# Start fresh logging session and follow immediately (session-specific logs)
+.PHONY: logs-fresh
+logs-fresh: logs
+	@sleep 2
+	@echo "Following fresh log session ($(LOGFILE))..."
+	@tail -f logs/$(DEVICE_NAME).log
+
 # Build, upload, and start logging in one step
 .PHONY: run
-run: build upload logs
+run: build upload logs-follow
 
 
 # ------------------------------------------------------------------------------
@@ -212,15 +249,19 @@ clean:
 	@rm -f build.log .sedargs
 	@if [ -n "$(DEVICE_NAME)" ] && [ "$(call is_protected_dir,$(DEVICE_NAME))" = "no" ]; then \
 		if [ -f "$(DEVICE_NAME)/$(DEVICE_NAME).yaml" ]; then \
-			@echo "Removing generated YAML: $(DEVICE_NAME)/$(DEVICE_NAME).yaml"; \
-			@rm -f "$(DEVICE_NAME)/$(DEVICE_NAME).yaml"; \
+			echo "Removing generated YAML: $(DEVICE_NAME)/$(DEVICE_NAME).yaml"; \
+			rm -f "$(DEVICE_NAME)/$(DEVICE_NAME).yaml"; \
 		fi; \
 		if [ -d "$(DEVICE_NAME)/.esphome" ]; then \
-			@echo "Cleaning ESPHome cache in $(DEVICE_NAME)/.esphome/"; \
-			@find "$(DEVICE_NAME)/.esphome" -name "*.bin" -o -name "*.elf" -o -name "*.map" -o -name "*.json" | head -20 | xargs rm -f; \
+			echo "Cleaning ESPHome cache in $(DEVICE_NAME)/.esphome/"; \
+			find "$(DEVICE_NAME)/.esphome" -name "*.bin" -o -name "*.elf" -o -name "*.map" -o -name "*.json" | head -20 | xargs rm -f; \
+		fi; \
+		if [ -L "logs/$(DEVICE_NAME).log" ]; then \
+			echo "Removing latest log symlink: logs/$(DEVICE_NAME).log"; \
+			rm -f "logs/$(DEVICE_NAME).log"; \
 		fi; \
 	else \
-		@echo "[WARN] DEVICE_NAME not set or protected - skipping device-specific cleanup"; \
+		echo "[WARN] DEVICE_NAME not set or protected - skipping device-specific cleanup"; \
 	fi
 
 # Remove generated documentation files
@@ -228,8 +269,8 @@ clean:
 clean-docs: clean-docs-esphome clean-docs-doxygen
 	@echo "Checking for empty docs directory..."
 	@if [ -d "docs" ] && [ -z "$$(ls -A docs/ 2>/dev/null)" ]; then \
-		@echo "Removing empty docs directory..."; \
-		@rmdir docs/; \
+		echo "Removing empty docs directory..."; \
+		rmdir docs/; \
 	fi
 
 # Remove only ESPHome-generated documentation
@@ -237,10 +278,10 @@ clean-docs: clean-docs-esphome clean-docs-doxygen
 clean-docs-esphome:
 	@echo "Cleaning ESPHome documentation files..."
 	@if [ -d "docs/esphome" ]; then \
-		@rm -rf docs/esphome; \
-		@echo "Removed ESPHome documentation directory"; \
+		rm -rf docs/esphome; \
+		echo "Removed ESPHome documentation directory"; \
 	else \
-		@echo "No ESPHome documentation directory found"; \
+		echo "No ESPHome documentation directory found"; \
 	fi
 
 # Remove only Doxygen-generated documentation
@@ -248,10 +289,10 @@ clean-docs-esphome:
 clean-docs-doxygen:
 	@echo "Cleaning Doxygen documentation..."
 	@if [ -d "docs" ]; then \
-		@rm -rf docs/html/ docs/latex/; \
-		@echo "Removed Doxygen documentation"; \
+		rm -rf docs/html/ docs/latex/; \
+		echo "Removed Doxygen documentation"; \
 	else \
-		@echo "No docs directory found"; \
+		echo "No docs directory found"; \
 	fi
 
 # Remove ESPHome build cache and compiled objects
@@ -289,6 +330,8 @@ distclean: clean-docs
 	@rm -f .makefile .sedargs
 	@echo "Removing build artifacts..."
 	@rm -f build.log
+	@echo "Removing log files..."
+	@rm -rf logs/
 	@echo "Scanning for device directories..."
 	@for dir in */; do \
 		if [ -d "$$dir" ] && [ "$(call is_protected_dir,$${dir%/})" = "no" ] && [ -f "$${dir}$${dir%/}.yaml" ]; then \
@@ -342,7 +385,11 @@ help:
 	@echo "  flash-info          Display flash memory information and layout"
 	@echo "  flash-verify        Verify flash contents against current firmware build"
 	@echo "  upload              Upload firmware to device"
-	@echo "  logs                View live device logs"
+	@echo "  logs                Start background logging (creates logs/DEVICE.log symlink)"
+	@echo "  logs-fresh          Start fresh session-specific logging + follow immediately"
+	@echo "  logs-follow         Follow logs in real-time using symlink"
+	@echo "  logs-stop           Stop background logging processes"
+	@echo "  logs-interactive    Interactive logs (blocks terminal)"
 	@echo "  run                 Build, upload, and stream logs"
 	@echo ""
 	@echo "Documentation Targets:"

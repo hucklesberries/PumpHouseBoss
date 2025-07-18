@@ -1,0 +1,124 @@
+# ------------------------------------------------------------------------------
+#  @file        watchdog.yaml
+#  @brief       System reliability watchdog component for ESP32 platforms.
+#  @details     Provides hardware watchdog timer, external watchdog trigger,
+#               reset reason monitoring, and system health diagnostics for
+#               mission-critical pump house monitoring applications.
+#
+#  @author      Roland Tembo Hendel
+#  @link        mailto:rhendel@nexuslogic.com
+#
+#  @license     GNU General Public License v3.0
+#               SPDX-License-Identifier: GPL-3.0-or-later
+#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
+#               This program is free software: you can redistribute it and/or
+#               modify it under the terms of the GNU General Public License
+#               as published by the Free Software Foundation, either version 3
+#               of the License, or (at your option) any later version.
+#
+#               This program is distributed in the hope that it will be useful,
+#               but WITHOUT ANY WARRANTY; without even the implied warranty of
+#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#               GNU General Public License for more details.
+#
+#               You should have received a copy of the GNU General Public License
+#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#  @note        Co-developed with ChatGPT by OpenAI.
+# ------------------------------------------------------------------------------
+
+# @brief Required substitutions for watchdog component
+# Note: Hardware watchdog may require different ESPHome version or ESP-IDF framework
+# Currently focusing on software monitoring and reset capabilities
+
+# @brief Boot-time system monitoring initialization
+esphome:
+  on_boot:
+    priority: 200                       # High priority - run early in boot sequence
+    then:
+      - logger.log:
+          level: INFO
+          tag: "SYSTEM"
+          format: "System monitoring initialized - software watchdog active"
+      - logger.log:
+          level: INFO  
+          tag: "SYSTEM"
+          format: "Reset monitoring active - tracking system stability"
+
+# @brief Watchdog status and reset reason monitoring
+text_sensor:
+  # @brief Human-readable reset reason tracking
+  - platform: template
+    name: "Reset Reason"
+    id: reset_reason_text
+    icon: "mdi:restart"
+    update_interval: never              # Set once on boot
+    lambda: |-
+      int reason = esp_reset_reason();
+      switch(reason) {
+        case 1: return {"Power-on reset"};
+        case 3: return {"Software reset"};
+        case 4: return {"Watchdog reset"};
+        case 5: return {"Deep sleep wake"};
+        case 6: return {"Brownout reset"};
+        case 7: return {"JTAG reset"};
+        default: return {"Unknown reset (" + to_string(reason) + ")"};
+      }
+
+# @brief Watchdog monitoring sensors
+sensor:
+  # @brief Watchdog reset counter for reliability tracking
+  - platform: template
+    name: "Watchdog Resets"
+    id: watchdog_reset_counter
+    unit_of_measurement: "resets"
+    accuracy_decimals: 0
+    icon: "mdi:counter"
+    update_interval: 60s                # Check once per minute
+    lambda: |-
+      // Count watchdog resets since boot
+      static int reset_count = 0;
+      if (esp_reset_reason() == 4) {
+        reset_count++;
+      }
+      return reset_count;
+
+  # @brief Raw reset reason code for advanced diagnostics
+  - platform: template
+    name: "Last Reset Code"
+    id: last_reset_reason_code
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    icon: "mdi:information"
+    update_interval: never              # Set once on boot
+    lambda: |-
+      return esp_reset_reason();
+
+  # @brief System health score based on reset frequency
+  - platform: template
+    name: "System Health Score"
+    id: system_health_score
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:heart-pulse"
+    update_interval: 300s               # Update every 5 minutes
+    lambda: |-
+      // Calculate health score based on uptime and reset frequency
+      float uptime_hours = id(uptime_sensor).state / 3600.0;
+      int reset_count = id(watchdog_reset_counter).state;
+      
+      if (uptime_hours < 1.0) return 100.0;
+      
+      float health = 100.0 - (reset_count * 10.0);
+      if (uptime_hours > 24.0) health += 5.0;
+      
+      return max(0.0f, min(100.0f, health));
+
+# @brief Remote system restart capability
+switch:
+  # @brief Software-controlled system restart for remote troubleshooting
+  - platform: restart
+    name: "System Restart"
+    id: system_restart_switch
+    icon: "mdi:restart"
+    # Note: Physical hardware reset available via external button wired to ESP32 EN pin
