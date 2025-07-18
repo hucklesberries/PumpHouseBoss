@@ -53,9 +53,24 @@ endif
 configure:
 	@./configure.sh
 
+# Generate device/node YAML from project source YAML
+.PHONY: generate
+generate: _makefile
+	@echo "Generating device YAML from main.yaml..."
+	@mkdir -p $(DEVICE_NAME)
+	@awk -F '=' 'NF==2 && $$1 !~ /^#/ && $$1 !~ /^$$/ { \
+		gsub(/^[ \t]+|[ \t]+$$/, "", $$1); \
+		gsub(/^[ \t]+|[ \t]+$$/, "", $$2); \
+		key=$$1; val=$$2; \
+		gsub(/[\/|]/, "\\\\&", val); \
+		print "s|__" key "__|" val "|g" \
+	}' .makefile > .sedargs
+	@sed -f .sedargs main.yaml > $(DEVICE_NAME)/$(DEVICE_NAME).yaml
+	@rm -f .sedargs
+
 # Compile the ESPHome firmware for the specified device
 .PHONY: build
-build: _makefile
+build: generate
 	@echo Building firmware for $(DEVICE_NAME)...
 	esphome compile $(DEVICE_NAME)/$(DEVICE_NAME).yaml
 

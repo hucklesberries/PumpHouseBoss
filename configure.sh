@@ -29,10 +29,6 @@
 # ------------------------------------------------------------------------------
 
 
-# ------------------------------------------------------------------------------
-# STEP 1: Generate the .makefile with user specified values (or defaults)
-# ------------------------------------------------------------------------------
-
 # Display friendly intro for the user
 echo "This script will generate a new .makefile for your ESPHome device."
 echo "Press Enter to skip optional values."
@@ -93,33 +89,3 @@ if [ "$USE_STATIC" = "y" ] || [ "$USE_STATIC" = "yes" ]; then
 fi
 
 echo ".makefile created successfully."
-
-
-# ------------------------------------------------------------------------------
-# STEP 2: Generate the device directory and YAML file from the main.yaml template
-# ------------------------------------------------------------------------------
-
-echo "Generating device YAML from template..."
-
-# Create subdir named after device (safe for re-entry)
-mkdir -p "$DEVICE_NAME"
-
-# Template substitution step
-if [ -f "main.yaml" ]; then
-    # Build sed replacement expressions from .makefile contents
-    SED_ARGS=()
-    while IFS='=' read -r key value; do
-        key=$(echo "$key" | tr -d ' ')
-        value=$(echo "$value" | sed -e 's/[&/]/\\&/g')  # Escape for sed safety
-        SED_ARGS+=("-e" "s|__${key}__|${value}|g")
-    done < .makefile
-
-    # Apply substitutions using sed and write result to device-specific YAML
-    sed "${SED_ARGS[@]}" main.yaml > "$DEVICE_NAME/$DEVICE_NAME.yaml"
-    echo "  → Created $DEVICE_NAME/$DEVICE_NAME.yaml"
-else
-    echo "  ⚠️  main.yaml not found. Skipping YAML generation."
-fi
-
-echo "Device directory and YAML file created successfully."
-

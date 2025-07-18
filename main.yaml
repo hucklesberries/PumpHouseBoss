@@ -79,7 +79,7 @@ sensor:
     name: "Flow Rate"
     id: flow_rate_sensor
     update_interval: 60s          # Sampling period
-    unit_of_measurement: "L/min"
+    unit_of_measurement: "gpm"
     accuracy_decimals: 2
     filters:
       - multiply: 0.1             # Calibration factor (pulses to L/min)
