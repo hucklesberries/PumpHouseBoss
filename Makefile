@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 #  @file        Makefile
 #  @brief       Master Makefile for ESPHome-based device management
-#  @version     0.4.0
+#  @version     0.5.0
 #  @date        2025-07-18
 #  @details     This Makefile drives the build, upload, and configuration
 #               process for ESPHome projects. It leverages a .makefile for per-device
