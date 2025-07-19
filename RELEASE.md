@@ -1,53 +1,22 @@
 # Release Notes
 
-## Version 0.3.0 – Professional Development Environment
+## Version 0.5.0 – Repo Migration & Professional Workflow
 
 **Date:** 2025-07-18
 
-### � Major Professional Overhaul
+### 🚀 Migration & Checklist Improvements
 
-This release represents a complete transformation from a basic ESPHome configuration to a professional-grade development environment with enterprise-level build system and comprehensive automation.
+This release marks the migration from AW-Toolbox/sysmon-ph-staging to the independent sysmon-ph repository.
 
-### 🎯 Professional Build System
+### 📝 Professional Workflow Enhancements
 
-**24 Makefile Targets** with comprehensive functionality:
-- **Build Pipeline**: configure, build, upload, logs, run
-- **Platform Operations**: flash-erase, chip-info, flash-info, flash-verify
-- **Documentation**: docs, docs-esphome, docs-doxygen
-- **Cleanup System**: clean, clean-cache, clean-docs, clobber, distclean
-- **Utilities**: version, buildvars, help
+- All documentation and references updated for new repo context
+- Improved check-in checklist and quickref for streamlined workflow
+- Verified file permissions, .gitignore, and build system for clean check-in
+- Added post-check-in procedure and version bump workflow
 
-### 🔧 Advanced Technical Features
+### ✅ Ready for Next Development Cycle
 
-**Auto-detected Python Integration**:
-- Sophisticated fallback chain for esptool availability
-- Cross-platform compatibility (Windows/Cygwin/Linux)
-- Automatic detection across multiple Python installations
-
-**Safety Systems**:
-- PROTECTED_DIRS preventing accidental deletion of critical directories
-- Comprehensive error handling with recovery suggestions
-- Dependency composition for clean, maintainable target relationships
-
-**Flash Operations & Hardware Integration**:
-- Complete esptool integration for ESP32-S3 devices
-- Flash memory operations (erase, info, verify)
-- Chip information and capabilities detection
-- Firmware verification against built binaries
-
-### 📚 Professional Documentation System
-
-**Organized Documentation Structure**:
-- ESPHome component documentation → `docs/esphome/`
-- Doxygen HTML documentation → `docs/html/`
-- Doxygen PDF documentation → `docs/latex/`
-- Automatic timestamps and generation tracking
-
-**Professional Header Standards**:
-- Doxygen-style documentation headers
-- Version tracking and date stamps
-- Proper GPL v3.0 licensing with SPDX identifiers
-- Accurate collaboration attribution
 
 ### 🛠️ Development Workflow Improvements
 
@@ -97,7 +66,7 @@ This release represents a complete transformation from a basic ESPHome configura
 
 This release co-authored by:
 
-- **Roland Tembo Hendel** (author, architect)
+GitHub Copilot (author, architect)
 - **GitHub Copilot by OpenAI** (co-author, automation + documentation)
 
 The design, automation tooling, and documentation were collaboratively built through conversational engineering with professional development standards.

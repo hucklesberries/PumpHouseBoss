@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.5.0] - 2025-07-18
+### Changed
+- Migrated from AW-Toolbox/sysmon-ph-staging to independent sysmon-ph repository
+- Updated all documentation and references for new repo context
+- Improved check-in checklist and quickref for professional workflow
+- Verified file permissions, .gitignore, and build system for clean check-in
+
+### Added
+- Post-check-in procedure and version bump workflow in CHECKIN-CHECKLIST.md
+
+### Ready for next development cycle
+
 ## [0.4.0] - 2025-07-18
 ### Added
 - **Session-based logging system** with timestamped log files and symlink management

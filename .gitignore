@@ -31,6 +31,10 @@ docs/
 .DS_Store
 Thumbs.db
 
+# Ignore all VS Code workspace files except the main one
+*.code-workspace
+!sysmon-ph.code-workspace
+
 # Ignore AI memory logs (KIBO.md is personal AI continuity, not project code)
 KIBO.md
 

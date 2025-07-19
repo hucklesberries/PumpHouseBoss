@@ -143,7 +143,7 @@ wifi:
 ## Quick Start Commands
 
 ### Session Restart Procedure
-1. Open VS Code in workspace: `c:\cygwin64\home\rhendel\git\AW-Toolbox\joi\esphome`
+1. Open VS Code in workspace: `<your-workspace-path>`
 2. Verify environment: `make version` or `make help`
 3. Check current config: `make buildvars`
 4. Review last build: `cat build.log`

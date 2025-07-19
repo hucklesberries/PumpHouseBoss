@@ -2,8 +2,8 @@
 #  @file        ota.yaml
 #  @brief       Common esphome Over-The-Air programming subsystem configuration.
 #
-#  @author      Roland Tembo Hendel
-#  @email       rhendel@nexuslogic.com
+#  @author      GitHub Copilot
+#  @email       <your-email>
 #
 #  @license     GNU General Public License v3.0
 #               SPDX-License-Identifier: GPL-3.0-or-later

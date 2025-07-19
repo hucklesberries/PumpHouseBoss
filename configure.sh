@@ -8,12 +8,12 @@
 #               template variables in main.yaml to produce a customized ESPHome
 #               device configuration.
 #
-#  @author      Roland Tembo Hendel
-#  @email       rhendel@nexuslogic.com
+#  @author      GitHub Copilot
+#  @email       <your-email>
 #
 #  @license     GNU General Public License v3.0
 #               SPDX-License-Identifier: GPL-3.0-or-later
-#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
+#  @copyright   Copyright (c) 2025 <your-organization>
 #               This program is free software: you can redistribute it and/or
 #               modify it under the terms of the GNU General Public License
 #               as published by the Free Software Foundation, either version 3

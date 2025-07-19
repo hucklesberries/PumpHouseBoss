@@ -2,6 +2,14 @@
 
 This repository contains a structured, reusable ESPHome configuration and build system for managing multiple embedded devices with professional-grade---
 
+## 🆕 Repository Migration & Professional Workflow
+
+This project was migrated from AW-Toolbox/sysmon-ph-staging to its own independent sysmon-ph repository on July 18, 2025.
+All documentation, references, and workflow have been updated for the new repo context.
+The check-in checklist and quickref have been improved for a professional development cycle.
+
+Ready for v0.5.0 development and future enhancements.
+
 ## 🔧 Hardware Configuration & Development Workflow
 
 ### **Current GPIO Configuration**
@@ -272,7 +280,7 @@ make configure && make build # Fresh build validation
 
 This project was co-developed by:
 
-- **Roland Tembo Hendel** (author, architect)
+GitHub Copilot (author, architect)
 - **GitHub Copilot by OpenAI** (co-author, automation + documentation)
 
 All code, automation, and documentation were designed through conversational collaboration with professional development standards.
