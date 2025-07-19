@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.0] - 2025-07-18
+## [0.6.0] - 2025-07-18
 ### Changed
 - Migrated from AW-Toolbox/sysmon-ph-staging to independent sysmon-ph repository
 - Updated all documentation and references for new repo context
@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Log cleanup** in `distclean` target for archive preparation
 
 ### Changed
-- **VERSION bump**: 0.3.0 → 0.4.0
+- **VERSION bump**: 0.5.0 → 0.6.0
 - **Makefile logging**: Background process management with automatic session cleanup
 - **Help system**: Updated with new logging workflow targets
 - **README.md**: Added Quality Assurance section with validation commands

@@ -1,7 +1,7 @@
 # ------------------------------------------------------------------------------
 #  @file        Makefile
 #  @brief       Master Makefile for ESPHome-based device management
-#  @version     0.5.0
+#  @version     0.6.0
 #  @date        2025-07-18
 #  @details     This Makefile drives the build, upload, and configuration
 #               process for ESPHome projects. It leverages a .makefile for per-device
@@ -37,9 +37,9 @@ LOGFILE ?= logs/$(DEVICE_NAME)-$(shell date +%Y%m%d_%H%M%S).log
 
 # Auto-detect Python executable with esptool module
 PYTHON_WITH_ESPTOOL := $(shell \
-    for py in python3 python /cygdrive/c/Users/rhendel/AppData/Local/Programs/Python/Python313/python.exe; do \
-        if "$$py" -c "import esptool" 2>/dev/null; then echo "$$py"; break; fi \
-    done)
+	for py in python3 python /cygdrive/c/Users/rhendel/AppData/Local/Programs/Python/Python313/python.exe; do \
+		if "$$py" -c "import esptool" 2>/dev/null; then echo "$$py"; break; fi \
+	done)
 
 # Default target - full pipeline: build + upload + logs
 .DEFAULT_GOAL := run

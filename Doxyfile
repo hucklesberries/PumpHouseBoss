@@ -1,5 +1,5 @@
 # Doxygen configuration for annotated ESPHome YAML
-PROJECT_NAME           = "Pumphouse Sysem Monitor"
+PROJECT_NAME           = "Pumphouse System Monitor"
 PROJECT_BRIEF          = "A Pumphouse System Monitor built on the ESP32S3 platform."
 OUTPUT_DIRECTORY       = docs
 INPUT                  = . common

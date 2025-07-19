@@ -1,32 +1,99 @@
-# ESPHome Device Configuration Framework
 
-This repository contains a structured, reusable ESPHome configuration and build system for managing multiple embedded devices with professional-grade---
 
-## 🆕 Repository Migration & Professional Workflow
+# sysmon-ph: ESPHome Pumphouse Monitor
 
-This project was migrated from AW-Toolbox/sysmon-ph-staging to its own independent sysmon-ph repository on July 18, 2025.
-All documentation, references, and workflow have been updated for the new repo context.
-The check-in checklist and quickref have been improved for a professional development cycle.
+This repository contains a professional-grade ESPHome-based system for monitoring and managing a commercial or residential pumphouse using an ESP32-S3 microcontroller. It features modular configuration, robust workflow automation, and comprehensive documentation for collaborative development.
 
-Ready for v0.5.0 development and future enhancements.
+## Features
 
-## 🔧 Hardware Configuration & Development Workflow
+- Monitors water flow through all ingress and egress lines
+- Configurable alerts for anomalies and leak detection
+- Modular YAML configuration for hardware components (flow sensors, watchdog, display, Wi-Fi, OTA, logging, web server)
+- Comprehensive Makefile with 24 targets for build, upload, logging, cleaning, and documentation
+- Interactive setup via `configure.sh` for device-specific configuration
+- Professional documentation standards (GPL v3.0 headers, Doxygen integration)
+- Automated version management and consistency checks
+- Safety mechanisms to prevent accidental deletion of critical files
+- VS Code integration with pre-defined tasks
+- Quality assurance via checklists, quick references, and session continuity files
+- Designed for collaborative development, maintainability, and easy migration to new hardware or environments
 
-### **Current GPIO Configuration**
+## Repository Migration
+
+Migrated from AW-Toolbox/sysmon-ph-staging to an independent repository on July 18, 2025. All documentation and workflow have been updated for the new context.
+
+> **Note:** The project description and documentation will be further refined before the next check-in to ensure clarity and completeness.
+
+## Hardware Configuration
+
+**Current GPIO Configuration:**
 ```text
 ESP32-S3 DevKitC-1 (Freenove Board)
 ├── GPIO04: Pulse counter input (primary flow sensor)
-├── GPIO05: Test output pin 
+├── GPIO05: Test output pin
 ├── All pins tested: GPIO04, GPIO05, GPIO18, GPIO45, GPIO21
 ├── LED interference: Confirmed on all GPIO pins
 └── PWM test signal: 4kHz, 50% duty cycle, 2.99V
 ```
 
-### **Development Workflow Patterns**
+## Development Workflow
+
+**AI Assistant Workflow (Non-blocking):**
+```bash
+make build && make upload      # Verifiable steps with clear output
+tail -10 logs/sysmon-ph.log    # Quick non-blocking log check
+# Use separate terminals for commands to avoid blocking
+```
+
+**Human Developer Workflow (Interactive):**
+```bash
+make run                       # Interactive: build + upload + live logs
+make logs-follow               # Dedicated log following terminal
+make logs-stop                 # Stop background log processes
+```
+
+> `make run` is optimized for human interaction, not AI assistance
+
+## Component Architecture
+
+- Modular components (e.g., `common/watchdog.yaml`)
+- Pin assignments via substitutions in `main.yaml`
+- Component includes via packages for clean modularity
+- Consistent GPL v3.0 headers and documentation style
+- Startup logging with tags and severity levels
+- Configurable pins via substitutions
+
+## Project Layout
+
+```text
+.
+├── Makefile               # Professional build system (24 targets)
+├── README.md
+├── VERSION                # Project version (0.6.0)
+├── Doxyfile
+├── configure.sh           # Interactive configuration generator
+├── main.yaml              # Device template with variable substitution
+├── common/
+│   ├── display.yaml
+│   ├── logging.yaml
+│   ├── ota.yaml
+│   ├── secrets.yaml       # Not tracked (gitignored)
+│   ├── web_server.yaml
+│   └── wifi.yaml
+├── docs/                  # Generated documentation
+│   ├── esphome/           # ESPHome component documentation
+│   ├── html/              # Doxygen HTML documentation
+│   └── latex/             # Doxygen PDF documentation
+├── .gitignore
+├── .makefile              # Auto-generated per-device configuration
+└── <DEVICE_NAME>/
+    └── <DEVICE_NAME>.yaml # Generated device configuration
+```
+- Designed for collaborative development, maintainability, and easy migration to new hardware or environments.
 
 #### **AI Assistant Workflow** (Non-blocking)
 ```bash
-make build && make upload       # Verifiable steps with clear output
+make build && make upload      # Verifiable steps with clear output
 tail -10 logs/sysmon-ph.log    # Quick non-blocking log check
 # Use separate terminals for commands to avoid blocking
 ```
@@ -34,8 +101,8 @@ tail -10 logs/sysmon-ph.log    # Quick non-blocking log check
 #### **Human Developer Workflow** (Interactive)
 ```bash
 make run                       # Interactive: build + upload + live logs
-make logs-follow              # Dedicated log following terminal
-make logs-stop               # Stop background log processes
+make logs-follow               # Dedicated log following terminal
+make logs-stop                 # Stop background log processes
 ```
 
 > **Key Insight**: `make run` is optimized for human interaction, not AI assistance
@@ -62,7 +129,7 @@ make logs-stop               # Stop background log processes
 
 ---
 
-## ✅ Quality Assurancetomation and comprehensive development workflow.
+## ✅ Quality Assurance automation and comprehensive development workflow.
 
 ---
 
@@ -72,7 +139,7 @@ make logs-stop               # Stop background log processes
 .
 ├── Makefile               # Professional build system (24 targets)
 ├── README.md
-├── VERSION                # Project version (0.3.0)
+├── VERSION                # Project version (0.6.0)
 ├── Doxyfile
 ├── configure.sh           # Interactive configuration generator
 ├── main.yaml              # Device template with variable substitution
@@ -84,8 +151,8 @@ make logs-stop               # Stop background log processes
 │   ├── web_server.yaml
 │   └── wifi.yaml
 ├── docs/                  # Generated documentation
-│   ├── esphome/          # ESPHome component documentation
-│   ├── html/             # Doxygen HTML documentation
+│   ├── esphome/           # ESPHome component documentation
+│   ├── html/              # Doxygen HTML documentation
 │   └── latex/            # Doxygen PDF documentation
 ├── .gitignore
 ├── .makefile              # Auto-generated per-device configuration

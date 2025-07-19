@@ -1,0 +1,32 @@
+# ------------------------------------------------------------------------------
+#  @file        esp32.yaml
+#  @brief       ESP32 board and framework configuration for sysmon-ph.
+#  @details     Modular include for ESPHome projects targeting ESP32-S3.
+#
+#  @author      Roland Tembo Hendel
+#  @link        mailto:rhendel@nexuslogic.com
+#
+#  @license     GNU General Public License v3.0
+#               SPDX-License-Identifier: GPL-3.0-or-later
+#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
+#               This program is free software: you can redistribute it and/or
+#               modify it under the terms of the GNU General Public License
+#               as published by the Free Software Foundation, either version 3
+#               of the License, or (at your option) any later version.
+#
+#               This program is distributed in the hope that it will be useful,
+#               but WITHOUT ANY WARRANTY; without even the implied warranty of
+#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#               GNU General Public License for more details.
+#
+#               You should have received a copy of the GNU General Public License
+#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#  @note        Co-developed with GitHub Copilot by OpenAI.
+# ------------------------------------------------------------------------------
+
+# @brief Target ESP32 board and Arduino framework declaration
+esp32:
+  board: esp32-s3-devkitc-1       # Target board: DevKitC-1 (8MB flash, no PSRAM)
+  framework:
+    type: arduino                 # Arduino core for ESP32-S3

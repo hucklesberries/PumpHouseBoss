@@ -1,5 +1,54 @@
 # ESPHome Project Check-in Checklist
 
+## Pre-Commit Commands
+```bash
+# 1. Clean build validation
+make clean && make build
+
+# 2. Version consistency check
+grep "version.*0\." Makefile VERSION
+
+# 3. Documentation test
+make help && make docs
+
+# 4. Archive readiness test
+make distclean && git status
+
+# 5. Gitignore validation
+git status --ignored --porcelain | grep "^!!" | head -5
+```
+
+## Commit Message Template
+```
+feat: Add session-based logging system
+
+Enhanced logging workflow with timestamp-based session management:
+- Added logs-fresh target for clean session-specific logs
+- Implemented background process management with automatic cleanup
+- Created symlink system for easy log access
+- Updated help system with new logging workflow
+
+Hardware tested: ESP32-S3 DevKitC-1
+Components: logging, watchdog
+Version: 0.6.0
+```
+
+## Post-Commit Updates
+- [ ] Update `GIT-COPILOT.md` technical context
+- [ ] Update `CHANGELOG.md` with version entry
+- [ ] Verify `make distclean` produces clean workspace
+
+---
+📋 **Full checklist below**
+
+> **Reminder:** Before the next check-in, refine the project description and provide similar updates to all documentation for clarity and completeness.
+
+### **Header Consistency Review**
+- [ ] Review all headers in source files for version, license, and attribution consistency
+
+### **Version Reference Update**
+- [ ] Update all version references throughout the codebase to match VERSION file (0.6.0)
+
 ## Pre-Commit Validation
 
 ### **1. Code Quality & Standards**
@@ -102,61 +151,14 @@ Version: X.Y.Z
 3. **Fix Forward**: Create fixing commit with `fix:` prefix
 4. **Document**: Update this checklist if new failure mode discovered
 
-## Quick Commands
-
-### **Pre-Commit Validation**
-```bash
-# Clean build test
-make clean && make build
-
-# Version consistency check
-grep "version.*0\." Makefile VERSION
-
-# File permission normalization  
-find . -type f -name "*.yaml" -o -name "*.md" -o -name "*.sh" | xargs chmod 644
-
-# Documentation generation test
-make docs
-
-# Gitignore validation
-git status --ignored --porcelain | grep "^!!" | head -5
-```
-
-### **Post-Commit Validation**
-```bash
-# Archive readiness test
-make distclean && git status
-
-# Fresh build test (after distclean)
-make configure  # Interactive setup
-make build     # Should build cleanly
-```
-
-### **Post-Check-in Procedure**
-```bash
-# 1. Reset checklist checkboxes (manual step in editor)
-# 2. Update version for next development cycle
-echo "0.5.0" > VERSION
-sed -i 's/@version     0\.4\.0/@version     0.5.0/' Makefile
-
-# 3. Commit version bump and checklist reset
-git add VERSION Makefile CHECKIN-CHECKLIST.md
-git commit -m "chore: Prepare for v0.5.0 development cycle
-
-- Reset checklist checkboxes for next development cycle
-- Bump version to 0.5.0 in VERSION file and Makefile
-- Ready for next feature development phase"
-
-# 4. Validate environment
-make version && make help
-```
+<!-- Quick Commands section removed: commands are now referenced in checklist steps above for conciseness -->
 
 ## Checklist History
 
-| Version | Date | Changes |
-|---------|------|---------|
-| 1.0.0 | 2025-07-18 | Initial checklist creation |
-| 1.1.0 | 2025-07-18 | Added post-check-in procedure, gitignore validation, reset for v0.5.0 cycle |
+| Version | Date       | Changes|
+|---------|------------|-------|
+| 0.6.0   | 2025-07-18 | Checklist consolidated, version bump, post-check-in procedure|
+| 0.5.0   | 2025-07-08 | Initial checklist creation|
 
 ---
 

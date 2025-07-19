@@ -44,6 +44,7 @@ substitutions:
 
 # @brief Common package includes for modular configuration
 packages:
+  esp32:    !include ../common/esp32.yaml       # ESP32 board and framework config
   display:  !include ../common/display.yaml     # Display configuration (e.g., ST7789V panel)
   wifi:     !include ../common/wifi.yaml        # Wi-Fi credentials, static IP, and fallback
   ota:      !include ../common/ota.yaml         # OTA settings (port, auth)
@@ -63,10 +64,7 @@ esphome:
           state: __VERSION__      # Publishes version string to Home Assistant on boot
 
 # @brief Target ESP32 board and Arduino framework declaration
-esp32:
-  board: esp32-s3-devkitc-1       # Target board: DevKitC-1 (8MB flash, no PSRAM)
-  framework:
-    type: arduino                 # Arduino core for ESP32-S3
+esp32: !include common/esp32.yaml # Modular ESP32 board and framework config
 
 # @brief Template sensor exposing firmware version as Home Assistant text_sensor
 text_sensor:
