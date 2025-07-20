@@ -31,7 +31,7 @@
 substitutions:
   node_name: __NODE_NAME__                      # @param node_name Node ID used in ESPHome and logs
   friendly_name: __FRIENDLY_NAME__              # @param friendly_name Human-readable name for dashboards
-  version: __VERSION__                          # @param version Firmware version tag injected into logs and sensors
+  version: 0.6.1                                # @param version Firmware version tag injected into logs and sensors
   
   # @brief Pin assignments for hardware configuration
   flow_sensor_pin: "GPIO04"                     # Primary flow sensor pulse counter input
@@ -61,10 +61,7 @@ esphome:
     then:
       - text_sensor.template.publish:
           id: firmware_version
-          state: __VERSION__      # Publishes version string to Home Assistant on boot
-
-# @brief Target ESP32 board and Arduino framework declaration
-esp32: !include common/esp32.yaml # Modular ESP32 board and framework config
+          state: 0.6.1           # Publishes version string to Home Assistant on boot
 
 # @brief Template sensor exposing firmware version as Home Assistant text_sensor
 text_sensor:

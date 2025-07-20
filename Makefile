@@ -55,9 +55,15 @@ PYTHON_WITH_ESPTOOL := $(shell \
 # Ensure that .makefile is present before dependent targets run
 .PHONY: _makefile
 _makefile:
-ifeq (,$(wildcard .makefile))
-	$(error .makefile not present. Run 'make configure' or 'bash ./configure.sh' before 'make $(MAKECMDGOALS))
-endif
+	@if [ ! -f .makefile ]; then \
+		echo ".makefile not found. Running configure.sh to generate it..."; \
+		./configure.sh; \
+		if [ -z "$$MAKEFILE_RELOADED" ]; then \
+			echo "Reloading Makefile to pick up new variables..."; \
+			MAKEFILE_RELOADED=1 $(MAKE) $(MAKECMDGOALS); \
+			exit 0; \
+		fi; \
+	fi
 
 # Run interactive configuration script to generate .makefile and YAML
 .PHONY: configure
@@ -136,7 +142,10 @@ upload: _makefile
 # View live log output from the device
 .PHONY: logs
 logs: _makefile
-	@mkdir -p logs
+	@if [ ! -d logs ]; then \
+		echo "Creating logs directory..."; \
+		mkdir -p logs; \
+	fi
 	@echo "Stopping any existing logging sessions..."
 	@pkill -f "esphome logs.*$(DEVICE_NAME)" 2>/dev/null || echo "No previous logging processes found"
 	@echo "Starting fresh logging session to $(LOGFILE)..."
@@ -151,7 +160,15 @@ logs: _makefile
 # Follow log output in real-time
 .PHONY: logs-follow
 logs-follow:
+	@if [ ! -d logs ]; then \
+		echo "Creating logs directory..."; \
+		mkdir -p logs; \
+	fi
 	@echo "Following logs from logs/$(DEVICE_NAME).log..."
+	@if [ ! -f logs/$(DEVICE_NAME).log ]; then \
+		echo "[ERROR] Log file logs/$(DEVICE_NAME).log not found. Please run 'make logs' first."; \
+		exit 1; \
+	fi
 	@tail -f logs/$(DEVICE_NAME).log
 
 # Stop background logging
@@ -169,13 +186,18 @@ logs-interactive: _makefile
 # Start fresh logging session and follow immediately (session-specific logs)
 .PHONY: logs-fresh
 logs-fresh: logs
-	@sleep 2
+	@if [ ! -d logs ]; then \
+		echo "Creating logs directory..."; \
+		mkdir -p logs; \
+	fi
 	@echo "Following fresh log session ($(LOGFILE))..."
 	@tail -f logs/$(DEVICE_NAME).log
 
-# Build, upload, and start logging in one step
+
+# Build, upload, start logging, then follow logs in one step
 .PHONY: run
-run: build upload logs-follow
+run: build upload logs
+	$(MAKE) logs-follow
 
 
 # ------------------------------------------------------------------------------
@@ -358,10 +380,10 @@ version:
 # Display the currently loaded configuration variables
 .PHONY: buildvars
 buildvars:
-	@echo "Device name:   $(DEVICE_NAME)"
-	@echo "Node name:     $(NODE_NAME)"
-	@echo "Friendly name: $(FRIENDLY_NAME)"
-	@echo "Upload path:   $(UPLOAD_PATH)"
+	@echo "Device name:   $(if $(DEVICE_NAME),$(DEVICE_NAME),[ MISSING ])"
+	@echo "Node name:     $(if $(NODE_NAME),$(NODE_NAME),[ MISSING ])"
+	@echo "Friendly name: $(if $(FRIENDLY_NAME),$(FRIENDLY_NAME),[ MISSING ])"
+	@echo "Upload path:   $(if $(UPLOAD_PATH),$(UPLOAD_PATH),[ MISSING ])"
 	@echo "WiFi IP:       $(if $(WIFI_STATIC_IP),$(WIFI_STATIC_IP),[ dynamic ])"
 	@echo "WiFi Gateway:  $(if $(WIFI_GATEWAY),$(WIFI_GATEWAY),[ dynamic ])"
 	@echo "WiFi Subnet:   $(if $(WIFI_SUBNET),$(WIFI_SUBNET),[ dynamic ])"

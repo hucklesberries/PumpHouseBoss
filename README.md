@@ -1,5 +1,3 @@
-
-
 # sysmon-ph: ESPHome Pumphouse Monitor
 
 This repository contains a professional-grade ESPHome-based system for monitoring and managing a commercial or residential pumphouse using an ESP32-S3 microcontroller. It features modular configuration, robust workflow automation, and comprehensive documentation for collaborative development.
@@ -358,3 +356,7 @@ All code, automation, and documentation were designed through conversational col
 
 Licensed under the GNU General Public License v3.0  
 SPDX-License-Identifier: GPL-3.0-or-later
+
+---
+
+> **Note:** This README will be fully populated and professionally sanitized for the first ready release. For now, it contains a working draft and all technical context. See `CHECKIN-CHECKLIST.md` for the authoritative check-in and validation process.
