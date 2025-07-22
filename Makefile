@@ -1,9 +1,3 @@
-# Test documentation generation (ESPHome + Doxygen)
-.PHONY: test-docs
-test-docs:
-	@echo "Testing documentation generation (ESPHome + Doxygen)..."
-	$(MAKE) docs
-	@echo "Documentation generation test complete."
 # ------------------------------------------------------------------------------
 #  @file        Makefile
 #  @brief       Master Makefile for ESPHome-based device management
@@ -222,11 +216,14 @@ run: check-secrets build upload logs
 # ------------------------------------------------------------------------------
 # Documentation Targets
 # ------------------------------------------------------------------------------
-DOXYFILE = Doxyfile
+DOXYFILE = docs/Doxyfile
+
 
 # Generate HTML and PDF from YAML documentation
 .PHONY: docs-doxygen
 docs-doxygen:
+	@echo "Extracting YAML headers to Markdown for Doxygen..."
+	@python3 docs/extract_yaml_headers.py
 	@echo "Generating HTML and PDF documentation from YAML files..."
 	@mkdir -p docs/html docs/latex
 	@doxygen $(DOXYFILE)
@@ -305,13 +302,41 @@ clean:
 		echo "[WARN] DEVICE_NAME not set or protected - skipping device-specific cleanup"; \
 	fi
 
+
 # Remove generated documentation files
 .PHONY: clean-docs
-clean-docs: clean-docs-esphome clean-docs-doxygen
-	@echo "Checking for empty docs directory..."
-	@if [ -d "docs" ] && [ -z "$$(ls -A docs/ 2>/dev/null)" ]; then \
-		echo "Removing empty docs directory..."; \
-		rmdir docs/; \
+clean-docs: clean-docs-esphome clean-docs-doxygen clean-docs-generated
+	@echo "Checking for empty docs subdirectories..."
+	@if [ -d "docs/html" ] && [ -z "$$(ls -A docs/html/ 2>/dev/null)" ]; then \
+		echo "Removing empty docs/html directory..."; \
+		rmdir docs/html/; \
+	fi
+	@if [ -d "docs/latex" ] && [ -z "$$(ls -A docs/latex/ 2>/dev/null)" ]; then \
+		echo "Removing empty docs/latex directory..."; \
+		rmdir docs/latex/; \
+	fi
+	@if [ -d "docs/esphome" ] && [ -z "$$(ls -A docs/esphome/ 2>/dev/null)" ]; then \
+		echo "Removing empty docs/esphome directory..."; \
+		rmdir docs/esphome/; \
+	fi
+# Only remove docs/generated if it is truly empty (including .gitkeep)
+	@if [ -d "docs/generated" ]; then \
+	count=$$(ls -A docs/generated/ 2>/dev/null | wc -l); \
+	if [ "$$count" -eq 0 ]; then \
+	echo "Removing empty docs/generated directory..."; \
+	rmdir docs/generated/; \
+	fi; \
+	fi
+
+# Remove only generated Markdown documentation
+.PHONY: clean-docs-generated
+clean-docs-generated:
+	@echo "Cleaning generated Markdown documentation..."
+	@if [ -d "docs/generated" ]; then \
+		find docs/generated -type f ! -name '.gitkeep' -delete; \
+		echo "Removed generated Markdown files from docs/generated/"; \
+	else \
+		echo "No generated Markdown directory found"; \
 	fi
 
 # Remove only ESPHome-generated documentation
@@ -329,11 +354,17 @@ clean-docs-esphome:
 .PHONY: clean-docs-doxygen
 clean-docs-doxygen:
 	@echo "Cleaning Doxygen documentation..."
-	@if [ -d "docs" ]; then \
-		rm -rf docs/html/ docs/latex/; \
-		echo "Removed Doxygen documentation"; \
+	@if [ -d "docs/html" ]; then \
+		rm -rf docs/html/; \
+		echo "Removed Doxygen HTML documentation"; \
 	else \
-		echo "No docs directory found"; \
+		echo "No Doxygen HTML directory found"; \
+	fi
+	@if [ -d "docs/latex" ]; then \
+		rm -rf docs/latex/; \
+		echo "Removed Doxygen LaTeX documentation"; \
+	else \
+		echo "No Doxygen LaTeX directory found"; \
 	fi
 
 # Remove ESPHome build cache and compiled objects
@@ -441,7 +472,8 @@ help:
 	@echo "Cleanup Targets:"
 	@echo "  clean               Remove temporary build artifacts and logs"
 	@echo "  clean-cache         Remove ESPHome build cache"
-	@echo "  clean-docs          Remove all generated documentation"
+	@echo "  clean-docs          Remove all generated documentation (including docs/generated)"
+	@echo "  clean-docs-generated Remove only generated Markdown documentation (docs/generated)"
 	@echo "  clean-docs-esphome  Remove only ESPHome documentation files"
 	@echo "  clean-docs-doxygen  Remove only Doxygen documentation"
 	@echo "  clobber             Remove entire device directory and documentation"

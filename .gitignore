@@ -18,8 +18,13 @@ build.log
 logs/
 *.sed*
 
-# Ignore generated documentation
-docs/
+
+# Ignore generated documentation (but keep scripts, markdown, and config)
+docs/html/
+docs/latex/
+docs/esphome/
+docs/generated/
+!docs/generated/.gitkeep
 
 # Ignore Doxygen preprocessed files
 *.doxygen_cpp.yaml

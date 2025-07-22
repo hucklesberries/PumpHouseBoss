@@ -288,16 +288,16 @@ display:
       it.printf(x, y, id(st7789_font), white, "%s", hostname_str.c_str());
       y += line_height;
 
-      std::string ssid_str = id(ssid).state.empty() ? std::string("SSID: N/A") : std::string("SSID: ") + id(ssid).state;
+      std::string ssid_str = id(ssid).state.empty() ? std::string("SSID: N/A") : id(ssid).state;
       x = (240 - (ssid_str.length() * char_width)) / 2;
       it.printf(x, y, id(st7789_font), white, "%s", ssid_str.c_str());
       y += line_height;
 
-      std::string ip_str = id(ip_address).state.empty() ? std::string("IP: N/A") : std::string("IP: ") + id(ip_address).state;
+      std::string ip_str = id(ip_address).state.empty() ? std::string("IP: N/A") : id(ip_address).state;
       x = (240 - (ip_str.length() * char_width)) / 2;
       it.printf(x, y, id(st7789_font), white, "%s", ip_str.c_str());
       y += line_height;
 
-      std::string mac_str = id(mac_address).state.empty() ? std::string("MAC: N/A") : std::string("MAC: ") + id(mac_address).state;
+      std::string mac_str = id(mac_address).state.empty() ? std::string("MAC: N/A") : id(mac_address).state;
       x = (240 - (mac_str.length() * char_width)) / 2;
       it.printf(x, y, id(st7789_font), white, "%s", mac_str.c_str());

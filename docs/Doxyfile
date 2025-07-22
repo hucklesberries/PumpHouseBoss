@@ -2,10 +2,10 @@
 PROJECT_NAME           = "Pumphouse System Monitor"
 PROJECT_BRIEF          = "A Pumphouse System Monitor built on the ESP32S3 platform."
 OUTPUT_DIRECTORY       = docs
-INPUT                  = . common
+INPUT                  = . common docs/generated
 EXCLUDE_PATTERNS       = */secrets.yaml
 FILE_PATTERNS          = *.yaml *.md
-RECURSIVE              = NO
+RECURSIVE              = YES
 EXTRACT_ALL            = YES
 EXTRACT_PRIVATE        = YES
 EXTRACT_STATIC         = YES
