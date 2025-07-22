@@ -27,11 +27,27 @@
 #  @note        Co-developed with ChatGPT by OpenAI.
 # ------------------------------------------------------------------------------
 
-# @brief Required substitutions for watchdog component
-# Note: Hardware watchdog may require different ESPHome version or ESP-IDF framework
-# Currently focusing on software monitoring and reset capabilities
+# ------------------------------------------------------------------------------
+# @brief YAML linter configuration
+# @details
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
 
+
+# ------------------------------------------------------------------------------
+# @brief Required substitutions for watchdog component
+# @details
+#   - Hardware watchdog may require different ESPHome version or ESP-IDF framework
+#   - This configuration focuses on software monitoring and reset capabilities
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 # @brief Boot-time system monitoring initialization
+# @details
+#   - Initializes system monitoring and software watchdog on boot
+#   - Logs system and reset monitoring status
+# ------------------------------------------------------------------------------
 esphome:
   on_boot:
     priority: 200                       # High priority - run early in boot sequence
@@ -41,18 +57,23 @@ esphome:
           tag: "SYSTEM"
           format: "System monitoring initialized - software watchdog active"
       - logger.log:
-          level: INFO  
+          level: INFO
           tag: "SYSTEM"
           format: "Reset monitoring active - tracking system stability"
 
+# ------------------------------------------------------------------------------
 # @brief Watchdog status and reset reason monitoring
+# ------------------------------------------------------------------------------
 text_sensor:
   # @brief Human-readable reset reason tracking
+  # @details
+  #   - Exposes the last reset reason as a readable string
+  #   - Uses esp_reset_reason() to determine cause
   - platform: template
-    name: "Reset Reason"
-    id: reset_reason_text
+    name: "Reset Reason"           # @param name Sensor name for reset reason
+    id: reset_reason_text          # @param id Sensor ID
     icon: "mdi:restart"
-    update_interval: never              # Set once on boot
+    update_interval: never         # Set once on boot
     lambda: |-
       int reason = esp_reset_reason();
       switch(reason) {
@@ -65,16 +86,20 @@ text_sensor:
         default: return {"Unknown reset (" + to_string(reason) + ")"};
       }
 
+# ------------------------------------------------------------------------------
 # @brief Watchdog monitoring sensors
+# ------------------------------------------------------------------------------
 sensor:
   # @brief Watchdog reset counter for reliability tracking
+  # @details
+  #   - Counts watchdog resets since boot
   - platform: template
-    name: "Watchdog Resets"
-    id: watchdog_reset_counter
+    name: "Watchdog Resets"           # @param name Sensor name for reset counter
+    id: watchdog_reset_counter        # @param id Sensor ID
     unit_of_measurement: "resets"
     accuracy_decimals: 0
     icon: "mdi:counter"
-    update_interval: 60s                # Check once per minute
+    update_interval: 60s              # Check once per minute
     lambda: |-
       // Count watchdog resets since boot
       static int reset_count = 0;
@@ -84,41 +109,48 @@ sensor:
       return reset_count;
 
   # @brief Raw reset reason code for advanced diagnostics
+  # @details
+  #   - Exposes the raw reset reason code for troubleshooting
   - platform: template
-    name: "Last Reset Code"
-    id: last_reset_reason_code
+    name: "Last Reset Code"           # @param name Sensor name for raw code
+    id: last_reset_reason_code        # @param id Sensor ID
     unit_of_measurement: ""
     accuracy_decimals: 0
     icon: "mdi:information"
-    update_interval: never              # Set once on boot
+    update_interval: never            # Set once on boot
     lambda: |-
       return esp_reset_reason();
 
   # @brief System health score based on reset frequency
+  # @details
+  #   - Calculates a health score based on uptime and reset frequency
   - platform: template
-    name: "System Health Score"
-    id: system_health_score
+    name: "System Health Score"       # @param name Sensor name for health score
+    id: system_health_score           # @param id Sensor ID
     unit_of_measurement: "%"
     accuracy_decimals: 1
     icon: "mdi:heart-pulse"
-    update_interval: 300s               # Update every 5 minutes
+    update_interval: 300s             # Update every 5 minutes
     lambda: |-
       // Calculate health score based on uptime and reset frequency
       float uptime_hours = id(uptime_sensor).state / 3600.0;
       int reset_count = id(watchdog_reset_counter).state;
-      
+
       if (uptime_hours < 1.0) return 100.0;
-      
       float health = 100.0 - (reset_count * 10.0);
       if (uptime_hours > 24.0) health += 5.0;
-      
       return max(0.0f, min(100.0f, health));
 
+# ------------------------------------------------------------------------------
 # @brief Remote system restart capability
+# ------------------------------------------------------------------------------
 switch:
   # @brief Software-controlled system restart for remote troubleshooting
+  # @details
+  #   - Allows remote restart of the ESP32 via Home Assistant or API
+  #   - Physical hardware reset available via external button wired to ESP32 EN pin
   - platform: restart
-    name: "System Restart"
-    id: system_restart_switch
+    name: "System Restart"            # @param name Switch name for restart
+    id: system_restart_switch         # @param id Switch ID
     icon: "mdi:restart"
     # Note: Physical hardware reset available via external button wired to ESP32 EN pin

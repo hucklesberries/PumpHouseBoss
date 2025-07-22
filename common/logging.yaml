@@ -24,14 +24,30 @@
 #  @note        Co-developed with ChatGPT by OpenAI.
 # ------------------------------------------------------------------------------
 
-# @brief ESPHome logging subsystem
-# @details Enables serial and OTA log output, controls verbosity
+# ------------------------------------------------------------------------------
+# @brief YAML linter configuration
+# @details
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# @brief ESPHome logging subsystem configuration
+# @details
+#   - Enables serial and OTA log output
+#   - Controls global and module-specific verbosity
+#   - Can trigger actions on log message reception
+# @param level Global log level (NONE, ERROR, WARN, INFO, DEBUG, VERBOSE)
+# @param logs.main Module-specific log level for 'main'
+# ------------------------------------------------------------------------------
 logger:
   level: DEBUG           # @param level Global log level (NONE, ERROR, WARN, INFO, DEBUG, VERBOSE)
   logs:
-    main: DEBUG          # @param main Module-specific log level for 'main'
+    main: DEBUG          # @param logs.main Module-specific log level for 'main'
 
   # @brief Action on log message reception
+  # @details Publishes firmware version to log on message
   on_message:
     - lambda: |-
         ESP_LOGI("main", "Firmware version: ${version}");

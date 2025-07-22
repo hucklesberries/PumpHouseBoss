@@ -24,18 +24,40 @@
 #  @note        Co-developed with ChatGPT by OpenAI.
 # ------------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------------
+# @brief YAML linter configuration
+# @details
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
 # @brief Enables OTA firmware upload over Wi-Fi
+# @details
+#   - Allows firmware updates to be uploaded wirelessly
+#   - Password is loaded from the secrets file for security
+#   - Platform can be set (default: esphome)
+#   - Logs a message on OTA completion
+# @param password Load OTA password from secrets file
+# @param platform OTA platform (default: esphome)
+# ------------------------------------------------------------------------------
 ota:
   password: !secret ota_password  # @param password Load OTA password from secrets file
   platform: esphome               # @param platform OTA platform (default: esphome)
 
   # @brief Log message on OTA completion
+  # @details Logs a message to indicate OTA update finished
   on_end:
     then:
       - logger.log: OTA update finished
 
+# ------------------------------------------------------------------------------
 # @brief Safe Mode logging handler
-# @details Triggered when device boots into recovery mode
+# @details
+#   - Triggered when device boots into recovery mode
+#   - Logs a message to indicate safe mode boot
+# ------------------------------------------------------------------------------
 safe_mode:
   on_safe_mode:
     then:

@@ -1,362 +1,126 @@
+
 # sysmon-ph: ESPHome Pumphouse Monitor
 
-This repository contains a professional-grade ESPHome-based system for monitoring and managing a commercial or residential pumphouse using an ESP32-S3 microcontroller. It features modular configuration, robust workflow automation, and comprehensive documentation for collaborative development.
+A professional ESPHome-based system for monitoring and managing a pumphouse using ESP32-S3. Features modular configuration, robust automation, and comprehensive documentation for collaborative development.
 
 ## Features
-
-- Monitors water flow through all ingress and egress lines
-- Configurable alerts for anomalies and leak detection
-- Modular YAML configuration for hardware components (flow sensors, watchdog, display, Wi-Fi, OTA, logging, web server)
-- Comprehensive Makefile with 24 targets for build, upload, logging, cleaning, and documentation
-- Interactive setup via `configure.sh` for device-specific configuration
-- Professional documentation standards (GPL v3.0 headers, Doxygen integration)
-- Automated version management and consistency checks
-- Safety mechanisms to prevent accidental deletion of critical files
+- Monitors water flow and detects anomalies
+- Controls solenoids to manage water flow
+- Modular YAML for hardware components
+- Pinout maps for ESP32S3, ST7789 display, and Pico-LCD hardware for easy wiring and troubleshooting
+- 24-target Makefile for build, upload, logging, cleaning, docs
+- Interactive setup via `configure.sh`
+- Improved onboarding with `secrets.template.yaml` for secure secrets management
+- Doxygen and ESPHome documentation
+- Automated version management
+- Safety mechanisms to protect critical files
 - VS Code integration with pre-defined tasks
-- Quality assurance via checklists, quick references, and session continuity files
-- Designed for collaborative development, maintainability, and easy migration to new hardware or environments
+- Quality assurance via checklists and session continuity
 
-## Repository Migration
-
-Migrated from AW-Toolbox/sysmon-ph-staging to an independent repository on July 18, 2025. All documentation and workflow have been updated for the new context.
-
-> **Note:** The project description and documentation will be further refined before the next check-in to ensure clarity and completeness.
-
-## Hardware Configuration
-
-**Current GPIO Configuration:**
-```text
-ESP32-S3 DevKitC-1 (Freenove Board)
-├── GPIO04: Pulse counter input (primary flow sensor)
-├── GPIO05: Test output pin
-├── All pins tested: GPIO04, GPIO05, GPIO18, GPIO45, GPIO21
-├── LED interference: Confirmed on all GPIO pins
-└── PWM test signal: 4kHz, 50% duty cycle, 2.99V
+## Repository File Tree
 ```
-
-## Development Workflow
-
-**AI Assistant Workflow (Non-blocking):**
-```bash
-make build && make upload      # Verifiable steps with clear output
-tail -10 logs/sysmon-ph.log    # Quick non-blocking log check
-# Use separate terminals for commands to avoid blocking
-```
-
-**Human Developer Workflow (Interactive):**
-```bash
-make run                       # Interactive: build + upload + live logs
-make logs-follow               # Dedicated log following terminal
-make logs-stop                 # Stop background log processes
-```
-
-> `make run` is optimized for human interaction, not AI assistance
-
-## Component Architecture
-
-- Modular components (e.g., `common/watchdog.yaml`)
-- Pin assignments via substitutions in `main.yaml`
-- Component includes via packages for clean modularity
-- Consistent GPL v3.0 headers and documentation style
-- Startup logging with tags and severity levels
-- Configurable pins via substitutions
-
-## Project Layout
-
-```text
 .
-├── Makefile               # Professional build system (24 targets)
+├── CHANGELOG.md
+├── CHECKIN-CHECKLIST.md
+├── LICENSE
+├── Makefile
 ├── README.md
-├── VERSION                # Project version (0.6.0)
+├── RELEASE.md
+├── VERSION
+├── configure.sh
+├── main.yaml
+├── secrets.template.yaml
 ├── Doxyfile
-├── configure.sh           # Interactive configuration generator
-├── main.yaml              # Device template with variable substitution
-├── common/
-│   ├── display.yaml
-│   ├── logging.yaml
-│   ├── ota.yaml
-│   ├── secrets.yaml       # Not tracked (gitignored)
-│   ├── web_server.yaml
-│   └── wifi.yaml
-├── docs/                  # Generated documentation
-│   ├── esphome/           # ESPHome component documentation
-│   ├── html/              # Doxygen HTML documentation
-│   └── latex/             # Doxygen PDF documentation
-├── .gitignore
-├── .makefile              # Auto-generated per-device configuration
-└── <DEVICE_NAME>/
-    └── <DEVICE_NAME>.yaml # Generated device configuration
-```
-- Designed for collaborative development, maintainability, and easy migration to new hardware or environments.
-
-#### **AI Assistant Workflow** (Non-blocking)
-```bash
-make build && make upload      # Verifiable steps with clear output
-tail -10 logs/sysmon-ph.log    # Quick non-blocking log check
-# Use separate terminals for commands to avoid blocking
+├── sysmon-ph.code-workspace
+├── icons/
+└── common/
+    ├── display_st7789.yaml
+    ├── esp32s3.yaml
+    ├── logging.yaml
+    ├── ota.yaml
+    ├── secrets.yaml
+    ├── watchdog.yaml
+    ├── web_server.yaml
+    └── wifi.yaml
 ```
 
-#### **Human Developer Workflow** (Interactive)
-```bash
-make run                       # Interactive: build + upload + live logs
-make logs-follow               # Dedicated log following terminal
-make logs-stop                 # Stop background log processes
-```
 
-> **Key Insight**: `make run` is optimized for human interaction, not AI assistance
+## Getting Started
 
-### **Component Architecture Evolution**
-
-#### **Modular Component System**
-- **Created**: `../common/watchdog.yaml` reusable component
-- **Pin assignments**: Via substitutions in `main.yaml`
-- **Component includes**: Via packages section for clean modularity
-
-#### **Professional Standards Established**
-- **Consistent GPL v3.0 headers** across all files
-- **Documentation style**: `@brief`/`@details`/`@author` format
-- **Component startup logging** with tags and severity levels
-- **Configurable pins** via substitutions pattern
-
-#### **Component Benefits**
-- **Hardware portability**: Change pins in main.yaml only
-- **Component reusability**: Across different projects
-- **Independent control**: Enable/disable components individually  
-- **Team development**: Different developers, different components
-- **Professional logging**: Tagged output for debugging
-
----
-
-## ✅ Quality Assurance automation and comprehensive development workflow.
-
----
-
-## 📁 Project Layout
-
-```text
-.
-├── Makefile               # Professional build system (24 targets)
-├── README.md
-├── VERSION                # Project version (0.6.0)
-├── Doxyfile
-├── configure.sh           # Interactive configuration generator
-├── main.yaml              # Device template with variable substitution
-├── common/
-│   ├── display.yaml
-│   ├── logging.yaml
-│   ├── ota.yaml
-│   ├── secrets.yaml       # Not tracked (gitignored)
-│   ├── web_server.yaml
-│   └── wifi.yaml
-├── docs/                  # Generated documentation
-│   ├── esphome/           # ESPHome component documentation
-│   ├── html/              # Doxygen HTML documentation
-│   └── latex/            # Doxygen PDF documentation
-├── .gitignore
-├── .makefile              # Auto-generated per-device configuration
-└── <DEVICE_NAME>/
-    └── <DEVICE_NAME>.yaml # Generated device configuration
-
-```
-
----
-
-## 🚀 Features
-
-### **Professional Build System**
-- **24 Makefile targets** with comprehensive functionality
-- **Auto-detected Python** with sophisticated esptool integration
-- **Safety mechanisms** with PROTECTED_DIRS and error handling
-- **Dependency composition** for clean, maintainable target relationships
-
-### **Advanced Development Workflow**
-- **Interactive configuration** via `configure.sh` script
-- **Template substitution** from main.yaml with variable interpolation
-- **Comprehensive cleanup system** (clean, clobber, distclean)
-- **Professional documentation generation** (ESPHome + Doxygen)
-
-### **Flash Operations & Hardware Integration**
-- **Complete esptool integration** for ESP32-S3 devices
-- **Flash memory operations** (erase, info, verify)
-- **Chip information** and capabilities detection
-- **Firmware verification** against built binaries
-
-### **Documentation & Quality**
-- **Organized documentation structure** with multiple output formats
-- **Professional header standards** with version tracking
-- **Consistent code quality** with systematic formatting
-- **Session continuity** with comprehensive development context
-
----
-
-## 🛠️ Getting Started
-
-1. **Clone and configure:**
-
+### 1. Clone and configure:
 ```bash
 git clone <repository-url>
 cd esphome
 make configure  # Interactive setup
 ```
 
-2. **Build and deploy:**
+### 2. Set up your secrets file:
+Before building or flashing this project, you must:
 
+  1. Copy `secrets.template.yaml` to `secrets.yaml` in the project root.
+  2. Edit `secrets.yaml` and fill in your actual Wi-Fi and OTA credentials.
+
+`secrets.yaml` is ignored by version control and should NOT be checked in. The template ensures onboarding is safe and repeatable.
+
+### 3. Build and deploy:
 ```bash
-make run        # Complete pipeline: build + upload + logs
+make run        # Build, upload, and logs
 ```
 
-3. **The configuration process defines:**
+### 4. Configuration defines:
+  - DEVICE_NAME, NODE_NAME, FRIENDLY_NAME
+  - UPLOAD_PATH (USB/IP)
+  - Optional: Static IP, Gateway, Subnet, DNS
 
-- `DEVICE_NAME` (e.g. `sysmon-ph`)
-- `NODE_NAME` (used for mDNS)
-- `FRIENDLY_NAME` (display name for Home Assistant)
-- `UPLOAD_PATH` (USB port or IP address)
-- Optional: Static IP, Gateway, Subnet, DNS configuration
+## Makefile Targets
+- `make configure`      # Interactive setup
+- `make build`          # Compile firmware
+- `make upload`         # Upload firmware
+- `make logs`           # Stream device logs
+- `make run`            # Build, upload, logs
+- `make flash-erase`    # Erase ESP32-S3 flash
+- `make chip-info`      # Chip info
+- `make flash-info`     # Flash memory info
+- `make flash-verify`   # Verify flash contents
+- `make docs`           # Generate all docs
+- `make clean`          # Remove build artifacts
+- `make clobber`        # Remove device directory
+- `make distclean`      # Full cleanup
+- `make version`        # Show versions
+- `make buildvars`      # Show build config
+- `make help`           # Help banner
 
----
+## Documentation
+- ESPHome component docs: `docs/esphome/`
+- Doxygen HTML/PDF: `docs/html/`, `docs/latex/`
+- Automatic timestamps and organized structure
 
-## 🎯 Professional Make Targets
+## Advanced Features
+- Auto-detected Python/esptool integration
+- Cross-platform compatibility (Windows/Cygwin/Linux)
+- PROTECTED_DIRS and error handling
 
-### **Build Pipeline**
-```bash
-make configure      # Interactive setup (.makefile generation)
-make build          # Compile firmware (output to build.log)
-make upload         # Upload firmware to device
-make logs           # Stream live device logs
-make run            # Complete pipeline: build + upload + logs
-```
+## Security & Secrets
+- Secrets in `common/secrets.yaml` (gitignored)
+- Use `!secret` in YAML
+- Secrets excluded from repository
 
-### **Platform Operations**
-```bash
-make flash-erase    # Erase ESP32-S3 flash (WARNING: destructive!)
-make chip-info      # Display chip information and capabilities
-make flash-info     # Display flash memory layout
-make flash-verify   # Verify flash contents against firmware
-```
+## Code Quality & Workflow
+- Consistent formatting and commenting
+- Synchronized versioning
+- Doxygen headers, GPL v3.0 licensing
+- Comprehensive testing and validation
+- Check-in process via `CHECKIN-CHECKLIST.md`
 
-### **Documentation Generation**
-```bash
-make docs           # Generate all documentation (ESPHome + Doxygen)
-make docs-esphome   # Generate ESPHome component documentation
-make docs-doxygen   # Generate Doxygen HTML/PDF documentation
-```
+## Quality Assurance
+- Pre-commit: `make clean && make build`, `make docs`
+- Post-commit: `make distclean && git status`, `make configure && make build`
 
-### **Comprehensive Cleanup**
-```bash
-make clean          # Remove temporary build artifacts
-make clean-cache    # Remove ESPHome build cache
-make clean-docs     # Remove all generated documentation
-make clobber        # Remove entire device directory
-make distclean      # Complete cleanup for archive/export
-```
+## Co-Authorship
+Developed by:
+- GitHub Copilot (author, architect)
+- GitHub Copilot by OpenAI (automation, documentation)
 
-### **Utilities**
-```bash
-make version        # Show platform and ESPHome versions
-make buildvars      # Show current build configuration
-make help           # Display professional help banner
-```
-
----
-
-## 🧾 Documentation System
-
-### **Generate Documentation**
-```bash
-make docs           # Generate all documentation
-make docs-esphome   # ESPHome component docs → docs/esphome/
-make docs-doxygen   # Doxygen HTML/PDF → docs/html/, docs/latex/
-```
-
-### **Documentation Features**
-- **ESPHome Component Documentation**: Device-specific configuration analysis
-- **Doxygen Integration**: Professional HTML and PDF generation
-- **Organized Structure**: Separate directories for different documentation types
-- **Automatic Timestamps**: Generated documentation includes creation dates
-
----
-
-## ⚡ Advanced Features
-
-### **Auto-detected Python Integration**
-- **Sophisticated fallback chain** for esptool availability
-- **Cross-platform compatibility** (Windows/Cygwin/Linux)
-- **Automatic detection** of Python installations with esptool module
-
-### **Safety Systems**
-- **PROTECTED_DIRS**: Prevents accidental deletion of critical directories
-- **Error handling**: Comprehensive error messages with recovery suggestions
-- **Dependency composition**: Clean, maintainable target relationships
-
-### **Professional Development Environment**
-- **VS Code integration**: Complete tasks.json with 9 ESPHome targets
-- **Terminal compatibility**: Optimized for zsh/bash with proper command suppression
-- **Session continuity**: GIT-COPILOT.md system for seamless restart capability
-
----
-
-## ⚠️ Security & Secrets
-
-- **Secrets management**: Stored in `common/secrets.yaml` (gitignored)
-- **Template references**: Use `!secret` in YAML files
-- **Version control**: Secrets automatically excluded from repository
-
----
-
-## 🔧 Professional Standards
-
-### **Code Quality**
-- **Consistent formatting**: Professional commenting and spacing
-- **Version tracking**: Synchronized versioning across all components
-- **Documentation headers**: Doxygen-style with GPL v3.0 licensing
-
-### **Development Workflow**
-- **Professional Makefile**: 24 targets with enterprise-grade functionality
-- **Comprehensive testing**: Flash verification and hardware validation
-- **Quality assurance**: Systematic code review and formatting standards
-- **Check-in process**: Structured validation via `CHECKIN-CHECKLIST.md`
-
----
-
-## 🔍 Quality Assurance
-
-### **Check-in Process**
-Follow the comprehensive validation checklist in `CHECKIN-CHECKLIST.md`:
-- **Pre-commit validation**: Build verification, code standards, documentation
-- **Version management**: Consistent versioning across all components  
-- **Repository hygiene**: Clean commits, proper file permissions
-- **Archive readiness**: `make distclean` validation for clean workspace
-
-### **Quick Validation Commands**
-```bash
-# Pre-commit validation
-make clean && make build    # Clean build test
-make help                   # Verify target documentation
-make docs                   # Documentation generation test
-
-# Post-commit validation  
-make distclean && git status # Archive readiness test
-make configure && make build # Fresh build validation
-```
-
----
-
-## 🙏 Co-Authorship
-
-This project was co-developed by:
-
-GitHub Copilot (author, architect)
-- **GitHub Copilot by OpenAI** (co-author, automation + documentation)
-
-All code, automation, and documentation were designed through conversational collaboration with professional development standards.
-
----
-
-## 📜 License
-
-Licensed under the GNU General Public License v3.0  
+## License
+GNU General Public License v3.0
 SPDX-License-Identifier: GPL-3.0-or-later
-
----
-
-> **Note:** This README will be fully populated and professionally sanitized for the first ready release. For now, it contains a working draft and all technical context. See `CHECKIN-CHECKLIST.md` for the authoritative check-in and validation process.

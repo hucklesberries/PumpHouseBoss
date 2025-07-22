@@ -2,9 +2,11 @@
 #  @file        main.yaml
 #  @brief       Pumphouie System Monitor built on the ESP32S3 platform.
 #  @details     Functions include:
-#               - ingress flow-monitoring
-#               - egress flow-monitoring
-#               - alarms and alerts
+#                 - ingress flow-monitoring
+#                 - egress flow-monitoring
+#                 - alarms and alerts
+#                 - modular YAML includes for board, display, network, OTA, logging, watchdog
+#                 - Home Assistant integration via ESPHome
 #
 #  @author      Roland Tembo Hendel
 #  @link        mailto:rhendel@nexuslogic.com
@@ -28,31 +30,70 @@
 #  @note        Co-developed with GitHub Copilot by OpenAI.
 # ------------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------------
+# @brief YAML linter configuration
+# @details
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# @brief Substitutions for node identity, version, and hardware pin assignments
+# @details
+#   - node_name: Node ID used in ESPHome and logs
+#   - friendly_name: Human-readable name for dashboards
+#   - version: Firmware version tag injected into logs and sensors
+#   - flow_sensor_pin: Primary flow sensor pulse counter input
+#   - test_output_pin: GPIO test and verification pin
+#   - watchdog_timeout: Hardware watchdog timeout period
+#   - watchdog_trigger_pin: External watchdog trigger output
+#   - watchdog_early_trigger: Early trigger before timeout
+# @param node_name Node ID used in ESPHome and logs
+# @param friendly_name Human-readable name for dashboards
+# @param version Firmware version tag injected into logs and sensors
+# @param flow_sensor_pin Primary flow sensor pulse counter input
+# @param test_output_pin GPIO test and verification pin
+# @param watchdog_timeout Hardware watchdog timeout period
+# @param watchdog_trigger_pin External watchdog trigger output
+# @param watchdog_early_trigger Early trigger before timeout
+# ------------------------------------------------------------------------------
 substitutions:
-  node_name: __NODE_NAME__                      # @param node_name Node ID used in ESPHome and logs
-  friendly_name: __FRIENDLY_NAME__              # @param friendly_name Human-readable name for dashboards
-  version: 0.6.1                                # @param version Firmware version tag injected into logs and sensors
-  
-  # @brief Pin assignments for hardware configuration
-  flow_sensor_pin: "GPIO04"                     # Primary flow sensor pulse counter input
-  test_output_pin: "GPIO05"                     # GPIO test and verification pin
-  
-  # @brief Watchdog configuration parameters
-  watchdog_timeout: "30s"                       # Hardware watchdog timeout period
-  watchdog_trigger_pin: "GPIO07"                # External watchdog trigger output
-  watchdog_early_trigger: "25s"                 # Early trigger before timeout
+  node_name: __NODE_NAME__
+  friendly_name: __FRIENDLY_NAME__
+  version: __VERSION__
+  flow_sensor_pin: "GPIO04"
+  test_output_pin: "GPIO05"
+  watchdog_timeout: "30s"
+  watchdog_trigger_pin: "GPIO07"
+  watchdog_early_trigger: "25s"
 
+# ------------------------------------------------------------------------------
 # @brief Common package includes for modular configuration
+# @details
+#   - esp32: ESP32 board and framework config
+#   - display: Display configuration (e.g., ST7789V panel)
+#   - wifi: Wi-Fi credentials, static IP, and fallback
+#   - ota: OTA settings (port, auth)
+#   - web: Web interface (http://<device>.local)
+#   - logging: USB/UART logging config (level, baud)
+#   - watchdog: System reliability watchdog component
+# ------------------------------------------------------------------------------
 packages:
-  esp32:    !include ../common/esp32.yaml       # ESP32 board and framework config
-  display:  !include ../common/display.yaml     # Display configuration (e.g., ST7789V panel)
-  wifi:     !include ../common/wifi.yaml        # Wi-Fi credentials, static IP, and fallback
-  ota:      !include ../common/ota.yaml         # OTA settings (port, auth)
-  web:      !include ../common/web_server.yaml  # Web interface (http://<device>.local)
-  logging:  !include ../common/logging.yaml     # USB/UART logging config (level, baud)
-  watchdog: !include ../common/watchdog.yaml    # System reliability watchdog component
+  esp32:    !include ../common/esp32s3.yaml
+  display:  !include ../common/display_st7789.yaml
+  wifi:     !include ../common/wifi.yaml
+  ota:      !include ../common/ota.yaml
+  web:      !include ../common/web_server.yaml
+  logging:  !include ../common/logging.yaml
+  watchdog: !include ../common/watchdog.yaml
 
+# ------------------------------------------------------------------------------
 # @brief ESPHome-specific metadata and on_boot logic
+# @details
+#   - Sets node name and friendly name
+#   - Publishes firmware version to Home Assistant on boot
+# ------------------------------------------------------------------------------
 esphome:
   name: __NODE_NAME__
   friendly_name: __FRIENDLY_NAME__
@@ -63,7 +104,11 @@ esphome:
           id: firmware_version
           state: 0.6.1           # Publishes version string to Home Assistant on boot
 
+# ------------------------------------------------------------------------------
 # @brief Template sensor exposing firmware version as Home Assistant text_sensor
+# @details
+#   - Publishes the firmware version string to Home Assistant
+# ------------------------------------------------------------------------------
 text_sensor:
   - platform: template
     name: "Firmware Version"      # User-visible sensor name in HA
@@ -73,7 +118,13 @@ text_sensor:
     lambda: |-
       return {"__VERSION__"};
 
+# ------------------------------------------------------------------------------
 # @brief Uptime and flow rate sensors (hall-effect pulse counter)
+# @details
+#   - Uptime sensor: seconds since boot
+#   - Flow rate sensor: hall-effect pulse counter, configurable input pin
+#   - Calibration factor converts pulses to L/min
+# ------------------------------------------------------------------------------
 sensor:
   - platform: uptime
     name: "Uptime"                # Uptime in seconds since boot
@@ -97,13 +148,17 @@ sensor:
     filters:
       - multiply: 0.1             # Calibration factor (pulses to L/min)
 
+# ------------------------------------------------------------------------------
 # @brief GPIO test output to verify pin mapping
+# ------------------------------------------------------------------------------
 output:
   - platform: gpio
     pin: ${test_output_pin}       # Configurable test output pin
     id: test_output
 
+# ------------------------------------------------------------------------------
 # @brief Test switch to toggle GPIO for pin verification
+# ------------------------------------------------------------------------------
 switch:
   - platform: output
     name: "GPIO Test Toggle"

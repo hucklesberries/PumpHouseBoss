@@ -1,0 +1,132 @@
+# ------------------------------------------------------------------------------
+#  @file        esp32.yaml
+#  @brief       ESP32 board and framework configuration for sysmon-ph.
+#  @details     Modular include for ESPHome projects targeting ESP32-S3.
+#
+#  @author      Roland Tembo Hendel
+#  @link        mailto:rhendel@nexuslogic.com
+#
+#  @license     GNU General Public License v3.0
+#               SPDX-License-Identifier: GPL-3.0-or-later
+#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
+#               This program is free software: you can redistribute it and/or
+#               modify it under the terms of the GNU General Public License
+#               as published by the Free Software Foundation, either version 3
+#               of the License, or (at your option) any later version.
+#
+#               This program is distributed in the hope that it will be useful,
+#               but WITHOUT ANY WARRANTY; without even the implied warranty of
+#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#               GNU General Public License for more details.
+#
+#               You should have received a copy of the GNU General Public License
+#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#  @note        Co-developed with GitHub Copilot by OpenAI.
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# @brief YAML linter configuration
+# @details
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# @brief ESP32-S3 (QFN44) Dev Module Standard Pinout Map (Vertical, Top View)
+# @details
+# ------------------------------------------------------------------------------
+#
+#                                      ┌──────────────────┐
+#                        3.3V     VCC ─┤ 01 ┌────────┐ 44 ├── GND
+#                        3.3V     VCC ─┤ 02 │        │ 43 ├── GPIO43  U0TXD     LED_TX
+#                                 RST ─┤ 03 │        │ 42 ├── GPIO44  U0RXD     LED_RX
+#    T04  ADC1_CH3   CAM_SIOD  GPIO04 ─┤ 04 │        │ 41 ├── GPIO01, ADC1_CH0            T01
+#    T05  ADC1_CH4   CAM_SIOC  GPIO05 ─┤ 05 └────────┘ 40 ├── GPIO02  ADC1_CH1  LED_ON    T02
+#    T06  ADC1_CH5  CAM_VSYNC  GPIO06 ─┤ 06            39 ├── GPIO42            MTMS
+#    T07  ADC1_CH6   CAM_HREF  GPIO07 ─┤ 07            38 ├── GPIO41            MTD1
+#  U0RTS  ADC2_CH4   CAM_XCLK  GPIO15 ─┤ 08            37 ├── GPIO40  SD_DATA   MTDO
+#  U0CTS  ADC2_CH5     CAM_Y9  GPIO16 ─┤ 09            36 ├── GPIO39  SD_CLK    MTCK
+#  U1TXD  ADC2_CH6     CAM_Y8  GPIO17 ─┤ 10            35 ├── GPIO38  SD_CMD
+#  U1RXD  ADC2_CH7     CAM_Y7  GPIO18 ─┤ 11  ESP32-S3  34 ├── GPIO37  PSRAM
+#    T08  ADC1_CH7     CAM_Y4  GPIO08 ─┤ 12            33 ├── GPIO36  PSRAM
+#    T03  ADC1_CH2    JTAG_EN  GPIO03 ─┤ 13            32 ├── GPIO35  PSRAM
+#                         LOG  GPIO46 ─┤ 14            31 ├── GPIO00  BOOT
+#    T09  ADC1_CH8     CAM_Y3  GPIO09 ─┤ 15            30 ├── GPIO45  VSPI
+#    T10  ADC1_CH9     CAM_Y5  GPIO10 ─┤ 16            29 ├── GPIO48  WS2812
+#    T11  ADC2_CH0     CAM_Y2  GPIO11 ─┤ 17            28 ├── GPIO47
+#    T12  ADC2_CH1     CAM_Y6  GPIO12 ─┤ 18            27 ├── GPIO21
+#    T13  ADC2_CH2   CAM_PCLK  GPIO13 ─┤ 19            26 ├── GPIO20  USB_D-    ADC2_CH9  U1CTS
+#    T14  ADC2_CH3             GPIO14 ─┤ 20            25 ├── GPIO19  USB_D+    ADC2_CH8  U1RTS
+#                          5V     VIN ─┤ 21            24 ├── GND
+#                                 GND ─┤ 22            23 ├── GND
+#                                      └───┐USB┌─┐USB┌────┘
+#                                          └───┘ └───┘
+#
+#  Notes:
+#    - pin numbers (1-44) match QFN44 package, not module/dev board
+#    - GPIO6-11 are typically used for SPI flash and not available for user IO
+#    - GPIO46 is input only
+#    - GPIO00, GPIO45, GPIO46 are strapping pins
+#      - these pins should not be pulled high or low at boot/reset
+#      - use with caution; avoid using as output or with pull-downs
+#    - GPIO1, GPIO3 are default UART0 pins (console)
+#      - can be repurposed if not used for serial
+#    - GPIO19, GPIO20, GPIO21 are USB D+/D- and related pins;
+#      - using them for other purposes can interfere with USB functionality
+#    - not all pins are available on all modules; check your board's datasheet
+#    - see ESP32-S3 datasheet for alternate functions and capabilities
+#
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# @brief ESP32-S3 (44 Pin Package) Pin Assignment/Connection Map (Vertical, Top View)
+# @details
+# ------------------------------------------------------------------------------
+#
+#                                    ┌──────────────────┐
+#            3.3V     VCC  [    NC] ─┤ 01 ┌────────┐ 44 ├── [   GND]  GND
+#            3.3V     VCC  [    NC] ─┤ 02 │        │ 43 ├── [OUT   ]  GPIO43  SOL_07
+#      DISP_BTN_Y     RST  [RST_IN] ─┤ 03 │        │ 42 ├── [OUT   ]  GPIO44  SOL_06
+#      DISP_BTN_X  GPIO04  [    IN] ─┤ 04 │        │ 41 ├── [OUT   ]  GPIO01  SOL_05
+#      DISP_BTN_A  GPIO05  [    IN] ─┤ 05 └────────┘ 40 ├── [OUT   ]  GPIO02  SOL_04
+#      DISP_BTN_B  GPIO06  [    IN] ─┤ 06            39 ├── [OUT   ]  GPIO42  SOL_03
+#     DISP_JOY_IN  GPIO07  [    IN] ─┤ 07            38 ├── [OUT   ]  GPIO41  SOL_02
+#     DISP_JOY_UP  GPIO15  [    IN] ─┤ 08            37 ├── [OUT   ]  GPIO40  SOL_01
+#   DISP_JOY_DOWN  GPIO16  [    IN] ─┤ 09            36 ├── [OUT   ]  GPIO39  SOL_00
+#   DISP_JOY_LEFT  GPIO17  [    IN] ─┤ 10            35 ├── [PWM_IN]  GPIO38  FLOW_07
+#  DISP_JOY_RIGHT  GPIO18  [    IN] ─┤ 11  ESP32-S3  34 ├── [PWM_IN]  GPIO37  FLOW_06
+#         DISP_DC  GPIO08  [   OUT] ─┤ 12            33 ├── [PWM_IN]  GPIO36  FLOW_05
+#          SOL_09  GPIO03  [   OUT] ─┤ 13            32 ├── [PWM_IN]  GPIO35  FLOW_04
+#         FLOW_09  GPIO46  [PWM_IN] ─┤ 14            31 ├── [PWM_IN]  GPIO00  FLOW_03
+#         DISP_CS  GPIO09  [   OUT] ─┤ 15            30 ├── [PWM_IN]  GPIO45  FLOW_02
+#        DISP_CLK  GPIO10  [   OUT] ─┤ 16            29 ├── [PWM_IN]  GPIO48  FLOW_01
+#       DISP_MOSI  GPIO11  [   OUT] ─┤ 17            28 ├── [PWM_IN]  GPIO47  FLOW_00
+#        DISP_RST  GPIO12  [   OUT] ─┤ 18            27 ├── [NC    ]  GPIO21
+#          SOL_08  GPIO13  [   OUT] ─┤ 19            26 ├── [NC    ]  GPIO20
+#         FLOW_08  GPIO14  [PWM_IN] ─┤ 20            25 ├── [NC    ]  GPIO19
+#              5V     VIN  [ 5V_IN] ─┤ 21            24 ├── [GND   ]  GND
+#                     GND  [   GND] ─┤ 22            23 ├── [GND   ]  GND
+#                                    └───┐USB┌─┐USB┌────┘
+#                                        └───┘ └───┘
+#  Notes:
+#    - the ESP32-S3 supports monitoring 8 flows by default
+#    - the ESP32-S3 can be configured to  monitor 2 additional flows (total of 10)
+#    - DISP_TN_Y-RST: Active low (button press pulls down line to reset the ESP32-S3)
+#
+# ------------------------------------------------------------------------------
+
+
+# ------------------------------------------------------------------------------
+# @brief Target ESP32-S3 board and Arduino framework declaration
+# @details
+#   - board: Target ESP32-S3 DevKitC-1 (8MB flash, no PSRAM)
+#   - framework: Arduino core for ESP32-S3
+# @param board Target board (e.g., esp32-s3-devkitc-1)
+# @param framework.type Framework type (e.g., arduino)
+# ------------------------------------------------------------------------------
+esp32:
+  board: esp32-s3-devkitc-1       # @param board Target board: DevKitC-1 (8MB flash, no PSRAM)
+  framework:
+    type: arduino                 # @param framework.type Arduino core for ESP32-S3

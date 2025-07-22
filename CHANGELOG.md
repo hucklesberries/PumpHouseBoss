@@ -1,5 +1,29 @@
 # Changelog
 
+## [0.6.5] - 2025-07-21
+**VERSION bump**: 0.6.1 → 0.6.5
+- Major UI improvements: ST7789 display now shows Hostname, SSID, IP, and MAC address, with robust centering and fallback for missing values
+- Font size and layout adjustments for better data fit and readability
+- Fixed MAC address display and improved sensor value handling
+- Modularized and harmonized Doxygen-style documentation across all YAML files
+- Provided pinout maps for ESP32S3, ST7789 display, and Pico-LCD hardware components
+- Improved Makefile automation and .gitignore for secrets and generated files
+- Updated `secrets.template.yaml` and documentation for secure workflow
+- Refined check-in checklist and commit message standards
+- General code cleanup, header consistency, and version reference updates
+
+### Changed
+- `common/display_st7789.yaml`: UI, font, and lambda logic for device info
+- `main.yaml`, `common/*.yaml`: Documentation, linter, and modularization
+- `Makefile`, `.gitignore`, `README.md`, `CHECKIN-CHECKLIST.md`, `GIT-COPILOT.md`, `RELEASE.md`: Workflow, automation, and documentation
+
+### Added
+- `secrets.template.yaml` for safe onboarding
+
+### Removed
+- Obsolete scripts and unused files (e.g., fix_bdf_encoding.py)
+
+---
 
 ## [0.6.1] - 2025-07-19
  **VERSION bump**: 0.6.0 → 0.6.1

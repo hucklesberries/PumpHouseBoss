@@ -24,7 +24,28 @@
 #  @note        Co-developed with ChatGPT by OpenAI.
 # ------------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------------
+# @brief YAML linter configuration
+# @details
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
 # @brief Wi-Fi client and fallback AP configuration
+# @details
+#   - Configures Wi-Fi client for normal operation
+#   - Enables fallback Access Point (AP) if Wi-Fi connection fails
+#   - Uses secrets.yaml for all sensitive credentials
+#   - Supports power management and connection reliability options
+# @param ssid            Wi-Fi SSID (from secrets.yaml)
+# @param password        Wi-Fi password (from secrets.yaml)
+# @param power_save_mode Wi-Fi power save mode (default: none)
+# @param fast_connect    Wait for DHCP before continuing (default: false)
+# @param output_power    Transmit power in dBm (default: 20.0)
+# @param reboot_timeout  Reboot if connection not established (default: 30s)
+# ------------------------------------------------------------------------------
 wifi:
   ssid: !secret wifi_ssid                # @param ssid Wi-Fi SSID (from secrets.yaml)
   password: !secret wifi_password        # @param password Wi-Fi password (from secrets.yaml)
@@ -33,7 +54,15 @@ wifi:
   output_power: 20.0                     # @param output_power Transmit power in dBm
   reboot_timeout: 30s                    # @param reboot_timeout Reboot if connection not established
 
+  # --------------------------------------------------------------------------
   # @brief Fallback Access Point when Wi-Fi fails
+  # @details
+  #   - Provides a backup AP for device recovery if client connection fails
+  #   - AP SSID is auto-generated using node_name
+  #   - Password is stored in secrets.yaml
+  # @param ssid      Fallback AP SSID (auto-generated)
+  # @param password  Fallback AP password (from secrets.yaml)
+  # --------------------------------------------------------------------------
   ap:
     ssid: "${node_name} Fallback"        # @param ssid Auto-generated AP name using node_name
     password: !secret fallback_password  # @param password Separate fallback password from secrets.yaml

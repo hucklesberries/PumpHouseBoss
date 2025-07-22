@@ -1,11 +1,57 @@
-    for py in python3 python /cygdrive/c/Users/rhendel/AppData/Local/Programs/Python/Python313/python.exe; do \
-        if "$$py" -c "import esptool" 2>/dev/null; then echo "$$py"; break; fi \
-    done)
+# Display and UI Plan
 
+## Overview
+- The system will support up to 8 named flow sensors and 8 named solenoids.
+- The display is divided into a status bar (top) and a data pane (main area).
+- The UI is designed for clarity, scalability, and operator control.
+
+## Display Layout
+- **Status Bar (top 40px):**
+  - Black background, blue border, white line at the bottom.
+  - Shows system status icons (e.g., checkmark), and can display status text.
+- **Data Pane (below status bar):**
+  - Blue background, framed by white and blue borders.
+  - Used for cycling through sensor and solenoid data, and for menu interactions.
+
+## Data Cycling
+- When idle, the data pane cycles through all flow sensors and solenoids, showing:
+  - Sensor/solenoid name
+  - Flow rate (for sensors)
+  - Solenoid state (ON/OFF)
+  - Smart shutoff status (enabled/disabled)
+
+## Controls
+- Four buttons:
+  - **A:** Scroll up
+  - **B:** Scroll down
+  - **X:** Open menu
+  - **Y:** System reset
+- Any joystick activity brings up a menu in the data pane for manual control.
+
+## Menu Features
+- Operator can:
+  - Turn any solenoid ON or OFF manually
+  - Enable/disable smart shutoff for any solenoid
+- Menu times out and returns to idle cycling after inactivity.
+
+## UI/UX Notes
+- Use icons and color highlights for clarity (e.g., ON/OFF, smart shutoff status).
+- Status bar can show menu/override indicators.
+- Data pane can highlight the currently selected item in the menu.
+
+---
+
+This plan will be implemented incrementally, starting with display layout and cycling logic, then adding controls and menu features.
 # GitHub Copilot Session Context
 
 ## Session Status
-**Last Updated:** July 18, 2025
+**Last Updated:** July 21, 2025
+
+**Recent updates:**
+- Provided pinout maps for ESP32S3, ST7789 display, and Pico-LCD hardware components
+- Major UI improvements: ST7789 display now shows Hostname, SSID, IP, and MAC address, with robust centering and fallback for missing values
+- Font size and layout adjustments for better data fit and readability
+- Improved secrets management, Makefile automation, and documentation
 
 This file preserves technical context, session continuity, troubleshooting notes, and action items for developers resuming work. For project overview, features, and setup, see `README.md`.
 
@@ -74,13 +120,21 @@ This file preserves technical context, session continuity, troubleshooting notes
 4. Full Clean: `make clobber`
 5. Archive Clean: `make distclean`
 
+## Session Continuity & Shared Context
+- Always use the `.kibo` file in your home directory (`~/.kibo`) for session continuity and shared context across workspaces.
+- When updating session context, run `~/sync-kibo.sh push` to sync changes back to `~/.kibo`.
+- At the start of every session, read `.kibo` from the workspace (or from the symlink pointing to `~/.kibo`) to restore context.
+- Do not use `.git-copilot` or `.git-copilot.md` for continuity—use `.kibo` exclusively.
+- Ensure `.kibo` is listed in `.gitignore` to prevent accidental commits.
+- If `.kibo` is not accessible, copy it into the workspace or provide its contents.
+- All file creation and editing should use Unix (LF) line endings.
+
+---
+*These notes ensure robust, cross-workspace session continuity and prevent loss of shared context.*
+
 ## Notes & Tips
-- Always start by reading this file for session context
-- Use `make help` to see all available targets
-- Check `build.log` for recent compilation results
-- Use `make buildvars` to confirm current device configuration
-- Session continuity maintained through this documentation system
-- Version consistency maintained between VERSION file and all component headers
+- **When updating version strings, do not update the version in `main.yaml` unless specifically requested.**
 
 ---
 *This file is maintained by GitHub Copilot to preserve session context and development state.*
+Always use Unix (LF) file format when creating or editing files in this repository.

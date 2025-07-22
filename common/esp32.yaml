@@ -1,3 +1,4 @@
+
 # ------------------------------------------------------------------------------
 #  @file        esp32.yaml
 #  @brief       ESP32 board and framework configuration for sysmon-ph.
@@ -25,8 +26,101 @@
 #  @note        Co-developed with GitHub Copilot by OpenAI.
 # ------------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------------
+# @brief YAML linter configuration
+# @details
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# @brief ESP32 (30 Pin Package) Dev Module standard Pinout Map (Vertical, Top View)
+# @details
+# ------------------------------------------------------------------------------
+# 
+#                                     ┌────────────────┐
+#                                 EN ─┤ 01 ┌──────┐ 30 ├─ GPIO23  SPI_MOSI  VSPI_MOSI
+#               VP  ADC1_CH0  GPIO36 ─┤ 02 │      │ 29 ├─ GPIO22  I2C_SCL
+#               VN  ADC1_CH3  GPIO39 ─┤ 03 │      │ 28 ├─ GPIO01  U0TXD     CLK3
+#                   ADC1_CH6  GPIO34 ─┤ 04 └──────┘ 27 ├─ GPIO03  U0RXD     CLK2
+#                   ADC1_CH7  GPIO35 ─┤ 05          26 ├─ GPIO21  I2C_SDA
+#   XTAL32  TOUCH9  ADC1_CH4  GPIO32 ─┤ 06          25 ├─ GPIO19  SPI_MISO  VSPI_MISO
+#           TOUCH8  ADC1_CH5  GPIO33 ─┤ 07          24 ├─ GPIO18  SPI_SCK   VSPI_CLK
+#             DAC1  ADC2_CH8  GPIO25 ─┤ 08  ESP-32  23 ├─ GPIO05  VSPI_CS
+#             DAC2  ADC2_CH9  GPIO26 ─┤ 09          22 ├─ GPIO17  U2TXD
+#           TOUCH7  ADC2_CH7  GPIO27 ─┤ 10          21 ├─ GPIO16  U2RXD
+# HSPI_CLK  TOUCH6  ADC2_CH6  GPIO14 ─┤ 11          20 ├─ GPIO04  ADC2_CH0  TOUCH0
+# HSPI_MISO TOUCH5  ADC2_CH5  GPIO12 ─┤ 12          19 ├─ GPIO02  ADC2_CH2  TOUCH2   SPI_CS
+# HSPI_MOSI TOUCH4  ADC2_CH4  GPIO13 ─┤ 13          18 ├─ GPIO15  ADC2_CH3  TOUCH3   HSPI_CS
+#                                GND ─┤ 14          17 ├─ GND
+#                         5V     VIN ─┤ 15          16 ├─ VCC     3.3V
+#                                     └──────USB───────┘
+#
+#  Notes:
+#    - GPIO6-11 are used for SPI flash and are not available for user IO
+#    - GPIO00 is used for boot mode selection (strapping pin); 
+#      - if pulled low during reset, the ESP32 enters programming mode 
+#      - use with caution; avoid using as output or with pull-downs
+#    - GPIO1 (TX0), GPIO3 (RX0) are UART0 (serial console) pins
+#      - can be repurposed if not using serial, but be careful 
+#        if you need serial logging or programming
+#    - GPIO2 is a strapping pin; must be low at boot for some modules
+#      - this pin should not be pulled high or low at boot/reset
+#      - avoid using for output that could interfere with boot
+#    - GPIO12 is a strapping pin; high at boot selects high voltage for flash
+#      - this pin should not be pulled high or low at boot/reset
+#      - avoid using for output or with pull-ups
+#    - GPIO15 is a strapping pin; must be low at boot
+#      - this pin should not be pulled high or low at boot/reset
+#      - avoid using for output or with pull-ups
+#    - GPIO16, GPIO17 is used for PSRAM on some modules
+#        - check your board’s datasheet before using
+#    - GPIO20, GPIO24 is not available on most ESP32 modules
+#    - GPIO34-GPIO39 are input only
+#    - not all pins are available on all modules; check your board's datasheet
+#    - see ESP32 datasheet for full alternate functions
+#
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# @brief ESP32 (30 Pin Package) Pin Assignment/Connection Map (Vertical, Top View)
+# @details
+# ------------------------------------------------------------------------------
+#                                ┌────────────────┐
+#  DISP_BTN_Y      EN  [RST_IN] ─┤ 01 ┌──────┐ 30 ├─ [IN ]  GPIO23  DISP_MOSI
+#     FLOW_05  GPIO36  [PWM_IN] ─┤ 02 │      │ 29 ├─ [IN ]  GPIO22  DISP_JOY_RIGHT
+#     FLOW_04  GPIO39  [PWM_IN] ─┤ 03 │      │ 28 ├─ [IN ]  GPIO01  DISP_JOY_LEFT
+#     FLOW_03  GPIO34  [PWM_IN] ─┤ 04 └──────┘ 27 ├─ [IN ]  GPIO03  DISP_JOY_DOWN
+#     FLOW_02  GPIO35  [PWM_IN] ─┤ 05          26 ├─ [IN ]  GPIO21  DISP_JOY_UP
+#     FLOW_01  GPIO32  [PWM_IN] ─┤ 06          25 ├─ [IN ]  GPIO19  DISP_JOY_IN
+#      SOL_01  GPIO33  [   OUT] ─┤ 07          24 ├─ [OUT]  GPIO18  DISP_CLK
+#      SOL_05  GPIO25  [   OUT] ─┤ 08  ESP-32  23 ├─ [OUT]  GPIO05  DISP_CS
+#      SOL_04  GPIO26  [   OUT] ─┤ 09          22 ├─ [OUT]  GPIO17  DISP_RST
+#      SOL_03  GPIO27  [   OUT] ─┤ 10          21 ├─ [IN ]  GPIO16  DISP_BTN_X
+#      SOL_02  GPIO14  [   OUT] ─┤ 11          20 ├─ [OUT]  GPIO04  DISP_DC
+#     FLOW_00  GPIO12  [PWM_IN] ─┤ 12          19 ├─ [IN ]  GPIO02  DISP_BTN_B
+#      SOL_00  GPIO13  [   OUT] ─┤ 13          18 ├─ [IN ]  GPIO15  DISP_BTN_A
+#                 GND  [   GND] ─┤ 14          17 ├─ [GND]  GND
+#                 VIN  [ 5V_IN] ─┤ 15          16 ├─ [NC ]
+#                                └─────┐USB┌──────┘
+#                                      └───┘
+#
+#  Notes:
+#    - the ESP32 supports monitoring 6 flows
+#    - DISP_TN_Y-EN: Active low (button press pulls down line to reset the ESP32)
+#
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
 # @brief Target ESP32 board and Arduino framework declaration
+# @details
+#   - board: Target ESP32 Dev Module (ESP-WROOM-32)
+#   - framework: Arduino core for ESP32
+# @param board Target board (e.g., esp32dev)
+# @param framework.type Framework type (e.g., arduino)
+# ------------------------------------------------------------------------------
 esp32:
-  board: esp32-s3-devkitc-1       # Target board: DevKitC-1 (8MB flash, no PSRAM)
+  board: esp32dev                 # @param board Target board: ESP32 Dev Module (ESP-WROOM-32)
   framework:
-    type: arduino                 # Arduino core for ESP32-S3
+    type: arduino                 # @param framework.type Arduino core for ESP32

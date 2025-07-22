@@ -1,7 +1,13 @@
+# Test documentation generation (ESPHome + Doxygen)
+.PHONY: test-docs
+test-docs:
+	@echo "Testing documentation generation (ESPHome + Doxygen)..."
+	$(MAKE) docs
+	@echo "Documentation generation test complete."
 # ------------------------------------------------------------------------------
 #  @file        Makefile
 #  @brief       Master Makefile for ESPHome-based device management
-#  @version     0.6.0
+#  @version     0.6.5
 #  @date        2025-07-18
 #  @details     This Makefile drives the build, upload, and configuration
 #               process for ESPHome projects. It leverages a .makefile for per-device
@@ -29,6 +35,11 @@
 #  @note        Co-developed with GitHub Copilot by OpenAI.
 # ------------------------------------------------------------------------------
 
+
+# ------------------------------------------------------------------------------
+# Pre-Build Configuration and Targets
+# ------------------------------------------------------------------------------
+
 # Load project version string
 VERSION := $(shell cat VERSION)
 
@@ -44,11 +55,15 @@ PYTHON_WITH_ESPTOOL := $(shell \
 # Default target - full pipeline: build + upload + logs
 .DEFAULT_GOAL := run
 
+# Ensure that secrets.yaml is present before running targets that require secrets
+.PHONY: check-secrets
+check-secrets:
+	@if [ ! -f ./common/secrets.yaml ]; then \
+		echo "[ERROR] ./common/secrets.yaml not found!"; \
+		echo "Please copy ./secrets.template.yaml to ./common/secrets.yaml and fill in your credentials."; \
+		exit 1; \
+	fi
 
-# ------------------------------------------------------------------------------
-# Build Targets
-# ------------------------------------------------------------------------------
- 
 # Load per-device config if available
 -include .makefile
 
@@ -85,9 +100,13 @@ generate: _makefile
 	@sed -f .sedargs main.yaml > $(DEVICE_NAME)/$(DEVICE_NAME).yaml
 	@rm -f .sedargs
 
+# ------------------------------------------------------------------------------
+# Build Targets
+# ------------------------------------------------------------------------------
+ 
 # Compile the ESPHome firmware for the specified device
 .PHONY: build
-build: generate
+build: check-secrets generate
 	@echo Building firmware for $(DEVICE_NAME)...
 	@esphome compile $(DEVICE_NAME)/$(DEVICE_NAME).yaml 2>&1 | tee build.log
 
@@ -135,13 +154,13 @@ flash-verify: build
 
 # Upload the compiled firmware to the device (USB or OTA)
 .PHONY: upload
-upload: _makefile
+upload: check-secrets _makefile
 	@echo Uploading firmware to $(DEVICE_NAME)...
 	@esphome upload $(DEVICE_NAME)/$(DEVICE_NAME).yaml --device $(UPLOAD_PATH)
 
 # View live log output from the device
 .PHONY: logs
-logs: _makefile
+logs: check-secrets _makefile
 	@if [ ! -d logs ]; then \
 		echo "Creating logs directory..."; \
 		mkdir -p logs; \
@@ -196,7 +215,7 @@ logs-fresh: logs
 
 # Build, upload, start logging, then follow logs in one step
 .PHONY: run
-run: build upload logs
+run: check-secrets build upload logs
 	$(MAKE) logs-follow
 
 

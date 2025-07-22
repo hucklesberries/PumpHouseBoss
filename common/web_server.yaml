@@ -24,7 +24,24 @@
 #  @note        Co-developed with ChatGPT by OpenAI.
 # ------------------------------------------------------------------------------
 
+# ------------------------------------------------------------------------------
+# @brief YAML linter configuration
+# @details
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
 # @brief ESPHome embedded web server configuration
+# @details
+#   - Enables the built-in web server for device diagnostics and control
+#   - Provides HTTP authentication using secrets for security
+#   - Accessible via browser on the configured port
+# @param port      HTTP port for web access (default: 80)
+# @param username  Web interface username (from secrets)
+# @param password  Web interface password (from secrets)
+# ------------------------------------------------------------------------------
 web_server:
   port: 80                           # @param port HTTP port for web access
   auth:

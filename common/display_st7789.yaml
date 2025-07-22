@@ -1,0 +1,303 @@
+# ------------------------------------------------------------------------------
+#  @file        display_st7789.yaml
+#  @brief       Waveshare Pico LCD 1.3" Display Module subsystem configuration.
+#  @details     Features Include:
+#               - 240x240 pixel display, IPS screen, 65k RGB color depth
+#               - 4 momentary buttons (A, B, X, Y)
+#               - 4-way joystick with select button
+#               - ST7789V display driver support
+#               - SPI interface for communication
+#               - rPi Pico Pin compatability
+#
+#  @author      Roland Tembo Hendel
+#  @email       rhendel@nexuslogic.com
+#
+#  @license     GNU General Public License v3.0
+#               SPDX-License-Identifier: GPL-3.0-or-later
+#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
+#               This program is free software: you can redistribute it and/or
+#               modify it under the terms of the GNU General Public License
+#               as published by the Free Software Foundation, either version 3
+#               of the License, or (at your option) any later version.
+#
+#               This program is distributed in the hope that it will be useful,
+#               but WITHOUT ANY WARRANTY; without even the implied warranty of
+#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#               GNU General Public License for more details.
+#
+#               You should have received a copy of the GNU General Public License
+#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#
+#  @note        Co-developed with ChatGPT by OpenAI.
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+# @brief YAML linter configuration
+# @details
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# @brief Waveshare Pico-LCD-1.3 Display Standard Pinout Map (Vertical, Top View)
+# @details
+# ------------------------------------------------------------------------------
+#
+#                       ┌──────────────────────┐
+#                VBUS  ─┤ 40                01 ├─  NC
+#                VSYS  ─┤ 39      ╔══╗      02 ├─  NC
+#                 GND  ─┤ 38   ╔══╝  ╚══╗   03 ├─  GND
+#                  NC  ─┤ 37   ╚══╗  ╔══╝   04 ├─  JOY_UP
+#                  NC  ─┤ 36      ╚══╝      05 ├─  JOY_IN
+#                  NC  ─┤ 35                06 ├─  NC
+#                  NC  ─┤ 34 ┌────────────┐ 07 ├─  NC
+#                 GND  ─┤ 33 │            │ 08 ├─  GND
+#                  NC  ─┤ 32 │            │ 09 ├─  NC
+#                  NC  ─┤ 31 │ Waveshare™ │ 10 ├─  NC
+#                  NC  ─┤ 30 │  Pico-LCD  │ 11 ├─  DC
+#                  NC  ─┤ 29 │    1.3"    │ 12 ├─  CS
+#                  NC  ─┤ 28 │            │ 13 ├─  GND
+#               BTN_Y  ─┤ 27 │            │ 14 ├─  CLK
+#           JOY_RIGHT  ─┤ 26 └────────────┘ 15 ├─  MOSI
+#               BTN_X  ─┤ 25                16 ├─  RST
+#            JOY_DOWN  ─┤ 24                17 ├─  BL
+#                 GND  ─┤ 23  ┌─┐┌─┐┌─┐┌─┐  18 ├─  GND
+#               BTN_B  ─┤ 22  └─┘└─┘└─┘└─┘  19 ├─  NC
+#            JOY_LEFT  ─┤ 21   Y  X  B  A   20 ├─  BTN_A
+#                       └──────────────────────┘
+#
+#  Notes:
+#    - pin 40, VBUS; 5 VDC
+#    - pin 39, VSYS; NC
+#    - pin 11, DC;   Data/Command - high for data, low for command)
+#    - pin 12, CS;   Chip Select  - active low
+#    - pin 16, RST;  Reset        - active low
+#    - pin 17, BL;   acklight    - active high
+#
+# ------------------------------------------------------------------------------
+
+
+# ------------------------------------------------------------------------------
+# @brief SPI bus configuration for ST7789V display module
+# @details
+#   - Configures SPI bus for display communication
+#   - Assigns clock and MOSI pins
+# @param clk_pin  Clock pin for SPI
+# @param mosi_pin MOSI data pin
+# ------------------------------------------------------------------------------
+spi:
+  clk_pin: GPIO10              # @param clk_pin Clock pin for SPI
+  mosi_pin: GPIO11             # @param mosi_pin MOSI data pin
+
+
+
+# ------------------------------------------------------------------------------
+# @brief Font used for on-screen display
+# @details
+#   - Loads Google Noto Sans Mono font for display text
+#   - Sets font size for UI elements
+# @param file Font file or URL
+# @param id   Font ID for reference
+# @param size Font size in points
+# ------------------------------------------------------------------------------
+font:
+  - file: gfonts://Noto Sans Mono
+    id: st7789_font
+    size: 22
+
+
+
+# ------------------------------------------------------------------------------
+# @brief Status icon images
+# @details
+#   - Loads PNG images for status and WiFi signal icons
+#   - Used for UI status bar and indicators
+# @param file   Path to image file
+# @param id     Image ID for reference
+# @param type   Image color type (e.g., RGB)
+# @param resize Resize dimensions (pixels)
+# ------------------------------------------------------------------------------
+image:
+  # Status icons
+  - file: "../icons/status_ok.png"
+    id: status_ok_icon
+    type: RGB
+    resize: 32x32
+  - file: "../icons/status_warn.png"
+    id: status_warn_icon
+    type: RGB
+    resize: 32x32
+  - file: "../icons/status_error.png"
+    id: status_error_icon
+    type: RGB
+    resize: 32x32
+
+  # WiFi signal icons
+  - file: "../icons/wifi_0.png"
+    id: wifi_0_icon
+    type: RGB
+    resize: 32x32
+  - file: "../icons/wifi_1.png"
+    id: wifi_1_icon
+    type: RGB
+    resize: 32x32
+  - file: "../icons/wifi_2.png"
+    id: wifi_2_icon
+    type: RGB
+    resize: 32x32
+  - file: "../icons/wifi_3.png"
+    id: wifi_3_icon
+    type: RGB
+    resize: 32x32
+  - file: "../icons/wifi_4.png"
+    id: wifi_4_icon
+    type: RGB
+    resize: 32x32
+
+
+
+# ------------------------------------------------------------------------------
+# @brief Text and sensor definitions
+# @details
+#   - Exposes WiFi info, hostname, date, and time as text sensors
+#   - Provides template sensors for custom data
+# @param name  Sensor name
+# @param id    Sensor ID
+# @param lambda Lambda function for value
+# @param update_interval Update frequency
+# ------------------------------------------------------------------------------
+text_sensor:
+  - platform: wifi_info
+    ip_address:
+      name: "WiFi IP Address"
+      id: ip_address
+    ssid:
+      name: "WiFi SSID"
+      id: ssid
+    mac_address:
+      name: "WiFi MAC Address"
+      id: mac_address
+  - platform: template
+    name: "Hostname"
+    id: hostname
+    # Doxygen: Hide lambda from documentation
+    # /** @cond */
+    lambda: |-
+      return App.get_name();
+    # /** @endcond */
+    update_interval: 60s
+
+  - platform: template
+    name: "Current Date"
+    id: current_date
+    # ---
+    # Returns the current date as YYYY-MM-DD
+    # Doxygen: Hide lambda from documentation
+    # /** @cond */
+    lambda: |-
+      char str[16];
+      time_t now = ::time(nullptr);
+      strftime(str, sizeof(str), "%Y-%m-%d", localtime(&now));
+      return std::string(str);
+    # /** @endcond */
+    update_interval: 60s
+
+  - platform: template
+    name: "Current Time"
+    id: current_time
+    # ---
+    # Returns the current time as HH:MM:SS
+    # Doxygen: Hide lambda from documentation
+    # /** @cond */
+    lambda: |-
+      char str[16];
+      time_t now = ::time(nullptr);
+      strftime(str, sizeof(str), "%H:%M:%S", localtime(&now));
+      return std::string(str);
+    # /** @endcond */
+    update_interval: 1s
+
+sensor:
+  - platform: wifi_signal
+    name: WiFi Signal Strength
+    id: wifi_signal_strength
+    update_interval: 60s
+
+
+
+# ------------------------------------------------------------------------------
+# @brief Display driver configuration block for ST7789V LCD
+# @details
+#   - Configures resolution, pinout, refresh rate, and UI rendering logic
+#   - Includes dynamic rendering of flow rate sensor value
+#   - Screen is cleared to teal and overlays two lines of text
+# @param platform   Display platform (st7789v)
+# @param model      Display model (CUSTOM)
+# @param cs_pin     Chip select pin
+# @param dc_pin     Data/command pin
+# @param reset_pin  Reset line
+# @param width      Display width (pixels)
+# @param height     Display height (pixels)
+# @param update_interval Refresh interval
+# @param data_rate  SPI clock frequency
+# ------------------------------------------------------------------------------
+display:
+  - platform: st7789v
+    model: CUSTOM
+    cs_pin: GPIO09          # @param cs_pin Chip select pin
+    dc_pin: GPIO08          # @param dc_pin Data/command pin
+    reset_pin: GPIO12       # @param reset_pin Reset line
+    width: 240
+    height: 240
+    offset_width: 0
+    offset_height: 0
+    rotation: 0
+    update_interval: 1s     # @param update_interval Refresh every second
+    data_rate: 2MHz         # @param data_rate SPI clock frequency
+    auto_clear_enabled: false
+    lambda: |-
+      // Colors
+      auto white = Color(255, 255, 255);
+      auto blue  = Color(0, 0, 255);
+      auto teal  = Color(0, 128, 128);
+      auto black = Color(0, 0, 0);
+
+      // establish status pane
+      it.rectangle(0, 0, 239, 39, white);
+
+      // establish data pane
+      it.filled_rectangle(0, 40, 239, 239, blue);
+      it.rectangle(0, 40, 239, 239, white);
+
+      // Draw status_ok icon at (4,4) in the status bar
+      it.image(4, 4, id(status_ok_icon));
+      //   TODO: add logic to determine which status icon to use
+
+      // Draw WiFi icons (Testing)
+      it.image(204, 4, id(wifi_4_icon));
+      //   TODO: add logic to determine which WiFi icon to use
+
+      // Display device info in the data pane
+      int y = 56;
+      int line_height = 32;
+      // Estimate average character width for Noto Sans Mono 22pt
+      const int char_width = 12;
+      std::string hostname_str = id(hostname).state;
+      int x = (240 - (hostname_str.length() * char_width)) / 2;
+      it.printf(x, y, id(st7789_font), white, "%s", hostname_str.c_str());
+      y += line_height;
+
+      std::string ssid_str = id(ssid).state.empty() ? std::string("SSID: N/A") : std::string("SSID: ") + id(ssid).state;
+      x = (240 - (ssid_str.length() * char_width)) / 2;
+      it.printf(x, y, id(st7789_font), white, "%s", ssid_str.c_str());
+      y += line_height;
+
+      std::string ip_str = id(ip_address).state.empty() ? std::string("IP: N/A") : std::string("IP: ") + id(ip_address).state;
+      x = (240 - (ip_str.length() * char_width)) / 2;
+      it.printf(x, y, id(st7789_font), white, "%s", ip_str.c_str());
+      y += line_height;
+
+      std::string mac_str = id(mac_address).state.empty() ? std::string("MAC: N/A") : std::string("MAC: ") + id(mac_address).state;
+      x = (240 - (mac_str.length() * char_width)) / 2;
+      it.printf(x, y, id(st7789_font), white, "%s", mac_str.c_str());
