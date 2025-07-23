@@ -1,11 +1,11 @@
 # Changelog
 
-## [0.6.5] - 2025-07-21
-**VERSION bump**: 0.6.1 → 0.6.5
+## [0.6.6] - 2025-07-22
+**VERSION bump**: 0.6.5 → 0.6.6
 - Major UI improvements: ST7789 display now shows Hostname, SSID, IP, and MAC address, with robust centering and fallback for missing values
 - Font size and layout adjustments for better data fit and readability
 - Fixed MAC address display and improved sensor value handling
-- Modularized and harmonized Doxygen-style documentation across all YAML files
+
 - Provided pinout maps for ESP32S3, ST7789 display, and Pico-LCD hardware components
 - Improved Makefile automation and .gitignore for secrets and generated files
 - Updated `secrets.template.yaml` and documentation for secure workflow
@@ -16,6 +16,10 @@
 - `common/display_st7789.yaml`: UI, font, and lambda logic for device info
 - `main.yaml`, `common/*.yaml`: Documentation, linter, and modularization
 - `Makefile`, `.gitignore`, `README.md`, `CHECKIN-CHECKLIST.md`, `GIT-COPILOT.md`, `RELEASE.md`: Workflow, automation, and documentation
+- Restored detailed Makefile header (author, version, copyright)
+- Removed user-specific Python path from Makefile; now portable
+- Fixed shell syntax error in `check-secrets` target
+- General Makefile polish and documentation improvements
 
 ### Added
 - `secrets.template.yaml` for safe onboarding

@@ -1,52 +1,46 @@
 # ------------------------------------------------------------------------------
-#  @file        watchdog.yaml
-#  @brief       System reliability watchdog component for ESP32 platforms.
-#  @details     Provides hardware watchdog timer, external watchdog trigger,
-#               reset reason monitoring, and system health diagnostics for
-#               mission-critical pump house monitoring applications.
+#  file       watchdog.yaml
+#  brief      System reliability watchdog component for ESP32 platforms.
+#  details    Provides hardware watchdog timer, external watchdog trigger,
+#             reset reason monitoring, and system health diagnostics for
+#             mission-critical pump house monitoring applications.
 #
-#  @author      Roland Tembo Hendel
-#  @link        mailto:rhendel@nexuslogic.com
+#  author     Roland Tembo Hendel
+#  link       mailto:rhendel@nexuslogic.com
 #
-#  @license     GNU General Public License v3.0
-#               SPDX-License-Identifier: GPL-3.0-or-later
-#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
-#               This program is free software: you can redistribute it and/or
-#               modify it under the terms of the GNU General Public License
-#               as published by the Free Software Foundation, either version 3
-#               of the License, or (at your option) any later version.
+#  license    GNU General Public License v3.0
+#             SPDX-License-Identifier: GPL-3.0-or-later
+#  copyright  Copyright (c) 2025 Roland Tembo Hendel
+#             This program is free software: you can redistribute it and/or
+#             modify it under the terms of the GNU General Public License
+#             as published by the Free Software Foundation, either version 3
+#             of the License, or (at your option) any later version.
 #
-#               This program is distributed in the hope that it will be useful,
-#               but WITHOUT ANY WARRANTY; without even the implied warranty of
-#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#               GNU General Public License for more details.
+#             This program is distributed in the hope that it will be useful,
+#             but WITHOUT ANY WARRANTY; without even the implied warranty of
+#             MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#             GNU General Public License for more details.
 #
-#               You should have received a copy of the GNU General Public License
-#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#             You should have received a copy of the GNU General Public License
+#             along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
-#  @note        Co-developed with ChatGPT by OpenAI.
+#  note       Co-developed with ChatGPT by OpenAI.
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
-# @brief YAML linter configuration
-# @details
+#  YAML linter configuration
 #   - Disables quoted-strings rule for improved readability
+#   - Ensures that string values do not require unnecessary quotes, improving
+#     readability and maintainability of the YAML configuration.
 # ------------------------------------------------------------------------------
 # yamllint disable rule:quoted-strings
 
 
 # ------------------------------------------------------------------------------
-# @brief Required substitutions for watchdog component
-# @details
-#   - Hardware watchdog may require different ESPHome version or ESP-IDF framework
-#   - This configuration focuses on software monitoring and reset capabilities
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
-# @brief Boot-time system monitoring initialization
-# @details
-#   - Initializes system monitoring and software watchdog on boot
-#   - Logs system and reset monitoring status
+#  Boot-time system monitoring initialization
+#   - Sets up system monitoring and software watchdog actions to run on boot.
+#   - Logs system and reset monitoring status for diagnostics and reliability tracking.
+#   - Ensures that monitoring is active as soon as the device starts.
 # ------------------------------------------------------------------------------
 esphome:
   on_boot:
@@ -62,16 +56,25 @@ esphome:
           format: "Reset monitoring active - tracking system stability"
 
 # ------------------------------------------------------------------------------
-# @brief Watchdog status and reset reason monitoring
+#  Watchdog status and reset reason monitoring
+#   - Defines a text sensor for human-readable reset reason tracking.
+#   - Uses esp_reset_reason() to determine and expose the last reset cause as a string.
+#   - Aids in diagnostics and troubleshooting by making reset causes visible in Home Assistant.
+#   - Parameters:
+#       name: Sensor name for reset reason
+#       id: Sensor ID
+#       icon: Icon for Home Assistant
+#       update_interval: How often to update the sensor
+#       lambda: C++ code to determine the reset reason
 # ------------------------------------------------------------------------------
 text_sensor:
-  # @brief Human-readable reset reason tracking
-  # @details
+  #  brief Human-readable reset reason tracking
+  #  details
   #   - Exposes the last reset reason as a readable string
   #   - Uses esp_reset_reason() to determine cause
   - platform: template
-    name: "Reset Reason"           # @param name Sensor name for reset reason
-    id: reset_reason_text          # @param id Sensor ID
+    name: "Reset Reason"           # name Sensor name for reset reason
+    id: reset_reason_text          # id Sensor ID
     icon: "mdi:restart"
     update_interval: never         # Set once on boot
     lambda: |-
@@ -87,15 +90,27 @@ text_sensor:
       }
 
 # ------------------------------------------------------------------------------
-# @brief Watchdog monitoring sensors
+#  Watchdog monitoring sensors
+#   - Defines template sensors for reliability and diagnostics:
+#     - Watchdog reset counter: Tracks number of watchdog resets since boot.
+#     - Last reset code: Exposes the raw reset reason code for advanced troubleshooting.
+#     - System health score: Calculates a health score based on uptime and reset frequency.
+#   - These sensors provide insight into system stability and help with proactive maintenance.
+#   - Parameters (per sensor):
+#       name: Sensor name
+#       id: Sensor ID
+#       unit_of_measurement: Unit for sensor value
+#       accuracy_decimals: Number of decimals to report
+#       icon: Icon for Home Assistant
+#       update_interval: How often to update the sensor
+#       lambda: C++ code for sensor value
 # ------------------------------------------------------------------------------
 sensor:
-  # @brief Watchdog reset counter for reliability tracking
-  # @details
+  #  Watchdog reset counter for reliability tracking
   #   - Counts watchdog resets since boot
   - platform: template
-    name: "Watchdog Resets"           # @param name Sensor name for reset counter
-    id: watchdog_reset_counter        # @param id Sensor ID
+    name: "Watchdog Resets"           # name Sensor name for reset counter
+    id: watchdog_reset_counter        # id Sensor ID
     unit_of_measurement: "resets"
     accuracy_decimals: 0
     icon: "mdi:counter"
@@ -108,12 +123,11 @@ sensor:
       }
       return reset_count;
 
-  # @brief Raw reset reason code for advanced diagnostics
-  # @details
+  #  Raw reset reason code for advanced diagnostics
   #   - Exposes the raw reset reason code for troubleshooting
   - platform: template
-    name: "Last Reset Code"           # @param name Sensor name for raw code
-    id: last_reset_reason_code        # @param id Sensor ID
+    name: "Last Reset Code"           # name Sensor name for raw code
+    id: last_reset_reason_code        # id Sensor ID
     unit_of_measurement: ""
     accuracy_decimals: 0
     icon: "mdi:information"
@@ -121,12 +135,11 @@ sensor:
     lambda: |-
       return esp_reset_reason();
 
-  # @brief System health score based on reset frequency
-  # @details
+  #  System health score based on reset frequency
   #   - Calculates a health score based on uptime and reset frequency
   - platform: template
-    name: "System Health Score"       # @param name Sensor name for health score
-    id: system_health_score           # @param id Sensor ID
+    name: "System Health Score"       # name Sensor name for health score
+    id: system_health_score           # id Sensor ID
     unit_of_measurement: "%"
     accuracy_decimals: 1
     icon: "mdi:heart-pulse"
@@ -142,15 +155,13 @@ sensor:
       return max(0.0f, min(100.0f, health));
 
 # ------------------------------------------------------------------------------
-# @brief Remote system restart capability
+#  Software-controlled system restart for remote troubleshooting
+#   - Allows remote restart of the ESP32 via Home Assistant or API
+#   - Physical hardware reset available via external button wired to ESP32 EN pin
+#  Note: Physical hardware reset available via external button wired to ESP32 EN pin
 # ------------------------------------------------------------------------------
 switch:
-  # @brief Software-controlled system restart for remote troubleshooting
-  # @details
-  #   - Allows remote restart of the ESP32 via Home Assistant or API
-  #   - Physical hardware reset available via external button wired to ESP32 EN pin
   - platform: restart
-    name: "System Restart"            # @param name Switch name for restart
-    id: system_restart_switch         # @param id Switch ID
+    name: "System Restart"            # name Switch name for restart
+    id: system_restart_switch         # id Switch ID
     icon: "mdi:restart"
-    # Note: Physical hardware reset available via external button wired to ESP32 EN pin

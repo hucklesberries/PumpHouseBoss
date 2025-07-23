@@ -1,7 +1,7 @@
 
 # Release Notes
 
-## Version 0.6.5 – July 21, 2025
+## Version 0.6.6 – July 22, 2025
 
 **Pre-release milestone: Modular, maintainable, and secure ESPHome system for ESP32S3**
 
@@ -9,7 +9,7 @@
 - Major UI improvements: ST7789 display now shows Hostname, SSID, IP, and MAC address, with robust centering and fallback for missing values
 - Font size and layout adjustments for better data fit and readability
 - Fixed MAC address display and improved sensor value handling
-- Modularized and harmonized Doxygen-style documentation across all YAML files
+
 - Provided pinout maps for ESP32S3, ST7789 display, and Pico-LCD hardware components
 - Improved Makefile automation and .gitignore for secrets and generated files
 - Updated `secrets.template.yaml` and documentation for secure workflow

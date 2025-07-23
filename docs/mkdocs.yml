@@ -1,0 +1,30 @@
+site_name: SysMon-PH Documentation
+docs_dir: mkdocs
+nav:
+  - Home: README.md
+  - RELEASE Notes: RELEASE.md
+  - CHANGELOG: CHANGELOG.md
+  - main.md: main.md
+  - secrets.template.md: secrets.template.md
+  - Common:
+      - Display: display_st7789.md
+      - esp32: esp32.md
+      - esp32s3: esp32s3.md
+      - Logging: logging.md
+      - OTA: ota.md
+      - Watchdog: watchdog.md
+      - Web Server: web_server.md
+      - WiFi: wifi.md
+theme:
+  name: material
+  palette:
+    primary: blue
+    accent: light blue
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+
+# Output built site to docs/html
+site_dir: html

@@ -1,4 +1,3 @@
-
 # sysmon-ph: ESPHome Pumphouse Monitor
 
 A professional ESPHome-based system for monitoring and managing a pumphouse using ESP32-S3. Features modular configuration, robust automation, and comprehensive documentation for collaborative development.
@@ -11,7 +10,7 @@ A professional ESPHome-based system for monitoring and managing a pumphouse usin
 - 24-target Makefile for build, upload, logging, cleaning, docs
 - Interactive setup via `configure.sh`
 - Improved onboarding with `secrets.template.yaml` for secure secrets management
-- Doxygen and ESPHome documentation
+- ESPHome documentation
 - Automated version management
 - Safety mechanisms to protect critical files
 - VS Code integration with pre-defined tasks
@@ -92,7 +91,7 @@ make run        # Build, upload, and logs
 
 ## Documentation
 - ESPHome component docs: `docs/esphome/`
-- Doxygen HTML/PDF: `docs/html/`, `docs/latex/`
+<!-- Doxygen HTML/PDF directories removed -->
 - Automatic timestamps and organized structure
 
 ## Advanced Features
@@ -108,7 +107,7 @@ make run        # Build, upload, and logs
 ## Code Quality & Workflow
 - Consistent formatting and commenting
 - Synchronized versioning
-- Doxygen headers, GPL v3.0 licensing
+<!-- Doxygen headers reference removed -->
 - Comprehensive testing and validation
 - Check-in process via `CHECKIN-CHECKLIST.md`
 
@@ -124,3 +123,28 @@ Developed by:
 ## License
 GNU General Public License v3.0
 SPDX-License-Identifier: GPL-3.0-or-later
+
+# SysMon-PH Project
+
+This project provides a robust, maintainable workflow for ESPHome-based device management and documentation.
+
+## Key Features
+- Modern Makefile for build, upload, and configuration
+- Automated documentation generation (MkDocs, ESPHome docs)
+- Clean, duplication-free workflow
+- All canonical docs in the project root; generated docs in `docs/`
+- Portable Python detection (no user-specific paths)
+- Professional header and documentation for maintainability
+
+## Recent Updates
+- Makefile header restored to professional, detailed format
+- Removed user-specific Python path; now uses only `python3` or `python`
+- Fixed shell syntax in `check-secrets` target
+- General polish and cleanup for maintainability
+
+## Usage
+- Run `make` for the default build/upload/log workflow
+- See `make help` for all available targets
+
+---
+For more details, see the Makefile and project documentation.

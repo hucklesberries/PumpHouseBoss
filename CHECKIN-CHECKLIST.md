@@ -30,7 +30,7 @@ Enhanced logging workflow with timestamp-based session management:
 
 Hardware tested: ESP32-S3 DevKitC-1
 Components: logging, watchdog
-Version: 0.6.0
+Version: 0.6.6
 ```
 
 ## Post-Commit Updates
@@ -47,7 +47,7 @@ Version: 0.6.0
 - [ ] Review all headers in source files for version, license, and attribution consistency
 
 ### **Version Reference Update**
-- [ ] Update all version references throughout the codebase to match VERSION file (0.6.0)
+- [ ] Update all version references throughout the codebase to match VERSION file (0.6.6)
 
 ## Pre-Commit Validation
 
@@ -159,7 +159,7 @@ Version: X.Y.Z
 
 | Version | Date       | Changes|
 |---------|------------|-------|
-| 0.6.0   | 2025-07-18 | Checklist consolidated, version bump, post-check-in procedure|
+| 0.6.6   | 2025-07-22 | Checklist consolidated, version bump, post-check-in procedure|
 | 0.5.0   | 2025-07-08 | Initial checklist creation|
 
 ---

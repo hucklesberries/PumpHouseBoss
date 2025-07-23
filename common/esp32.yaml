@@ -1,42 +1,40 @@
 
 # ------------------------------------------------------------------------------
-#  @file        esp32.yaml
-#  @brief       ESP32 board and framework configuration for sysmon-ph.
-#  @details     Modular include for ESPHome projects targeting ESP32-S3.
+#  file       esp32.yaml
+#  brief      ESP32 board and framework configuration for sysmon-ph.
+#  details   Modular include for ESPHome projects targeting ESP32-S3.
 #
-#  @author      Roland Tembo Hendel
-#  @link        mailto:rhendel@nexuslogic.com
+#  author    Roland Tembo Hendel
+#  link      mailto:rhendel@nexuslogic.com
 #
-#  @license     GNU General Public License v3.0
-#               SPDX-License-Identifier: GPL-3.0-or-later
-#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
-#               This program is free software: you can redistribute it and/or
-#               modify it under the terms of the GNU General Public License
-#               as published by the Free Software Foundation, either version 3
-#               of the License, or (at your option) any later version.
+#  license   GNU General Public License v3.0
+#            SPDX-License-Identifier: GPL-3.0-or-later
+#  copyright Copyright (c) 2025 Roland Tembo Hendel
+#            This program is free software: you can redistribute it and/or
+#            modify it under the terms of the GNU General Public License
+#            as published by the Free Software Foundation, either version 3
+#            of the License, or (at your option) any later version.
 #
-#               This program is distributed in the hope that it will be useful,
-#               but WITHOUT ANY WARRANTY; without even the implied warranty of
-#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#               GNU General Public License for more details.
+#            This program is distributed in the hope that it will be useful,
+#            but WITHOUT ANY WARRANTY; without even the implied warranty of
+#            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#            GNU General Public License for more details.
 #
-#               You should have received a copy of the GNU General Public License
-#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#            You should have received a copy of the GNU General Public License
+#            along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
-#  @note        Co-developed with GitHub Copilot by OpenAI.
+#  note      Co-developed with GitHub Copilot by OpenAI.
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
-# @brief YAML linter configuration
-# @details
+#  YAML linter configuration
 #   - Disables quoted-strings rule for improved readability
 # ------------------------------------------------------------------------------
 # yamllint disable rule:quoted-strings
 
 
 # ------------------------------------------------------------------------------
-# @brief ESP32 (30 Pin Package) Dev Module standard Pinout Map (Vertical, Top View)
-# @details
+#  ESP32 (30 Pin Package) Dev Module standard Pinout Map (Vertical, Top View)
 # ------------------------------------------------------------------------------
 # 
 #                                     ┌────────────────┐
@@ -84,8 +82,7 @@
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
-# @brief ESP32 (30 Pin Package) Pin Assignment/Connection Map (Vertical, Top View)
-# @details
+#  ESP32 (30 Pin Package) Pin Assignment/Connection Map (Vertical, Top View)
 # ------------------------------------------------------------------------------
 #                                ┌────────────────┐
 #  DISP_BTN_Y      EN  [RST_IN] ─┤ 01 ┌──────┐ 30 ├─ [IN ]  GPIO23  DISP_MOSI
@@ -113,14 +110,14 @@
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
-# @brief Target ESP32 board and Arduino framework declaration
-# @details
+#  Target ESP32 board and Arduino framework declaration
 #   - board: Target ESP32 Dev Module (ESP-WROOM-32)
 #   - framework: Arduino core for ESP32
-# @param board Target board (e.g., esp32dev)
-# @param framework.type Framework type (e.g., arduino)
+#   - Parameters:
+#       board: Target board (e.g., esp32dev)
+#       framework.type: Framework type (e.g., arduino)
 # ------------------------------------------------------------------------------
 esp32:
-  board: esp32dev                 # @param board Target board: ESP32 Dev Module (ESP-WROOM-32)
+  board: esp32dev                 # board Target board: ESP32 Dev Module (ESP-WROOM-32)
   framework:
-    type: arduino                 # @param framework.type Arduino core for ESP32
+    type: arduino                 # framework.type Arduino core for ESP32

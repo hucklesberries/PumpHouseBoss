@@ -65,17 +65,16 @@ This file preserves technical context, session continuity, troubleshooting notes
 ### Documentation Generation
 #### New Documentation Workflow (as of July 2025)
 - YAML module/file descriptions are now extracted to Markdown using `docs/extract_yaml_headers.py`.
-- The Doxygen configuration file is located at `docs/Doxyfile` (not the project root).
-- To generate all documentation:
-  1. Run: `python docs/extract_yaml_headers.py` (extracts YAML headers to Markdown in `docs/`)
-  2. Run: `make docs` (generates ESPHome and Doxygen docs)
-- To generate only ESPHome docs: `make docs-esphome`
-- To generate only Doxygen docs: `make docs-doxygen`
-- All generated documentation is output to `docs/esphome/`, `docs/html/`, and `docs/latex/`.
 
-1. All Docs: `make docs` (ESPHome + Doxygen)
+
+To generate all documentation:
+  1. Run: `python docs/extract_yaml_headers.py` (extracts YAML headers to Markdown in `docs/`)
+  2. Run: `make docs` (generates ESPHome docs)
+To generate only ESPHome docs: `make docs-esphome`
+All generated documentation is output to `docs/esphome/`.
+
+1. All Docs: `make docs` (ESPHome only)
 2. ESPHome Only: `make docs-esphome`
-3. Doxygen Only: `make docs-doxygen`
 
 ### Flash Operations
 1. Chip Info: `make chip-info`

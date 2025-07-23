@@ -1,32 +1,22 @@
 # ------------------------------------------------------------------------------
-#  @file        Makefile
-#  @brief       Master Makefile for ESPHome-based device management
-#  @version     0.6.5
-#  @date        2025-07-18
-#  @details     This Makefile drives the build, upload, and configuration
-#               process for ESPHome projects. It leverages a .makefile for per-device
-#               definitions and includes safety mechanisms to prevent destructive errors.
+#  file        Makefile
+#  brief       Master Makefile for ESPHome-based device management
+#  version     0.6.6
+#  date        2025-07-18
+#  details     This Makefile drives the build, upload, and configuration
+#              process for ESPHome projects. It leverages a .makefile for per-device
+#              definitions and includes safety mechanisms to prevent destructive errors.
 #
-#  @author      Roland Tembo Hendel
-#  @email       rhendel@nexuslogic.com
+#  author      Roland Tembo Hendel
+#  email       rhendel@nexuslogic.com
 #
-#  @license     GNU General Public License v3.0
-#               SPDX-License-Identifier: GPL-3.0-or-later
-#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
-#               This program is free software: you can redistribute it and/or
-#               modify it under the terms of the GNU General Public License
-#               as published by the Free Software Foundation, either version 3
-#               of the License, or (at your option) any later version.
-#
-#               This program is distributed in the hope that it will be useful,
-#               but WITHOUT ANY WARRANTY; without even the implied warranty of
-#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#               GNU General Public License for more details.
-#
-#               You should have received a copy of the GNU General Public License
-#               along with this program. If not, see <https://www.gnu.org/licenses/>.
-#
-#  @note        Co-developed with GitHub Copilot by OpenAI.
+#  license     GNU General Public License v3.0
+#              SPDX-License-Identifier: GPL-3.0-or-later
+#  copyright   Copyright (c) 2025 Roland Tembo Hendel
+#              This program is free software: you can redistribute it and/or
+#              modify it under the terms of the GNU General Public License
+#              as published by the Free Software Foundation, either version 3
+#              of the License, or (at your option) any later version.
 # ------------------------------------------------------------------------------
 
 
@@ -35,54 +25,62 @@
 # ------------------------------------------------------------------------------
 
 # Load project version string
-VERSION := $(shell cat VERSION)
+VERSION              := $(shell cat VERSION)
 
-# Configurable log file (can be overridden in .makefile or command line)
-LOGFILE ?= logs/$(DEVICE_NAME)-$(shell date +%Y%m%d_%H%M%S).log
+# Project-wide file variables
+CONFIGURATION_FILE   := .makefile
+CONFIGURATION_SCRIPT := ./configure.sh
+SRC_DIRS             := . ./common
+YAML_FILES           := $(filter-out %/secrets.yaml, $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.yaml)))
+MD_FILES             := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.md))
+SECRETS_FILE         := ./common/secrets.yaml
+SECRETS_TEMPLATE     := ./common/secrets.template.yaml
+YAML_MAIN            := main.yaml
+LOGFILE              ?= logs/$(DEVICE_NAME)-$(shell date +%Y%m%d_%H%M%S).log
+
+# Default target - full pipeline: build + upload + logs
+.DEFAULT_GOAL        := run
 
 # Auto-detect Python executable with esptool module
 PYTHON_WITH_ESPTOOL := $(shell \
-	for py in python3 python /cygdrive/c/Users/rhendel/AppData/Local/Programs/Python/Python313/python.exe; do \
+	for py in python3 python; do \
 		if "$$py" -c "import esptool" 2>/dev/null; then echo "$$py"; break; fi \
 	done)
 
-# Default target - full pipeline: build + upload + logs
-.DEFAULT_GOAL := run
+# Load per-device config if available
+-include $(CONFIGURATION_FILE)
 
 # Ensure that secrets.yaml is present before running targets that require secrets
 .PHONY: check-secrets
 check-secrets:
-	@if [ ! -f ./common/secrets.yaml ]; then \
-		echo "[ERROR] ./common/secrets.yaml not found!"; \
-		echo "Please copy ./secrets.template.yaml to ./common/secrets.yaml and fill in your credentials."; \
+	@if [ ! -f $(SECRETS_FILE) ]; then \
+		echo "[ERROR] $(SECRETS_FILE) not found!"; \
+		echo "Please copy $(SECRETS_TEMPLATE_FILE) to $(SECRETS_FILE) and fill in your credentials."; \
 		exit 1; \
 	fi
 
-# Load per-device config if available
--include .makefile
+# Ensure that $(CONFIGURATION_FILE) is present before dependent targets run
+.PHONY: _configuration_file
+_configuration_file:
+	   @if [ ! -f $(CONFIGURATION_FILE) ]; then \
+			   echo "$(CONFIGURATION_FILE) not found. Running $(CONFIGURATION_SCRIPT) to generate it..."; \
+			   $(CONFIGURATION_SCRIPT); \
+			   if [ -z "$$MAKEFILE_RELOADED" ]; then \
+					   echo "Reloading Makefile to pick up new variables..."; \
+					   MAKEFILE_RELOADED=1 $(MAKE) $(MAKECMDGOALS); \
+					   exit 0; \
+			   fi; \
+	   fi
 
-# Ensure that .makefile is present before dependent targets run
-.PHONY: _makefile
-_makefile:
-	@if [ ! -f .makefile ]; then \
-		echo ".makefile not found. Running configure.sh to generate it..."; \
-		./configure.sh; \
-		if [ -z "$$MAKEFILE_RELOADED" ]; then \
-			echo "Reloading Makefile to pick up new variables..."; \
-			MAKEFILE_RELOADED=1 $(MAKE) $(MAKECMDGOALS); \
-			exit 0; \
-		fi; \
-	fi
-
-# Run interactive configuration script to generate .makefile and YAML
+# Run interactive configuration script to generate $(CONFIGURATION_FILE) and YAML
 .PHONY: configure
 configure:
-	@./configure.sh
+	@$(CONFIGURE_SCRIPT)
 
 # Generate device/node YAML from project source YAML
 .PHONY: generate
-generate: _makefile
-	@echo "Generating device YAML from main.yaml..."
+generate: _configuration_file
+	@echo "Generating device YAML from $(YAML_MAIN)..."
 	@mkdir -p $(DEVICE_NAME)
 	@awk -F '=' 'NF==2 && $$1 !~ /^#/ && $$1 !~ /^$$/ { \
 		gsub(/^[ \t]+|[ \t]+$$/, "", $$1); \
@@ -90,8 +88,8 @@ generate: _makefile
 		key=$$1; val=$$2; \
 		gsub(/[\/|]/, "\\\\&", val); \
 		print "s|__" key "__|" val "|g" \
-	}' .makefile > .sedargs
-	@sed -f .sedargs main.yaml > $(DEVICE_NAME)/$(DEVICE_NAME).yaml
+	}' $(CONFIGURATION_FILE) > .sedargs
+	@sed -f .sedargs < $(YAML_MAIN) > $(DEVICE_NAME)/$(DEVICE_NAME).yaml
 	@rm -f .sedargs
 
 # ------------------------------------------------------------------------------
@@ -111,7 +109,7 @@ build: check-secrets generate
  
 # Erase the entire flash memory of the ESP32-S3
 .PHONY: flash-erase
-flash-erase: _makefile
+flash-erase: _configuration_file
 	@echo "Erasing flash memory on $(DEVICE_NAME) via $(UPLOAD_PATH)..."
 	@echo "WARNING: This will completely erase all firmware and data!"
 	@echo "Press Ctrl+C within 5 seconds to cancel..."
@@ -120,13 +118,13 @@ flash-erase: _makefile
 
 # Display ESP32-S3 chip information and capabilities
 .PHONY: chip-info
-chip-info: _makefile
+chip-info: _configuration_file
 	@echo "Reading ESP32-S3 chip information via $(UPLOAD_PATH)..."
 	@$(PYTHON_WITH_ESPTOOL) -m esptool --chip esp32s3 --port $(UPLOAD_PATH) chip_id
 
 # Display flash memory information and layout
 .PHONY: flash-info
-flash-info: _makefile
+flash-info: _configuration_file
 	@echo "Reading flash memory information via $(UPLOAD_PATH)..."
 	@$(PYTHON_WITH_ESPTOOL) -m esptool --chip esp32s3 --port $(UPLOAD_PATH) flash_id
 
@@ -148,13 +146,13 @@ flash-verify: build
 
 # Upload the compiled firmware to the device (USB or OTA)
 .PHONY: upload
-upload: check-secrets _makefile
+upload: check-secrets _configuration_file
 	@echo Uploading firmware to $(DEVICE_NAME)...
 	@esphome upload $(DEVICE_NAME)/$(DEVICE_NAME).yaml --device $(UPLOAD_PATH)
 
 # View live log output from the device
 .PHONY: logs
-logs: check-secrets _makefile
+logs: check-secrets _configuration_file
 	@if [ ! -d logs ]; then \
 		echo "Creating logs directory..."; \
 		mkdir -p logs; \
@@ -192,7 +190,7 @@ logs-stop:
 
 # Interactive logs (old behavior, blocks terminal)
 .PHONY: logs-interactive
-logs-interactive: _makefile
+logs-interactive: _configuration_file
 	@echo Streaming logs from $(DEVICE_NAME)...
 	@esphome logs $(DEVICE_NAME)/$(DEVICE_NAME).yaml
 
@@ -216,24 +214,10 @@ run: check-secrets build upload logs
 # ------------------------------------------------------------------------------
 # Documentation Targets
 # ------------------------------------------------------------------------------
-DOXYFILE = docs/Doxyfile
 
-
-# Generate HTML and PDF from YAML documentation
-.PHONY: docs-doxygen
-docs-doxygen:
-	@echo "Extracting YAML headers to Markdown for Doxygen..."
-	@python3 docs/extract_yaml_headers.py
-	@echo "Generating HTML and PDF documentation from YAML files..."
-	@mkdir -p docs/html docs/latex
-	@doxygen $(DOXYFILE)
-	@echo "Building PDF from LaTeX..."
-	@$(MAKE) -C docs/latex > /dev/null 2>&1 || echo "[WARN] PDF build may have issues."
-	@echo "Done. View HTML at docs/html/index.html or PDF at docs/latex/refman.pdf"
-
-# Generate ESPHome documentation from YAML files
+# Documentation Targets (ESPHome only)
 .PHONY: docs-esphome
-docs-esphome: _makefile
+docs-esphome: _configuration_file
 	@echo "Generating ESPHome documentation from device configuration..."
 	@mkdir -p docs/esphome
 	@if [ -f "$(DEVICE_NAME)/$(DEVICE_NAME).yaml" ]; then \
@@ -245,25 +229,48 @@ docs-esphome: _makefile
 		echo "→ $(DEVICE_NAME)/$(DEVICE_NAME).yaml"; \
 		esphome compile $(DEVICE_NAME)/$(DEVICE_NAME).yaml --only-generate > docs/esphome/$(DEVICE_NAME)-config.txt 2>&1 || echo "[WARN] Failed to generate docs for $(DEVICE_NAME).yaml"; \
 	fi
-	@echo "Generating component documentation from common YAML files..."
-	@for file in common/*.yaml; do \
+	@echo "Generating component documentation from YAML_FILES..."
+	@for file in $(YAML_FILES); do \
 		name=$$(basename $$file .yaml); \
-		if [ "$$name" != "secrets" ]; then \
-			echo "→ $$file"; \
-			echo "# ESPHome Component: $$name" > docs/esphome/$$name-component.txt; \
-			echo "# Source: $$file" >> docs/esphome/$$name-component.txt; \
-			echo "# Generated: $$(date)" >> docs/esphome/$$name-component.txt; \
-			echo "" >> docs/esphome/$$name-component.txt; \
-			cat $$file >> docs/esphome/$$name-component.txt; \
-		else \
-			echo "[SKIP] Skipping secrets.yaml"; \
-		fi; \
+		echo "→ $$file"; \
+		echo "# ESPHome Component: $$name" > docs/esphome/$$name-component.txt; \
+		echo "# Source: $$file" >> docs/esphome/$$name-component.txt; \
+		echo "# Generated: $$(date)" >> docs/esphome/$$name-component.txt; \
+		echo "" >> docs/esphome/$$name-component.txt; \
+		cat $$file >> docs/esphome/$$name-component.txt; \
 	done
 	@echo "ESPHome documentation saved to docs/esphome/"
 
-# Generate all documentation (ESPHome + Doxygen)
+
+# MkDocs documentation build target
+.PHONY: docs-mkdoc
+docs-mkdoc:
+	   @echo "Preparing documentation files for MkDocs..."
+	   @mkdir -p docs/mkdocs
+	   # Copy or stub all Markdown files from MD_FILES
+	   for f in $(MD_FILES); do \
+		 base=$$(basename $$f); \
+		 cp -f "$$f" docs/mkdocs/ 2>/dev/null || echo "# Stub for $$base" > docs/mkdocs/$$base; \
+	   done
+	   # Generate .md files for all YAML_FILES
+	   for yaml in $(YAML_FILES); do \
+		 comp=$$(basename $$yaml .yaml); \
+		 md="docs/mkdocs/$${comp}.md"; \
+		 echo "# Component: $$comp" > "$$md"; \
+		 echo "# Source: $$yaml" >> "$$md"; \
+		 echo "# Generated: $$(date)" >> "$$md"; \
+		 echo "" >> "$$md"; \
+		 cat "$$yaml" >> "$$md"; \
+	   done
+	   @echo "Building MkDocs documentation site into docs/html..."
+	   mkdocs build --clean --config-file docs/mkdocs.yml
+	   @echo "MkDocs site built at docs/html/index.html"
+	   @echo "Cleaning up copied documentation files..."
+	   @rm -f docs/mkdocs/*.md
+
+# Generate all documentation (ESPHome only)
 .PHONY: docs
-docs: docs-esphome docs-doxygen
+docs: docs-esphome docs-mkdoc
 
 
 # ------------------------------------------------------------------------------
@@ -303,70 +310,6 @@ clean:
 	fi
 
 
-# Remove generated documentation files
-.PHONY: clean-docs
-clean-docs: clean-docs-esphome clean-docs-doxygen clean-docs-generated
-	@echo "Checking for empty docs subdirectories..."
-	@if [ -d "docs/html" ] && [ -z "$$(ls -A docs/html/ 2>/dev/null)" ]; then \
-		echo "Removing empty docs/html directory..."; \
-		rmdir docs/html/; \
-	fi
-	@if [ -d "docs/latex" ] && [ -z "$$(ls -A docs/latex/ 2>/dev/null)" ]; then \
-		echo "Removing empty docs/latex directory..."; \
-		rmdir docs/latex/; \
-	fi
-	@if [ -d "docs/esphome" ] && [ -z "$$(ls -A docs/esphome/ 2>/dev/null)" ]; then \
-		echo "Removing empty docs/esphome directory..."; \
-		rmdir docs/esphome/; \
-	fi
-# Only remove docs/generated if it is truly empty (including .gitkeep)
-	@if [ -d "docs/generated" ]; then \
-	count=$$(ls -A docs/generated/ 2>/dev/null | wc -l); \
-	if [ "$$count" -eq 0 ]; then \
-	echo "Removing empty docs/generated directory..."; \
-	rmdir docs/generated/; \
-	fi; \
-	fi
-
-# Remove only generated Markdown documentation
-.PHONY: clean-docs-generated
-clean-docs-generated:
-	@echo "Cleaning generated Markdown documentation..."
-	@if [ -d "docs/generated" ]; then \
-		find docs/generated -type f ! -name '.gitkeep' -delete; \
-		echo "Removed generated Markdown files from docs/generated/"; \
-	else \
-		echo "No generated Markdown directory found"; \
-	fi
-
-# Remove only ESPHome-generated documentation
-.PHONY: clean-docs-esphome
-clean-docs-esphome:
-	@echo "Cleaning ESPHome documentation files..."
-	@if [ -d "docs/esphome" ]; then \
-		rm -rf docs/esphome; \
-		echo "Removed ESPHome documentation directory"; \
-	else \
-		echo "No ESPHome documentation directory found"; \
-	fi
-
-# Remove only Doxygen-generated documentation
-.PHONY: clean-docs-doxygen
-clean-docs-doxygen:
-	@echo "Cleaning Doxygen documentation..."
-	@if [ -d "docs/html" ]; then \
-		rm -rf docs/html/; \
-		echo "Removed Doxygen HTML documentation"; \
-	else \
-		echo "No Doxygen HTML directory found"; \
-	fi
-	@if [ -d "docs/latex" ]; then \
-		rm -rf docs/latex/; \
-		echo "Removed Doxygen LaTeX documentation"; \
-	else \
-		echo "No Doxygen LaTeX directory found"; \
-	fi
-
 # Remove ESPHome build cache and compiled objects
 .PHONY: clean-cache
 clean-cache: clean
@@ -377,6 +320,21 @@ clean-cache: clean
 			rm -rf "$(DEVICE_NAME)/.esphome"; \
 		fi; \
 	fi
+
+# Remove generated documentation files (ESPHome and MkDocs)
+.PHONY: clean-docs
+clean-docs:
+	   @echo "Cleaning ESPHome documentation files..."
+	   @if [ -d "docs/esphome" ]; then \
+			   rm -rf docs/esphome; \
+			   echo "Removed ESPHome documentation directory"; \
+	   else \
+			   echo "No ESPHome documentation directory found"; \
+	   fi
+	   @echo "Cleaning MkDocs documentation files..."
+	   rm -rf docs/mkdocs
+	   rm -rf docs/html
+	   @echo "Removed MkDocs documentation directory."
 
 # Remove entire device directory (generated YAML + all build artifacts)
 .PHONY: clobber
@@ -465,17 +423,14 @@ help:
 	@echo "  run                 Build, upload, and stream logs"
 	@echo ""
 	@echo "Documentation Targets:"
-	@echo "  docs                Generate all documentation (ESPHome + Doxygen)"
+	@echo "  docs                Generate all documentation (ESPHome)"
 	@echo "  docs-esphome        Generate ESPHome style documentation"
-	@echo "  docs-doxygen        Generate Doxygen style documentation"
+	@echo "  docs-mkdoc          Generate MkDocs style documentation"
 	@echo ""
 	@echo "Cleanup Targets:"
 	@echo "  clean               Remove temporary build artifacts and logs"
 	@echo "  clean-cache         Remove ESPHome build cache"
-	@echo "  clean-docs          Remove all generated documentation (including docs/generated)"
-	@echo "  clean-docs-generated Remove only generated Markdown documentation (docs/generated)"
-	@echo "  clean-docs-esphome  Remove only ESPHome documentation files"
-	@echo "  clean-docs-doxygen  Remove only Doxygen documentation"
+	@echo "  clean-docs          Remove all generated documentation (ESPHome)"
 	@echo "  clobber             Remove entire device directory and documentation"
 	@echo "  distclean           Complete cleanup for archive/export"
 	@echo ""

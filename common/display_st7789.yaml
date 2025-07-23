@@ -1,47 +1,45 @@
 # ------------------------------------------------------------------------------
-#  @file        display_st7789.yaml
-#  @brief       Waveshare Pico LCD 1.3" Display Module subsystem configuration.
-#  @details     Features Include:
-#               - 240x240 pixel display, IPS screen, 65k RGB color depth
-#               - 4 momentary buttons (A, B, X, Y)
-#               - 4-way joystick with select button
-#               - ST7789V display driver support
-#               - SPI interface for communication
-#               - rPi Pico Pin compatability
+#  file       display_st7789.yaml
+#  brief      Waveshare Pico LCD 1.3" Display Module subsystem configuration.
+#  details    Features Include:
+#             - 240x240 pixel display, IPS screen, 65k RGB color depth
+#             - 4 momentary buttons (A, B, X, Y)
+#             - 4-way joystick with select button
+#             - ST7789V display driver support
+#             - SPI interface for communication
+#             - rPi Pico Pin compatibility
 #
-#  @author      Roland Tembo Hendel
-#  @email       rhendel@nexuslogic.com
+#  author     Roland Tembo Hendel
+#  email      rhendel@nexuslogic.com
 #
-#  @license     GNU General Public License v3.0
-#               SPDX-License-Identifier: GPL-3.0-or-later
-#  @copyright   Copyright (c) 2025 Roland Tembo Hendel
-#               This program is free software: you can redistribute it and/or
-#               modify it under the terms of the GNU General Public License
-#               as published by the Free Software Foundation, either version 3
-#               of the License, or (at your option) any later version.
+#  license    GNU General Public License v3.0
+#             SPDX-License-Identifier: GPL-3.0-or-later
+#  copyright  Copyright (c) 2025 Roland Tembo Hendel
+#             This program is free software: you can redistribute it and/or
+#             modify it under the terms of the GNU General Public License
+#             as published by the Free Software Foundation, either version 3
+#             of the License, or (at your option) any later version.
 #
-#               This program is distributed in the hope that it will be useful,
-#               but WITHOUT ANY WARRANTY; without even the implied warranty of
-#               MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#               GNU General Public License for more details.
+#             This program is distributed in the hope that it will be useful,
+#             but WITHOUT ANY WARRANTY; without even the implied warranty of
+#             MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#             GNU General Public License for more details.
 #
-#               You should have received a copy of the GNU General Public License
-#               along with this program. If not, see <https://www.gnu.org/licenses/>.
+#             You should have received a copy of the GNU General Public License
+#             along with this program. If not, see <https://www.gnu.org/licenses/>.
 #
-#  @note        Co-developed with ChatGPT by OpenAI.
+#  note       Co-developed with ChatGPT by OpenAI.
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
-# @brief YAML linter configuration
-# @details
+#  YAML linter configuration
 #   - Disables quoted-strings rule for improved readability
 # ------------------------------------------------------------------------------
 # yamllint disable rule:quoted-strings
 
 
 # ------------------------------------------------------------------------------
-# @brief Waveshare Pico-LCD-1.3 Display Standard Pinout Map (Vertical, Top View)
-# @details
+#  Waveshare Pico-LCD-1.3 Display Standard Pinout Map (Vertical, Top View)
 # ------------------------------------------------------------------------------
 #
 #                       ┌──────────────────────┐
@@ -79,27 +77,27 @@
 
 
 # ------------------------------------------------------------------------------
-# @brief SPI bus configuration for ST7789V display module
-# @details
+#  SPI bus configuration for ST7789V display module
 #   - Configures SPI bus for display communication
 #   - Assigns clock and MOSI pins
-# @param clk_pin  Clock pin for SPI
-# @param mosi_pin MOSI data pin
+#   - Parameters:
+#       clk_pin: Clock pin for SPI
+#       mosi_pin: MOSI data pin
 # ------------------------------------------------------------------------------
 spi:
-  clk_pin: GPIO10              # @param clk_pin Clock pin for SPI
-  mosi_pin: GPIO11             # @param mosi_pin MOSI data pin
+  clk_pin: GPIO10              # clk_pin Clock pin for SPI
+  mosi_pin: GPIO11             # param mosi_pin MOSI data pin
 
 
 
 # ------------------------------------------------------------------------------
-# @brief Font used for on-screen display
-# @details
+#  Font used for on-screen display
 #   - Loads Google Noto Sans Mono font for display text
 #   - Sets font size for UI elements
-# @param file Font file or URL
-# @param id   Font ID for reference
-# @param size Font size in points
+#   - Parameters:
+#       file: Font file or URL
+#       id: Font ID for reference
+#       size: Font size in points
 # ------------------------------------------------------------------------------
 font:
   - file: gfonts://Noto Sans Mono
@@ -109,14 +107,14 @@ font:
 
 
 # ------------------------------------------------------------------------------
-# @brief Status icon images
-# @details
+#  Status icon images
 #   - Loads PNG images for status and WiFi signal icons
 #   - Used for UI status bar and indicators
-# @param file   Path to image file
-# @param id     Image ID for reference
-# @param type   Image color type (e.g., RGB)
-# @param resize Resize dimensions (pixels)
+#   - Parameters:
+#       file: Path to image file
+#       id: Image ID for reference
+#       type: Image color type (e.g., RGB)
+#       resize: Resize dimensions (pixels)
 # ------------------------------------------------------------------------------
 image:
   # Status icons
@@ -158,14 +156,14 @@ image:
 
 
 # ------------------------------------------------------------------------------
-# @brief Text and sensor definitions
-# @details
+#  Text and sensor definitions
 #   - Exposes WiFi info, hostname, date, and time as text sensors
 #   - Provides template sensors for custom data
-# @param name  Sensor name
-# @param id    Sensor ID
-# @param lambda Lambda function for value
-# @param update_interval Update frequency
+#   - Parameters (per sensor):
+#       name: Sensor name
+#       id: Sensor ID
+#       lambda: Lambda function for value
+#       update_interval: Update frequency
 # ------------------------------------------------------------------------------
 text_sensor:
   - platform: wifi_info
@@ -181,41 +179,30 @@ text_sensor:
   - platform: template
     name: "Hostname"
     id: hostname
-    # Doxygen: Hide lambda from documentation
-    # /** @cond */
     lambda: |-
       return App.get_name();
-    # /** @endcond */
     update_interval: 60s
 
   - platform: template
     name: "Current Date"
     id: current_date
-    # ---
     # Returns the current date as YYYY-MM-DD
-    # Doxygen: Hide lambda from documentation
-    # /** @cond */
     lambda: |-
       char str[16];
       time_t now = ::time(nullptr);
       strftime(str, sizeof(str), "%Y-%m-%d", localtime(&now));
       return std::string(str);
-    # /** @endcond */
     update_interval: 60s
 
   - platform: template
     name: "Current Time"
     id: current_time
-    # ---
     # Returns the current time as HH:MM:SS
-    # Doxygen: Hide lambda from documentation
-    # /** @cond */
     lambda: |-
       char str[16];
       time_t now = ::time(nullptr);
       strftime(str, sizeof(str), "%H:%M:%S", localtime(&now));
       return std::string(str);
-    # /** @endcond */
     update_interval: 1s
 
 sensor:
@@ -227,34 +214,34 @@ sensor:
 
 
 # ------------------------------------------------------------------------------
-# @brief Display driver configuration block for ST7789V LCD
-# @details
+#  Display driver configuration block for ST7789V LCD
 #   - Configures resolution, pinout, refresh rate, and UI rendering logic
 #   - Includes dynamic rendering of flow rate sensor value
 #   - Screen is cleared to teal and overlays two lines of text
-# @param platform   Display platform (st7789v)
-# @param model      Display model (CUSTOM)
-# @param cs_pin     Chip select pin
-# @param dc_pin     Data/command pin
-# @param reset_pin  Reset line
-# @param width      Display width (pixels)
-# @param height     Display height (pixels)
-# @param update_interval Refresh interval
-# @param data_rate  SPI clock frequency
+#   - Parameters:
+#       platform: Display platform (st7789v)
+#       model: Display model (CUSTOM)
+#       cs_pin: Chip select pin
+#       dc_pin: Data/command pin
+#       reset_pin: Reset line
+#       width: Display width (pixels)
+#       height: Display height (pixels)
+#       update_interval: Refresh interval
+#       data_rate: SPI clock frequency
 # ------------------------------------------------------------------------------
 display:
   - platform: st7789v
     model: CUSTOM
-    cs_pin: GPIO09          # @param cs_pin Chip select pin
-    dc_pin: GPIO08          # @param dc_pin Data/command pin
-    reset_pin: GPIO12       # @param reset_pin Reset line
+    cs_pin: GPIO09          # cs_pin Chip select pin
+    dc_pin: GPIO08          # dc_pin Data/command pin
+    reset_pin: GPIO12       # reset_pin Reset line
     width: 240
     height: 240
     offset_width: 0
     offset_height: 0
     rotation: 0
-    update_interval: 1s     # @param update_interval Refresh every second
-    data_rate: 2MHz         # @param data_rate SPI clock frequency
+    update_interval: 1s     # update_interval Refresh every second
+    data_rate: 2MHz         # data_rate SPI clock frequency
     auto_clear_enabled: false
     lambda: |-
       // Colors
