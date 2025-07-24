@@ -1,7 +1,9 @@
 
 # Release Notes
 
-## Version 0.6.6 – July 22, 2025
+> **⚠️ _This project is currently under active development and is _not_ ready for practical deployment. Use at your own risk!_ ⚠️**
+
+## Version 0.6.7 – July 23, 2025
 
 **Pre-release milestone: Modular, maintainable, and secure ESPHome system for ESP32S3**
 

@@ -2,14 +2,12 @@
 
 ## Pre-Commit Commands
 ```bash
-# 1. Clean build validation
-make clean && make build
+# 1. Run regression tests
+./regression-test.sh
 
 # 2. Version consistency check
 grep "version.*0\." Makefile VERSION
 
-# 3. Documentation test
-make help && make docs  # Validate documentation generation
 
 # 4. Archive readiness test
 make distclean && git status
@@ -47,7 +45,7 @@ Version: 0.6.6
 - [ ] Review all headers in source files for version, license, and attribution consistency
 
 ### **Version Reference Update**
-- [ ] Update all version references throughout the codebase to match VERSION file (0.6.6)
+- [ ] Update all non-historical, non-generic version references in documentation and markdown files to match VERSION file (0.6.7)
 
 ## Pre-Commit Validation
 
@@ -57,7 +55,6 @@ Version: 0.6.6
 - [x] **Documentation**: All functions/components have `@brief`, `@details`, `@author` comments
 - [x] **Code Style**: Consistent formatting, proper indentation, clean spacing
 
-
 ### **2. Build System Validation**
 - [x] **Clean Build**: `make clean && make build` completes successfully
 - [x] **No Warnings**: Build process shows no compilation warnings or errors
@@ -66,13 +63,15 @@ Version: 0.6.6
 - [x] **Documentation Generation**: `make help && make docs` completes without errors
 
 ### **3. Testing & Verification**
-- [x] **Hardware Test**: If hardware changes, verify on actual ESP32 device
+- [x] **Regression Test**: Regression Test script passes with no wrrors or warnings
+- [x] **Hardware Test**: If hardware changes, verify on actual platform devices
 - [x] **Component Test**: New components build and initialize correctly
 - [x] **Log Validation**: Logging system produces clean, readable output
 - [x] **OTA Test**: Over-the-air upload works (if network changes made)
 
 ### **4. Documentation Updates**
 - [x] **README.md**: Updated with new features, requirements, or workflow changes
+- [x] **Repository File Tree**: Updated in `README.md` to reflect current project structure
 - [x] **CHANGELOG.md**: New entry documenting changes with version bump
 - [x] **Help System**: `make help` reflects any new or changed targets
 - [x] **Component Docs**: New components documented in `common/` directory
@@ -87,6 +86,7 @@ Version: 0.6.6
 ### **6. Version Management**
 - [x] **VERSION File**: Bumped appropriately (major.minor.patch)
 - [x] **Makefile Header**: Version number updated to match VERSION file
+- [x] **Check All Version References**: All version numbers in code, docs, and configs match the VERSION file
 - [x] **Component Versions**: Any component-specific versions updated
 - [x] **Dependency Versions**: Document any new version requirements
 

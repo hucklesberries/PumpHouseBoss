@@ -1,10 +1,18 @@
+
 # sysmon-ph: ESPHome Pumphouse Monitor
 
-A professional ESPHome-based system for monitoring and managing a pumphouse using ESP32-S3. Features modular configuration, robust automation, and comprehensive documentation for collaborative development.
+A professional ESPHome-based system for monitoring and managing a commerecial or residential pumphouse 
+or water distribution/filtration system.
 
-## Features
+> **⚠️ _This project is currently under active development and is _not_ ready for practical deployment. Use at your own risk!_ ⚠️**
+
+## Product Features
 - Monitors water flow and detects anomalies
-- Controls solenoids to manage water flow
+- Controls solenoids to manage water flow and prevent water loss from water-line breaks and leaks
+- Built-in integration with ESPHome Applications (i.e. Home Assistant)
+- Can sends alerts through integrated sofware (i.e. Home Assistant)
+
+## Firmware Features
 - Modular YAML for hardware components
 - Pinout maps for ESP32S3, ST7789 display, and Pico-LCD hardware for easy wiring and troubleshooting
 - 24-target Makefile for build, upload, logging, cleaning, docs
@@ -15,6 +23,13 @@ A professional ESPHome-based system for monitoring and managing a pumphouse usin
 - Safety mechanisms to protect critical files
 - VS Code integration with pre-defined tasks
 - Quality assurance via checklists and session continuity
+
+## Supported Hardware
+- Espressif ESP32 MCU platforms
+- Espressif ESP32s3 MCU platforms
+- Waveshare Pico-LCD-1.3 Display (st7789) [OPTIONAL]
+- 4-button Control(ler) [OPTIONAL]
+- Status LEDs x 3 [OPTIONAL]
 
 ## Repository File Tree
 ```
@@ -43,6 +58,25 @@ A professional ESPHome-based system for monitoring and managing a pumphouse usin
     └── wifi.yaml
 ```
 
+
+
+## Dependencies
+
+To build, flash, and document this project, you need:
+
+- **Python 3** (for ESPHome and build scripts)
+- **ESPHome** (`pip install esphome`)
+- **Make** (GNU Make, available via Cygwin on Windows)
+- **Cygwin** (for Unix-like tools and shell on Windows)
+- **MkDocs** (`pip install mkdocs mkdocs-material`) for documentation
+- **YAML linter** (optional, e.g., `pip install yamllint`)
+- **Git** (for version control)
+
+You may also need:
+- ESP32 toolchain (if building/flashing outside ESPHome)
+- pip packages: `esphome`, `mkdocs`, `mkdocs-material`, `yamllint`
+
+See the Makefile and docs for more details.
 
 ## Getting Started
 
