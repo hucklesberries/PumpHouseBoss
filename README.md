@@ -44,20 +44,31 @@ or water distribution/filtration system.
 ├── configure.sh
 ├── main.yaml
 ├── secrets.template.yaml
-├── Doxyfile
-├── sysmon-ph.code-workspace
+├── regression-test.sh
+├── GIT-COPILOT.md
+├── common/
+│   ├── display_st7789.yaml
+│   ├── esp32.yaml
+│   ├── esp32s3.yaml
+│   ├── logging.yaml
+│   ├── ota.yaml
+│   ├── watchdog.yaml
+│   ├── web_server.yaml
+│   └── wifi.yaml
+├── docs/
+│   └── mkdocs.yml
 ├── icons/
-└── common/
-    ├── display_st7789.yaml
-    ├── esp32s3.yaml
-    ├── logging.yaml
-    ├── ota.yaml
-    ├── secrets.yaml
-    ├── watchdog.yaml
-    ├── web_server.yaml
-    └── wifi.yaml
+│   ├── status_error.png
+│   ├── status_ok.png
+│   ├── status_warn.png
+│   ├── wifi-0.png
+│   ├── wifi-100.png
+│   ├── wifi_0.png
+│   ├── wifi_1.png
+│   ├── wifi_2.png
+│   ├── wifi_3.png
+│   └── wifi_4.png
 ```
-
 
 
 ## Dependencies

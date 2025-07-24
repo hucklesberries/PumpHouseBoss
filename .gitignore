@@ -1,3 +1,5 @@
+# Ignore VS Code workspace file
+sysmon-ph.code-workspace
 
 # Project/session continuity
 .kibo
