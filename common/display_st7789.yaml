@@ -1,45 +1,37 @@
 # ------------------------------------------------------------------------------
-#  file       display_st7789.yaml
-#  brief      Waveshare Pico LCD 1.3" Display Module subsystem configuration.
-#  details    Features Include:
-#             - 240x240 pixel display, IPS screen, 65k RGB color depth
-#             - 4 momentary buttons (A, B, X, Y)
-#             - 4-way joystick with select button
-#             - ST7789V display driver support
-#             - SPI interface for communication
-#             - rPi Pico Pin compatibility
+#  File:         display_st7789.yaml
+#  File Type:    ESPHome YAML Include
+#  Purpose:      Waveshare Pico LCD 1.3" Display Module subsystem configuration
+#  Version:      0.7.0
+#  Date:         2025-07-24
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
-#  author     Roland Tembo Hendel
-#  email      rhendel@nexuslogic.com
+#  Description:  Configuration for 240x240 pixel IPS display, 4 buttons, joystick,
+#                ST7789V driver, SPI interface, and rPi Pico compatibility.
 #
-#  license    GNU General Public License v3.0
-#             SPDX-License-Identifier: GPL-3.0-or-later
-#  copyright  Copyright (c) 2025 Roland Tembo Hendel
-#             This program is free software: you can redistribute it and/or
-#             modify it under the terms of the GNU General Public License
-#             as published by the Free Software Foundation, either version 3
-#             of the License, or (at your option) any later version.
+#  Features:     - 240x240 pixel display, IPS, 65k RGB color
+#                - 4 momentary buttons (A, B, X, Y)
+#                - 4-way joystick with select button
+#                - ST7789V display driver support
+#                - SPI interface for communication
+#                - rPi Pico Pin compatibility
 #
-#             This program is distributed in the hope that it will be useful,
-#             but WITHOUT ANY WARRANTY; without even the implied warranty of
-#             MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-#             GNU General Public License for more details.
-#
-#             You should have received a copy of the GNU General Public License
-#             along with this program. If not, see <https://www.gnu.org/licenses/>.
-#
-#  note       Co-developed with ChatGPT by OpenAI.
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
-#  YAML linter configuration
-#   - Disables quoted-strings rule for improved readability
+#    YAML linter configuration
+#      - Disables quoted-strings rule for improved readability
 # ------------------------------------------------------------------------------
 # yamllint disable rule:quoted-strings
 
 
 # ------------------------------------------------------------------------------
-#  Waveshare Pico-LCD-1.3 Display Standard Pinout Map (Vertical, Top View)
+#    Waveshare Pico-LCD-1.3 Display Standard Pinout Map (Vertical, Top View)
 # ------------------------------------------------------------------------------
 #
 #                       ┌──────────────────────┐
@@ -65,25 +57,25 @@
 #            JOY_LEFT  ─┤ 21   Y  X  B  A   20 ├─  BTN_A
 #                       └──────────────────────┘
 #
-#  Notes:
-#    - pin 40, VBUS; 5 VDC
-#    - pin 39, VSYS; NC
-#    - pin 11, DC;   Data/Command - high for data, low for command)
-#    - pin 12, CS;   Chip Select  - active low
-#    - pin 16, RST;  Reset        - active low
-#    - pin 17, BL;   acklight    - active high
+#    Notes:
+#      - pin 40, VBUS; 5 VDC
+#      - pin 39, VSYS; NC
+#      - pin 11, DC;   Data/Command - high for data, low for command)
+#      - pin 12, CS;   Chip Select  - active low
+#      - pin 16, RST;  Reset        - active low
+#      - pin 17, BL;   Backlight    - active high
 #
 # ------------------------------------------------------------------------------
 
 
 # ------------------------------------------------------------------------------
-#  Font used for on-screen display
-#   - Loads Google Noto Sans Mono font for display text
-#   - Sets font size for UI elements
-#   - Parameters:
-#       file: Font file or URL
-#       id: Font ID for reference
-#       size: Font size in points
+#    Font used for on-screen display
+#      - Loads Google Noto Sans Mono font for display text
+#      - Sets font size for UI elements
+#      - Parameters:
+#          file: Font file or URL
+#          id: Font ID for reference
+#          size: Font size in points
 # ------------------------------------------------------------------------------
 font:
   - file: gfonts://Noto Sans Mono
@@ -93,48 +85,48 @@ font:
 
 
 # ------------------------------------------------------------------------------
-#  Status icon images
-#   - Loads PNG images for status and WiFi signal icons
-#   - Used for UI status bar and indicators
-#   - Parameters:
-#       file: Path to image file
-#       id: Image ID for reference
-#       type: Image color type (e.g., RGB)
-#       resize: Resize dimensions (pixels)
+#    Status icon images
+#      - Loads PNG images for status and WiFi signal icons
+#      - Used for UI status bar and indicators
+#      - Parameters:
+#          file: Path to image file
+#          id: Image ID for reference
+#          type: Image color type (e.g., RGB)
+#          resize: Resize dimensions (pixels)
 # ------------------------------------------------------------------------------
 image:
   # Status icons
-  - file: "../../icons/status_ok.png"
+  - file: "icons/status_ok.png"
     id: status_ok_icon
     type: RGB
     resize: 32x32
-  - file: "../../icons/status_warn.png"
+  - file: "icons/status_warn.png"
     id: status_warn_icon
     type: RGB
     resize: 32x32
-  - file: "../../icons/status_error.png"
+  - file: "icons/status_error.png"
     id: status_error_icon
     type: RGB
     resize: 32x32
 
   # WiFi signal icons
-  - file: "../../icons/wifi_0.png"
+  - file: "icons/wifi_0.png"
     id: wifi_0_icon
     type: RGB
     resize: 32x32
-  - file: "../../icons/wifi_1.png"
+  - file: "icons/wifi_1.png"
     id: wifi_1_icon
     type: RGB
     resize: 32x32
-  - file: "../../icons/wifi_2.png"
+  - file: "icons/wifi_2.png"
     id: wifi_2_icon
     type: RGB
     resize: 32x32
-  - file: "../../icons/wifi_3.png"
+  - file: "icons/wifi_3.png"
     id: wifi_3_icon
     type: RGB
     resize: 32x32
-  - file: "../../icons/wifi_4.png"
+  - file: "icons/wifi_4.png"
     id: wifi_4_icon
     type: RGB
     resize: 32x32
@@ -142,14 +134,14 @@ image:
 
 
 # ------------------------------------------------------------------------------
-#  Text and sensor definitions
-#   - Exposes WiFi info, hostname, date, and time as text sensors
-#   - Provides template sensors for custom data
-#   - Parameters (per sensor):
-#       name: Sensor name
-#       id: Sensor ID
-#       lambda: Lambda function for value
-#       update_interval: Update frequency
+#    Text and sensor definitions
+#      - Exposes WiFi info, hostname, date, and time as text sensors
+#      - Provides template sensors for custom data
+#      - Parameters (per sensor):
+#          name: Sensor name
+#          id: Sensor ID
+#          lambda: Lambda function for value
+#          update_interval: Update frequency
 # ------------------------------------------------------------------------------
 text_sensor:
   - platform: wifi_info
@@ -200,20 +192,20 @@ sensor:
 
 
 # ------------------------------------------------------------------------------
-#  Display driver configuration block for ST7789V LCD
-#   - Configures resolution, pinout, refresh rate, and UI rendering logic
-#   - Includes dynamic rendering of flow rate sensor value
-#   - Screen is cleared to teal and overlays two lines of text
-#   - Parameters:
-#       platform: Display platform (st7789v)
-#       model: Display model (CUSTOM)
-#       cs_pin: Chip select pin
-#       dc_pin: Data/command pin
-#       reset_pin: Reset line
-#       width: Display width (pixels)
-#       height: Display height (pixels)
-#       update_interval: Refresh interval
-#       data_rate: SPI clock frequency
+#    Display driver configuration block for ST7789V LCD
+#      - Configures resolution, pinout, refresh rate, and UI rendering logic
+#      - Includes dynamic rendering of flow rate sensor value
+#      - Screen is cleared to teal and overlays two lines of text
+#      - Parameters:
+#          platform: Display platform (st7789v)
+#          model: Display model (CUSTOM)
+#          cs_pin: Chip select pin
+#          dc_pin: Data/command pin
+#          reset_pin: Reset line
+#          width: Display width (pixels)
+#          height: Display height (pixels)
+#          update_interval: Refresh interval
+#          data_rate: SPI clock frequency
 # ------------------------------------------------------------------------------
 display:
   - platform: st7789v

@@ -1,11 +1,32 @@
+# ------------------------------------------------------------------------------
+#  File:         mkdocs.yml
+#  File Type:    MkDocs Configuration
+#  Purpose:      Documentation site configuration for PumpHouse Boss
+#  Version:      0.7.0
+#  Date:         2025-07-24
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Configuration for MkDocs static documentation site, navigation,
+#                theme, and build output directory.
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ------------------------------------------------------------------------------
+
 site_name: SysMon-PH Documentation
 docs_dir: mkdocs
 nav:
   - Home: README.md
   - RELEASE Notes: RELEASE.md
   - CHANGELOG: CHANGELOG.md
-  - main.md: main.md
-  - secrets.template.md: secrets.template.md
+  - Main: main.md
+  - Variants:
+      - PHB Pro: phb-pro.md
+      - PHB Pro Max: phb-pro-max.md
+      - PHB Std: phb-std.md
   - Common:
       - Display: display_st7789.md
       - esp32: esp32.md
@@ -15,6 +36,10 @@ nav:
       - Watchdog: watchdog.md
       - Web Server: web_server.md
       - WiFi: wifi.md
+      - Secrets Template: secrets.template.md
+  - DISPOSITION: DISPOSITION.md
+  - GIT-COPILOT: GIT-COPILOT.md
+  - TODO: TODO.md
 theme:
   name: material
   palette:

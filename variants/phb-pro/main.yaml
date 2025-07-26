@@ -71,15 +71,13 @@ substitutions:
 #       logging: USB/UART logging config (level, baud)
 #       watchdog: System reliability watchdog component
 # ------------------------------------------------------------------------------
-# ------------------------------------------------------------------------------
 packages:
-  esp32:    !include ../../common/__PLATFORM__.yaml
-  display:  !include ../../common/display_st7789.yaml
-  wifi:     !include ../../common/wifi.yaml
-  ota:      !include ../../common/ota.yaml
-  web:      !include ../../common/web_server.yaml
-  logging:  !include ../../common/logging.yaml
-  watchdog: !include ../../common/watchdog.yaml
+  esp32s3:  !include __PROJECT_ROOT__/common/__PLATFORM__.yaml
+  wifi:     !include __PROJECT_ROOT__/common/wifi.yaml
+  ota:      !include __PROJECT_ROOT__/common/ota.yaml
+  web:      !include __PROJECT_ROOT__/common/web_server.yaml
+  logging:  !include __PROJECT_ROOT__/common/logging.yaml
+  watchdog: !include __PROJECT_ROOT__/common/watchdog.yaml
 
 # ------------------------------------------------------------------------------
 #  ESPHome-specific metadata and on_boot logic

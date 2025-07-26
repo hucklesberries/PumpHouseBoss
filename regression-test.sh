@@ -1,68 +1,177 @@
 #!/usr/bin/env bash
-# ------------------------------------------------------------------------------
-#  file        regression-test.sh
-#  brief       Project regression test runner for ESPHome-based device management
-#  details     Runs a suite of checks and utility targets, logging results and
-#              printing a summary. Designed to be called from the Makefile or
-#              directly from the shell. All output is logged to TEST_LOGFILE.
+# ===============================================================================
+#  File:         regression-test.sh
+#  File Type:    bash script
+#  Purpose:      Project regression test runner for ESPHome-based device management
+#  Version:      0.7.0
+#  Date:         2025-07-24
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
-#  author      Roland Tembo Hendel
-#  email       rhendel@nexuslogic.com
+#  Description:  Runs a suite of checks and utility targets for all project variants,
+#                logging results and printing a summary. Designed to be called from
+#                the Makefile or directly from the shell. All output is logged to
+#                regression-test.log.
 #
-#  license     GNU General Public License v3.0
-#              SPDX-License-Identifier: GPL-3.0-or-later
-#  copyright   Copyright (c) 2025 Roland Tembo Hendel
-#              This program is free software: you can redistribute it and/or
-#              modify it under the terms of the GNU General Public License
-# ------------------------------------------------------------------------------
+#  Features:     - Validates required files and YAML syntax
+#                - Runs Makefile utility, build, docs, and clean targets per variant
+#                - Colorized output in terminal, plain in logfile
+#                - Progress dots for long-running tests (interactive only)
+#                - Robust cleanup of background tasks on interruption
+#                - Elapsed time and summary reporting
+#  Usage:        ./regression-test.sh [logfile] [options]
+#                   Options:
+#                     -h, --help     Show this help message and exit
+#                     -v, --version  Show script version and exit
+#                     logfile        (Optional) Path to log file (default: regression-test.log)
+#                   Example:
+#                     ./regression-test.sh custom.log
+#
+#  Note:         Spawns a background task for progress indication when run
+#                interactively. Background task is killed on exit or interruption (trap).
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ===============================================================================
+
+set -uo pipefail
 
 
 # ------------------------------------------------------------------------------
 #  Configuration
 # ------------------------------------------------------------------------------
 
-# List of targets to check (matches Makefile)
-UTILITY_TARGETS="${TEST_TARGETS:-help version buildvars}"
-BUILD_TARGETS="${BUILD_TARGETS:-build docs-esphome docs-mkdoc}"
-YAML_DIRECTORIES=(./ common)
 
-# Dynamically find all .yaml files in YAML_DIRECTORIES
-YAML_FILES=()
-for dir in "${YAML_DIRECTORIES[@]}"; do
+# List of targets to check (matches Makefile)
+UTILITY_TARGETS="help version buildvars"
+BUILD_TARGETS="build docs-esphome docs-mkdoc docs"
+CLEAN_TARGETS="clean clean-cache clean-docs clobber distclean"
+SRC_DIRECTORIES=(./ common)
+
+# Dynamically find all .yaml files in SRC_DIRECTORIES
+SRC_FILES=()
+for dir in "${SRC_DIRECTORIES[@]}"; do
     while IFS= read -r -d $'\0' file; do
-        YAML_FILES+=("$file")
+        SRC_FILES+=("$file")
     done < <(find "$dir" -maxdepth 1 -type f -name '*.yaml' -print0 2>/dev/null)
 done
+# Collect .yaml files recursively in variants/
+if [ -d "variants" ]; then
+    while IFS= read -r -d $'\0' file; do
+        SRC_FILES+=("$file")
+    done < <(find variants -type f -name '*.yaml' -print0 2>/dev/null)
+fi
 
-# Log file for all output
-TEST_LOGFILE="${TEST_LOGFILE:-regression-test.log}"
+# Log file for all output (set in parse_command_line)
+TEST_LOGFILE="regression-test.log"
 
 # Key project files to check
-CONFIG_SCRIPT="${CONFIG_SCRIPT:-./configure.sh}"
-MAIN="${MAIN:-./main.yaml}"
-SECRETS_FILE="${SECRETS_FILE:-./common/secrets.yaml}"
+SECRETS_FILE="./common/secrets.yaml"
 
-# Color codes for output
-GREEN="${GREEN:-\033[0;32m}"
-RED="${RED:-\033[0;31m}"
-YELLOW="${YELLOW:-\033[0;33m}"
-NC="${NC:-\033[0m}"
+# Detect if terminal supports color
+if [ -t 1 ] && command -v tput >/dev/null 2>&1 && [ $(tput colors) -ge 8 ]; then
+    COLOR_SUPPORT=1
+    GREEN="\033[0;32m"
+    RED="\033[0;31m"
+    YELLOW="\033[0;33m"
+    NC="\033[0m"
+else
+    COLOR_SUPPORT=0
+    GREEN=""
+    RED=""
+    YELLOW=""
+    NC=""
+fi
 
 # Output tags
-OK="${GREEN}[OK]${NC}"
-WARN="${YELLOW}[WARN]${NC}"
-FAIL="${RED}[FAIL]${NC}"
+PASSED="${GREEN}[PASSED]${NC}"
+WARN="${YELLOW}[-WARN-]${NC}"
+FAIL="${RED}[-FAIL-]${NC}"
+
+
+# Results counters
+COUNTER_FAIL=0
+COUNTER_TOTAL=0
+
+
+# ------------------------------------------------------------------------------
+#  Main dispatch
+# ------------------------------------------------------------------------------
+main() {
+    parse_command_line "$@"
+    print_start_banner
+    test_required_files
+    test_yaml_validation
+    # Robust globbing for test variants
+    local nullglob_was_set=0
+    if shopt -q nullglob; then
+        nullglob_was_set=1
+    else
+        shopt -s nullglob
+    fi
+    for VARIANT in config/*-test.mk; do
+        test_utility_targets "${VARIANT}"
+        test_build_targets "${VARIANT}"
+        test_doc_targets "${VARIANT}"
+        test_clean_targets "${VARIANT}"
+    done
+    # Restore nullglob to previous state
+    if [ "$nullglob_was_set" -eq 0 ]; then
+        shopt -u nullglob
+    fi
+    print_summary_banner
+}
 
 
 # ----------------------------------------------------------------------------
-#  Command line options:
+#  Command Line Operations
 # ----------------------------------------------------------------------------
 
-# Show version information and exit
+# Parse command line options
+parse_command_line() {
+    # Defaults
+    local positional=()
+    while [ $# -gt 0 ]; do
+        case "$1" in
+            -h|--help)
+                show_help
+                exit 0
+                ;;
+            -v|--version)
+                show_version
+                exit 0
+                ;;
+            --)
+                shift; break
+                ;;
+            -*)
+                echo "Unknown option: $1" >&2
+                show_help
+                exit 1
+                ;;
+            *)
+                positional+=("$1")
+                ;;
+        esac
+        shift
+    done
+    # If first positional arg is present and not an option, treat as logfile
+    if [ ${#positional[@]} -gt 0 ]; then
+        TEST_LOGFILE="${positional[0]}"
+    fi
+}
+
+# Show help information and exit
 show_help() {
-    echo "Usage: $0 [output_file] [-h|--help] [-v|--version]"
-    echo "  -h, --help     Show this help message and exit."
+    echo "Usage: $0 [options] [logfile]"
+    echo "  -h, --help     Show this help message and exit"
     echo "  -v, --version  Show script version and exit"
+    echo "  logfile        (Optional) Path to log file (default: regression-test.log)"
+    echo "Examples:"
+    echo "  $0 -h"
+    echo "  $0 custom.log"
 }
 
 # Show version information and exit
@@ -76,102 +185,197 @@ show_version() {
     echo "v$version"
 }
 
-# Parse command line options
-for arg in "$@"; do
-    case "$arg" in
-        -h|--help)
-            show_help
-            exit 0
-            ;;
-        -v|--version)
-            show_version
-            exit 0
-            ;;
-        *)
-            show_help
-            exit -1
-            ;;
-    esac
-done
-
 
 # ------------------------------------------------------------------------------
-#  Main regression test logic
+#  Regression Test Logic
 # ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
 #  run_test: Run a shell command, log output, and print summary line
 #   $1: Command to run
 #   $2: Description for summary
-#   $3: Name of failures variable (by reference)
-#   $4: Name of total variable (by reference)
+#   $3: Name of COUNTER_FAIL variable (by reference)
+#   $4: Name of COUNTER_TOTAL variable (by reference)
 run_test() {
-    local cmd="$1"
-    local desc="$2"
-    local -n failures_ref=$3
-    local -n total_ref=$4
-    local tmp_output
-    tmp_output=$(mktemp)
-    if eval "$cmd" >> "$tmp_output" 2>&1; then
-        if grep -Eiq '(warn|error|fail)' "$tmp_output"; then
-            echo -e "${WARN} $desc" | tee -a "$TEST_LOGFILE"
+    local CMD="$1"
+    local DESC="$2"
+    local -n LOCAL_FAIL=$3
+    local -n LOCAL_TOTAL=$4
+    local TMP_OUTPUT
+    TMP_OUTPUT=$(mktemp)
+
+
+    # Only show dot progress if running interactively
+    if [ -t 1 ]; then
+        # Print running message (no newline)
+        printf "Running %s ..." "${DESC}"
+        (
+            while true; do
+                sleep 3
+                printf "."
+            done
+        ) &
+        PROGRESS_UPDATE_PID=$!
+    fi
+
+    # Run the test command
+    if eval "${CMD}" >> "${TMP_OUTPUT}" 2>&1; then
+        if grep -Eiq '(warn|error|fail)' "${TMP_OUTPUT}"; then
+            local RESULT_LINE="${WARN} ${DESC}"
         else
-            echo -e "${OK}   $desc" | tee -a "$TEST_LOGFILE"
+            local RESULT_LINE="${PASSED}   ${DESC}"
         fi
     else
-        echo -e "${FAIL} $desc" | tee -a "$TEST_LOGFILE"
-        ((failures_ref++))
+        local RESULT_LINE="${FAIL} ${DESC}"
+        ((LOCAL_FAIL++))
     fi
-    cat "$tmp_output" >> "$TEST_LOGFILE"
-    rm -f "$tmp_output"
-    ((total_ref++))
+
+    # Stop the dot printer if running
+    if [ -n "${PROGRESS_UPDATE_PID:-}" ]; then
+        # clean-up
+        kill "${PROGRESS_UPDATE_PID}" 2>/dev/null || true
+        wait "${PROGRESS_UPDATE_PID}" 2>/dev/null || true
+        PROGRESS_UPDATE_PID=""
+
+        # Overwrite the progress line
+        local COLS=$(tput cols 2>/dev/null || echo 80)
+        printf "\r%*s\r" "${COLS}" ""
+    fi
+
+    # Overwrite the line with the result (stdout only)
+    echo -e "${RESULT_LINE}"
+
+    # Log the result (no color)
+    echo "${RESULT_LINE}" >> "${TEST_LOGFILE}"
+    cat "${TMP_OUTPUT}" >> "${TEST_LOGFILE}"
+    rm -f "${TMP_OUTPUT}"
+    ((LOCAL_TOTAL++))
 }
 
-# Start the log file with a banner and timestamp
-{
-    echo "==============================================================================="
-    echo "  Regression Test Log"
-    echo "  Date: $(date)"
-    echo "==============================================================================="
-} > "$TEST_LOGFILE"
 
-# Initialize counters
-failures=0
-total=0
+# ----------------------------------------------------------------------------
+#  Start and Summary banners
+# ----------------------------------------------------------------------------
 
-# Check for required files
-run_test '[ -f VERSION ]' "VERSION file exists" failures total
-run_test "[ -f $CONFIG_SCRIPT ]" "CONFIG_SCRIPT exists" failures total
-run_test "[ -f $MAIN ]" "MAIN YAML exists" failures total
-run_test "[ -f $SECRETS_FILE ]" "SECRETS_FILE exists" failures total
+# Print start banner to both stdout and logfile, and record start time
+BANNER="========================================================================================"
+print_start_banner() {
+    START_TIME=$(date +%s)
+    START_TIME_HUMAN=$(date)
 
-# YAML validation for all YAML files in root and common/
-if command -v yamllint >/dev/null 2>&1; then
-    for yf in "${YAML_FILES[@]}"; do
-        run_test "yamllint $yf" "YAML validation: $yf (yamllint)" failures total
+    fancy_echo "${GREEN}" "$BANNER"
+    fancy_echo "${GREEN}" "  Starting Regression Testing:"
+    fancy_echo "${GREEN}" "    Start Time: ${START_TIME_HUMAN}"
+    fancy_echo "${GREEN}" "$BANNER"
+}
+
+# Print summary banner to both stdout and logfile, and show elapsed time
+print_summary_banner() {
+    END_TIME=$(date +%s)
+    END_TIME_HUMAN=$(date)
+    ELAPSED=$((END_TIME-START_TIME))
+    ELAPSED_MIN=$((ELAPSED/60))
+    ELAPSED_SEC=$((ELAPSED%60))
+    ELAPSED_FMT="${ELAPSED_MIN}m, ${ELAPSED_SEC}s"
+
+    if [ "$COUNTER_FAIL" -eq 0 ]; then
+        fancy_echo "${GREEN}" "$BANNER"
+        fancy_echo "${GREEN}" "  Congratulations! All tests passed: (${COUNTER_TOTAL}/${COUNTER_TOTAL})"
+        fancy_echo "${GREEN}" "    End Time    :  ${END_TIME_HUMAN}"
+        fancy_echo "${GREEN}" "    Elapsed Time:  ${ELAPSED_FMT}"
+        fancy_echo "${GREEN}" "$BANNER"
+    else
+        fancy_echo "${RED}" "$BANNER"
+        fancy_echo "${RED}" "  Oh Oh! Regression tests failed: (${COUNTER_FAIL}/${COUNTER_TOTAL}), see ${TEST_LOGFILE} for results."
+        fancy_echo "${RED}" "    End Time    :  ${END_TIME_HUMAN}"
+        fancy_echo "${RED}" "    Elapsed Time:  ${ELAPSED_FMT}"
+        fancy_echo "${RED}" "$BANNER"
+    fi
+}
+
+
+# ------------------------------------------------------------------------------
+#  Global Test Counters (initialized in main)
+# ------------------------------------------------------------------------------
+
+# Test: required files
+test_required_files() {
+    run_test '[ -f VERSION ]' "VERSION file exists" COUNTER_FAIL COUNTER_TOTAL
+    run_test "[ -f \"${SECRETS_FILE}\" ]" "SECRETS_FILE exists" COUNTER_FAIL COUNTER_TOTAL
+}
+
+# Test: YAML validation
+test_yaml_validation() {
+    if command -v yamllint >/dev/null 2>&1; then
+        for YF in "${SRC_FILES[@]}"; do
+            run_test "yamllint ${YF}" "YAML validation: ${YF} (yamllint)" COUNTER_FAIL COUNTER_TOTAL
+        done
+    elif command -v python >/dev/null 2>&1; then
+        for YF in "${SRC_FILES[@]}"; do
+            run_test "python -c 'import sys, yaml; yaml.safe_load(open(\"${YF}\"))'" "YAML validation: ${YF} (python/yaml)" COUNTER_FAIL COUNTER_TOTAL
+        done
+    else
+        echo -e "${YELLOW}[WARN]${NC} YAML validation skipped: no yamllint or python found" | tee -a "${TEST_LOGFILE}"
+    fi
+}
+
+# Test: utility targets
+test_utility_targets() {
+    for T in ${UTILITY_TARGETS}; do
+        run_test "make ${T} CONFIG=\"${1}\"" "Variant $(basename \"${1}\") - make ${T}" COUNTER_FAIL COUNTER_TOTAL
     done
-elif command -v python >/dev/null 2>&1; then
-    for yf in "${YAML_FILES[@]}"; do
-        run_test "python -c 'import sys, yaml; yaml.safe_load(open(\"$yf\"))'" "YAML validation: $yf (python/yaml)" failures total
+}
+
+# Test: build with each test.mk in config/
+test_build_targets() {
+run_test "make build CONFIG=\"${1}\"" "Variant $(basename \"${1}\") - make build" COUNTER_FAIL COUNTER_TOTAL
+}
+
+# Test: docs targets
+test_doc_targets() {
+run_test "make docs CONFIG=\"${1}\"" "Variant $(basename \"${1}\") - make docs" COUNTER_FAIL COUNTER_TOTAL
+}
+
+# Test: clean targets
+test_clean_targets() {
+    for T in ${CLEAN_TARGETS}; do
+        run_test "make ${T} CONFIG=\"${1}\"" "Variant $(basename \"${1}\") - make ${T}" COUNTER_FAIL COUNTER_TOTAL
     done
-else
-    echo -e "${YELLOW}[WARN]${NC} YAML validation skipped: no yamllint or python found" | tee -a "$TEST_LOGFILE"
-fi
+}
 
-# Run each utility target and log the result
-for t in $UTILITY_TARGETS; do
-    run_test "make $t" "Utility Target: $t" failures total
-done
 
-# Run each build target and log the result
-for t in $BUILD_TARGETS; do
-    run_test "make $t" "Build Target  : $t" failures total
-done
+# ----------------------------------------------------------------------------
+#  Utility Functions
+# ----------------------------------------------------------------------------
 
-# Print final summary with color-coded result
-if [ "$failures" -eq 0 ]; then
-    echo -e "${GREEN}All regression tests passed ($total/$total)${NC}"
-else
-    echo -e "${RED}Regression tests failed: ${failures} of ${total} tests failed.${NC}"
-    echo -e "${RED}See ${TEST_LOGFILE} for results."
-fi
+# Print a line in color to stdout and plain to logfile
+fancy_echo() {
+    if [ "$COLOR_SUPPORT" -eq 1 ]; then
+        echo -e "$1$2${NC}"
+    else
+        echo "$2"
+    fi
+    echo "$2" >> "$TEST_LOGFILE"
+}
+
+
+# ----------------------------------------------------------------------------
+#  Main invocation
+# ----------------------------------------------------------------------------
+# Track background dot printer PID globally
+PROGRESS_UPDATE_PID=""
+
+# Cleanup function to kill background dot printer on exit or interrupt
+cleanup() {
+    if [ -n "${PROGRESS_UPDATE_PID:-}" ]; then
+        kill "${PROGRESS_UPDATE_PID}" 2>/dev/null || true
+        wait "${PROGRESS_UPDATE_PID}" 2>/dev/null || true
+        PROGRESS_UPDATE_PID=""
+    fi
+}
+
+# Trap INT (CTRL-C) and TERM to cleanup (not EXIT, to avoid premature exit under set -e)
+trap cleanup INT TERM
+
+# Call main
+main "$@"

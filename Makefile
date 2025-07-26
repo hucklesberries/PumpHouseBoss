@@ -1,123 +1,105 @@
-# ------------------------------------------------------------------------------
-#  file        Makefile
-#  brief       Master Makefile for ESPHome-based device management
-#  version     0.6.7
-#  date        2025-07-18
-#  details     This Makefile drives the build, upload, and configuration
-#              process for ESPHome projects. It leverages a configuration file
-#              for per-device definitions and includes safety mechanisms to
-#              prevent destructive errors.
+
+# ===============================================================================
+#  File:         Makefile
+#  File Type:    Makefile
+#  Purpose:      Master Makefile for ESPHome-based device management
+#  Version:      0.7.0
+#  Date:         2025-07-24
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
-#  author      Roland Tembo Hendel
-#  email       rhendel@nexuslogic.com
+#  Description:  Drives the build, upload, and configuration process for ESPHome
+#                projects. Leverages a configuration file for per-device definitions
+#                and includes safety mechanisms to prevent destructive errors.
 #
-#  license     GNU General Public License v3.0
-#              SPDX-License-Identifier: GPL-3.0-or-later
-#  copyright   Copyright (c) 2025 Roland Tembo Hendel
-#              This program is free software: you can redistribute it and/or
-#              modify it under the terms of the GNU General Public License
-#              as published by the Free Software Foundation, either version 3
-#              of the License, or (at your option) any later version.
-# ------------------------------------------------------------------------------
+#  Features:     - Per-device configuration and build
+#                - Safety checks for secrets and version
+#                - Utility, build, docs, and clean targets
+#                - Robust error handling and protected directories
+#                - Project versioning and documentation automation
+#  Usage:        make [target] [CONFIG=path/to/config.mk] [VARIANT=variant]
+#                   Common targets: build, upload, logs, docs, clean, run
+#                   Example:
+#                     make build VARIANT=phb-pro CONFIG=phb-pro-test.mk
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ===============================================================================
+
+
+# include helper macros and functions
+include makefile.mk
 
 
 # ------------------------------------------------------------------------------
-# Global Configuration
+
+# ------------------------------------------------------------------------------
+# Initialization / Configuration
 # ------------------------------------------------------------------------------
 
 # Load project version string
-VERSION       ?= $(shell cat VERSION)
+VERSION        ?= $(shell cat VERSION)
 
 # Project root directory (no trailing slash)
-PROJECT_ROOT  := $(patsubst %/,%, $(dir $(abspath $(lastword $(MAKEFILE_LIST)))))
+PROJECT_ROOT   := $(abspath .)
 
 # Default target - full pipeline: build + upload + logs
-.DEFAULT_GOAL := run
+.DEFAULT_GOAL  := run
 
-# Load per-device config if available
-#   note: we'll generate this if we need it and it doesn't exist
-CONFIG ?= $(PROJECT_ROOT)/Makefile.in
--include $(CONFIG)
+# User-specified CONFIG file from the command line, these take precedence
+ifeq ($(origin CONFIG),command line)
+	ifeq ($(shell [ -r $(CONFIG) ] && echo yes),yes)
+		include $(CONFIG)
+	else
+		$(error User config file '$(CONFIG)' is not readable)
+	endif
+endif
 
+# Default custom configuration file (will not override established values)
+ifeq ($(shell [ -r $(PROJECT_ROOT)/config/config.mk ] && echo yes),yes)
+	include $(PROJECT_ROOT)/config/config.mk
+else
+	$(error Default config file '$(PROJECT_ROOT)/config/config.mk' is not readable)
+endif
 
-# ------------------------------------------------------------------------------
-# Pre-Build Configuration and Targets
-# ------------------------------------------------------------------------------
+# Project global defaults (will not override established values)
+ifeq ($(shell [ -r $(PROJECT_ROOT)/config/default.mk ] && echo yes),yes)
+	include $(PROJECT_ROOT)/config/default.mk
+else
+	$(error Default config file '$(PROJECT_ROOT)/config/default.mk' is not readable)
+endif
 
-# Project-wide file variables
-CONFIG_SCRIPT    := $(PROJECT_ROOT)/configure.sh
-TEST_SCRIPT      := $(PROJECT_ROOT)/regression-test.sh
-SRC_DIRS         := $(PROJECT_ROOT) $(PROJECT_ROOT)/common
-SECRETS_FILE     := $(PROJECT_ROOT)/common/secrets.yaml
-SECRETS_TEMPLATE := $(PROJECT_ROOT)/common/secrets.template.yaml
-MAIN             ?= $(PROJECT_ROOT)/main.yaml
-YAML_MAIN        := $(MAIN)
-BUILD_DIR 	     := $(PROJECT_ROOT)/build/$(NODE_NAME)
-RUN_LOGFILE      ?= $(PROJECT_ROOT)/logs/$(NODE_NAME)-$(shell date +%Y%m%d_%H%M%S).log
-BUILD_LOGFILE	 ?= $(PROJECT_ROOT)/build.log
-YAML_FILES       := $(filter-out %/secrets.yaml, $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.yaml)))
-MD_FILES         := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.md))
+# Variant defaults (will not override established values)
+ifeq ($(strip $(VARIANT)),)
+	$(error VARIANT is not set. Please specify a build variant.)
+else
+	ifneq ($(shell [ -r $(PROJECT_ROOT)/variants/$(VARIANT)/variant.mk ] && echo yes),yes)
+		$(error Variant file '$(PROJECT_ROOT)/variants/$(VARIANT)/variant.mk' is not readable)
+	else
+		include $(PROJECT_ROOT)/variants/$(VARIANT)/variant.mk
+	endif
+endif
 
-# Ensure that secrets.yaml is present before running targets that require secrets
-.PHONY: check-secrets
-check-secrets:
-	@if [ ! -f $(SECRETS_FILE) ]; then \
-		echo -e "$(ERROR) $(SECRETS_FILE) not found!"; \
-		echo "Please copy $(SECRETS_TEMPLATE_FILE) to $(SECRETS_FILE) and fill in your credentials."; \
-		exit 1; \
-	fi
+# Project-wide file variables and pre-compile defaults
+SRC_DIRS            := $(PROJECT_ROOT) $(PROJECT_ROOT)/variants $(PROJECT_ROOT)/common
+SECRETS_FILE        := $(PROJECT_ROOT)/common/secrets.yaml
+SECRETS_TEMPLATE    := $(PROJECT_ROOT)/common/secrets.template.yaml
+TEST_SCRIPT         := $(PROJECT_ROOT)/regression-test.sh
+YAML_MAIN           ?= $(PROJECT_ROOT)/variants/$(VARIANT)/main.yaml
+BUILD_DIR           := $(PROJECT_ROOT)/build/$(VARIANT)/$(NODE_NAME)
+LOGFILE             ?= $(PROJECT_ROOT)/logs/$(NODE_NAME)-$(shell date +%Y%m%d_%H%M%S).log
+SRC_FILES           := $(filter-out %/secrets.yaml, $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/**/*.yaml)))
+MD_FILES            := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.md))
 
-# Ensure that $(VERSION) is defined before dependent targets run
-.PHONY: _version
-_version:
-	@if [ -z "$(VERSION)" ]; then \
-		echo -e "$(ERROR) VERSION variable is not set!"; \
-		echo "Please ensure the VERSION file exists and contains a valid version string."; \
-		exit 1; \
-	fi
+# Files and directories to be protected from accidental deletion
+PROTECTED_DIRS      := / ~ ./ $(PROJECT_ROOT)/common $(PROJECT_ROOT)/variants/ $(PROJECT_ROOT)/config $(PROJECT_ROOT)/docs $(PROJECT_ROOT)/icons
 
-# Ensure that $(CONFIG) is present before dependent targets run
-.PHONY: _configuration_file
-_configuration_file:
-	@if [ ! -f $(CONFIG) ]; then \
-		echo "$(CONFIG) not found. Running $(CONFIG_SCRIPT) to generate it..."; \
-		$(CONFIG_SCRIPT); \
-		if [ -z "$$MAKEFILE_RELOADED" ]; then \
-			echo "Reloading Makefile to pick up new variables..."; \
-			MAKEFILE_RELOADED=1 $(MAKE) $(MAKECMDGOALS); \
-			exit 0; \
-		fi; \
-	fi
-
-# Check that PYTHON_WITH_ESPTOOL is set, or fail with a clear error
-.PHONY: check-esptool-python
-check-esptool-python:
-	@if [ -z "$(PYTHON_WITH_ESPTOOL)" ]; then \
-		echo -e "$(ERROR) PYTHON_WITH_ESPTOOL is not set!"; \
-		echo "Set it in your environment or pass it inline, e.g.:'"; \
-		echo "  PYTHON_WITH_ESPTOOL=/cygdrive/c/Users/youruser/AppData/Local/Programs/Python/Python311/python.exe make chip-info"; \
-		exit 1; \
-	fi
-
-# Run interactive configuration script to generate $(CONFIG) and YAML
-.PHONY: configure
-configure:
-	@$(CONFIGURE_SCRIPT)
-
-# Generate device/node YAML from project source YAML
-.PHONY: generate
-generate: _version _configuration_file
-	@echo "Generating device YAML from $(YAML_MAIN)..."
-	@mkdir -p $(BUILD_DIR)
-	@awk -F '=' 'NF==2 && $$1 !~ /^#/ && $$1 !~ /^$$/ { \
-		gsub(/^[ \t]+|[ \t]+$$/, "", $$1); \
-		gsub(/^[ \t]+|[ \t]+$$/, "", $$2); \
-		key=$$1; val=$$2; \
-		gsub(/[\/|]/, "\\&", val); \
-		print "s|__" key "__|" val "|g" \
-	}' $(CONFIG) > .sedargs
-	@sed -f .sedargs < $(YAML_MAIN) > $(BUILD_DIR)/$(NODE_NAME).yaml
-	@rm -f .sedargs
+# RELATIVE_BUILD_PATH is the YAML path relative to the project root
+#   IMPORTANT: Always use a relative path to the YAML file when calling ESPHome.
+#   Using an absolute path causes ESPHome to misresolve includes and assets, and produces misleading errors.
+RELATIVE_BUILD_PATH := build/$(VARIANT)/$(NODE_NAME)/$(NODE_NAME).yaml
 
 
 # ------------------------------------------------------------------------------
@@ -126,56 +108,19 @@ generate: _version _configuration_file
 
 # Compile the ESPHome firmware for the specified device
 .PHONY: build
-build: check-secrets generate
+build: _build
 	@echo Building firmware for $(NODE_NAME)...
-	@$(call ESPHOME_CMD,compile,2>&1 | tee build.log)
+	esphome compile $(RELATIVE_BUILD_PATH)
 
-# Erase the entire flash memory of the chipset
-.PHONY: flash-erase
-flash-erase: check-esptool-python _configuration_file
-	@echo "Erasing flash memory on $(NODE_NAME) via $(UPLOAD_PATH)..."
-	@echo "WARNING: This will completely erase all firmware and data!"
-	@echo "Press Ctrl+C within 5 seconds to cancel..."
-	@sleep 5
-	@$(ESPTOOL_CMD) erase_flash
-
-# Display chipset information and capabilities
-.PHONY: chip-info
-chip-info: check-esptool-python _configuration_file
-	   @echo "Reading $(PLATFORM) information via $(UPLOAD_PATH)..."
-	   @$(ESPTOOL_CMD) chip_id
-
-# Display flash memory information and layout
-.PHONY: flash-info
-flash-info: check-esptool-python _configuration_file
-	@echo "Reading flash memory information via $(UPLOAD_PATH)..."
-	@$(ESPTOOL_CMD) flash_id
-
-# Verify flash contents against current firmware build
-.PHONY: flash-verify
-flash-verify: build
-	@echo "Verifying flash contents against current firmware build..."
-	@FIRMWARE_PATH="$(BUILD_DIR)/.esphome/build/$(NODE_NAME)/firmware.bin"; \
-	if [ -f "$$FIRMWARE_PATH" ]; then \
-		echo "Using firmware binary: $$FIRMWARE_PATH"; \
-		echo "Comparing flash contents with built firmware..."; \
-		$(PYTHON_WITH_ESPTOOL) -m esptool --chip $(PLATFORM) --port $(UPLOAD_PATH) verify_flash 0x0 "$$FIRMWARE_PATH" || \
-		echo -e "$(ERROR) Flash verification failed - contents do not match firmware binary"; \
-	else \
-		echo -e "$(ERROR) Firmware binary not found at $$FIRMWARE_PATH"; \
-		echo "Try running 'make build' first to generate the firmware binary"; \
-		exit 1; \
-	fi
-
-# Upload the compiled firmware to the device (USB or OTA)
+# Upload current firmware build to the device
 .PHONY: upload
-upload: check-secrets _configuration_file
+upload:
 	@echo Uploading firmware to $(NODE_NAME)...
-	@$(call ESPHOME_CMD,upload,--device $(UPLOAD_PATH))
+	@cd $(PROJECT_ROOT) && esphome upload $(RELATIVE_BUILD_PATH) --device $(UPLOAD_PATH)
 
 # Record logs from the device
 .PHONY: logs
-logs: check-secrets _configuration_file
+logs: check-secrets
 	@if [ ! -d logs ]; then \
 		echo "Creating logs directory..."; \
 		mkdir -p logs; \
@@ -183,7 +128,7 @@ logs: check-secrets _configuration_file
 	@echo "Stopping any existing logging sessions..."
 	@pkill -f "esphome logs.*$(NODE_NAME)" 2>/dev/null || echo "No previous logging processes found"
 	@echo "Starting fresh logging session to $(LOGFILE)..."
-	@$(call ESPHOME_CMD,logs,> $(LOGFILE) 2>&1 &)
+	@cd $(PROJECT_ROOT) && esphome logs $(RELATIVE_BUILD_PATH) > $(LOGFILE) 2>&1 &
 	@echo "Creating symlink to latest log file..."
 	@cd logs && ln -sf $(shell basename $(LOGFILE)) $(NODE_NAME).log
 	@echo "Logs are being written to: $(LOGFILE)"
@@ -206,16 +151,16 @@ logs-follow:
 	@tail -f logs/$(NODE_NAME).log
 
 # Stop background logging
-.PHONY: logs-stop  
+.PHONY: logs-stop
 logs-stop:
 	@echo "Stopping background logging processes..."
 	@pkill -f "esphome logs.*$(NODE_NAME)" 2>/dev/null || echo "No logging processes found"
 
 # Interactive logs (old behavior, blocks terminal)
 .PHONY: logs-interactive
-logs-interactive: _configuration_file
+logs-interactive:
 	@echo Streaming logs from $(NODE_NAME)...
-	@$(call ESPHOME_CMD,logs,)
+	@cd $(PROJECT_ROOT) && esphome logs $(RELATIVE_BUILD_PATH)
 
 # Start fresh logging session and follow immediately (session-specific logs)
 .PHONY: logs-fresh
@@ -224,13 +169,45 @@ logs-fresh: logs
 		echo "Creating logs directory..."; \
 		mkdir -p logs; \
 	fi
-	@echo "Following fresh log session ($(RUN_LOGFILE))..."
+	@echo "Following fresh log session ($(LOGFILE))..."
 	@tail -f logs/$(NODE_NAME).log
 
 # Build, upload, start logging, then follow logs in one step
 .PHONY: run
-run: check-secrets build upload logs
-	$(MAKE) logs-follow
+run: check-secrets build upload logs logs-follow
+
+# Display chipset information and capabilities
+.PHONY: chip-info
+chip-info: _esptool
+	@echo "Reading $(PLATFORM) information via $(UPLOAD_PATH)..."
+	@$(ESPTOOL_CMD) chip_id
+
+# Display flash memory information and layout
+.PHONY: flash-info
+flash-info: _esptool
+	@echo "Reading flash memory information via $(UPLOAD_PATH)..."
+	@$(ESPTOOL_CMD) flash_id
+
+# Verify flash contents against current firmware build
+.PHONY: flash-verify
+flash-verify: build
+	@echo "Verifying flash contents against current firmware build..."
+	@FIRMWARE_PATH="$(BUILD_DIR)/.esphome/build/$(NODE_NAME)/firmware.bin"; \
+	if [ -f "$$FIRMWARE_PATH" ]; then \
+		echo "Using firmware binary: $$FIRMWARE_PATH"; \
+		echo "Comparing flash contents with built firmware..."; \
+		$(PYTHON_WITH_ESPTOOL) -m esptool --chip $(PLATFORM) --port $(UPLOAD_PATH) verify_flash 0x0 "$$FIRMWARE_PATH" || \
+		echo -e "$(ERROR) Flash verification failed - contents do not match firmware binary"; \
+	fi
+
+# Erase the entire flash memory of the chipset
+.PHONY: flash-erase
+flash-erase: _esptool
+	@echo "Erasing flash memory on $(NODE_NAME) via $(UPLOAD_PATH)..."
+	@echo "WARNING: This will completely erase all firmware and data!"
+	@echo "Press Ctrl+C within 5 seconds to cancel..."
+	@sleep 5
+	@$(ESPTOOL_CMD) erase_flash
 
 
 # ------------------------------------------------------------------------------
@@ -238,27 +215,27 @@ run: check-secrets build upload logs
 # ------------------------------------------------------------------------------
 
 # Documentation Targets (ESPHome only)
-.PHONY: docs-esphome
-docs-esphome: _configuration_file
+
+docs-esphome:
 	@echo "Generating ESPHome documentation from device configuration..."
-	@mkdir -p docs/esphome
-	@WIN_YAML=$(shell cygpath -m $(BUILD_DIR)/$(NODE_NAME).yaml); \
-	if [ -f "$$WIN_YAML" ]; then \
-		$(call ESPHOME_CMD,compile,--only-generate > docs/esphome/$(NODE_NAME)-config.txt 2>&1 || echo "[WARN] Failed to generate docs for $(NODE_NAME).yaml"); \
+	@mkdir -p docs/esphome/$(VARIANT)
+	@if [ -f "$(BUILD_DIR)/$(NODE_NAME)/$(NODE_NAME).yaml" ]; then \
+		esphome compile $(RELATIVE_BUILD_PATH) --only-generate > docs/esphome/$(VARIANT)/$(NODE_NAME)-config.txt 2>&1 || echo "[WARN] Failed to generate docs for $(NODE_NAME).yaml"; \
 	else \
-		$(MAKE) generate; \
-		$(call ESPHOME_CMD,compile,--only-generate > docs/esphome/$(NODE_NAME)-config.txt 2>&1 || echo "[WARN] Failed to generate docs for $(NODE_NAME).yaml"); \
+		$(MAKE) _build; \
+		esphome compile $(RELATIVE_BUILD_PATH) --only-generate > docs/esphome/$(VARIANT)/$(NODE_NAME)-config.txt 2>&1 || echo "[WARN] Failed to generate docs for $(NODE_NAME).yaml"; \
 	fi
-	for file in $(YAML_FILES); do \
+	@for file in $(SRC_FILES); do \
 		name=$$(basename $$file .yaml); \
 		echo "→ $$file"; \
-		echo "# ESPHome Component: $$name" > docs/esphome/$$name-component.txt; \
-		echo "# Source: $$file" >> docs/esphome/$$name-component.txt; \
-		echo "# Generated: $$(date)" >> docs/esphome/$$name-component.txt; \
-		echo "" >> docs/esphome/$$name-component.txt; \
-		cat $$file >> docs/esphome/$$name-component.txt; \
+		echo "# ESPHome Component: $$name" > docs/esphome/$(VARIANT)/$$name-component.txt; \
+		echo "# Source: $$file" >> docs/esphome/$(VARIANT)/$$name-component.txt; \
+		echo "# Generated: $$(date)" >> docs/esphome/$(VARIANT)/$$name-component.txt; \
+		echo "" >> docs/esphome/$(VARIANT)/$$name-component.txt; \
+		cat $$file >> docs/esphome/$(VARIANT)/$$name-component.txt; \
 	done
-	@echo "ESPHome documentation saved to docs/esphome/"
+	@echo "ESPHome documentation saved to docs/esphome/$(VARIANT)/"
+
 
 # MkDocs documentation build target
 .PHONY: docs-mkdoc
@@ -266,12 +243,27 @@ docs-mkdoc:
 	@echo "Preparing documentation files for MkDocs..."
 	@mkdir -p docs/mkdocs
 	# Copy or stub all Markdown files from MD_FILES
-	for f in $(MD_FILES); do \
+	@for f in $(MD_FILES); do \
 		base=$$(basename $$f); \
 		cp -f "$$f" docs/mkdocs/ 2>/dev/null || echo "# Stub for $$base" > docs/mkdocs/$$base; \
 	done
-	# Generate .md files for all YAML_FILES
-	for yaml in $(YAML_FILES); do \
+	# Generate .md files for all variants listed in mkdocs.yml nav
+	@for variant in phb-pro phb-pro-max phb-std; do \
+		yaml="variants/$$variant/main.yaml"; \
+		md="docs/mkdocs/$$variant.md"; \
+		if [ -f "$$yaml" ]; then \
+			echo "# Variant: $$variant" > "$$md"; \
+			echo "# Source: $$yaml" >> "$$md"; \
+			echo "# Generated: $$(date)" >> "$$md"; \
+			echo "" >> "$$md"; \
+			cat "$$yaml" >> "$$md"; \
+		else \
+			echo "# Stub for $$variant" > "$$md"; \
+			echo "# Source: $$yaml (not found)" >> "$$md"; \
+		fi \
+	done
+	# Generate .md files for all other SRC_FILES
+	@for yaml in $(SRC_FILES); do \
 		comp=$$(basename $$yaml .yaml); \
 		md="docs/mkdocs/$${comp}.md"; \
 		echo "# Component: $$comp" > "$$md"; \
@@ -281,7 +273,7 @@ docs-mkdoc:
 		cat "$$yaml" >> "$$md"; \
 	done
 	@echo "Building MkDocs documentation site into docs/html..."
-	mkdocs build --clean --config-file docs/mkdocs.yml
+	@mkdocs build --clean --config-file docs/mkdocs.yml
 	@echo "MkDocs site built at docs/html/index.html"
 	@echo "Cleaning up copied documentation files..."
 	@rm -f docs/mkdocs/*.md
@@ -298,76 +290,53 @@ docs: docs-esphome docs-mkdoc
 # ------------------------------------------------------------------------------
 
 # Remove temporary build artifacts and logs
+
 .PHONY: clean
 clean:
-	@echo "Cleaning temporary build artifacts..."
+	@echo "Cleaning build artifacts (build.log, .sedargs)..."
 	@rm -f build.log .sedargs
-	@if [ -n "$(BUILD_DIR)" ] && [ "$(call is_protected_dir,$(BUILD_DIR))" = "no" ]; then \
-		if [ -f "$(BUILD_DIR)/$(NODE_NAME).yaml" ]; then \
-			echo "Removing generated YAML: $(BUILD_DIR)/$(NODE_NAME).yaml"; \
-			@rm -f "$(BUILD_DIR)/$(NODE_NAME).yaml"; \
-		fi; \
-		if [ -d "$(BUILD_DIR)/.esphome" ]; then \
-			echo "Cleaning ESPHome cache in $(NODE_NAME)/.esphome/"; \
-			@find "$(BUILD_DIR)/.esphome" -name "*.bin" -o -name "*.elf" -o -name "*.map" -o -name "*.json" | head -20 | xargs rm -f; \
-		fi; \
-		if [ -L "logs/$(NODE_NAME).log" ]; then \
-			echo "Removing latest log symlink: logs/$(NODE_NAME).log"; \
-			@rm -f "logs/$(NODE_NAME).log"; \
-		fi; \
-	else \
-		echo "[WARN] NODE_NAME not set or protected - skipping node-build cleanup"; \
-	fi
-	@sh -c '$(call safe_rmrf,$(BUILD_DIR))'
+	@echo "Cleaning build directory ($(BUILD_DIR))..."
+	@sh -c '$(call SAFE_RM,$(BUILD_DIR))'
+	@echo "Cleaning logs for $(NODE_NAME)..."
+	@rm -f logs/$(NODE_NAME).log logs/$(NODE_NAME)-*.log
+	@echo "Cleaning generated documentation for variant ($(VARIANT))..."
+	@sh -c '$(call SAFE_RM,docs/esphome/$(VARIANT))'
 
 
 # Remove ESPHome build cache and compiled objects
 .PHONY: clean-cache
 clean-cache: clean
 	@echo "Removing ESPHome build cache..."
-	@if [ -n "$(BUILD_DIR)" ] && [ "$(call is_protected_dir,$(BUILD_DIR))" = "no" ]; then \
-		if [ -d "$(BUILD_DIR)/.esphome" ]; then \
-			@sh -c '$(call safe_rmrf,$(BUILD_DIR)/.esphome)'; \
-		fi; \
-	fi
+	@-sh -c '$(call SAFE_RM,$(BUILD_DIR)/.esphome)'
 
 # Remove generated documentation files (ESPHome and MkDocs)
 .PHONY: clean-docs
 clean-docs:
 	@echo "Cleaning documentation files..."
-	@if [ -d "docs/esphome" ]; then \
-		sh -c '$(call safe_rmrf,docs/esphome)' >/dev/null 2>&1; \
-	fi
-	@sh -c '$(call safe_rmrf,docs/mkdocs)' >/dev/null 2>&1
-	@sh -c '$(call safe_rmrf,docs/html)' >/dev/null 2>&1
+	@-sh -c '$(call SAFE_RM,docs/esphome)'
+	@-sh -c '$(call SAFE_RM,docs/mkdocs)'
+	@-sh -c '$(call SAFE_RM,docs/html)'
 
 # Remove entire device directory (generated YAML + all build artifacts)
 .PHONY: clobber
-clobber: clean clean-docs
-	@echo "Clobbering device directory..."
-	@if [ -n "$(BUILD_DIR)" ] && [ "$(call is_protected_dir,$(BUILD_DIR))" = "no" ]; then \
-		if [ -d "$(BUILD_DIR)" ]; then \
-			@sh -c '$(call safe_rmrf,$(BUILD_DIR))'; \
-		else \
-			echo "Device directory $(BUILD_DIR)/ does not exist"; \
-		fi; \
-	else \
-		echo -e "$(ERROR) Cannot clobber: NODE_NAME='$(NODE_NAME)' is not set or is protected"; \
-		exit 1; \
-	fi
+clobber: clean-cache clean-docs
+	@echo "Clobbering device build directory..."
+	@-sh -c '$(call SAFE_RM,$(BUILD_DIR))'
 
 # Remove all generated content for fresh start
+
 .PHONY: distclean
 distclean: clean-docs
 	@echo "Performing complete cleanup for archive/export..."
-	@rm -f $(CONFIG) .sedargs 2>/dev/null
-	@rm -f build.log 2>/dev/null
-	@sh -c '$(call safe_rmrf,logs)' >/dev/null 2>&1
-	@for dir in */; do \
-		if [ -d "$$dir" ] && [ "$(call is_protected_dir,$${dir%/})" = "no" ] && [ -f "$$dir$${dir%/}.yaml" ]; then \
-			sh -c '$(call safe_rmrf,$$dir)' >/dev/null 2>&1; \
-		fi; \
-	 done
+	@-rm -f $(CONFIG) .sedargs build.log 2>/dev/null || true
+	@-sh -c '$(call SAFE_RM,build)' 2>/dev/null || true
+	@-sh -c '$(call SAFE_RM,logs)' 2>/dev/null || true
+	@set -- */; \
+	if [ "$$1" != "*/" ]; then \
+		(set +e; for dir in "$@"; do \
+			[ -d "$$dir" ] && sh -c '$(call SAFE_RM,$$dir)' || true; \
+		done); \
+	fi
 	@echo "Distclean complete - workspace ready for archive"
 
 
@@ -397,19 +366,23 @@ version:
 # Display the currently loaded configuration variables
 .PHONY: buildvars
 buildvars:
+	@echo "Variant........: $(if $(VARIANT),$(VARIANT),[ MISSING ])"
 	@echo "Platform.......: $(if $(PLATFORM),$(PLATFORM),[ MISSING ])"
 	@echo "Device name....: $(if $(DEVICE_NAME),$(DEVICE_NAME),[ MISSING ])"
 	@echo "Node name......: $(if $(NODE_NAME),$(NODE_NAME),[ MISSING ])"
 	@echo "Friendly name..: $(if $(FRIENDLY_NAME),$(FRIENDLY_NAME),[ MISSING ])"
+	@echo "Max Controllers: $(if $(NUM_PORTS),$(NUM_PORTS),[ MISSING ])"
 	@echo "Upload path....: $(if $(UPLOAD_PATH),$(UPLOAD_PATH),[ MISSING ])"
-	@echo "WiFi IP........: $(if $(WIFI_STATIC_IP),$(WIFI_STATIC_IP),[ dynamic ])"
-	@echo "WiFi Gateway...: $(if $(WIFI_GATEWAY),$(WIFI_GATEWAY),[ dynamic ])"
-	@echo "WiFi Subnet....: $(if $(WIFI_SUBNET),$(WIFI_SUBNET),[ dynamic ])"
-	@echo "WiFi DNS1......: $(if $(WIFI_DNS1),$(WIFI_DNS1),[ dynamic ])"
-	@echo "WiFi DNS2......: $(if $(WIFI_DNS2),$(WIFI_DNS2),[ dynamic ])"
-	@echo "BUILD DIRECTORY: $(if $(DEVICE_NAME),$(BUILD_DIR),[ NOT_SET ])"
-	@echo "BUILD_LOGFILE..: $(if $(DEVICE_NAME),$(BUILD_LOGFILE),[ NOT_SET ])"
-	@echo "RUN_LOGFILE....: $(if $(DEVICE_NAME),$(RUN_LOGFILE),[ NOT_SET ])"
+	@echo "WiFi IP........: $(if $(STATIC_STATIC_IP),$(STATIC_STATIC_IP),[ dynamic ])"
+	@echo "WiFi Gateway...: $(if $(STATIC_GATEWAY),$(STATIC_GATEWAY),[ dynamic ])"
+	@echo "WiFi Subnet....: $(if $(STATIC_SUBNET),$(STATIC_SUBNET),[ dynamic ])"
+	@echo "WiFi DNS1......: $(if $(STATIC_DNS1),$(STATIC_DNS1),[ dynamic ])"
+	@echo "WiFi DNS2......: $(if $(STATIC_DNS2),$(STATIC_DNS2),[ dynamic ])"
+	@echo "Network Name...: $(if $(OTA_NAME),$(OTA_NAME),[ dynamic ])"
+	@echo "Serial ID......: $(if $(SERIAL_ID),$(SERIAL_ID),[ NOT SET ])"
+	@echo "Build Directory: $(if $(DEVICE_NAME),$(BUILD_DIR),[ NOT_SET ])"
+	@echo "Upload Path....: $(if $(DEVICE_NAME),$(UPLOAD_PATH),[ NOT_SET ])"
+	@echo "Log File........: $(if $(DEVICE_NAME),$(LOGFILE),[ NOT_SET ])"
 
 
 # Print a list of available Makefile targets and descriptions
@@ -420,7 +393,6 @@ help:
 	@echo "================================================================================"
 	@echo ""
 	@echo "Build Targets:"
-	@echo "  configure           Generate configuration (Makefile.in and YAML)"
 	@echo "  build               Compile firmware (output to build.log)"
 	@echo ""
 	@echo "Platform Targets:"
@@ -458,82 +430,69 @@ help:
 
 
 # ------------------------------------------------------------------------------
-# Helper Functions
+# Helper Targets
+# Note: These targets are meant for use by the Build and Utility targets.
+#       They are niot typiocally invoked directly by users.
 # ------------------------------------------------------------------------------
 
-# Macro: Safe recursive delete
-PROTECTED_DIRS := / ~ ./ $(PROJECT_ROOT)/common $(PROJECT_ROOT)/config $(PROJECT_ROOT)/docs $(PROJECT_ROOT)/icons
-define is_protected_dir
-$(if $(filter $(1),$(PROTECTED_DIRS)),yes,no)
-endef
-safe_rmrf = \
-	if [ -z "$1" ]; then \
-		echo "[SAFE_RM] Refusing to delete: directory not specified"; \
-	elif [ "$(call is_protected_dir,$1)" = "yes" ]; then \
-		echo "[SAFE_RM] Refusing to delete protected directory: $1"; \
-	else \
-		echo "[SAFE_RM] Deleting directory: $1"; \
-		rm -rf "$1"; \
+# Ensure that secrets.yaml is present before running targets that require secrets
+.PHONY: _secrets
+check-secrets:
+	@if [ ! -f $(SECRETS_FILE) ]; then \
+		echo -e "$(ERROR) $(SECRETS_FILE) not found!"; \
+		echo "Please copy $(SECRETS_TEMPLATE_FILE) to $(SECRETS_FILE) and fill in your credentials."; \
+		exit 1; \
 	fi
 
-# Detect Windows (Cygwin/MINGW) for path conversion
-UNAME_S := $(shell uname -s)
-ifeq ($(findstring CYGWIN,$(UNAME_S)),CYGWIN)
-	WIN_CMD = 1
-else ifeq ($(findstring MINGW,$(UNAME_S)),MINGW)
-	WIN_CMD = 1
-else
-	WIN_CMD = 0
-endif
+# Ensure that $(VERSION) is defined before dependent targets run
+.PHONY: _version
+_version:
+	@if [ -z "$(VERSION)" ]; then \
+		echo -e "$(ERROR) VERSION variable is not set!"; \
+		echo "Please ensure the VERSION file exists and contains a valid version string."; \
+		exit 1; \
+	fi
 
-# Auto-detect Python executable with esptool module
-#   Windows users: If esptool is only available in your Windows Python, override this variable in your environment:
-#   export PYTHON_WITH_ESPTOOL=/cygdrive/c/Users/youruser/AppData/Local/Programs/Python/Python311/python.exe
-#   (adjust the path as needed; see Makefile docs for details)
-PYTHON_WITH_ESPTOOL ?= $(shell \
-	for py in python3 python; do \
-		if "$$py" -c "import esptool" 2>/dev/null; then echo "$$py"; break; fi \
-	done)
+# Check that PYTHON_WITH_ESPTOOL is set, or fail with a clear error
+.PHONY: _esptool
+_esptool:
+	@if [ -z "$(PYTHON_WITH_ESPTOOL)" ]; then \
+		echo -e "$(ERROR) PYTHON_WITH_ESPTOOL is not set!"; \
+		echo "Set it in your environment or pass it inline, e.g.:'"; \
+		echo "  PYTHON_WITH_ESPTOOL=/cygdrive/c/Users/youruser/AppData/Local/Programs/Python/Python311/python.exe make chip-info"; \
+		exit 1; \
+	fi
 
-# Macro: Run esptool command via Python (single-line variable for safe recipe expansion)
-ESPTOOL_CMD = $(PYTHON_WITH_ESPTOOL) -m esptool --chip $(PLATFORM) --port $(UPLOAD_PATH)
-
-# Macro: Set YAML path (Windows: cygpath -m, else normal path) and run ESPHome command
-define ESPHOME_CMD
-if [ -n "$(YAML_PATH)" ]; then \
-  yaml_path="$(YAML_PATH)"; \
-else \
-  yaml_path="$(BUILD_DIR)/$(NODE_NAME).yaml"; \
-fi; \
-if [ "$(WIN_CMD)" = "1" ]; then \
-  YAML_PATH=$$(cygpath -m "$$yaml_path"); \
-else \
-  YAML_PATH="$$yaml_path"; \
-fi; \
-esphome $(1) $$YAML_PATH $(2)
-endef
-
-# Color support detection and color variables
-ifeq (,$(findstring dumb,$(TERM)))
-  ifneq (,$(TERM))
-	COLOR_SUPPORT := 1
-  else
-	COLOR_SUPPORT := 0
-  endif
-else
-  COLOR_SUPPORT := 0
-endif
-ifeq ($(COLOR_SUPPORT),1)
-  RED    := \033[0;31m
-  GREEN  := \033[0;32m
-  YELLOW := \033[0;33m
-  NC     := \033[0m
-else
-  RED    :=
-  GREEN  :=
-  YELLOW :=
-  NC     :=
-endif
-FAIL  := $(YELLOW)[FAIL]$(NC)
-ERROR := $(RED)[ERROR]$(NC)
-OK    := $(GREEN)[OK]$(NC)
+# Generate device/node YAML from project source YAML
+.PHONY: _build
+_build: _version _secrets
+	@echo "Generating $(BUILD_DIR)/$(NODE_NAME).yaml from $(YAML_MAIN)..."
+	@mkdir -p $(BUILD_DIR)
+	@echo "s|__PROJECT_ROOT__|../../..|g" > .sedargs
+	@echo "s|__VERSION__|$(VERSION)|g" >> .sedargs
+	@echo "s|__VARIANT__|$(VARIANT)|g" >> .sedargs
+	@echo "s|__PLATFORM__|$(PLATFORM)|g" >> .sedargs
+	@echo "s|__DEVICE_NAME__|$(DEVICE_NAME)|g" >> .sedargs
+	@echo "s|__NODE_NAME__|$(NODE_NAME)|g" >> .sedargs
+	@echo "s|__FRIENDLY_NAME__|$(FRIENDLY_NAME)|g" >> .sedargs
+	@echo "s|__NUM_PORTS__|$(NUM_PORTS)|g" >> .sedargs
+	@echo "s|__UPLOAD_PATH__|$(UPLOAD_PATH)|g" >> .sedargs
+	@echo "s|__STATIC_STATIC_IP__|$(STATIC_STATIC_IP)|g" >> .sedargs
+	@echo "s|__STATIC_GATEWAY__|$(STATIC_GATEWAY)|g" >> .sedargs
+	@echo "s|__STATIC_SUBNET__|$(STATIC_SUBNET)|g" >> .sedargs
+	@echo "s|__STATIC_DNS1__|$(STATIC_DNS1)|g" >> .sedargs
+	@echo "s|__STATIC_DNS2__|$(STATIC_DNS2)|g" >> .sedargs
+	@echo "s|__OTA_NAME__|$(OTA_NAME)|g" >> .sedargs
+	@echo "s|__SERIAL_ID__|$(SERIAL_ID)|g" >> .sedargs
+	@sed -f .sedargs < $(YAML_MAIN) > $(BUILD_DIR)/$(NODE_NAME).yaml
+	@rm -f .sedargs
+	# Copy icons directory if it exists
+	@if [ -d icons ]; then \
+		echo "Copying icons/ to $(BUILD_DIR)/icons..."; \
+		cp -r icons $(BUILD_DIR)/; \
+	fi
+	# Copy common directory if it exists
+	@if [ -d common ]; then \
+		echo "Copying common/ to $(BUILD_DIR)/common..."; \
+		cp -r common $(BUILD_DIR)/; \
+	fi

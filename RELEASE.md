@@ -1,5 +1,27 @@
-
 # Release Notes
+
+## Version 0.7.0 – July 26, 2025
+
+**Pre-release milestone: Support for multiple Variants, and improved/automated processes and documentation**
+
+### Highlights
+- Support for multiple hardware variants with modular configuration
+- Consistent terminology and improved documentation throughout the project
+- Added a Table of Contents, FAQ, and Contact/Support sections to the README
+- Enhanced Makefile automation and clarified target documentation
+- Improved onboarding workflow and stepwise Getting Started instructions
+- Security best practices: secrets template, gitignore updates, and onboarding guidance
+- Cleaned up and organized project TODOs and release notes
+- General code and documentation cleanup for clarity and maintainability
+
+### Project Status
+- Modular YAML includes for all major subsystems
+- Secure secrets management and onboarding template
+- Automated build, upload, and logging via Makefile
+- Comprehensive documentation and workflow standards
+- Comprehensive documentation and workflow standards
+
+---
 
 > **⚠️ _This project is currently under active development and is _not_ ready for practical deployment. Use at your own risk!_ ⚠️**
 
