@@ -2,7 +2,7 @@
 #  File:         esp32.yaml
 #  File Type:    ESPHome YAML Include
 #  Purpose:      ESP32 board and framework configuration
-#  Version:      0.7.0
+#  Version:      0.7.1
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -46,15 +46,16 @@
 #
 #  Notes:
 #    - GPIO6-11 are used for SPI flash and are not available for user IO
-#    - GPIO00 is used for boot mode selection (strapping pin);
-#      - if pulled low during reset, the ESP32 enters programming mode
-#      - use with caution; avoid using as output or with pull-downs
 #    - GPIO1 (TX0), GPIO3 (RX0) are UART0 (serial console) pins
 #      - can be repurposed if not using serial, but be careful
 #        if you need serial logging or programming
 #    - GPIO2 is a strapping pin; must be low at boot for some modules
 #      - this pin should not be pulled high or low at boot/reset
 #      - avoid using for output that could interfere with boot
+#    - GPIO5  is a strapping pin; must be high at boot
+#      - this pin should not be pulled low at boot/reset
+#      - avoid using for output or with pull-ups
+#    - GPIO3 is Rx pin for flashing/debugging
 #    - GPIO12 is a strapping pin; high at boot selects high voltage for flash
 #      - this pin should not be pulled high or low at boot/reset
 #      - avoid using for output or with pull-ups
@@ -68,35 +69,11 @@
 #    - not all pins are available on all modules; check your board's datasheet
 #    - see ESP32 datasheet for full alternate functions
 #
+#  ESP32 Datasheet: 
+#      https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf
+#
 # ------------------------------------------------------------------------------
 
-# ------------------------------------------------------------------------------
-#  ESP32 (30 Pin Package) Pin Assignment/Connection Map (Vertical, Top View)
-# ------------------------------------------------------------------------------
-#                                ┌────────────────┐
-#  DISP_BTN_Y      EN  [RST_IN] ─┤ 01 ┌──────┐ 30 ├─ [IN ]  GPIO23  DISP_MOSI
-#     FLOW_05  GPIO36  [PWM_IN] ─┤ 02 │      │ 29 ├─ [IN ]  GPIO22  DISP_JOY_RIGHT
-#     FLOW_04  GPIO39  [PWM_IN] ─┤ 03 │      │ 28 ├─ [IN ]  GPIO01  DISP_JOY_LEFT
-#     FLOW_03  GPIO34  [PWM_IN] ─┤ 04 └──────┘ 27 ├─ [IN ]  GPIO03  DISP_JOY_DOWN
-#     FLOW_02  GPIO35  [PWM_IN] ─┤ 05          26 ├─ [IN ]  GPIO21  DISP_JOY_UP
-#     FLOW_01  GPIO32  [PWM_IN] ─┤ 06          25 ├─ [IN ]  GPIO19  DISP_JOY_IN
-#      SOL_01  GPIO33  [   OUT] ─┤ 07          24 ├─ [OUT]  GPIO18  DISP_CLK
-#      SOL_05  GPIO25  [   OUT] ─┤ 08  ESP-32  23 ├─ [OUT]  GPIO05  DISP_CS
-#      SOL_04  GPIO26  [   OUT] ─┤ 09          22 ├─ [OUT]  GPIO17  DISP_RST
-#      SOL_03  GPIO27  [   OUT] ─┤ 10          21 ├─ [IN ]  GPIO16  DISP_BTN_X
-#      SOL_02  GPIO14  [   OUT] ─┤ 11          20 ├─ [OUT]  GPIO04  DISP_DC
-#     FLOW_00  GPIO12  [PWM_IN] ─┤ 12          19 ├─ [IN ]  GPIO02  DISP_BTN_B
-#      SOL_00  GPIO13  [   OUT] ─┤ 13          18 ├─ [IN ]  GPIO15  DISP_BTN_A
-#                 GND  [   GND] ─┤ 14          17 ├─ [GND]  GND
-#                 VIN  [ 5V_IN] ─┤ 15          16 ├─ [NC ]
-#                                └─────┐USB┌──────┘
-#                                      └───┘
-#
-#  Notes:
-#    - the ESP32 supports monitoring 6 flows
-#    - DISP_TN_Y-EN: Active low (button press pulls down line to reset the ESP32)
-#
-# ------------------------------------------------------------------------------
 
 # ------------------------------------------------------------------------------
 #  Target ESP32 board and Arduino framework declaration

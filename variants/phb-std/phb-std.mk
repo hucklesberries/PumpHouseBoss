@@ -1,16 +1,16 @@
 # ------------------------------------------------------------------------------
 #  File:         variant.mk
 #  File Type:    Makefile Variant Configuration
-#  Purpose:      PumpHouseBoss Pro Variant build variables and defaults
-#  Version:      0.7.0
+#  Purpose:      PumpHouseBoss Standard Variant build variables and defaults
+#  Version:      0.7.1
 #  Date:         2025-07-26
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
 #  Description:  This variant-specific configuration file describes default values
-#                used to build the PumpHouseBoss Pro implementation.
+#                used to build the PumpHouseBoss Standard implementation.
 #                Includes:
-#                - Espressif ESP-32-S3 Development Board Type C (44 pin)
-#                - Support for up to 6 ports
+#                - Espressif ESP-32-S Development Board Type C (30 pin)
+#                - Support for up to 6 ports (default is 1)
 #                - 3 LED status outputs
 #                - External reset button
 #                - External emergency shut-off button
@@ -27,14 +27,14 @@
 
 
 # Required configuration values
-VARIANT        ?= phb-pro
-PLATFORM       ?= esp32s3
-DEVICE_NAME    ?= phb-pro
-NODE_NAME      ?= phb-pro-00
-FRIENDLY_NAME  ?= PumpHouse Boss - Pro
+VARIANT        ?= phb-std
+PLATFORM       ?= esp32
+DEVICE_NAME    ?= phb-std
+NODE_NAME      ?= phb-std-00
+FRIENDLY_NAME  ?= PumpHouse Boss - Standard
 
 # [Optional] static network values
-NUM_PORTS      ?= 6
+NUM_PORTS      ?= 1
 
 # [Optional] programming values
-OTA_NAME       ?= phb-pro-00.local
+OTA_NAME       ?= phb-std-00.local

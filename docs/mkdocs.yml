@@ -2,7 +2,7 @@
 #  File:         mkdocs.yml
 #  File Type:    MkDocs Configuration
 #  Purpose:      Documentation site configuration for PumpHouse Boss
-#  Version:      0.7.0
+#  Version:      0.7.1
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -16,40 +16,45 @@
 #                modify it under the terms of the GNU General Public License.
 # ------------------------------------------------------------------------------
 
-site_name: SysMon-PH Documentation
-docs_dir: mkdocs
+site_name: PumpHouseBoss Documentation
 nav:
   - Home: README.md
-  - RELEASE Notes: RELEASE.md
+  - DESCRIPTION:
+     - PumpHouseBoss Standard:
+        - Overview: phb-std-overview.md
+        - Hardware: phb-std-hardware.md
+     - PumpHouseBoss Professional:
+        - Overview: phb-pro-overview.md
+        - Hardware: phb-pro-hardware.md
+  - RELEASE NOTES: RELEASE.md
   - CHANGELOG: CHANGELOG.md
-  - Main: main.md
-  - Variants:
-      - PHB Pro: phb-pro.md
-      - PHB Pro Max: phb-pro-max.md
-      - PHB Std: phb-std.md
-  - Common:
-      - Display: display_st7789.md
-      - esp32: esp32.md
-      - esp32s3: esp32s3.md
-      - Logging: logging.md
-      - OTA: ota.md
-      - Watchdog: watchdog.md
-      - Web Server: web_server.md
-      - WiFi: wifi.md
-      - Secrets Template: secrets.template.md
-  - DISPOSITION: DISPOSITION.md
+  - STANDARDS: STANDARDS.md
+  - RELEASE-CHECKLIST: RELEASE-CHECKLIST.md
   - GIT-COPILOT: GIT-COPILOT.md
   - TODO: TODO.md
+  - SOURCE CODE:
+     - Variants:
+        - PHB Std: phb-std.md
+        - PHB Pro: phb-pro.md
+     - Common:
+        - Display: display_st7789.md
+        - esp32: esp32.md
+        - esp32s3: esp32s3.md
+        - Logging: logging.md
+        - OTA: ota.md
+        - Watchdog: watchdog.md
+        - Web Server: web_server.md
+        - WiFi: wifi.md
+        - Secrets Template: secrets.template.md
+repo_url: https://github.com/hucklesberries/PumpHouseBoss
 theme:
-  name: material
-  palette:
-    primary: blue
-    accent: light blue
+  name: readthedocs
+  color_mode: auto
+  user_color_mode_toggle: true
 markdown_extensions:
   - admonition
   - codehilite
   - toc:
       permalink: true
-
-# Output built site to docs/html
+docs_dir: md
 site_dir: html

@@ -2,7 +2,7 @@
 #  File:         makefile.mk
 #  File Type:    Makefile Include
 #  Purpose:      Make Macros and Helper Functions
-#  Version:      0.7.0
+#  Version:      0.7.1
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -66,6 +66,8 @@ ifeq (,$(findstring dumb,$(TERM)))
 		NC     := \033[0m
 	endif
 endif
-FAIL  := $(YELLOW)[FAIL]$(NC)
+
+# Output colorized normalization macros
+INFO  := $(GREEN)[INFO]$(NC)
+WARN  := $(YELLOW)[WARN]$(NC)
 ERROR := $(RED)[ERROR]$(NC)
-OK    := $(GREEN)[OK]$(NC)

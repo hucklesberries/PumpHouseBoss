@@ -2,7 +2,7 @@
 #  File:         template.mk
 #  File Type:    Makefile Include
 #  Purpose:      PumpHouse Boss Build Configuration Template
-#  Version:      0.7.0
+#  Version:      0.7.1
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #

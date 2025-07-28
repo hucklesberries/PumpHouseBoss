@@ -1,127 +1,88 @@
 # PumpHouseBoss: ESPHome Pumphouse Monitor
 
-  A professional ESPHome-based system for monitoring and managing a commercial or residential pumphouse or water distribution/filtration system.
+An ESPHome-based system for monitoring and managing commercial or residential pumphouse or water distribution/filtration systems.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![Version](https://img.shields.io/badge/version-$(cat%20VERSION)-orange)](#)
+[![Last Commit](https://img.shields.io/github/last-commit/hucklesberries/PumpHouseBoss?color=blue)](https://github.com/hucklesberries/PumpHouseBoss/commits/main)
+[![Platform](https://img.shields.io/badge/platform-ESP32%20%7C%20ESP32S3-lightgrey)](#)
+[![Release](https://img.shields.io/github/v/release/hucklesberries/PumpHouseBoss?include_prereleases&label=release)](https://github.com/hucklesberries/PumpHouseBoss/releases)
 [![Docs](https://img.shields.io/badge/docs-wiki-blue)](#)
+[![Maintenance](https://img.shields.io/maintenance/yes/2025)](#)
 
 > **⚠️ _This project is currently under active development and is _not_ ready for practical deployment. Use at your own risk!_ ⚠️**
 
 
-## Product Features
-- Monitors water flow and detects anomalies
-- Controls solenoids to manage water flow and prevent water loss from water-line breaks and leaks
-- Built-in integration with ESPHome Applications (i.e. Home Assistant)
-- Can send alerts through integrated software (i.e. Home Assistant)
+## Table of Contents
+- [Product Features](#product-features)
+- [Authorship](#authorship)
+- [License](#license)
+- [Available Variants](#available-variants)
+- [Firmware Features](#firmware-features)
+- [Getting Started](#getting-started)
+- [Collaboration](#collaboration)
+- [Automations](#automations)
+- [FAQ / Common Issues](#faq--common-issues)
+- [Contact & Support](#contact--support)
 
+
+## Product Features
+- Over/under flow-rate detection, alerts and alarms
+- Automated solenoid control for emergency water-shutoff or water-flow management/control
+- Manual emergency override (button) to shut-off water-flow
+- Historical flow-rate/usage graphing
+- Home Assistant integration via ESPHome
+- LED System Status indications
+- 4 Line LCD Display
+- Support for up to 8 MMUs (Monitor/Management Units) to monitor and manage up to 8 water-lines
+- Extensible to other flow-monitoring and and management operations and fluid-types
 
 ## Authorship
 Project developed and maintained by:
 - Roland Tembo Hendel (author, architect)
 - GitHub Copilot (AI automation and documentation support)
 
-
 ## License
 GNU General Public License v3.0
 SPDX-License-Identifier: GPL-3.0-or-later
 
+## Available Variants
+The PumpHouseBoss project supports two hardware variants:
+
+### PumpHouseBoss Standard
+- **Platform:** Espressif ESP32 (30 pin)
+- **MMUs:** 1
+- **Indications:** 4 LED status outputs
+- **Controls:**  3 button; System Reset, Manual MMU Control (shut-off)
+- **Display:** 4 line by 20 character display (lcd_pcf8574 I2C interface)
+- **Other:** USB programming/debugging port
+- **Reference:**
+    - [PHB Standard Functional Overview](phb-std-overview.md)
+    - [PHB Standard Hardware Guide](phb-std-hardware.md)
+
+### PumpHouseBoss Professional
+- **Platform:** Espressif ESP32-S3 (44 pin)
+- **MMUs:** 8
+- **Indications:** 4 LED status outputs
+- **Controls:**  4 button; Display Control, Systemm Reset, Manual MMU Control (shut-off)
+- **Display:** 4 line by 20 character display (lcd_pcf8574 I2C interface)
+- **Other:** USB programming/debugging port
+- **Reference:**
+    - [PHB Professional Functional Overview](phb-pro-overview.md)
+    - [PHB Professional Hardware Guide](phb-pro-hardware.md)
+
+See the `variants/` directory for detailed configuration and hardware mapping for each variant.
 
 ## Firmware Features
 - Modular YAML configuration for all hardware components and variants
-- Pinout maps and modular includes for ESP32/ESP32S3, ST7789 display, Pico-LCD, and all supported hardware
-- Comprehensive Makefile with 24+ targets for build, upload, logging, cleaning, documentation, and more
+- Pinout maps and modular includes for ESP32/ESP32S3, PCF8574 display, and all I/O
+- Comprehensive Makefile build, upload, logging, cleaning, documentation, and more
 - Secure secrets management using `secrets.template.yaml` (never check in real secrets)
-- Automated and manual documentation generation (ESPHome, MkDocs)
+- Automated documentation generation (ESPHome, MkDocs)
 - Automated version management and consistency checks
 - Safety mechanisms to protect critical files and prevent destructive actions
 - VS Code integration with pre-defined tasks for build and test
 - Quality assurance via automated regression tests, checklists, and session continuity
-
-
-## Available Variants
-The PumpHouseBoss system supports three hardware variants, each tailored for different use cases and hardware configurations:
-
-### phb-pro-max
-- **Platform:** Espressif ESP32-S3 (44 pin)
-- **Ports:** Up to 8
-- **Display:** Waveshare Pico LCD 1.3" 240x240
-- **Controls:** Integrated menu and controls
-- **Other:** USB programming/debugging port
-
-### phb-pro
-- **Platform:** Espressif ESP32-S3 (44 pin)
-- **Ports:** Up to 6
-- **Status:** 3 LED status outputs
-- **Controls:** External reset and emergency shut-off buttons
-- **Other:** USB programming/debugging port
-
-### phb-std
-- **Platform:** Espressif ESP32 (30 pin)
-- **Ports:** Up to 6 (default is 1)
-- **Status:** 3 LED status outputs
-- **Controls:** External reset and emergency shut-off buttons
-- **Other:** USB programming/debugging port
-
-See the `variants/` directory for detailed configuration and hardware mapping for each variant.
-
-
-## Repository File Tree
-```
-│
-├── CHANGELOG.md                  *Project changelog; documents all major changes and releases*
-├── common/                       *Shared YAML modules for hardware, logging, OTA, wifi, etc.*
-│   ├── display_st7789.yaml            *ST7789 display configuration*
-│   ├── esp32.yaml                     *ESP32 base configuration*
-│   ├── esp32s3.yaml                   *ESP32-S3 base configuration*
-│   ├── logging.yaml                   *Logging configuration*
-│   ├── ota.yaml                       *OTA update configuration*
-│   ├── secrets.template.yaml          *Template for secrets.yaml*
-│   ├── secrets.yaml                   *User secrets (gitignored)*
-│   ├── watchdog.yaml                  *Watchdog timer configuration*
-│   ├── web_server.yaml                *Web server configuration*
-│   └── wifi.yaml                      *Wi-Fi configuration*
-├── configuration/                *Input configuration templates and Makefile fragments*
-│   ├── config.mk                        *Main configuration Makefile fragment*
-│   ├── default.mk                       *Default configuration fragment*
-│   ├── phb-pro-max-test.mk              *phb-pro-max test configuration*
-│   ├── phb-pro-test.mk                  *phb-pro test configuration*
-│   ├── phb-std-test.mk                  *phb-std test configuration*
-│   └── template.mk                      *Secrets template Makefile fragment*
-├── DISPOSITION.md                  *(If present) Disposition or project planning notes*
-├── docs/                           *Project documentation, MkDocs config, and generated docs*
-│   └── mkdocs.yml                        *MkDocs configuration file*
-├── GIT-COPILOT.md                  *Session context, developer notes, and Copilot usage*
-├── icons/                          *PNG icons for status and UI*
-│   ├── status_error.png                 *Error status icon*
-│   ├── status_ok.png                    *OK status icon*
-│   ├── status_warn.png                  *Warning status icon*
-│   ├── wifi_0.png                       *Wi-Fi signal icon 0*
-│   ├── wifi_1.png                       *Wi-Fi signal icon 1*
-│   ├── wifi_2.png                       *Wi-Fi signal icon 2*
-│   ├── wifi_3.png                       *Wi-Fi signal icon 3*
-│   ├── wifi_4.png                       *Wi-Fi signal icon 4*
-│   ├── wifi-0.png                       *Wi-Fi signal icon alt 0*
-│   └── wifi-100.png                     *Wi-Fi signal icon 100*
-├── LICENSE                         *Project license (GPL v3.0 or later)*
-├── Makefile                        *Main Makefile for build, upload, docs, and automation*
-├── makefile.mk                     *(If present) Additional Makefile fragments*
-├── README.md                       *Main project overview, setup, and documentation (this file)*
-├── regression-test.sh              *Automated regression test script for Makefile/YAML*
-├── RELEASE.md                      *Release notes and instructions for new versions*
-├── STANDARDS.md                    *Coding standards, conventions, and check-in procedures*
-├── TODO.md                         *Project TODOs and possible future enhancements*
-├── variants/                       *Hardware variant directories (each with main.yaml and variant.mk)*
-│   ├── phb-pro/
-│   │   ├── main.yaml                    *phb-pro main configuration*
-│   │   └── variant.mk                   *phb-pro Makefile fragment*
-│   ├── phb-pro-max/
-│   │   ├── main.yaml                    *phb-pro-max main configuration*
-│   │   └── variant.mk                   *phb-pro-max Makefile fragment*
-│   └── phb-std/
-│       ├── main.yaml                    *phb-std main configuration*
-│       └── variant.mk                   *phb-std Makefile fragment*
-└── VERSION                         *Current project version string*
-```
 
 
 ## Getting Started
@@ -131,37 +92,94 @@ See the `variants/` directory for detailed configuration and hardware mapping fo
 ```sh
 git clone https://github.com/hucklesberries/PumpHouseBoss.git
 cd PumpHouseBoss
+
+│
+├── CHANGELOG.md                    # Project changelog
+├── common/                             # Shared YAML configs and hardware includes
+│   ├── display_st7789.yaml             # ST7789 display config
+│   ├── esp32.yaml                      # ESP32 base config
+│   ├── esp32s3.yaml                    # ESP32-S3 base config
+│   ├── logging.yaml                    # Logging config
+│   ├── ota.yaml                        # OTA update config
+│   ├── secrets.template.yaml           # Template for secrets file
+│   ├── secrets.yaml                    # Actual secrets (not in repo)
+│   ├── watchdog.yaml                   # Watchdog timer config
+│   ├── web_server.yaml                 # Web server config
+│   └── wifi.yaml                       # WiFi config
+├── config/                         # Build and variant configuration
+│   ├── config.mk                       # Main build config
+│   ├── default.mk                      # Default build settings
+│   ├── phb-pro-test.mk                 # Test config for Pro variant
+│   ├── phb-std-test.mk                 # Test config for Standard variant
+│   └── template.mk                     # Template for new configs
+├── docs/                           # Documentation and MkDocs config
+│   └── mkdocs.yml                      # MkDocs site config
+├── GIT-COPILOT.md                  # Copilot session context and usage notes
+├── icons/                          # Status and WiFi icon images
+│   ├── status_error.png                # Error status icon
+│   ├── status_ok.png                   # OK status icon
+│   ├── status_warn.png                 # Warning status icon
+│   ├── wifi-0.png                      # WiFi signal icon (0%)
+│   ├── wifi-100.png                    # WiFi signal icon (100%)
+│   ├── wifi_0.png                      # WiFi signal icon (0%)
+│   ├── wifi_1.png                      # WiFi signal icon (25%)
+│   ├── wifi_2.png                      # WiFi signal icon (50%)
+│   ├── wifi_3.png                      # WiFi signal icon (75%)
+│   └── wifi_4.png                      # WiFi signal icon (100%)
+├── LICENSE                         # Project license (GPLv3)
+├── logs/                           # Log files (created at runtime)
+├── Makefile                        # Main project Makefile
+├── makefile.mk                     # Makefile macros and helpers
+├── README.md                       # Project overview and documentation
+├── RELEASE-CHECKLIST.md            # Release checklist (if present)
+├── RELEASE.md                      # Release notes and instructions
+├── scripts/                        # Project scripts and automation
+│   ├── .common.sh                      # Shared shell functions for scripts
+│   └── regression-test.sh              # Regression test automation
+├── STANDARDS.md                    # Coding standards and conventions
+├── TODO.md                         # Project TODOs and future plans
+├── variants/                       # Device variant definitions
+│   ├── phb-pro/                        # Pro variant files
+│   │   ├── phb-pro-hardware.md             # Pro hardware guide
+│   │   ├── phb-pro-overview.md             # Pro functional overview
+│   │   ├── phb-pro.mk                      # Pro variant Makefile config
+│   │   └── phb-pro.yaml                    # Pro variant YAML config
+│   └── phb-std/                        # Standard variant files
+│       ├── phb-std-hardware.md             # Standard hardware guide
+│       ├── phb-std-overview.md             # Standard functional overview
+│       ├── phb-std.mk                      # Standard variant Makefile config
+│       └── phb-std.yaml                    # Standard variant YAML config
+└── VERSION                         # Project version string
 ```
 
+
 ### 2. Review Documentation
+Read all Markdown files in the project root for standards, changelogs, and workflow:
 
-- Read all Markdown files in the project root for standards, changelogs, and workflow:
-  - `README.md` – Main project overview, setup, and documentation (this file)
-  - `STANDARDS.md` – Coding standards, conventions, and check-in procedures
-  - `RELEASE.md` – Release notes and instructions for new versions
-  - `CHANGELOG.md` – Project changelog; documents all major changes and releases
-  - `DISPOSITION.md` – (If present) Record of previous check-in status
-  - `GIT-COPILOT.md` – Session context, developer notes, and Copilot usage
-  - `TODO.md` – Project TODOs and possible future enhancements
-- (Coming Soon) Review the project wiki for additional details.
-
+| Document Title | Description |
+|---|---|
+| [README.md](README.md) | Main project overview, setup, and documentation (this file) |
+| [STANDARDS.md](STANDARDS.md) | Coding standards, conventions, and check-in procedures |
+| [RELEASE.md](RELEASE.md) | Release notes and instructions for new versions |
+| [CHANGELOG.md](CHANGELOG.md) | Project changelog; documents all major changes and releases |
+| [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md) | (If present) Record of previous check-in status |
+| [GIT-COPILOT.md](GIT-COPILOT.md) | Session context, developer notes, and Copilot usage |
+| [TODO.md](TODO.md) | Project TODOs and possible future enhancements |
 
 ### 3. Configure Your Build
-
-- Copy the secrets template and edit your secrets:
+Copy the secrets template and edit your secrets:
   ```sh
   cp common/secrets.template.yaml common/secrets.yaml
   # Edit common/secrets.yaml with your actual secrets
   ```
-- Create and edit your build configuration:
+Create and edit your build configuration:
   ```sh
   cp configuration/template.mk configuration/config.mk
   # Edit configuration/config.mk to match your hardware and preferences
   ```
 
 ### 4. Build, Flash, and Test
-
-- Use the following Makefile targets for common tasks:
+Use the following Makefile targets for common tasks:
 
   **Build & Flash:**
   - `make build` – Compile firmware for the selected device
@@ -193,14 +211,29 @@ cd PumpHouseBoss
   - `make clobber` – Remove device directory and documentation
   - `make distclean` – Complete cleanup for archive/export
 
-  **Testing:**
-  - `make regression-test` – Run regression tests on all device YAMLs
+  **Test:**
+  - `make regression-test` – Run regression tests for the project
 
   **Utility:**
   - `make version` – Show project and ESPHome version
   - `make buildvars` – Show current build configuration values
   - `make help` – Show help/target summary
 
+
+## Collaboration
+Contributions, collaboration, suggestions, and critique are welcome.
+
+For a comprehensive guide to the implementation standards applied to this project,
+please refer to [PHB Implementation Standards](STANDARDS.md)
+
+
+## Automations
+Several automations are included to streamline the development process. These automations can be exercised as make targets or run directly from the project 'scripts' directory.
+1. sanitize.sh        - performs standards conformance validation on a project file [TBD]
+2. regression-test.sh - performs build and basic regression testing across all makefile targets
+3. pre-check-in.sh    - perfomes pre-checkin process per project standards [TBD]
+4. check-in.sh        - perfomes checkin process per project standards [TBD]
+5. post-check-in.sh   - perfomes checkin process per project standards [TBD]
 
 ## FAQ / Common Issues
 

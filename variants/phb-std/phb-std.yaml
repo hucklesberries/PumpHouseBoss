@@ -1,16 +1,23 @@
 # ------------------------------------------------------------------------------
-#  File:         main.yaml
-#  File Type:    ESPHome Variant Configuration
-#  Purpose:      Pumphouse System Monitor built on the ESP32S3 platform.
-#  Version:      0.7.0
+#  File:         phb-std.yaml
+#  File Type:    ESPHome YAML Main
+#  Purpose:      PumpHouseBoss Standard Variant Main
+#  Version:      0.7.1
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
-#  Description:  Functions include:
-#                - Ingress and egress flow monitoring
-#                - Alarms and alerts
-#                - Modular YAML includes for board, display, network, OTA, logging, watchdog
+#  Description:  PumpHouseBoss Standard Variant is a Water Distribution System
+#                Monitor and controller built on the ESP32 platform.
+#
+#  Features:     - Ingress and egress flow monitoring, metering
+#                - Over/under flow-rate detection, alerts and alarms
+#                - Automated solenoid control for emergency water-shutoff or
+#                  water-flow management/control
+#                - Manual emergency override to shut-off water-flow
+#                - 4 line LCD (lcd_pcf8574 interface)
+#                - Historical flow-rate/usage graphing
 #                - Home Assistant integration via ESPHome
+#                - Supports up to 5 MMUs
 #
 #  License:      GNU General Public License v3.0
 #                SPDX-License-Identifier: GPL-3.0-or-later

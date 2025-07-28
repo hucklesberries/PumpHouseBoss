@@ -2,7 +2,7 @@
 #  File:         phb-std-test.mk
 #  File Type:    Makefile Include
 #  Purpose:      Default build configuration for PumpHouse Boss Standard test instance
-#  Version:      0.7.0
+#  Version:      0.7.1
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #

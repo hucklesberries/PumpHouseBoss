@@ -1,5 +1,25 @@
 # Release Notes
 
+> **⚠️ _This project is currently under active development and is _not_ ready for practical deployment. Use at your own risk!_ ⚠️**
+## Version 0.7.1 – July 28, 2025
+
+**Milestone: Standards compliance, versioning, and automation improvements**
+
+### Highlights
+- Checked and fixed file permissions for scripts and assets (icons)
+- Improved README.md: file tree now includes concise comments for every file
+- Ensured all automation, Makefiles, and scripts are standards-compliant
+- Added/updated documentation for check-in and release process
+- General code and documentation cleanup for clarity and maintainability
+
+### Project Status
+- All major files and scripts are now standards-compliant
+- Versioning and permissions are consistent across the project
+- Automated build, upload, and logging via Makefile
+- Comprehensive documentation and workflow standards
+
+---
+
 ## Version 0.7.0 – July 26, 2025
 
 **Pre-release milestone: Support for multiple Variants, and improved/automated processes and documentation**
@@ -22,8 +42,6 @@
 - Comprehensive documentation and workflow standards
 
 ---
-
-> **⚠️ _This project is currently under active development and is _not_ ready for practical deployment. Use at your own risk!_ ⚠️**
 
 ## Version 0.6.7 – July 23, 2025
 

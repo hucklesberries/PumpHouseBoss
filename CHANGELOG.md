@@ -1,6 +1,16 @@
+
 # Changelog
 
 > **Note:** For detailed release notes, see RELEASE.md. This changelog is a concise, developer-focused summary.
+
+## [0.7.1] - 2025-07-28
+### Changed
+- Checked and fixed file permissions for scripts and assets (icons)
+- Improved README.md: file tree now includes concise comments for every file
+- Ensured all automation, Makefiles, and scripts are standards-compliant
+- Added/updated documentation for check-in and release process
+- General code and documentation cleanup for clarity and maintainability
+
 ## [0.7.0] - 2025-07-26
 ### Added
 - Support for multiple hardware variants with modular configuration

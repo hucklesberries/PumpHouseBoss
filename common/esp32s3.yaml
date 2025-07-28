@@ -2,7 +2,7 @@
 #  File:         esp32s3.yaml
 #  File Type:    ESPHome YAML Include
 #  Purpose:      ESP32-S3 board and framework configuration
-#  Version:      0.7.0
+#  Version:      0.7.1
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -65,42 +65,6 @@
 #      - using them for other purposes can interfere with USB functionality
 #    - not all pins are available on all modules; check your board's datasheet
 #    - see ESP32-S3 datasheet for alternate functions and capabilities
-#
-# ------------------------------------------------------------------------------
-
-# ------------------------------------------------------------------------------
-#  ESP32-S3 (44 Pin Package) Pin Assignment/Connection Map (Vertical, Top View)
-# ------------------------------------------------------------------------------
-#
-#                                    ┌──────────────────┐
-#            3.3V     VCC  [    NC] ─┤ 01 ┌────────┐ 44 ├── [   GND]  GND
-#            3.3V     VCC  [    NC] ─┤ 02 │        │ 43 ├── [OUT   ]  GPIO43  SOL_07
-#      DISP_BTN_Y     RST  [RST_IN] ─┤ 03 │        │ 42 ├── [OUT   ]  GPIO44  SOL_06
-#      DISP_BTN_X  GPIO04  [    IN] ─┤ 04 │        │ 41 ├── [OUT   ]  GPIO01  SOL_05
-#      DISP_BTN_A  GPIO05  [    IN] ─┤ 05 └────────┘ 40 ├── [OUT   ]  GPIO02  SOL_04
-#      DISP_BTN_B  GPIO06  [    IN] ─┤ 06            39 ├── [OUT   ]  GPIO42  SOL_03
-#     DISP_JOY_IN  GPIO07  [    IN] ─┤ 07            38 ├── [OUT   ]  GPIO41  SOL_02
-#     DISP_JOY_UP  GPIO15  [    IN] ─┤ 08            37 ├── [OUT   ]  GPIO40  SOL_01
-#   DISP_JOY_DOWN  GPIO16  [    IN] ─┤ 09            36 ├── [OUT   ]  GPIO39  SOL_00
-#   DISP_JOY_LEFT  GPIO17  [    IN] ─┤ 10            35 ├── [PWM_IN]  GPIO38  FLOW_07
-#  DISP_JOY_RIGHT  GPIO18  [    IN] ─┤ 11  ESP32-S3  34 ├── [PWM_IN]  GPIO37  FLOW_06
-#         DISP_DC  GPIO08  [   OUT] ─┤ 12            33 ├── [PWM_IN]  GPIO36  FLOW_05
-#          SOL_09  GPIO03  [   OUT] ─┤ 13            32 ├── [PWM_IN]  GPIO35  FLOW_04
-#         FLOW_09  GPIO46  [PWM_IN] ─┤ 14            31 ├── [PWM_IN]  GPIO00  FLOW_03
-#         DISP_CS  GPIO09  [   OUT] ─┤ 15            30 ├── [PWM_IN]  GPIO45  FLOW_02
-#        DISP_CLK  GPIO10  [   OUT] ─┤ 16            29 ├── [PWM_IN]  GPIO48  FLOW_01
-#       DISP_MOSI  GPIO11  [   OUT] ─┤ 17            28 ├── [PWM_IN]  GPIO47  FLOW_00
-#        DISP_RST  GPIO12  [   OUT] ─┤ 18            27 ├── [NC    ]  GPIO21
-#          SOL_08  GPIO13  [   OUT] ─┤ 19            26 ├── [NC    ]  GPIO20
-#         FLOW_08  GPIO14  [PWM_IN] ─┤ 20            25 ├── [NC    ]  GPIO19
-#              5V     VIN  [ 5V_IN] ─┤ 21            24 ├── [GND   ]  GND
-#                     GND  [   GND] ─┤ 22            23 ├── [GND   ]  GND
-#                                    └───┐USB┌─┐USB┌────┘
-#                                        └───┘ └───┘
-#  Notes:
-#    - the ESP32-S3 supports monitoring 8 flows by default
-#    - the ESP32-S3 can be configured to  monitor 2 additional flows (total of 10)
-#    - DISP_TN_Y-RST: Active low (button press pulls down line to reset the ESP32-S3)
 #
 # ------------------------------------------------------------------------------
 
