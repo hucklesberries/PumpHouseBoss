@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" /><link rel="canonical" href="https://hucklesberries.github.io/PumpHouseBoss/" />
       <link rel="shortcut icon" href="img/favicon.ico" />
     <title>PumpHouseBoss Documentation</title>
     <link rel="stylesheet" href="css/theme.css" />
@@ -14,7 +14,7 @@
         // Current page data
         var mkdocs_page_name = "Home";
         var mkdocs_page_input_path = "README.md";
-        var mkdocs_page_url = null;
+        var mkdocs_page_url = "/PumpHouseBoss/";
       </script>
     
     <!--[if lt IE 9]>
@@ -418,8 +418,9 @@ Create and edit your build configuration:
   - <code>make flash-erase</code> – Erase entire platform flash memory (destructive!)</p>
 <p><strong>Documentation:</strong>
   - <code>make docs</code> – Generate all documentation (ESPHome and MkDocs)
-  - <code>make docs-esphome</code> – Generate ESPHome documentation
-  - <code>make docs-mkdoc</code> – Generate MkDocs documentation</p>
+  - <code>make docs-esphome</code> – Generate ESPHome style documentation
+  - <code>make docs-mkdoc</code> – Generate MkDocs style documentation (local build only)
+  - <code>make docs-deploy</code> – Build and deploy MkDocs site to GitHub Pages (public docs)</p>
 <p><strong>Cleanup:</strong>
   - <code>make clean</code> – Remove build artifacts and logs
   - <code>make clean-cache</code> – Remove ESPHome build cache
@@ -525,5 +526,5 @@ please refer to <a href="STANDARDS/">PHB Implementation Standards</a></p>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-07-30 07:07:16.791293+00:00
+Build Date UTC : 2025-07-30 07:22:19.556724+00:00
 -->

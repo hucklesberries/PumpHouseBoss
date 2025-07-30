@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hucklesberries.github.io/PumpHouseBoss/CONTRIBUTING/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
     <title>CONTRIBUTING - PumpHouseBoss Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
@@ -14,7 +14,7 @@
         // Current page data
         var mkdocs_page_name = "CONTRIBUTING";
         var mkdocs_page_input_path = "CONTRIBUTING.md";
-        var mkdocs_page_url = null;
+        var mkdocs_page_url = "/PumpHouseBoss/CONTRIBUTING/";
       </script>
     
     <!--[if lt IE 9]>
@@ -207,8 +207,12 @@ This document provides living project context, onboarding, workflow, troubleshoo
 <h2 id="documentation-and-automation">Documentation and Automation<a class="headerlink" href="#documentation-and-automation" title="Permanent link">&para;</a></h2>
 <ul>
 <li>YAML headers and comments are extracted to Markdown for MkDocs</li>
-<li>Run <code>make docs</code> to generate all documentation (ESPHome + Doxygen)</li>
-<li>Docs output: <code>docs/esphome/</code>, <code>docs/html/</code>, and <code>docs/latex/</code></li>
+<li>Documentation targets:</li>
+<li><code>make docs</code> – Generate all documentation (ESPHome and MkDocs)</li>
+<li><code>make docs-esphome</code> – Generate ESPHome style documentation</li>
+<li><code>make docs-mkdoc</code> – Generate MkDocs style documentation (local build only)</li>
+<li><code>make docs-deploy</code> – Build and deploy MkDocs site to GitHub Pages (public docs)</li>
+<li>Docs output: <code>docs/esphome/</code>, <code>docs/html/</code>, and (if used) <code>docs/latex/</code></li>
 <li>See <code>docs/extract_yaml_headers.py</code> for YAML-to-Markdown automation</li>
 </ul>
 <h2 id="troubleshooting-and-tips">Troubleshooting and Tips<a class="headerlink" href="#troubleshooting-and-tips" title="Permanent link">&para;</a></h2>
