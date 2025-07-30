@@ -91,8 +91,6 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#source">Source</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a>
-    </li>
     <li class="toctree-l2"><a class="reference internal" href="#next-cycle">Next Cycle</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#notesreminders">Notes/Reminders</a>
@@ -101,6 +99,27 @@
     </li>
     </ul>
                 </li>
+              </ul>
+              <p class="caption"><span class="caption-text">WIKI</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="" href="../wiki/Home.md">Wiki Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../wiki/Overview.md">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../wiki/Getting-Started.md">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../wiki/Hardware-Overview.md">Hardware Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../wiki/Firmware-and-Configuration.md">Firmware & Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../wiki/Usage-and-Troubleshooting.md">Usage & Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../wiki/Developer-Guide.md">Developer Guide</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../wiki/FAQ.md">FAQ</a>
+                  </li>
+                  <li class="toctree-l1"><a class="" href="../wiki/Contact-and-Support.md">Contact & Support</a>
+                  </li>
               </ul>
               <p class="caption"><span class="caption-text">SOURCE CODE</span></p>
               <ul>
@@ -189,12 +208,43 @@ This document tracks project tasks, enhancements, and future plans for PumpHouse
 <li>add 'publish' target</li>
 </ul>
 </li>
+<li>break-out build _generate (Being mindful of dependencies)</li>
 </ul>
 <h2 id="source">Source<a class="headerlink" href="#source" title="Permanent link">&para;</a></h2>
-<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
 <ul>
-<li>stand up wiki</li>
+<li>
+<p>[NOTE] To convert the social preview SVG (e.g., social-preview-valve2.svg) to PNG for GitHub:</p>
+<ul>
+<li>Use Inkscape: <code>inkscape social-preview-valve2.svg --export-type=png --export-filename=social-preview-valve2.png -w 1280 -h 640</code></li>
+<li>Or use an online converter (e.g., svg2png.com)</li>
+<li>Then upload the PNG in your repository settings for the social preview image.</li>
 </ul>
+</li>
+<li>
+<p>stand up wiki</p>
+</li>
+<li>[ ] Enable GitHub Wiki in repository settings</li>
+<li>[ ] Create Home page with intro and navigation</li>
+<li>[ ] Add main sections: Overview, Getting Started, Hardware, Firmware, FAQ, Troubleshooting, Developer Guide</li>
+<li>[ ] Seed initial content from README.md, CONTRIBUTING.md, and docs</li>
+<li>[ ] Add diagrams/images as needed</li>
+<li>[ ] Cross-link wiki and main repo docs</li>
+<li>[ ] Invite contributors and set editing guidelines</li>
+<li>[ ] Plan for ongoing updates and advanced topics</li>
+</ul>
+<p><strong>Proposed Wiki Home Page Outline:</strong>
+  - Welcome &amp; Project Summary
+  - Quick Links to Key Sections
+  - Table of Contents
+  - Getting Started
+  - Hardware Overview
+  - Firmware &amp; Configuration
+  - Usage &amp; Troubleshooting
+  - Developer Guide
+  - FAQ
+  - Contact &amp; Support
+- [DONE] Implemented <code>make docs-deploy</code> target for public documentation publishing
+- [DONE] Documentation is now published via GitHub Pages: https://hucklesberries.github.io/PumpHouseBoss/</p>
 <h2 id="next-cycle">Next Cycle<a class="headerlink" href="#next-cycle" title="Permanent link">&para;</a></h2>
 <h2 id="notesreminders">Notes/Reminders<a class="headerlink" href="#notesreminders" title="Permanent link">&para;</a></h2>
 <ul>
