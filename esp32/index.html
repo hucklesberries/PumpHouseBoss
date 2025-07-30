@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>esp32 - PumpHouseBoss Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "esp32";
+        var mkdocs_page_input_path = "esp32.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> PumpHouseBoss Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">DESCRIPTION</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Standard</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Professional</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE/">RELEASE NOTES</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG/">CHANGELOG</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../STANDARDS/">STANDARDS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE-CHECKLIST/">RELEASE-CHECKLIST</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TODO/">TODO</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SOURCE CODE</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" >Variants</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std/">PHB Std</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro/">PHB Pro</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Common</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">esp32</a>
+    <ul class="current">
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32s3/">esp32s3</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../logging/">Logging</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../ota/">OTA</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../watchdog/">Watchdog</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../web_server/">Web Server</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../wifi/">WiFi</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../secrets.template/">Secrets Template</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">PumpHouseBoss Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">SOURCE CODE</li>
+          <li class="breadcrumb-item">Common</li>
+      <li class="breadcrumb-item active">esp32</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/hucklesberries/PumpHouseBoss/edit/master/docs/esp32.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="component-esp32">Component: esp32<a class="headerlink" href="#component-esp32" title="Permanent link">&para;</a></h1>
+<h1 id="source-homerhendelgitpumphousebosscommonesp32yaml">Source: /home/rhendel/git/PumpHouseBoss/common/esp32.yaml<a class="headerlink" href="#source-homerhendelgitpumphousebosscommonesp32yaml" title="Permanent link">&para;</a></h1>
+<h1 id="generated-tue-jul-29-2025-115947-pm">Generated: Tue, Jul 29, 2025 11:59:47 PM<a class="headerlink" href="#generated-tue-jul-29-2025-115947-pm" title="Permanent link">&para;</a></h1>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  File:         esp32.yaml</span>
+<span class="c1">#  File Type:    ESPHome YAML Include</span>
+<span class="c1">#  Purpose:      ESP32 board and framework configuration</span>
+<span class="c1">#  Version:      0.7.1</span>
+<span class="c1">#  Date:         2025-07-24</span>
+<span class="c1">#  Author:       Roland Tembo Hendel &lt;rhendel@nexuslogic.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Description:  Modular include for ESPHome projects targeting ESP32-S3.</span>
+<span class="c1">#</span>
+<span class="c1">#  License:      GNU General Public License v3.0</span>
+<span class="c1">#                SPDX-License-Identifier: GPL-3.0-or-later</span>
+<span class="c1">#  Copyright:    (c) 2025 Roland Tembo Hendel</span>
+<span class="c1">#                This program is free software: you can redistribute it and/or</span>
+<span class="c1">#                modify it under the terms of the GNU General Public License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  YAML linter configuration</span>
+<span class="c1">#   - Disables quoted-strings rule for improved readability</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># yamllint disable rule:quoted-strings</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  ESP32 (30 Pin Package) Dev Module standard Pinout Map (Vertical, Top View)</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#</span>
+<span class="c1">#                                     ┌────────────────┐</span>
+<span class="c1">#                                 EN ─┤ 01 ┌──────┐ 30 ├─ GPIO23  SPI_MOSI  VSPI_MOSI</span>
+<span class="c1">#               VP  ADC1_CH0  GPIO36 ─┤ 02 │      │ 29 ├─ GPIO22  I2C_SCL</span>
+<span class="c1">#               VN  ADC1_CH3  GPIO39 ─┤ 03 │      │ 28 ├─ GPIO01  U0TXD     CLK3</span>
+<span class="c1">#                   ADC1_CH6  GPIO34 ─┤ 04 └──────┘ 27 ├─ GPIO03  U0RXD     CLK2</span>
+<span class="c1">#                   ADC1_CH7  GPIO35 ─┤ 05          26 ├─ GPIO21  I2C_SDA</span>
+<span class="c1">#   XTAL32  TOUCH9  ADC1_CH4  GPIO32 ─┤ 06          25 ├─ GPIO19  SPI_MISO  VSPI_MISO</span>
+<span class="c1">#           TOUCH8  ADC1_CH5  GPIO33 ─┤ 07          24 ├─ GPIO18  SPI_SCK   VSPI_CLK</span>
+<span class="c1">#             DAC1  ADC2_CH8  GPIO25 ─┤ 08  ESP-32  23 ├─ GPIO05  VSPI_CS</span>
+<span class="c1">#             DAC2  ADC2_CH9  GPIO26 ─┤ 09          22 ├─ GPIO17  U2TXD</span>
+<span class="c1">#           TOUCH7  ADC2_CH7  GPIO27 ─┤ 10          21 ├─ GPIO16  U2RXD</span>
+<span class="c1"># HSPI_CLK  TOUCH6  ADC2_CH6  GPIO14 ─┤ 11          20 ├─ GPIO04  ADC2_CH0  TOUCH0</span>
+<span class="c1"># HSPI_MISO TOUCH5  ADC2_CH5  GPIO12 ─┤ 12          19 ├─ GPIO02  ADC2_CH2  TOUCH2   SPI_CS</span>
+<span class="c1"># HSPI_MOSI TOUCH4  ADC2_CH4  GPIO13 ─┤ 13          18 ├─ GPIO15  ADC2_CH3  TOUCH3   HSPI_CS</span>
+<span class="c1">#                                GND ─┤ 14          17 ├─ GND</span>
+<span class="c1">#                         5V     VIN ─┤ 15          16 ├─ VCC     3.3V</span>
+<span class="c1">#                                     └──────USB───────┘</span>
+<span class="c1">#</span>
+<span class="c1">#  Notes:</span>
+<span class="c1">#    - GPIO6-11 are used for SPI flash and are not available for user IO</span>
+<span class="c1">#    - GPIO1 (TX0), GPIO3 (RX0) are UART0 (serial console) pins</span>
+<span class="c1">#      - can be repurposed if not using serial, but be careful</span>
+<span class="c1">#        if you need serial logging or programming</span>
+<span class="c1">#    - GPIO2 is a strapping pin; must be low at boot for some modules</span>
+<span class="c1">#      - this pin should not be pulled high or low at boot/reset</span>
+<span class="c1">#      - avoid using for output that could interfere with boot</span>
+<span class="c1">#    - GPIO5  is a strapping pin; must be high at boot</span>
+<span class="c1">#      - this pin should not be pulled low at boot/reset</span>
+<span class="c1">#      - avoid using for output or with pull-ups</span>
+<span class="c1">#    - GPIO3 is Rx pin for flashing/debugging</span>
+<span class="c1">#    - GPIO12 is a strapping pin; high at boot selects high voltage for flash</span>
+<span class="c1">#      - this pin should not be pulled high or low at boot/reset</span>
+<span class="c1">#      - avoid using for output or with pull-ups</span>
+<span class="c1">#    - GPIO15 is a strapping pin; must be low at boot</span>
+<span class="c1">#      - this pin should not be pulled high or low at boot/reset</span>
+<span class="c1">#      - avoid using for output or with pull-ups</span>
+<span class="c1">#    - GPIO16, GPIO17 is used for PSRAM on some modules</span>
+<span class="c1">#        - check your board’s datasheet before using</span>
+<span class="c1">#    - GPIO20, GPIO24 is not available on most ESP32 modules</span>
+<span class="c1">#    - GPIO34-GPIO39 are input only</span>
+<span class="c1">#    - not all pins are available on all modules; check your board&#39;s datasheet</span>
+<span class="c1">#    - see ESP32 datasheet for full alternate functions</span>
+<span class="c1">#</span>
+<span class="c1">#  ESP32 Datasheet: </span>
+<span class="c1">#      https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf</span>
+<span class="c1">#</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Target ESP32 board and Arduino framework declaration</span>
+<span class="c1">#   - board: Target ESP32 Dev Module (ESP-WROOM-32)</span>
+<span class="c1">#   - framework: Arduino core for ESP32</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       board: Target board (e.g., esp32dev)</span>
+<span class="c1">#       framework.type: Framework type (e.g., arduino)</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">esp32</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">board</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">esp32dev</span><span class="w">                 </span><span class="c1"># board Target board: ESP32 Dev Module (ESP-WROOM-32)</span>
+<span class="w">  </span><span class="nt">framework</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arduino</span><span class="w">                 </span><span class="c1"># framework.type Arduino core for ESP32</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  SPI bus configuration for ST7789V display module</span>
+<span class="c1">#   - Configures SPI bus for display communication</span>
+<span class="c1">#   - Assigns clock and MOSI pins</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       clk_pin: Clock pin for SPI</span>
+<span class="c1">#       mosi_pin: MOSI data pin</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">spi</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">clk_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GPIO18</span><span class="w">              </span><span class="c1"># clk_pin Clock pin for SPI</span>
+<span class="w">  </span><span class="nt">mosi_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GPIO23</span><span class="w">             </span><span class="c1"># param mosi_pin MOSI data pin</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Display Interface Configuration</span>
+<span class="c1">#   - Configures GPIO pins for display communication</span>
+<span class="c1">#   - Assigns Chip Select, Data/Command, and Reset pins</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       display_cs: pin Chip Select pin</span>
+<span class="c1">#       display_dc: pin Data/Command pin</span>
+<span class="c1">#       display_reset: pin Reset pin</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">substitutions</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">display_cs_pin</span><span class="p">:</span><span class="w">    </span><span class="s">&quot;GPIO13&quot;</span><span class="w">       </span><span class="c1"># cs_pin Chip select pin</span>
+<span class="w">  </span><span class="nt">display_dc_pin</span><span class="p">:</span><span class="w">    </span><span class="s">&quot;GPIO04&quot;</span><span class="w">       </span><span class="c1"># dc_pin Data/command pin</span>
+<span class="w">  </span><span class="nt">display_reset_pin</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GPIO17&quot;</span><span class="w">       </span><span class="c1"># reset_pin Reset line</span>
+</code></pre></div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../api/" class="btn btn-neutral float-left" title="API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../esp32s3/" class="btn btn-neutral float-right" title="esp32s3">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hucklesberries/PumpHouseBoss" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../api/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../esp32s3/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

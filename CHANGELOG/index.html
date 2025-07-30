@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>CHANGELOG - PumpHouseBoss Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "CHANGELOG";
+        var mkdocs_page_input_path = "CHANGELOG.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> PumpHouseBoss Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">DESCRIPTION</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Standard</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Professional</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE/">RELEASE NOTES</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">CHANGELOG</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#071-2025-07-28">[0.7.1] - 2025-07-28</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#changed">Changed</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#070-2025-07-26">[0.7.0] - 2025-07-26</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#added">Added</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#changed_1">Changed</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#068-2025-07-24">[0.6.8] - 2025-07-24</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#changed_2">Changed</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#067-2025-07-23">[0.6.7] - 2025-07-23</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#added_1">Added</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#changed_3">Changed</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#066-2025-07-22">[0.6.6] - 2025-07-22</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#added_2">Added</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#changed_4">Changed</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#061-2025-07-19">[0.6.1] - 2025-07-19</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#added_3">Added</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#changed_5">Changed</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#baseline-makefile-auto-2025-07-18">[baseline-makefile-auto] - 2025-07-18</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#050-2025-07-10">[0.5.0] - 2025-07-10</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#030-2025-06-20">[0.3.0] - 2025-06-20</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#010-2025-06-01">[0.1.0] - 2025-06-01</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../STANDARDS/">STANDARDS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE-CHECKLIST/">RELEASE-CHECKLIST</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TODO/">TODO</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SOURCE CODE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >Variants</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std/">PHB Std</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro/">PHB Pro</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Common</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32s3/">esp32s3</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../logging/">Logging</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../ota/">OTA</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../watchdog/">Watchdog</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../web_server/">Web Server</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../wifi/">WiFi</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../secrets.template/">Secrets Template</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">PumpHouseBoss Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">CHANGELOG</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/hucklesberries/PumpHouseBoss/edit/master/docs/CHANGELOG.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="changelog">Changelog<a class="headerlink" href="#changelog" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Scope &amp; Purpose:</strong>
+This changelog provides a concise, developer-focused summary of all significant changes to PumpHouseBoss. For detailed release notes, see RELEASE.md.</p>
+</blockquote>
+<h2 id="071-2025-07-28">[0.7.1] - 2025-07-28<a class="headerlink" href="#071-2025-07-28" title="Permanent link">&para;</a></h2>
+<h3 id="changed">Changed<a class="headerlink" href="#changed" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Checked and fixed file permissions for scripts and assets (icons)</li>
+<li>Improved README.md: file tree now includes concise comments for every file</li>
+<li>Ensured all automation, Makefiles, and scripts are standards-compliant</li>
+<li>Added/updated documentation for check-in and release process</li>
+<li>General code and documentation cleanup for clarity and maintainability</li>
+</ul>
+<h2 id="070-2025-07-26">[0.7.0] - 2025-07-26<a class="headerlink" href="#070-2025-07-26" title="Permanent link">&para;</a></h2>
+<h3 id="added">Added<a class="headerlink" href="#added" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Support for multiple hardware variants with modular configuration</li>
+<li>Table of Contents, FAQ, and Contact/Support sections in documentation</li>
+<li>Security best practices: secrets template, gitignore updates, onboarding guidance</li>
+</ul>
+<h3 id="changed_1">Changed<a class="headerlink" href="#changed_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Consistent terminology and improved documentation</li>
+<li>Enhanced Makefile automation and clarified targets</li>
+<li>Improved onboarding workflow and Getting Started instructions</li>
+<li>Cleaned up and organized project TODOs and release notes</li>
+</ul>
+<h2 id="068-2025-07-24">[0.6.8] - 2025-07-24<a class="headerlink" href="#068-2025-07-24" title="Permanent link">&para;</a></h2>
+<h3 id="changed_2">Changed<a class="headerlink" href="#changed_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Repository name changed from sysmon-ph to PumpHouseBoss</li>
+</ul>
+<h2 id="067-2025-07-23">[0.6.7] - 2025-07-23<a class="headerlink" href="#067-2025-07-23" title="Permanent link">&para;</a></h2>
+<h3 id="added_1">Added<a class="headerlink" href="#added_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Major UI improvements for ST7789 display</li>
+<li>Pinout maps for ESP32S3, ST7789, Pico-LCD</li>
+<li><code>secrets.template.yaml</code> for onboarding</li>
+</ul>
+<h3 id="changed_3">Changed<a class="headerlink" href="#changed_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Improved Makefile automation, .gitignore, and documentation</li>
+<li>Refined check-in checklist and commit message standards</li>
+</ul>
+<h2 id="066-2025-07-22">[0.6.6] - 2025-07-22<a class="headerlink" href="#066-2025-07-22" title="Permanent link">&para;</a></h2>
+<h3 id="added_2">Added<a class="headerlink" href="#added_2" title="Permanent link">&para;</a></h3>
+<ul>
+<li>UI improvements for ST7789 display</li>
+<li>Pinout maps for ESP32S3, ST7789, Pico-LCD</li>
+<li><code>secrets.template.yaml</code> for onboarding</li>
+</ul>
+<h3 id="changed_4">Changed<a class="headerlink" href="#changed_4" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Makefile automation, .gitignore, and documentation</li>
+</ul>
+<h2 id="061-2025-07-19">[0.6.1] - 2025-07-19<a class="headerlink" href="#061-2025-07-19" title="Permanent link">&para;</a></h2>
+<h3 id="added_3">Added<a class="headerlink" href="#added_3" title="Permanent link">&para;</a></h3>
+<ul>
+<li>ESP32 board and framework configuration</li>
+<li>Automated device configuration via <code>configure.sh</code></li>
+<li>Modular includes: <code>wifi.yaml</code>, <code>ota.yaml</code>, <code>logging.yaml</code>, <code>web_server.yaml</code></li>
+<li>Fully automated Makefile for build, upload, and logging</li>
+</ul>
+<h3 id="changed_5">Changed<a class="headerlink" href="#changed_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Migrated to independent sysmon-ph repository</li>
+<li>Improved check-in checklist, .gitignore, and documentation</li>
+</ul>
+<h2 id="baseline-makefile-auto-2025-07-18">[baseline-makefile-auto] - 2025-07-18<a class="headerlink" href="#baseline-makefile-auto-2025-07-18" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Snapshot before major Makefile automation overhaul</li>
+</ul>
+<h2 id="050-2025-07-10">[0.5.0] - 2025-07-10<a class="headerlink" href="#050-2025-07-10" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Migrated to independent sysmon-ph repository</li>
+<li>Quality assurance system added</li>
+<li>Improved documentation, workflow, and check-in checklist</li>
+</ul>
+<h2 id="030-2025-06-20">[0.3.0] - 2025-06-20<a class="headerlink" href="#030-2025-06-20" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Major refactor and cleanup</li>
+<li>Improved modularity, build scripts, and Makefile automation</li>
+</ul>
+<h2 id="010-2025-06-01">[0.1.0] - 2025-06-01<a class="headerlink" href="#010-2025-06-01" title="Permanent link">&para;</a></h2>
+<ul>
+<li>First working version of ESPHome configuration</li>
+<li>Initial Makefile and YAML includes</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../RELEASE/" class="btn btn-neutral float-left" title="RELEASE NOTES"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../STANDARDS/" class="btn btn-neutral float-right" title="STANDARDS">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hucklesberries/PumpHouseBoss" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../RELEASE/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../STANDARDS/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

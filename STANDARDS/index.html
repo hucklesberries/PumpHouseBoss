@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>STANDARDS - PumpHouseBoss Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "STANDARDS";
+        var mkdocs_page_input_path = "STANDARDS.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> PumpHouseBoss Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">DESCRIPTION</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Standard</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Professional</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE/">RELEASE NOTES</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG/">CHANGELOG</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">STANDARDS</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of Contents</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#general-principles">General Principles</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#project-files">Project Files</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#tabs-and-indentation">Tabs and Indentation</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#line-endings">Line Endings</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#line-spacing">Line Spacing</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#build-files">Build Files</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#makefiles">Makefiles</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#shell-scripts">Shell Scripts</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#markdown-files">Markdown Files</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#versioning">Versioning</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#file-permissions">File Permissions</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#check-in-procedure">Check-in Procedure</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#commit-messages">Commit Messages</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#session-continuity">Session Continuity</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE-CHECKLIST/">RELEASE-CHECKLIST</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TODO/">TODO</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SOURCE CODE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >Variants</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std/">PHB Std</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro/">PHB Pro</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Common</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32s3/">esp32s3</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../logging/">Logging</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../ota/">OTA</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../watchdog/">Watchdog</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../web_server/">Web Server</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../wifi/">WiFi</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../secrets.template/">Secrets Template</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">PumpHouseBoss Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">STANDARDS</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/hucklesberries/PumpHouseBoss/edit/master/docs/STANDARDS.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="standardsmd-project-conventions-coding-standards">STANDARDS.md — Project Conventions &amp; Coding Standards<a class="headerlink" href="#standardsmd-project-conventions-coding-standards" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Scope &amp; Purpose:</strong>
+This document defines the conventions, standards, and best practices for all contributors to PumpHouseBoss. It ensures code quality, maintainability, and a consistent developer experience across the project.</p>
+</blockquote>
+<p>This document defines the conventions, standards, and best practices for all contributors to the PumpHouseBoss project. Adhering to these standards ensures code quality, maintainability, and a consistent developer experience.</p>
+<p>For the purpose of this project, the following terms are defined:
+- <strong>project files:</strong> Includes source files, build files, project configuration files, and documentation.
+- <strong>build files:</strong> Includes source files, makefiles, and configuration files required for executing makefile targets.
+- <strong>source files:</strong> Includes all files consisting of source code (i.e., C/C++, YAML, Python, and shell scripts).
+- <strong>documentation:</strong> Includes files consisting of Markdown or HTML.</p>
+<hr />
+<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="#general-principles">General Principles</a></li>
+<li><a href="#project-files">Project Files</a></li>
+<li><a href="#build-files">Build Files</a></li>
+<li><a href="#makefiles">Makefiles</a></li>
+<li><a href="#shell-scripts">Shell Scripts</a></li>
+<li><a href="#markdown-files">Markdown Files</a></li>
+<li><a href="#versioning">Versioning</a></li>
+<li><a href="#file-permissions">File Permissions</a></li>
+<li><a href="#check-in-procedure">Check-in Procedure</a></li>
+<li><a href="#commit-messages">Commit Messages</a></li>
+<li><a href="#session-continuity">Session Continuity</a></li>
+</ul>
+<hr />
+<h2 id="general-principles">General Principles<a class="headerlink" href="#general-principles" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Write clear, maintainable, and well-documented code.</li>
+<li>Prioritize explicitness and readability over cleverness.</li>
+<li>All project files must be licensed under GPL v3.0 or later.</li>
+</ul>
+<h2 id="project-files">Project Files<a class="headerlink" href="#project-files" title="Permanent link">&para;</a></h2>
+<h3 id="tabs-and-indentation">Tabs and Indentation<a class="headerlink" href="#tabs-and-indentation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Indentation must use spaces, not tabs, Except for Makefiles, tabs should be expanded to 4 spaces.</li>
+<li>Configure your editor to display tabs as 4 spaces and to insert spaces when the Tab key is pressed.</li>
+<li>For VS Code, add the following to your workspace settings:
+  <code>json
+     {
+        "editor.tabSize": 4,
+        "editor.insertSpaces": true,
+        "files.eol": "\n"
+    }</code></li>
+<li>For Vim, add to your <code>.vimrc</code>:
+  <code>vim
+     set tabstop=4
+     set shiftwidth=4
+     set expandtab
+     set fileformat=unix</code></li>
+<li>For Emacs, add to your <code>.emacs</code> or <code>.dir-locals.el</code>:
+  <code>elisp
+     (setq-default indent-tabs-mode nil)
+     (setq-default tab-width 4)
+     (setq-default buffer-file-coding-system 'utf-8-unix)</code>
+<em>Note: Makefiles are required to use tabs for indentation, and as such are an exception to this rule.</em></li>
+</ul>
+<h3 id="line-endings">Line Endings<a class="headerlink" href="#line-endings" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Files must use Unix (LF) line endings. Do not use Windows (CRLF).</li>
+<li>Lines should not include trailing whitespce.</li>
+<li>Lines should not end with trailing whitespace.</li>
+</ul>
+<h3 id="line-spacing">Line Spacing<a class="headerlink" href="#line-spacing" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Files should not start with empty lines, and should end with a single empty line.</li>
+<li>Major sections should be separated by two blank lines.</li>
+<li>Minor sections should be separated by a single blank line.</li>
+</ul>
+<h2 id="build-files">Build Files<a class="headerlink" href="#build-files" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Build files must begin with the standard project header, including in order:</li>
+<li><strong>Required:</strong> Name, Type, Purpose, Version, Date, Author</li>
+<li><strong>Where Applicable:</strong> Description, Features, Usage, Note, Caution</li>
+<li><strong>Required:</strong> License, Copyright
+  See <code>Makefile</code> for a canonical example.</li>
+<li>Build files must include comprehensive inline documentation, including:</li>
+<li>Inline documentation consists of comments and explanations within the code, scripts, or configuration files that clarify the purpose, logic, and usage of code sections (such as code blocks, function definitions, and logic groupings), functions, variables, and complex logic.</li>
+<li>Use clear, concise comments to aid future maintainers and reviewers.</li>
+<li>Inline documentation should follow the conventions of the language or file type (e.g., <code>#</code> for shell scripts, <code>//</code> or <code>/* ... */</code> for C/C++, <code>#</code> for YAML, etc.).</li>
+<li>PascalCase is preferred for variable names (i.e., ThisIsAVariable).</li>
+<li>UPPER_SNAKE_CASE (also known as CONSTANT_CASE) is preferred for macros and definitions (i.e., THIS_IS_A_MACRO).</li>
+<li><strong>Note:</strong> Build files include Makefiles and related configuration files required for building the project. Makefiles are a special type of build file and must follow both the general build file standards and the additional Makefile-specific standards below.</li>
+</ul>
+<h2 id="makefiles">Makefiles<a class="headerlink" href="#makefiles" title="Permanent link">&para;</a></h2>
+<p>Makefiles are a type of build file and must follow all build file standards in addition to the following Makefile-specific conventions:
+- Use phony targets for all non-file targets.
+- Prepend targets not meant for external use with an underscore ("_"). For example, use <code>_internal_target</code> for internal-only targets. This helps distinguish private/internal targets from those intended for public use.
+- Group related targets (build, docs, clean, etc.) and document them.
+- Use variables for directories and file lists.
+- Indent shell code in recipes for human readability.
+- <strong>Quoting Variables:</strong> Quote all variable expansions, e.g., "$(VAR)", to prevent word splitting and globbing issues.</p>
+<h2 id="shell-scripts">Shell Scripts<a class="headerlink" href="#shell-scripts" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Use <code>#!/usr/bin/env bash</code> as the shebang for all Bash scripts.</li>
+<li><strong>Strict Mode:</strong> Use <code>set -u</code> (treat unset variables as errors), <code>set -e</code> (exit on error), and <code>set -o pipefail</code> (fail pipelines if any command fails) at the top of all scripts unless there is a documented reason not to. If you must omit <code>-e</code> (e.g., for scripts with background jobs), document this in the script header.</li>
+<li><strong>Quoting Variables:</strong> Quote all variable expansions, e.g., <code>"${VAR}"</code>, to prevent word splitting and globbing issues.</li>
+<li>Use colorized output only if the terminal supports it.</li>
+<li>Always clean up background processes on exit or interruption.</li>
+</ul>
+<h3 id="markdown-files">Markdown Files<a class="headerlink" href="#markdown-files" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Use two blank lines before the start of major (##) sections/headers.</li>
+<li>Use one blank line before the start of minor (###...) sections/headers.</li>
+<li>Use one blank line between paragraphs or list blocks.</li>
+<li>Do not add extra blank lines within lists or between list items.</li>
+<li>Do not add blank lines before or after code blocks inside lists.</li>
+<li>Use one blank line before and after code blocks that are not inside a list.</li>
+<li>Keep Markdown formatting consistent for readability and proper rendering.</li>
+</ul>
+<h2 id="versioning">Versioning<a class="headerlink" href="#versioning" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Keep the <code>VERSION</code> file and Makefile version in sync.</li>
+<li>Update version strings in headers and documentation as part of the release process.</li>
+</ul>
+<h2 id="file-permissions">File Permissions<a class="headerlink" href="#file-permissions" title="Permanent link">&para;</a></h2>
+<ul>
+<li>All executable scripts (e.g., Bash, Python) must be committed with executable permissions (<code>chmod 755</code> or <code>chmod +x</code>).</li>
+<li>Data files, documentation, and configuration files should not be executable (use <code>chmod 644</code>).</li>
+<li>Do not commit files as world-writable (no <code>chmod 777</code>).</li>
+<li>Use <code>git update-index --chmod=+x &lt;file&gt;</code> to set executable bit in git if needed.</li>
+<li>Always check file permissions before committing new or modified files.</li>
+</ul>
+<h2 id="check-in-procedure">Check-in Procedure<a class="headerlink" href="#check-in-procedure" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Before committing code or documentation, contributors must:</li>
+<li>Conduct a peer review:<ul>
+<li>Request at least one other contributor to review all code and documentation changes before merging.</li>
+<li>Reviewers should check for code quality, adherence to project standards, clarity, maintainability, and correctness.</li>
+<li>Provide constructive feedback and suggest improvements where needed.</li>
+<li>Ensure all comments and requested changes are addressed before approval.</li>
+<li>Approve the changes only when all checklist items and standards are satisfied.</li>
+</ul>
+</li>
+<li>Perform all steps and clear all checkmarks in the checklist file (<code>RELEASE-CHECKLIST.md</code>).</li>
+</ul>
+<h2 id="commit-messages">Commit Messages<a class="headerlink" href="#commit-messages" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Use structured commit messages:</li>
+<li>Short summary (max 72 chars)</li>
+<li>Blank line</li>
+<li>Detailed description (if needed)</li>
+<li>Reference related issues or action items when appropriate.</li>
+</ul>
+<h2 id="session-continuity">Session Continuity<a class="headerlink" href="#session-continuity" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Use <code>CONTRIBUTING.md</code> for session context and developer continuity.</li>
+</ul>
+<hr />
+<p><em>This document is maintained by GitHub Copilot and the project maintainers. Please propose updates as standards evolve.</em></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../CHANGELOG/" class="btn btn-neutral float-left" title="CHANGELOG"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../RELEASE-CHECKLIST/" class="btn btn-neutral float-right" title="RELEASE-CHECKLIST">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hucklesberries/PumpHouseBoss" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../CHANGELOG/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../RELEASE-CHECKLIST/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>esp32s3 - PumpHouseBoss Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "esp32s3";
+        var mkdocs_page_input_path = "esp32s3.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> PumpHouseBoss Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">DESCRIPTION</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Standard</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Professional</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE/">RELEASE NOTES</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG/">CHANGELOG</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../STANDARDS/">STANDARDS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE-CHECKLIST/">RELEASE-CHECKLIST</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TODO/">TODO</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SOURCE CODE</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" >Variants</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std/">PHB Std</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro/">PHB Pro</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Common</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">esp32s3</a>
+    <ul class="current">
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../logging/">Logging</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../ota/">OTA</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../watchdog/">Watchdog</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../web_server/">Web Server</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../wifi/">WiFi</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../secrets.template/">Secrets Template</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">PumpHouseBoss Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">SOURCE CODE</li>
+          <li class="breadcrumb-item">Common</li>
+      <li class="breadcrumb-item active">esp32s3</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/hucklesberries/PumpHouseBoss/edit/master/docs/esp32s3.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="component-esp32s3">Component: esp32s3<a class="headerlink" href="#component-esp32s3" title="Permanent link">&para;</a></h1>
+<h1 id="source-homerhendelgitpumphousebosscommonesp32s3yaml">Source: /home/rhendel/git/PumpHouseBoss/common/esp32s3.yaml<a class="headerlink" href="#source-homerhendelgitpumphousebosscommonesp32s3yaml" title="Permanent link">&para;</a></h1>
+<h1 id="generated-tue-jul-29-2025-115947-pm">Generated: Tue, Jul 29, 2025 11:59:47 PM<a class="headerlink" href="#generated-tue-jul-29-2025-115947-pm" title="Permanent link">&para;</a></h1>
+<p>```yaml</p>
+<h1 id="-">------------------------------------------------------------------------------<a class="headerlink" href="#-" title="Permanent link">&para;</a></h1>
+<h1 id="file-esp32s3yaml">File:         esp32s3.yaml<a class="headerlink" href="#file-esp32s3yaml" title="Permanent link">&para;</a></h1>
+<h1 id="file-type-esphome-yaml-include">File Type:    ESPHome YAML Include<a class="headerlink" href="#file-type-esphome-yaml-include" title="Permanent link">&para;</a></h1>
+<h1 id="purpose-esp32-s3-board-and-framework-configuration">Purpose:      ESP32-S3 board and framework configuration<a class="headerlink" href="#purpose-esp32-s3-board-and-framework-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="version-071">Version:      0.7.1<a class="headerlink" href="#version-071" title="Permanent link">&para;</a></h1>
+<h1 id="date-2025-07-24">Date:         2025-07-24<a class="headerlink" href="#date-2025-07-24" title="Permanent link">&para;</a></h1>
+<h1 id="author-roland-tembo-hendel-rhendelnexuslogiccom">Author:       Roland Tembo Hendel <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;">&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;</a><a class="headerlink" href="#author-roland-tembo-hendel-rhendelnexuslogiccom" title="Permanent link">&para;</a></h1>
+<h1 id="_1"><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="description-modular-include-for-esphome-projects-targeting-esp32-s3">Description:  Modular include for ESPHome projects targeting ESP32-S3.<a class="headerlink" href="#description-modular-include-for-esphome-projects-targeting-esp32-s3" title="Permanent link">&para;</a></h1>
+<h1 id="_2"><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h1 id="license-gnu-general-public-license-v30">License:      GNU General Public License v3.0<a class="headerlink" href="#license-gnu-general-public-license-v30" title="Permanent link">&para;</a></h1>
+<h1 id="spdx-license-identifier-gpl-30-or-later">SPDX-License-Identifier: GPL-3.0-or-later<a class="headerlink" href="#spdx-license-identifier-gpl-30-or-later" title="Permanent link">&para;</a></h1>
+<h1 id="copyright-c-2025-roland-tembo-hendel">Copyright:    (c) 2025 Roland Tembo Hendel<a class="headerlink" href="#copyright-c-2025-roland-tembo-hendel" title="Permanent link">&para;</a></h1>
+<h1 id="this-program-is-free-software-you-can-redistribute-it-andor">This program is free software: you can redistribute it and/or<a class="headerlink" href="#this-program-is-free-software-you-can-redistribute-it-andor" title="Permanent link">&para;</a></h1>
+<h1 id="modify-it-under-the-terms-of-the-gnu-general-public-license">modify it under the terms of the GNU General Public License.<a class="headerlink" href="#modify-it-under-the-terms-of-the-gnu-general-public-license" title="Permanent link">&para;</a></h1>
+<h1 id="-_1">------------------------------------------------------------------------------<a class="headerlink" href="#-_1" title="Permanent link">&para;</a></h1>
+<h1 id="-_2">------------------------------------------------------------------------------<a class="headerlink" href="#-_2" title="Permanent link">&para;</a></h1>
+<h1 id="yaml-linter-configuration">YAML linter configuration<a class="headerlink" href="#yaml-linter-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="-disables-quoted-strings-rule-for-improved-readability">- Disables quoted-strings rule for improved readability<a class="headerlink" href="#-disables-quoted-strings-rule-for-improved-readability" title="Permanent link">&para;</a></h1>
+<h1 id="-_3">------------------------------------------------------------------------------<a class="headerlink" href="#-_3" title="Permanent link">&para;</a></h1>
+<h1 id="yamllint-disable-rulequoted-strings">yamllint disable rule:quoted-strings<a class="headerlink" href="#yamllint-disable-rulequoted-strings" title="Permanent link">&para;</a></h1>
+<h1 id="-_4">------------------------------------------------------------------------------<a class="headerlink" href="#-_4" title="Permanent link">&para;</a></h1>
+<h1 id="esp32-s3-qfn44-dev-module-standard-pinout-map-vertical-top-view">ESP32-S3 (QFN44) Dev Module Standard Pinout Map (Vertical, Top View)<a class="headerlink" href="#esp32-s3-qfn44-dev-module-standard-pinout-map-vertical-top-view" title="Permanent link">&para;</a></h1>
+<h1 id="-_5">------------------------------------------------------------------------------<a class="headerlink" href="#-_5" title="Permanent link">&para;</a></h1>
+<h1 id="_3"><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<h1 id="_4">┌──────────────────┐<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<h1 id="33v-vcc-01-44-gnd">3.3V     VCC ─┤ 01 ┌────────┐ 44 ├── GND<a class="headerlink" href="#33v-vcc-01-44-gnd" title="Permanent link">&para;</a></h1>
+<h1 id="33v-vcc-02-43-gpio43-u0txd-led_tx">3.3V     VCC ─┤ 02 │        │ 43 ├── GPIO43  U0TXD     LED_TX<a class="headerlink" href="#33v-vcc-02-43-gpio43-u0txd-led_tx" title="Permanent link">&para;</a></h1>
+<h1 id="rst-03-42-gpio44-u0rxd-led_rx">RST ─┤ 03 │        │ 42 ├── GPIO44  U0RXD     LED_RX<a class="headerlink" href="#rst-03-42-gpio44-u0rxd-led_rx" title="Permanent link">&para;</a></h1>
+<h1 id="t04-adc1_ch3-cam_siod-gpio04-04-41-gpio01-adc1_ch0-t01">T04  ADC1_CH3   CAM_SIOD  GPIO04 ─┤ 04 │        │ 41 ├── GPIO01, ADC1_CH0            T01<a class="headerlink" href="#t04-adc1_ch3-cam_siod-gpio04-04-41-gpio01-adc1_ch0-t01" title="Permanent link">&para;</a></h1>
+<h1 id="t05-adc1_ch4-cam_sioc-gpio05-05-40-gpio02-adc1_ch1-led_on-t02">T05  ADC1_CH4   CAM_SIOC  GPIO05 ─┤ 05 └────────┘ 40 ├── GPIO02  ADC1_CH1  LED_ON    T02<a class="headerlink" href="#t05-adc1_ch4-cam_sioc-gpio05-05-40-gpio02-adc1_ch1-led_on-t02" title="Permanent link">&para;</a></h1>
+<h1 id="t06-adc1_ch5-cam_vsync-gpio06-06-39-gpio42-mtms">T06  ADC1_CH5  CAM_VSYNC  GPIO06 ─┤ 06            39 ├── GPIO42            MTMS<a class="headerlink" href="#t06-adc1_ch5-cam_vsync-gpio06-06-39-gpio42-mtms" title="Permanent link">&para;</a></h1>
+<h1 id="t07-adc1_ch6-cam_href-gpio07-07-38-gpio41-mtd1">T07  ADC1_CH6   CAM_HREF  GPIO07 ─┤ 07            38 ├── GPIO41            MTD1<a class="headerlink" href="#t07-adc1_ch6-cam_href-gpio07-07-38-gpio41-mtd1" title="Permanent link">&para;</a></h1>
+<h1 id="u0rts-adc2_ch4-cam_xclk-gpio15-08-37-gpio40-sd_data-mtdo">U0RTS  ADC2_CH4   CAM_XCLK  GPIO15 ─┤ 08            37 ├── GPIO40  SD_DATA   MTDO<a class="headerlink" href="#u0rts-adc2_ch4-cam_xclk-gpio15-08-37-gpio40-sd_data-mtdo" title="Permanent link">&para;</a></h1>
+<h1 id="u0cts-adc2_ch5-cam_y9-gpio16-09-36-gpio39-sd_clk-mtck">U0CTS  ADC2_CH5     CAM_Y9  GPIO16 ─┤ 09            36 ├── GPIO39  SD_CLK    MTCK<a class="headerlink" href="#u0cts-adc2_ch5-cam_y9-gpio16-09-36-gpio39-sd_clk-mtck" title="Permanent link">&para;</a></h1>
+<h1 id="u1txd-adc2_ch6-cam_y8-gpio17-10-35-gpio38-sd_cmd">U1TXD  ADC2_CH6     CAM_Y8  GPIO17 ─┤ 10            35 ├── GPIO38  SD_CMD<a class="headerlink" href="#u1txd-adc2_ch6-cam_y8-gpio17-10-35-gpio38-sd_cmd" title="Permanent link">&para;</a></h1>
+<h1 id="u1rxd-adc2_ch7-cam_y7-gpio18-11-esp32-s3-34-gpio37-psram">U1RXD  ADC2_CH7     CAM_Y7  GPIO18 ─┤ 11  ESP32-S3  34 ├── GPIO37  PSRAM<a class="headerlink" href="#u1rxd-adc2_ch7-cam_y7-gpio18-11-esp32-s3-34-gpio37-psram" title="Permanent link">&para;</a></h1>
+<h1 id="t08-adc1_ch7-cam_y4-gpio08-12-33-gpio36-psram">T08  ADC1_CH7     CAM_Y4  GPIO08 ─┤ 12            33 ├── GPIO36  PSRAM<a class="headerlink" href="#t08-adc1_ch7-cam_y4-gpio08-12-33-gpio36-psram" title="Permanent link">&para;</a></h1>
+<h1 id="t03-adc1_ch2-jtag_en-gpio03-13-32-gpio35-psram">T03  ADC1_CH2    JTAG_EN  GPIO03 ─┤ 13            32 ├── GPIO35  PSRAM<a class="headerlink" href="#t03-adc1_ch2-jtag_en-gpio03-13-32-gpio35-psram" title="Permanent link">&para;</a></h1>
+<h1 id="log-gpio46-14-31-gpio00-boot">LOG  GPIO46 ─┤ 14            31 ├── GPIO00  BOOT<a class="headerlink" href="#log-gpio46-14-31-gpio00-boot" title="Permanent link">&para;</a></h1>
+<h1 id="t09-adc1_ch8-cam_y3-gpio09-15-30-gpio45-vspi">T09  ADC1_CH8     CAM_Y3  GPIO09 ─┤ 15            30 ├── GPIO45  VSPI<a class="headerlink" href="#t09-adc1_ch8-cam_y3-gpio09-15-30-gpio45-vspi" title="Permanent link">&para;</a></h1>
+<h1 id="t10-adc1_ch9-cam_y5-gpio10-16-29-gpio48-ws2812">T10  ADC1_CH9     CAM_Y5  GPIO10 ─┤ 16            29 ├── GPIO48  WS2812<a class="headerlink" href="#t10-adc1_ch9-cam_y5-gpio10-16-29-gpio48-ws2812" title="Permanent link">&para;</a></h1>
+<h1 id="t11-adc2_ch0-cam_y2-gpio11-17-28-gpio47">T11  ADC2_CH0     CAM_Y2  GPIO11 ─┤ 17            28 ├── GPIO47<a class="headerlink" href="#t11-adc2_ch0-cam_y2-gpio11-17-28-gpio47" title="Permanent link">&para;</a></h1>
+<h1 id="t12-adc2_ch1-cam_y6-gpio12-18-27-gpio21">T12  ADC2_CH1     CAM_Y6  GPIO12 ─┤ 18            27 ├── GPIO21<a class="headerlink" href="#t12-adc2_ch1-cam_y6-gpio12-18-27-gpio21" title="Permanent link">&para;</a></h1>
+<h1 id="t13-adc2_ch2-cam_pclk-gpio13-19-26-gpio20-usb_d-adc2_ch9-u1cts">T13  ADC2_CH2   CAM_PCLK  GPIO13 ─┤ 19            26 ├── GPIO20  USB_D-    ADC2_CH9  U1CTS<a class="headerlink" href="#t13-adc2_ch2-cam_pclk-gpio13-19-26-gpio20-usb_d-adc2_ch9-u1cts" title="Permanent link">&para;</a></h1>
+<h1 id="t14-adc2_ch3-gpio14-20-25-gpio19-usb_d-adc2_ch8-u1rts">T14  ADC2_CH3             GPIO14 ─┤ 20            25 ├── GPIO19  USB_D+    ADC2_CH8  U1RTS<a class="headerlink" href="#t14-adc2_ch3-gpio14-20-25-gpio19-usb_d-adc2_ch8-u1rts" title="Permanent link">&para;</a></h1>
+<h1 id="5v-vin-21-24-gnd">5V     VIN ─┤ 21            24 ├── GND<a class="headerlink" href="#5v-vin-21-24-gnd" title="Permanent link">&para;</a></h1>
+<h1 id="gnd-22-23-gnd">GND ─┤ 22            23 ├── GND<a class="headerlink" href="#gnd-22-23-gnd" title="Permanent link">&para;</a></h1>
+<h1 id="usbusb">└───┐USB┌─┐USB┌────┘<a class="headerlink" href="#usbusb" title="Permanent link">&para;</a></h1>
+<h1 id="_5">└───┘ └───┘<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
+<h1 id="_6"><a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
+<h1 id="notes">Notes:<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h1>
+<h1 id="-pin-numbers-1-44-match-qfn44-package-not-moduledev-board">- pin numbers (1-44) match QFN44 package, not module/dev board<a class="headerlink" href="#-pin-numbers-1-44-match-qfn44-package-not-moduledev-board" title="Permanent link">&para;</a></h1>
+<h1 id="-gpio6-11-are-typically-used-for-spi-flash-and-not-available-for-user-io">- GPIO6-11 are typically used for SPI flash and not available for user IO<a class="headerlink" href="#-gpio6-11-are-typically-used-for-spi-flash-and-not-available-for-user-io" title="Permanent link">&para;</a></h1>
+<h1 id="-gpio46-is-input-only">- GPIO46 is input only<a class="headerlink" href="#-gpio46-is-input-only" title="Permanent link">&para;</a></h1>
+<h1 id="-gpio00-gpio45-gpio46-are-strapping-pins">- GPIO00, GPIO45, GPIO46 are strapping pins<a class="headerlink" href="#-gpio00-gpio45-gpio46-are-strapping-pins" title="Permanent link">&para;</a></h1>
+<h1 id="-these-pins-should-not-be-pulled-high-or-low-at-bootreset">- these pins should not be pulled high or low at boot/reset<a class="headerlink" href="#-these-pins-should-not-be-pulled-high-or-low-at-bootreset" title="Permanent link">&para;</a></h1>
+<h1 id="-use-with-caution-avoid-using-as-output-or-with-pull-downs">- use with caution; avoid using as output or with pull-downs<a class="headerlink" href="#-use-with-caution-avoid-using-as-output-or-with-pull-downs" title="Permanent link">&para;</a></h1>
+<h1 id="-gpio1-gpio3-are-default-uart0-pins-console">- GPIO1, GPIO3 are default UART0 pins (console)<a class="headerlink" href="#-gpio1-gpio3-are-default-uart0-pins-console" title="Permanent link">&para;</a></h1>
+<h1 id="-can-be-repurposed-if-not-used-for-serial">- can be repurposed if not used for serial<a class="headerlink" href="#-can-be-repurposed-if-not-used-for-serial" title="Permanent link">&para;</a></h1>
+<h1 id="-gpio19-gpio20-gpio21-are-usb-dd-and-related-pins">- GPIO19, GPIO20, GPIO21 are USB D+/D- and related pins;<a class="headerlink" href="#-gpio19-gpio20-gpio21-are-usb-dd-and-related-pins" title="Permanent link">&para;</a></h1>
+<h1 id="-using-them-for-other-purposes-can-interfere-with-usb-functionality">- using them for other purposes can interfere with USB functionality<a class="headerlink" href="#-using-them-for-other-purposes-can-interfere-with-usb-functionality" title="Permanent link">&para;</a></h1>
+<h1 id="-not-all-pins-are-available-on-all-modules-check-your-boards-datasheet">- not all pins are available on all modules; check your board's datasheet<a class="headerlink" href="#-not-all-pins-are-available-on-all-modules-check-your-boards-datasheet" title="Permanent link">&para;</a></h1>
+<h1 id="-see-esp32-s3-datasheet-for-alternate-functions-and-capabilities">- see ESP32-S3 datasheet for alternate functions and capabilities<a class="headerlink" href="#-see-esp32-s3-datasheet-for-alternate-functions-and-capabilities" title="Permanent link">&para;</a></h1>
+<h1 id="_7"><a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
+<h1 id="-_6">------------------------------------------------------------------------------<a class="headerlink" href="#-_6" title="Permanent link">&para;</a></h1>
+<h1 id="-_7">------------------------------------------------------------------------------<a class="headerlink" href="#-_7" title="Permanent link">&para;</a></h1>
+<h1 id="target-esp32-s3-board-and-arduino-framework-declaration">Target ESP32-S3 board and Arduino framework declaration<a class="headerlink" href="#target-esp32-s3-board-and-arduino-framework-declaration" title="Permanent link">&para;</a></h1>
+<h1 id="-board-target-esp32-s3-devkitc-1-8mb-flash-no-psram">- board: Target ESP32-S3 DevKitC-1 (8MB flash, no PSRAM)<a class="headerlink" href="#-board-target-esp32-s3-devkitc-1-8mb-flash-no-psram" title="Permanent link">&para;</a></h1>
+<h1 id="-framework-arduino-core-for-esp32-s3">- framework: Arduino core for ESP32-S3<a class="headerlink" href="#-framework-arduino-core-for-esp32-s3" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters">- Parameters:<a class="headerlink" href="#-parameters" title="Permanent link">&para;</a></h1>
+<h1 id="board-target-board-eg-esp32-s3-devkitc-1">board: Target board (e.g., esp32-s3-devkitc-1)<a class="headerlink" href="#board-target-board-eg-esp32-s3-devkitc-1" title="Permanent link">&para;</a></h1>
+<h1 id="frameworktype-framework-type-eg-arduino">framework.type: Framework type (e.g., arduino)<a class="headerlink" href="#frameworktype-framework-type-eg-arduino" title="Permanent link">&para;</a></h1>
+<h1 id="-_8">------------------------------------------------------------------------------<a class="headerlink" href="#-_8" title="Permanent link">&para;</a></h1>
+<p>esp32:
+  board: esp32-s3-devkitc-1       # board Target board: DevKitC-1 (8MB flash, no PSRAM)
+  framework:
+    type: arduino                 # framework.type Arduino core for ESP32-S3</p>
+<h1 id="-_9">------------------------------------------------------------------------------<a class="headerlink" href="#-_9" title="Permanent link">&para;</a></h1>
+<h1 id="spi-bus-configuration">SPI bus configuration<a class="headerlink" href="#spi-bus-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="-configures-spi-bus-for-communication">- Configures SPI bus for communication<a class="headerlink" href="#-configures-spi-bus-for-communication" title="Permanent link">&para;</a></h1>
+<h1 id="-assigns-clock-and-mosi-pins">- Assigns clock and MOSI pins<a class="headerlink" href="#-assigns-clock-and-mosi-pins" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters_1">- Parameters:<a class="headerlink" href="#-parameters_1" title="Permanent link">&para;</a></h1>
+<h1 id="clk_pin-clock-pin-for-spi">clk_pin: Clock pin for SPI<a class="headerlink" href="#clk_pin-clock-pin-for-spi" title="Permanent link">&para;</a></h1>
+<h1 id="mosi_pin-mosi-data-pin">mosi_pin: MOSI data pin<a class="headerlink" href="#mosi_pin-mosi-data-pin" title="Permanent link">&para;</a></h1>
+<h1 id="-_10">------------------------------------------------------------------------------<a class="headerlink" href="#-_10" title="Permanent link">&para;</a></h1>
+<p>spi:
+  clk_pin: GPIO10              # clk_pin Clock pin for SPI
+  mosi_pin: GPIO11             # param mosi_pin MOSI data pin</p>
+<h1 id="-_11">------------------------------------------------------------------------------<a class="headerlink" href="#-_11" title="Permanent link">&para;</a></h1>
+<h1 id="display-interface-configuration">Display Interface Configuration<a class="headerlink" href="#display-interface-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="-configures-gpio-pins-for-display-communication">- Configures GPIO pins for display communication<a class="headerlink" href="#-configures-gpio-pins-for-display-communication" title="Permanent link">&para;</a></h1>
+<h1 id="-assigns-chip-select-datacommand-and-reset-pins">- Assigns Chip Select, Data/Command, and Reset pins<a class="headerlink" href="#-assigns-chip-select-datacommand-and-reset-pins" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters_2">- Parameters:<a class="headerlink" href="#-parameters_2" title="Permanent link">&para;</a></h1>
+<h1 id="display_cs-pin-chip-select-pin">display_cs: pin Chip Select pin<a class="headerlink" href="#display_cs-pin-chip-select-pin" title="Permanent link">&para;</a></h1>
+<h1 id="display_dc-pin-datacommand-pin">display_dc: pin Data/Command pin<a class="headerlink" href="#display_dc-pin-datacommand-pin" title="Permanent link">&para;</a></h1>
+<h1 id="display_reset-pin-reset-pin">display_reset: pin Reset pin<a class="headerlink" href="#display_reset-pin-reset-pin" title="Permanent link">&para;</a></h1>
+<h1 id="-_12">------------------------------------------------------------------------------<a class="headerlink" href="#-_12" title="Permanent link">&para;</a></h1>
+<p>substitutions:
+  display_cs_pin:    "GPIO09"       # cs_pin Chip select pin
+  display_dc_pin:    "GPIO08"       # dc_pin Data/command pin
+  display_reset_pin: "GPIO12"       # reset_pin Reset line```</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../esp32/" class="btn btn-neutral float-left" title="esp32"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../logging/" class="btn btn-neutral float-right" title="Logging">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hucklesberries/PumpHouseBoss" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../esp32/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../logging/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

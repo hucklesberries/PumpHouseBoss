@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Hardware - PumpHouseBoss Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Hardware";
+        var mkdocs_page_input_path = "phb-std-hardware.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> PumpHouseBoss Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">DESCRIPTION</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" >PumpHouseBoss Standard</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Hardware</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#pinout-map-esp32-30-pin-package-top-view">Pinout Map: ESP32 (30 Pin Package, Top View'')</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#notes">Notes:</a>
+    </li>
+    </ul>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Professional</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE/">RELEASE NOTES</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG/">CHANGELOG</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../STANDARDS/">STANDARDS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE-CHECKLIST/">RELEASE-CHECKLIST</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TODO/">TODO</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SOURCE CODE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >Variants</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std/">PHB Std</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro/">PHB Pro</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Common</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32s3/">esp32s3</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../logging/">Logging</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../ota/">OTA</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../watchdog/">Watchdog</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../web_server/">Web Server</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../wifi/">WiFi</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../secrets.template/">Secrets Template</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">PumpHouseBoss Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">DESCRIPTION</li>
+          <li class="breadcrumb-item">PumpHouseBoss Standard</li>
+      <li class="breadcrumb-item active">Hardware</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/hucklesberries/PumpHouseBoss/edit/master/docs/phb-std-hardware.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="pumphouseboss-pro-hardware-guide">PumpHouseBoss Pro - Hardware Guide<a class="headerlink" href="#pumphouseboss-pro-hardware-guide" title="Permanent link">&para;</a></h1>
+<h2 id="pinout-map-esp32-30-pin-package-top-view">Pinout Map: ESP32 (30 Pin Package, Top View'')<a class="headerlink" href="#pinout-map-esp32-30-pin-package-top-view" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><code>                               ┌────────────────┐
+   BTN_RESET          [   EN] ─┤ 01 ┌──────┐ 30 ├─ [NC   ]  GPIO23  NC
+              GPIO36  [   NC] ─┤ 02 │      │ 29 ├─ [OUT  ]  GPIO22  DISP_SCL
+    BTN_CTRL  GPIO39  [   IN] ─┤ 03 │      │ 28 ├─ [-----]  GPIO01  NC
+   LED_WHITE  GPIO34  [   IN] ─┤ 04 └──────┘ 27 ├─ [-----]  GPIO03  NC
+   LED_GREEN  GPIO35  [   IN] ─┤ 05          26 ├─ [INOUT]  GPIO21  DISP_SDA
+    LED_BLUE  GPIO32  [  OUT] ─┤ 06          25 ├─ [NC   ]  GPIO19  NC
+     LED_RED  GPIO33  [  OUT] ─┤ 07          24 ├─ [NC   ]  GPIO18  NC
+          NC  GPIO25  [  OUT] ─┤ 08  ESP-32  23 ├─ [XXX  ]  GPIO05  NC
+          NC  GPIO26  [   NC] ─┤ 09          22 ├─ [NC   ]  GPIO17  NC
+          NC  GPIO27  [   NC] ─┤ 10          21 ├─ [OUT  ]  GPIO16  MMU0_CTRL
+          NC  GPIO14  [   NC] ─┤ 11          20 ├─ [PWMIN]  GPIO04  MMU0_SENS
+          NC  GPIO12  [-----] ─┤ 12          19 ├─ [-----]  GPIO02  NC
+          NC  GPIO13  [   NC] ─┤ 13          18 ├─ [-----]  GPIO15  NC
+                 GND  [  GND] ─┤ 14          17 ├─ [GND  ]  GND
+                 VIN  [5V_IN] ─┤ 15          16 ├─ [NC   ]  NC
+                               └─────┐USB┌──────┘
+                                     └───┘
+</code></pre></div>
+
+<h2 id="notes">Notes:<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Power:     supply 5v to VIN (on-board regulator)</li>
+<li>GND:       tie pins 14 and 17 low</li>
+<li>BTN_RESET: active low; button press pulls to GND for system reset</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../phb-std-overview/" class="btn btn-neutral float-left" title="Overview"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../phb-pro-overview/" class="btn btn-neutral float-right" title="Overview">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hucklesberries/PumpHouseBoss" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../phb-std-overview/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../phb-pro-overview/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

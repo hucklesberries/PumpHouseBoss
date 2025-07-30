@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>PHB Pro - PumpHouseBoss Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "PHB Pro";
+        var mkdocs_page_input_path = "phb-pro.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> PumpHouseBoss Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">DESCRIPTION</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Standard</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Professional</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE/">RELEASE NOTES</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG/">CHANGELOG</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../STANDARDS/">STANDARDS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE-CHECKLIST/">RELEASE-CHECKLIST</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TODO/">TODO</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SOURCE CODE</span></p>
+              <ul class="current">
+                  <li class="toctree-l1 current"><a class="reference internal current" >Variants</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std/">PHB Std</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">PHB Pro</a>
+    <ul class="current">
+    </ul>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Common</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32s3/">esp32s3</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../logging/">Logging</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../ota/">OTA</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../watchdog/">Watchdog</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../web_server/">Web Server</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../wifi/">WiFi</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../secrets.template/">Secrets Template</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">PumpHouseBoss Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">SOURCE CODE</li>
+          <li class="breadcrumb-item">Variants</li>
+      <li class="breadcrumb-item active">PHB Pro</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/hucklesberries/PumpHouseBoss/edit/master/docs/phb-pro.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="component-phb-pro">Component: phb-pro<a class="headerlink" href="#component-phb-pro" title="Permanent link">&para;</a></h1>
+<h1 id="source-homerhendelgitpumphousebossvariantsphb-prophb-proyaml">Source: /home/rhendel/git/PumpHouseBoss/variants/phb-pro/phb-pro.yaml<a class="headerlink" href="#source-homerhendelgitpumphousebossvariantsphb-prophb-proyaml" title="Permanent link">&para;</a></h1>
+<h1 id="generated-tue-jul-29-2025-115948-pm">Generated: Tue, Jul 29, 2025 11:59:48 PM<a class="headerlink" href="#generated-tue-jul-29-2025-115948-pm" title="Permanent link">&para;</a></h1>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  File:         phb-pro.yaml</span>
+<span class="c1">#  File Type:    ESPHome YAML Main</span>
+<span class="c1">#  Purpose:      PumpHouseBoss Pro Variant Main</span>
+<span class="c1">#  Version:      0.7.1</span>
+<span class="c1">#  Date:         2025-07-24</span>
+<span class="c1">#  Author:       Roland Tembo Hendel &lt;rhendel@nexuslogic.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Description:  PumpHouseBoss Pro Variant is a Water Distribution System</span>
+<span class="c1">#                Monitor and controller built on the ESP32s3 platform.</span>
+<span class="c1">#</span>
+<span class="c1">#  Features:     - Ingress and egress flow monitoring, metering</span>
+<span class="c1">#                - Over/under flow-rate detection, alerts and alarms</span>
+<span class="c1">#                - Automated solenoid control for emergency water-shutoff or</span>
+<span class="c1">#                  water-flow management/control</span>
+<span class="c1">#                - Manual emergency override to shut-off water-flow</span>
+<span class="c1">#                - 4 line LCD (lcd_pcf8574 interface)</span>
+<span class="c1">#                - Historical flow-rate/usage graphing</span>
+<span class="c1">#                - Home Assistant integration via ESPHome</span>
+<span class="c1">#                - Supports up to 8 MMUs</span>
+<span class="c1">#</span>
+<span class="c1">#  License:      GNU General Public License v3.0</span>
+<span class="c1">#                SPDX-License-Identifier: GPL-3.0-or-later</span>
+<span class="c1">#  Copyright:    (c) 2025 Roland Tembo Hendel</span>
+<span class="c1">#                This program is free software: you can redistribute it and/or</span>
+<span class="c1">#                modify it under the terms of the GNU General Public License.</span>
+<span class="c1">#</span>
+<span class="c1">#  Note:         Build-time Variable Substitution:</span>
+<span class="c1">#                - Variables in the form __VAR_NAME__ are automatically replaced</span>
+<span class="c1">#                  with project-specific values during the build process</span>
+<span class="c1">#                  (see Makefile and sed logic).</span>
+<span class="c1">#                - This enables flexible, reusable configuration for multiple</span>
+<span class="c1">#                  hardware variants.</span>
+<span class="c1">#                - Do not edit these variables directly in the build output.</span>
+<span class="c1">#                  (Example: __NODE_NAME__, __PLATFORM__, __VERSION__)</span>
+<span class="c1">#</span>
+<span class="c1">#  Note:         Co-developed with GitHub Copilot by OpenAI.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  YAML linter configuration</span>
+<span class="c1">#   - Disables quoted-strings rule for improved readability</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># yamllint disable rule:quoted-strings</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Node identity, version, and hardware pin assignments</span>
+<span class="c1">#   - Provides substitutions for node name, friendly name, version, and key pins</span>
+<span class="c1">#   - Used throughout the configuration for maintainability</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       node_name: Node ID used in ESPHome and logs</span>
+<span class="c1">#       friendly_name: Human-readable name for dashboards</span>
+<span class="c1">#       version: Firmware version tag injected into logs and sensors</span>
+<span class="c1">#       flow_sensor_pin: Primary flow sensor pulse counter input</span>
+<span class="c1">#       test_output_pin: GPIO test and verification pin</span>
+<span class="c1">#       watchdog_timeout: Hardware watchdog timeout period</span>
+<span class="c1">#       watchdog_trigger_pin: External watchdog trigger output</span>
+<span class="c1">#       watchdog_early_trigger: Early trigger before timeout</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">substitutions</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">chip_set</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__PLATFORM__</span>
+<span class="w">  </span><span class="nt">node_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__NODE_NAME__</span>
+<span class="w">  </span><span class="nt">friendly_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__FRIENDLY_NAME__</span>
+<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__VERSION__</span>
+<span class="w">  </span><span class="nt">watchdog_timeout</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;30s&quot;</span>
+<span class="w">  </span><span class="nt">watchdog_trigger_pin</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GPIO07&quot;</span>
+<span class="w">  </span><span class="nt">watchdog_early_trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;25s&quot;</span>
+<span class="w">  </span><span class="nt">led_power_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GPIO7</span>
+<span class="w">  </span><span class="nt">led_wifi_status_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GPIO15</span>
+<span class="w">  </span><span class="nt">led_host_status_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GPIO16</span>
+<span class="w">  </span><span class="nt">led_mmu_status_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GPIO17</span>
+<span class="w">  </span><span class="nt">mmu_sensor_0_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GPIO19</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Common package includes for modular configuration</span>
+<span class="c1">#   - Modularizes board, display, network, OTA, logging, and watchdog config</span>
+<span class="c1">#       display: Display configuration (e.g., ST7789V panel)</span>
+<span class="c1">#       wifi: Wi-Fi credentials, static IP, and fallback</span>
+<span class="c1">#       ota: OTA settings (port, auth)</span>
+<span class="c1">#       web: Web interface (http://&lt;device&gt;.local)</span>
+<span class="c1">#       logging: USB/UART logging config (level, baud)</span>
+<span class="c1">#       watchdog: System reliability watchdog component</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">packages</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">esp32s3</span><span class="p">:</span><span class="w">     </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common/__PLATFORM__.yaml</span>
+<span class="w">  </span><span class="nt">wifi</span><span class="p">:</span><span class="w">        </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common/wifi.yaml</span>
+<span class="w">  </span><span class="nt">ota</span><span class="p">:</span><span class="w">         </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common/ota.yaml</span>
+<span class="w">  </span><span class="nt">api</span><span class="p">:</span><span class="w">         </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common/api.yaml</span>
+<span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w">         </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common/web_server.yaml</span>
+<span class="w">  </span><span class="nt">logging</span><span class="p">:</span><span class="w">     </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common/logging.yaml</span>
+<span class="w">  </span><span class="nt">watchdog</span><span class="p">:</span><span class="w">    </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common/watchdog.yaml</span>
+<span class="w">  </span><span class="nt">indications</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common/indications.yaml</span>
+<span class="w">  </span><span class="nt">display</span><span class="p">:</span><span class="w">     </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common/display_pcf8574.yaml</span>
+<span class="w">  </span><span class="nt">mmu</span><span class="p">:</span><span class="w">         </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">common/mmu.yaml</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Global Variables</span>
+<span class="c1">#   - Defines internal variables for use in automations and logic blocks</span>
+<span class="c1">#   - Example: ha_connected tracks Home Assistant API connection status</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       id: Variable name (referenced in lambdas)</span>
+<span class="c1">#       type: Data type (e.g., bool, int, float)</span>
+<span class="c1">#       restore_value: Whether to restore value after reboot (no for runtime state)</span>
+<span class="c1">#       initial_value: Value at boot</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">globals</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ha_connected</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">bool</span>
+<span class="w">    </span><span class="nt">restore_value</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">no</span>
+<span class="w">    </span><span class="nt">initial_value</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;false&#39;</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  ESPHome-specific metadata and on_boot logic</span>
+<span class="c1">#   - Sets node name and friendly name</span>
+<span class="c1">#   - Publishes firmware version to Home Assistant on boot</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       name: Node name</span>
+<span class="c1">#       friendly_name: Human-readable name</span>
+<span class="c1">#       on_boot: Actions to perform on boot</span>
+<span class="c1">#   - NOTE: ESPHome does not currently support reset diagnostics on ESP32-S3.</span>
+<span class="c1">#           These are placeholders until native support is available.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">esphome</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__NODE_NAME__</span>
+<span class="w">  </span><span class="nt">friendly_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__FRIENDLY_NAME__</span>
+<span class="w">  </span><span class="nt">on_boot</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-100</span>
+<span class="w">    </span><span class="nt">then</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">text_sensor.template.publish</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">firmware_version</span>
+<span class="w">          </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;__VERSION__&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">text_sensor.template.publish</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reset_reason</span>
+<span class="w">          </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Power</span><span class="nv"> </span><span class="s">On</span><span class="nv"> </span><span class="s">Reset&quot;</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">sensor.template.publish</span><span class="p">:</span>
+<span class="w">          </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">last_reset_code</span>
+<span class="w">          </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  I2C Bus Configuration</span>
+<span class="c1">#   - Configures the I2C bus for peripherals (e.g., LCD, sensors)</span>
+<span class="c1">#   - sda: GPIO pin used for I2C data (SDA)</span>
+<span class="c1">#   - scl: GPIO pin used for I2C clock (SCL)</span>
+<span class="c1">#   - scan: true enables automatic device address scanning (shows in logs)</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">i2c</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">sda</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">18</span>
+<span class="w">  </span><span class="nt">scl</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">9</span>
+<span class="w">  </span><span class="nt">scan</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  ESP32 Reset Diagnostics (Fallback for ESP32-S3)</span>
+<span class="c1">#   - ESPHome does not yet support esp32_reset_reason/last_reset on ESP32-S3.</span>
+<span class="c1">#   - These template sensors default to &#39;Power On Reset&#39; (string) and 1 (numeric).</span>
+<span class="c1">#   - Update to native sensors when ESPHome adds support for ESP32-S3.</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       platform: template</span>
+<span class="c1">#       name: Sensor name (shown in Home Assistant)</span>
+<span class="c1">#       id: Sensor ID for internal reference</span>
+<span class="c1">#   - NOTE: ESPHome does not currently support reset diagnostics on ESP32-S3.</span>
+<span class="c1">#           These are placeholders until native support is available.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">sensor</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Last</span><span class="nv"> </span><span class="s">Reset</span><span class="nv"> </span><span class="s">Code&quot;</span><span class="w">      </span><span class="c1"># Fallback: always 1 (Power On Reset code)</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">last_reset_code</span>
+<span class="w">    </span><span class="nt">lambda</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">      </span><span class="no">return 1;</span>
+<span class="w">    </span><span class="nt">update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">never</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uptime</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Uptime&quot;</span><span class="w">                </span><span class="c1"># Uptime in seconds since boot</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uptime_sensor</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Uptime and flow rate sensors (hall-effect pulse counter)</span>
+<span class="c1">#   - Uptime sensor: seconds since boot</span>
+<span class="c1">#   - Flow rate sensor: hall-effect pulse counter, configurable input pin</span>
+<span class="c1">#   - Calibration factor converts pulses to L/min</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       platform: Sensor platform (uptime, pulse_counter)</span>
+<span class="c1">#       pin: Input pin for pulse counter</span>
+<span class="c1">#       name: Sensor name</span>
+<span class="c1">#       id: Sensor ID</span>
+<span class="c1">#       update_interval: Update frequency</span>
+<span class="c1">#       count_mode: Pulse counting mode</span>
+<span class="c1">#       internal_filter: Filter for pulse input</span>
+<span class="c1">#       unit_of_measurement: Measurement units</span>
+<span class="c1">#       accuracy_decimals: Number of decimals</span>
+<span class="c1">#       filters: Calibration factor</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">binary_sensor</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">status</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wifi_connected</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">system_boot</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;System</span><span class="nv"> </span><span class="s">Boot&quot;</span>
+<span class="w">    </span><span class="nt">lambda</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">      </span><span class="no">// Always true after boot</span>
+<span class="w">      </span><span class="no">return true;</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Template text sensors</span>
+<span class="c1">#   - Firmware Version: Publishes the firmware version string to Home Assistant</span>
+<span class="c1">#   - Reset Reason: Fallback for ESP32-S3, always &#39;Power On Reset&#39;</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       platform: template</span>
+<span class="c1">#       name: Sensor name</span>
+<span class="c1">#       id: Sensor ID</span>
+<span class="c1">#       icon: Home Assistant icon (optional)</span>
+<span class="c1">#       update_interval: Update frequency</span>
+<span class="c1">#       lambda: Lambda function for value</span>
+<span class="c1">#</span>
+<span class="c1"># NOTE: ESPHome does not currently support reset diagnostics on ESP32-S3.</span>
+<span class="c1"># This is a placeholder until native support is available.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">text_sensor</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Firmware</span><span class="nv"> </span><span class="s">Version&quot;</span><span class="w">      </span><span class="c1"># User-visible sensor name in HA</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">firmware_version</span>
+<span class="w">    </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mdi:tag&quot;</span>
+<span class="w">    </span><span class="nt">update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">never</span><span class="w">        </span><span class="c1"># Static value set only on boot</span>
+<span class="w">    </span><span class="nt">lambda</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">      </span><span class="no">return {&quot;__VERSION__&quot;};</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Reset</span><span class="nv"> </span><span class="s">Reason&quot;</span><span class="w">          </span><span class="c1"># Fallback: always &#39;Power On Reset&#39; on ESP32-S3</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">reset_reason</span>
+<span class="w">    </span><span class="nt">update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">never</span>
+<span class="w">    </span><span class="nt">lambda</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">      </span><span class="no">return {&quot;Power On Reset&quot;};</span>
+</code></pre></div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../phb-std/" class="btn btn-neutral float-left" title="PHB Std"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../display_st7789/" class="btn btn-neutral float-right" title="Display">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hucklesberries/PumpHouseBoss" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../phb-std/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../display_st7789/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

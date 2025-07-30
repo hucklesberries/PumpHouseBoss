@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Watchdog - PumpHouseBoss Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Watchdog";
+        var mkdocs_page_input_path = "watchdog.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> PumpHouseBoss Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">DESCRIPTION</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Standard</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Professional</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE/">RELEASE NOTES</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG/">CHANGELOG</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../STANDARDS/">STANDARDS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE-CHECKLIST/">RELEASE-CHECKLIST</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TODO/">TODO</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SOURCE CODE</span></p>
+              <ul class="current">
+                  <li class="toctree-l1"><a class="reference internal" >Variants</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std/">PHB Std</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro/">PHB Pro</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1 current"><a class="reference internal current" >Common</a>
+    <ul class="current">
+                <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32s3/">esp32s3</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../logging/">Logging</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../ota/">OTA</a>
+                </li>
+                <li class="toctree-l2 current"><a class="reference internal current" href="#">Watchdog</a>
+    <ul class="current">
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../web_server/">Web Server</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../wifi/">WiFi</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../secrets.template/">Secrets Template</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">PumpHouseBoss Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+          <li class="breadcrumb-item">SOURCE CODE</li>
+          <li class="breadcrumb-item">Common</li>
+      <li class="breadcrumb-item active">Watchdog</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/hucklesberries/PumpHouseBoss/edit/master/docs/watchdog.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="component-watchdog">Component: watchdog<a class="headerlink" href="#component-watchdog" title="Permanent link">&para;</a></h1>
+<h1 id="source-homerhendelgitpumphousebosscommonwatchdogyaml">Source: /home/rhendel/git/PumpHouseBoss/common/watchdog.yaml<a class="headerlink" href="#source-homerhendelgitpumphousebosscommonwatchdogyaml" title="Permanent link">&para;</a></h1>
+<h1 id="generated-tue-jul-29-2025-115948-pm">Generated: Tue, Jul 29, 2025 11:59:48 PM<a class="headerlink" href="#generated-tue-jul-29-2025-115948-pm" title="Permanent link">&para;</a></h1>
+<p>```yaml</p>
+<h1 id="-">------------------------------------------------------------------------------<a class="headerlink" href="#-" title="Permanent link">&para;</a></h1>
+<h1 id="file-watchdogyaml">File:         watchdog.yaml<a class="headerlink" href="#file-watchdogyaml" title="Permanent link">&para;</a></h1>
+<h1 id="file-type-esphome-yaml-include">File Type:    ESPHome YAML Include<a class="headerlink" href="#file-type-esphome-yaml-include" title="Permanent link">&para;</a></h1>
+<h1 id="purpose-system-reliability-watchdog-component-for-esp32-platforms">Purpose:      System reliability watchdog component for ESP32 platforms<a class="headerlink" href="#purpose-system-reliability-watchdog-component-for-esp32-platforms" title="Permanent link">&para;</a></h1>
+<h1 id="version-071">Version:      0.7.1<a class="headerlink" href="#version-071" title="Permanent link">&para;</a></h1>
+<h1 id="date-2025-07-24">Date:         2025-07-24<a class="headerlink" href="#date-2025-07-24" title="Permanent link">&para;</a></h1>
+<h1 id="author-roland-tembo-hendel-rhendelnexuslogiccom">Author:       Roland Tembo Hendel <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;">&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;</a><a class="headerlink" href="#author-roland-tembo-hendel-rhendelnexuslogiccom" title="Permanent link">&para;</a></h1>
+<h1 id="_1"><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="description-provides-hardware-watchdog-timer-external-watchdog-trigger">Description:  Provides hardware watchdog timer, external watchdog trigger,<a class="headerlink" href="#description-provides-hardware-watchdog-timer-external-watchdog-trigger" title="Permanent link">&para;</a></h1>
+<h1 id="reset-reason-monitoring-and-system-health-diagnostics-for">reset reason monitoring, and system health diagnostics for<a class="headerlink" href="#reset-reason-monitoring-and-system-health-diagnostics-for" title="Permanent link">&para;</a></h1>
+<h1 id="mission-critical-pump-house-monitoring-applications">mission-critical pump house monitoring applications.<a class="headerlink" href="#mission-critical-pump-house-monitoring-applications" title="Permanent link">&para;</a></h1>
+<h1 id="_2"><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h1 id="license-gnu-general-public-license-v30">License:      GNU General Public License v3.0<a class="headerlink" href="#license-gnu-general-public-license-v30" title="Permanent link">&para;</a></h1>
+<h1 id="spdx-license-identifier-gpl-30-or-later">SPDX-License-Identifier: GPL-3.0-or-later<a class="headerlink" href="#spdx-license-identifier-gpl-30-or-later" title="Permanent link">&para;</a></h1>
+<h1 id="copyright-c-2025-roland-tembo-hendel">Copyright:    (c) 2025 Roland Tembo Hendel<a class="headerlink" href="#copyright-c-2025-roland-tembo-hendel" title="Permanent link">&para;</a></h1>
+<h1 id="this-program-is-free-software-you-can-redistribute-it-andor">This program is free software: you can redistribute it and/or<a class="headerlink" href="#this-program-is-free-software-you-can-redistribute-it-andor" title="Permanent link">&para;</a></h1>
+<h1 id="modify-it-under-the-terms-of-the-gnu-general-public-license">modify it under the terms of the GNU General Public License.<a class="headerlink" href="#modify-it-under-the-terms-of-the-gnu-general-public-license" title="Permanent link">&para;</a></h1>
+<h1 id="-_1">------------------------------------------------------------------------------<a class="headerlink" href="#-_1" title="Permanent link">&para;</a></h1>
+<h1 id="-_2">------------------------------------------------------------------------------<a class="headerlink" href="#-_2" title="Permanent link">&para;</a></h1>
+<h1 id="yaml-linter-configuration">YAML linter configuration<a class="headerlink" href="#yaml-linter-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="-disables-quoted-strings-rule-for-improved-readability">- Disables quoted-strings rule for improved readability<a class="headerlink" href="#-disables-quoted-strings-rule-for-improved-readability" title="Permanent link">&para;</a></h1>
+<h1 id="-ensures-that-string-values-do-not-require-unnecessary-quotes-improving">- Ensures that string values do not require unnecessary quotes, improving<a class="headerlink" href="#-ensures-that-string-values-do-not-require-unnecessary-quotes-improving" title="Permanent link">&para;</a></h1>
+<h1 id="readability-and-maintainability-of-the-yaml-configuration">readability and maintainability of the YAML configuration.<a class="headerlink" href="#readability-and-maintainability-of-the-yaml-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="-_3">------------------------------------------------------------------------------<a class="headerlink" href="#-_3" title="Permanent link">&para;</a></h1>
+<h1 id="yamllint-disable-rulequoted-strings">yamllint disable rule:quoted-strings<a class="headerlink" href="#yamllint-disable-rulequoted-strings" title="Permanent link">&para;</a></h1>
+<h1 id="-_4">------------------------------------------------------------------------------<a class="headerlink" href="#-_4" title="Permanent link">&para;</a></h1>
+<h1 id="boot-time-system-monitoring-initialization">Boot-time system monitoring initialization<a class="headerlink" href="#boot-time-system-monitoring-initialization" title="Permanent link">&para;</a></h1>
+<h1 id="-sets-up-system-monitoring-and-software-watchdog-actions-to-run-on-boot">- Sets up system monitoring and software watchdog actions to run on boot.<a class="headerlink" href="#-sets-up-system-monitoring-and-software-watchdog-actions-to-run-on-boot" title="Permanent link">&para;</a></h1>
+<h1 id="-logs-system-and-reset-monitoring-status-for-diagnostics-and-reliability-tracking">- Logs system and reset monitoring status for diagnostics and reliability tracking.<a class="headerlink" href="#-logs-system-and-reset-monitoring-status-for-diagnostics-and-reliability-tracking" title="Permanent link">&para;</a></h1>
+<h1 id="-ensures-that-monitoring-is-active-as-soon-as-the-device-starts">- Ensures that monitoring is active as soon as the device starts.<a class="headerlink" href="#-ensures-that-monitoring-is-active-as-soon-as-the-device-starts" title="Permanent link">&para;</a></h1>
+<h1 id="-_5">------------------------------------------------------------------------------<a class="headerlink" href="#-_5" title="Permanent link">&para;</a></h1>
+<p>esphome:
+  on_boot:
+    priority: 200                       # High priority - run early in boot sequence
+    then:
+      - logger.log:
+          level: INFO
+          tag: "SYSTEM"
+          format: "System monitoring initialized - software watchdog active"
+      - logger.log:
+          level: INFO
+          tag: "SYSTEM"
+          format: "Reset monitoring active - tracking system stability"</p>
+<h1 id="-_6">------------------------------------------------------------------------------<a class="headerlink" href="#-_6" title="Permanent link">&para;</a></h1>
+<h1 id="watchdog-status-and-reset-reason-monitoring">Watchdog status and reset reason monitoring<a class="headerlink" href="#watchdog-status-and-reset-reason-monitoring" title="Permanent link">&para;</a></h1>
+<h1 id="-defines-a-text-sensor-for-human-readable-reset-reason-tracking">- Defines a text sensor for human-readable reset reason tracking.<a class="headerlink" href="#-defines-a-text-sensor-for-human-readable-reset-reason-tracking" title="Permanent link">&para;</a></h1>
+<h1 id="-uses-esp_reset_reason-to-determine-and-expose-the-last-reset-cause-as-a-string">- Uses esp_reset_reason() to determine and expose the last reset cause as a string.<a class="headerlink" href="#-uses-esp_reset_reason-to-determine-and-expose-the-last-reset-cause-as-a-string" title="Permanent link">&para;</a></h1>
+<h1 id="-aids-in-diagnostics-and-troubleshooting-by-making-reset-causes-visible-in-home-assistant">- Aids in diagnostics and troubleshooting by making reset causes visible in Home Assistant.<a class="headerlink" href="#-aids-in-diagnostics-and-troubleshooting-by-making-reset-causes-visible-in-home-assistant" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters">- Parameters:<a class="headerlink" href="#-parameters" title="Permanent link">&para;</a></h1>
+<h1 id="name-sensor-name-for-reset-reason">name: Sensor name for reset reason<a class="headerlink" href="#name-sensor-name-for-reset-reason" title="Permanent link">&para;</a></h1>
+<h1 id="id-sensor-id">id: Sensor ID<a class="headerlink" href="#id-sensor-id" title="Permanent link">&para;</a></h1>
+<h1 id="icon-icon-for-home-assistant">icon: Icon for Home Assistant<a class="headerlink" href="#icon-icon-for-home-assistant" title="Permanent link">&para;</a></h1>
+<h1 id="update_interval-how-often-to-update-the-sensor">update_interval: How often to update the sensor<a class="headerlink" href="#update_interval-how-often-to-update-the-sensor" title="Permanent link">&para;</a></h1>
+<h1 id="lambda-c-code-to-determine-the-reset-reason">lambda: C++ code to determine the reset reason<a class="headerlink" href="#lambda-c-code-to-determine-the-reset-reason" title="Permanent link">&para;</a></h1>
+<h1 id="-_7">------------------------------------------------------------------------------<a class="headerlink" href="#-_7" title="Permanent link">&para;</a></h1>
+<p>text_sensor:
+  #  brief Human-readable reset reason tracking
+  #  details
+  #   - Exposes the last reset reason as a readable string
+  #   - Uses esp_reset_reason() to determine cause
+  - platform: template
+    name: "Reset Reason"           # name Sensor name for reset reason
+    id: reset_reason_text          # id Sensor ID
+    icon: "mdi:restart"
+    update_interval: never         # Set once on boot
+    lambda: |-
+      int reason = esp_reset_reason();
+      switch(reason) {
+        case 1: return {"Power-on reset"};
+        case 3: return {"Software reset"};
+        case 4: return {"Watchdog reset"};
+        case 5: return {"Deep sleep wake"};
+        case 6: return {"Brownout reset"};
+        case 7: return {"JTAG reset"};
+        default: return {"Unknown reset (" + to_string(reason) + ")"};
+      }</p>
+<h1 id="-_8">------------------------------------------------------------------------------<a class="headerlink" href="#-_8" title="Permanent link">&para;</a></h1>
+<h1 id="watchdog-monitoring-sensors">Watchdog monitoring sensors<a class="headerlink" href="#watchdog-monitoring-sensors" title="Permanent link">&para;</a></h1>
+<h1 id="-defines-template-sensors-for-reliability-and-diagnostics">- Defines template sensors for reliability and diagnostics:<a class="headerlink" href="#-defines-template-sensors-for-reliability-and-diagnostics" title="Permanent link">&para;</a></h1>
+<h1 id="-watchdog-reset-counter-tracks-number-of-watchdog-resets-since-boot">- Watchdog reset counter: Tracks number of watchdog resets since boot.<a class="headerlink" href="#-watchdog-reset-counter-tracks-number-of-watchdog-resets-since-boot" title="Permanent link">&para;</a></h1>
+<h1 id="-last-reset-code-exposes-the-raw-reset-reason-code-for-advanced-troubleshooting">- Last reset code: Exposes the raw reset reason code for advanced troubleshooting.<a class="headerlink" href="#-last-reset-code-exposes-the-raw-reset-reason-code-for-advanced-troubleshooting" title="Permanent link">&para;</a></h1>
+<h1 id="-system-health-score-calculates-a-health-score-based-on-uptime-and-reset-frequency">- System health score: Calculates a health score based on uptime and reset frequency.<a class="headerlink" href="#-system-health-score-calculates-a-health-score-based-on-uptime-and-reset-frequency" title="Permanent link">&para;</a></h1>
+<h1 id="-these-sensors-provide-insight-into-system-stability-and-help-with-proactive-maintenance">- These sensors provide insight into system stability and help with proactive maintenance.<a class="headerlink" href="#-these-sensors-provide-insight-into-system-stability-and-help-with-proactive-maintenance" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters-per-sensor">- Parameters (per sensor):<a class="headerlink" href="#-parameters-per-sensor" title="Permanent link">&para;</a></h1>
+<h1 id="name-sensor-name">name: Sensor name<a class="headerlink" href="#name-sensor-name" title="Permanent link">&para;</a></h1>
+<h1 id="id-sensor-id_1">id: Sensor ID<a class="headerlink" href="#id-sensor-id_1" title="Permanent link">&para;</a></h1>
+<h1 id="unit_of_measurement-unit-for-sensor-value">unit_of_measurement: Unit for sensor value<a class="headerlink" href="#unit_of_measurement-unit-for-sensor-value" title="Permanent link">&para;</a></h1>
+<h1 id="accuracy_decimals-number-of-decimals-to-report">accuracy_decimals: Number of decimals to report<a class="headerlink" href="#accuracy_decimals-number-of-decimals-to-report" title="Permanent link">&para;</a></h1>
+<h1 id="icon-icon-for-home-assistant_1">icon: Icon for Home Assistant<a class="headerlink" href="#icon-icon-for-home-assistant_1" title="Permanent link">&para;</a></h1>
+<h1 id="update_interval-how-often-to-update-the-sensor_1">update_interval: How often to update the sensor<a class="headerlink" href="#update_interval-how-often-to-update-the-sensor_1" title="Permanent link">&para;</a></h1>
+<h1 id="lambda-c-code-for-sensor-value">lambda: C++ code for sensor value<a class="headerlink" href="#lambda-c-code-for-sensor-value" title="Permanent link">&para;</a></h1>
+<h1 id="-_9">------------------------------------------------------------------------------<a class="headerlink" href="#-_9" title="Permanent link">&para;</a></h1>
+<p>sensor:
+  #  Watchdog reset counter for reliability tracking
+  #   - Counts watchdog resets since boot
+  - platform: template
+    name: "Watchdog Resets"           # name Sensor name for reset counter
+    id: watchdog_reset_counter        # id Sensor ID
+    unit_of_measurement: "resets"
+    accuracy_decimals: 0
+    icon: "mdi:counter"
+    update_interval: 60s              # Check once per minute
+    lambda: |-
+      // Count watchdog resets since boot
+      static int reset_count = 0;
+      if (esp_reset_reason() == 4) {
+        reset_count++;
+      }
+      return reset_count;</p>
+<p>#  Raw reset reason code for advanced diagnostics
+  #   - Exposes the raw reset reason code for troubleshooting
+  - platform: template
+    name: "Last Reset Code"           # name Sensor name for raw code
+    id: last_reset_reason_code        # id Sensor ID
+    unit_of_measurement: ""
+    accuracy_decimals: 0
+    icon: "mdi:information"
+    update_interval: never            # Set once on boot
+    lambda: |-
+      return esp_reset_reason();</p>
+<p>#  System health score based on reset frequency
+  #   - Calculates a health score based on uptime and reset frequency
+  - platform: template
+    name: "System Health Score"       # name Sensor name for health score
+    id: system_health_score           # id Sensor ID
+    unit_of_measurement: "%"
+    accuracy_decimals: 1
+    icon: "mdi:heart-pulse"
+    update_interval: 300s             # Update every 5 minutes
+    lambda: |-
+      // Calculate health score based on uptime and reset frequency
+      float uptime_hours = id(uptime_sensor).state / 3600.0;
+      int reset_count = id(watchdog_reset_counter).state;</p>
+<div class="codehilite"><pre><span></span><code>  if (uptime_hours &lt; 1.0) return 100.0;
+  float health = 100.0 - (reset_count * 10.0);
+  if (uptime_hours &gt; 24.0) health += 5.0;
+  return max(0.0f, min(100.0f, health));
+</code></pre></div>
+
+<h1 id="-_10">------------------------------------------------------------------------------<a class="headerlink" href="#-_10" title="Permanent link">&para;</a></h1>
+<h1 id="software-controlled-system-restart-for-remote-troubleshooting">Software-controlled system restart for remote troubleshooting<a class="headerlink" href="#software-controlled-system-restart-for-remote-troubleshooting" title="Permanent link">&para;</a></h1>
+<h1 id="-allows-remote-restart-of-the-esp32-via-home-assistant-or-api">- Allows remote restart of the ESP32 via Home Assistant or API<a class="headerlink" href="#-allows-remote-restart-of-the-esp32-via-home-assistant-or-api" title="Permanent link">&para;</a></h1>
+<h1 id="-physical-hardware-reset-available-via-external-button-wired-to-esp32-en-pin">- Physical hardware reset available via external button wired to ESP32 EN pin<a class="headerlink" href="#-physical-hardware-reset-available-via-external-button-wired-to-esp32-en-pin" title="Permanent link">&para;</a></h1>
+<h1 id="note-physical-hardware-reset-available-via-external-button-wired-to-esp32-en-pin">Note: Physical hardware reset available via external button wired to ESP32 EN pin<a class="headerlink" href="#note-physical-hardware-reset-available-via-external-button-wired-to-esp32-en-pin" title="Permanent link">&para;</a></h1>
+<h1 id="-_11">------------------------------------------------------------------------------<a class="headerlink" href="#-_11" title="Permanent link">&para;</a></h1>
+<p>switch:
+  - platform: restart
+    name: "System Restart"            # name Switch name for restart
+    id: system_restart_switch         # id Switch ID
+    icon: "mdi:restart"```</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../ota/" class="btn btn-neutral float-left" title="OTA"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../web_server/" class="btn btn-neutral float-right" title="Web Server">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hucklesberries/PumpHouseBoss" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+      <span><a href="../ota/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../web_server/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
