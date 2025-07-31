@@ -2,110 +2,142 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/CHANGELOG/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/CONTRIBUTING/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
-         <loc>https://hucklesberries.github.io/PumpHouseBoss/GIT-COPILOT/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <loc>https://hucklesberries.github.io/PumpHouseBoss/Contact-and-Support/</loc>
+         <lastmod>2025-07-31</lastmod>
+    </url>
+    <url>
+         <loc>https://hucklesberries.github.io/PumpHouseBoss/Developer-Guide/</loc>
+         <lastmod>2025-07-31</lastmod>
+    </url>
+    <url>
+         <loc>https://hucklesberries.github.io/PumpHouseBoss/FAQ/</loc>
+         <lastmod>2025-07-31</lastmod>
+    </url>
+    <url>
+         <loc>https://hucklesberries.github.io/PumpHouseBoss/Firmware-and-Configuration/</loc>
+         <lastmod>2025-07-31</lastmod>
+    </url>
+    <url>
+         <loc>https://hucklesberries.github.io/PumpHouseBoss/Getting-Started/</loc>
+         <lastmod>2025-07-31</lastmod>
+    </url>
+    <url>
+         <loc>https://hucklesberries.github.io/PumpHouseBoss/Hardware-Overview/</loc>
+         <lastmod>2025-07-31</lastmod>
+    </url>
+    <url>
+         <loc>https://hucklesberries.github.io/PumpHouseBoss/Home/</loc>
+         <lastmod>2025-07-31</lastmod>
+    </url>
+    <url>
+         <loc>https://hucklesberries.github.io/PumpHouseBoss/Overview/</loc>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/RELEASE-CHECKLIST/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/RELEASE/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/STANDARDS/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/TODO/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
+    </url>
+    <url>
+         <loc>https://hucklesberries.github.io/PumpHouseBoss/Usage-and-Troubleshooting/</loc>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/api/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/display_pcf8574/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/display_st7789/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/esp32/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/esp32s3/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/indications/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/logging/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/mmu/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/ota/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/phb-pro-hardware/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/phb-pro-overview/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/phb-pro/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/phb-std-hardware/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/phb-std-overview/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/phb-std/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/secrets.template/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/watchdog/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/web_server/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
     <url>
          <loc>https://hucklesberries.github.io/PumpHouseBoss/wifi/</loc>
-         <lastmod>2025-07-30</lastmod>
+         <lastmod>2025-07-31</lastmod>
     </url>
 </urlset>

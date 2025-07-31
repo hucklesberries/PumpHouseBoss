@@ -3,18 +3,18 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hucklesberries.github.io/PumpHouseBoss/RELEASE/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hucklesberries.github.io/PumpHouseBoss/Usage-and-Troubleshooting/" />
       <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>RELEASE NOTES - PumpHouseBoss Documentation</title>
+    <title>Usage & Troubleshooting - PumpHouseBoss Documentation</title>
     <link rel="stylesheet" href="../css/theme.css" />
     <link rel="stylesheet" href="../css/theme_extra.css" />
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
     
       <script>
         // Current page data
-        var mkdocs_page_name = "RELEASE NOTES";
-        var mkdocs_page_input_path = "RELEASE.md";
-        var mkdocs_page_url = "/PumpHouseBoss/RELEASE/";
+        var mkdocs_page_name = "Usage \u0026 Troubleshooting";
+        var mkdocs_page_input_path = "Usage-and-Troubleshooting.md";
+        var mkdocs_page_url = "/PumpHouseBoss/Usage-and-Troubleshooting/";
       </script>
     
     <!--[if lt IE 9]>
@@ -66,34 +66,8 @@
                 <li class="toctree-l1"><a class="reference internal" href="..">READ ME</a>
                 </li>
               </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="#">RELEASE NOTES</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#version-071-july-28-2025">Version 0.7.1 – July 28, 2025</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#highlights">Highlights</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#project-status">Project Status</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#version-070-july-26-2025">Version 0.7.0 – July 26, 2025</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#highlights_1">Highlights</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#project-status_1">Project Status</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#version-067-july-23-2025">Version 0.6.7 – July 23, 2025</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#highlights_2">Highlights</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#project-status_2">Project Status</a>
-    </li>
-        </ul>
-    </li>
-    </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE/">RELEASE NOTES</a>
                 </li>
               </ul>
               <ul>
@@ -117,7 +91,7 @@
                 </li>
               </ul>
               <p class="caption"><span class="caption-text">WIKI</span></p>
-              <ul>
+              <ul class="current">
                   <li class="toctree-l1"><a class="reference internal" href="../Home/">Home</a>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Overview/">Overview</a>
@@ -128,7 +102,15 @@
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Firmware-and-Configuration/">Firmware & Configuration</a>
                   </li>
-                  <li class="toctree-l1"><a class="reference internal" href="../Usage-and-Troubleshooting/">Usage & Troubleshooting</a>
+                  <li class="toctree-l1 current"><a class="reference internal current" href="#">Usage & Troubleshooting</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#logging-monitoring">Logging &amp; Monitoring</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#common-issues">Common Issues</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#regression-testing">Regression Testing</a>
+    </li>
+    </ul>
                   </li>
                   <li class="toctree-l1"><a class="reference internal" href="../Developer-Guide/">Developer Guide</a>
                   </li>
@@ -192,9 +174,10 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">RELEASE NOTES</li>
+          <li class="breadcrumb-item">WIKI</li>
+      <li class="breadcrumb-item active">Usage & Troubleshooting</li>
     <li class="wy-breadcrumbs-aside">
-          <a href="https://github.com/hucklesberries/PumpHouseBoss/edit/master/docs/RELEASE.md" class="icon icon-github"> Edit on GitHub</a>
+          <a href="https://github.com/hucklesberries/PumpHouseBoss/edit/master/docs/Usage-and-Troubleshooting.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
   <hr/>
@@ -202,86 +185,32 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div class="section" itemprop="articleBody">
               
-                <h1 id="release-notes">Release Notes<a class="headerlink" href="#release-notes" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p><strong>Scope &amp; Purpose:</strong>
-This document provides detailed release notes, milestones, and project status for each version of PumpHouseBoss. It is the authoritative record of changes and improvements for each release.</p>
-<p><strong>⚠️ <em>This project is currently under active development and is _not</em> ready for practical deployment. Use at your own risk!_ ⚠️</strong></p>
-</blockquote>
-<h2 id="version-071-july-28-2025">Version 0.7.1 – July 28, 2025<a class="headerlink" href="#version-071-july-28-2025" title="Permanent link">&para;</a></h2>
-<p><strong>Milestone: Standards compliance, versioning, and automation improvements</strong></p>
-<h3 id="highlights">Highlights<a class="headerlink" href="#highlights" title="Permanent link">&para;</a></h3>
+                <h1 id="usage-troubleshooting">Usage &amp; Troubleshooting<a class="headerlink" href="#usage-troubleshooting" title="Permanent link">&para;</a></h1>
+<p><strong>See also:</strong> <a href="../">README.md</a> | <a href="../Home/">Wiki Home</a> | <a href="../Overview/">Overview</a> | <a href="../Getting-Started/">Getting Started</a> | <a href="../Hardware-Overview/">Hardware Overview</a> | <a href="../Firmware-and-Configuration/">Firmware &amp; Configuration</a> | <a href="../Developer-Guide/">Developer Guide</a> | <a href="../FAQ/">FAQ</a> | <a href="../Contact-and-Support/">Contact &amp; Support</a></p>
+<p>This section provides guidance on using PumpHouseBoss and resolving common issues.</p>
+<h2 id="logging-monitoring">Logging &amp; Monitoring<a class="headerlink" href="#logging-monitoring" title="Permanent link">&para;</a></h2>
 <ul>
-<li>Checked and fixed file permissions for scripts and assets (icons)</li>
-<li>Improved README.md: file tree now includes concise comments for every file</li>
-<li>Ensured all automation, Makefiles, and scripts are standards-compliant</li>
-<li>Added/updated documentation for check-in and release process</li>
-<li>General code and documentation cleanup for clarity and maintainability</li>
+<li>Use <code>make logs</code>, <code>make logs-follow</code>, and related targets</li>
+<li>Log files are stored in the <code>logs/</code> directory</li>
 </ul>
-<h3 id="project-status">Project Status<a class="headerlink" href="#project-status" title="Permanent link">&para;</a></h3>
+<h2 id="common-issues">Common Issues<a class="headerlink" href="#common-issues" title="Permanent link">&para;</a></h2>
 <ul>
-<li>All major files and scripts are now standards-compliant</li>
-<li>Versioning and permissions are consistent across the project</li>
-<li>Automated build, upload, and logging via Makefile</li>
-<li>Comprehensive documentation and workflow standards</li>
+<li>Build failures: Check for missing secrets/config files</li>
+<li>Upload failures: Check device connection and <code>COMM_PATH</code></li>
+<li>Logging issues: Ensure device is running and correct log target is used</li>
+</ul>
+<h2 id="regression-testing">Regression Testing<a class="headerlink" href="#regression-testing" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Run <code>make regression-test</code> to validate builds</li>
 </ul>
 <hr />
-<h2 id="version-070-july-26-2025">Version 0.7.0 – July 26, 2025<a class="headerlink" href="#version-070-july-26-2025" title="Permanent link">&para;</a></h2>
-<p><strong>Pre-release milestone: Support for multiple Variants, and improved/automated processes and documentation</strong></p>
-<h3 id="highlights_1">Highlights<a class="headerlink" href="#highlights_1" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Support for multiple hardware variants with modular configuration</li>
-<li>Consistent terminology and improved documentation throughout the project</li>
-<li>Added a Table of Contents, FAQ, and Contact/Support sections to the README</li>
-<li>Enhanced Makefile automation and clarified target documentation</li>
-<li>Improved onboarding workflow and stepwise Getting Started instructions</li>
-<li>Security best practices: secrets template, gitignore updates, and onboarding guidance</li>
-<li>Cleaned up and organized project TODOs and release notes</li>
-<li>General code and documentation cleanup for clarity and maintainability</li>
-</ul>
-<h3 id="project-status_1">Project Status<a class="headerlink" href="#project-status_1" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Modular YAML includes for all major subsystems</li>
-<li>Secure secrets management and onboarding template</li>
-<li>Automated build, upload, and logging via Makefile</li>
-<li>Comprehensive documentation and workflow standards</li>
-<li>Comprehensive documentation and workflow standards</li>
-</ul>
-<hr />
-<h2 id="version-067-july-23-2025">Version 0.6.7 – July 23, 2025<a class="headerlink" href="#version-067-july-23-2025" title="Permanent link">&para;</a></h2>
-<p><strong>Pre-release milestone: Modular, maintainable, and secure ESPHome system for ESP32S3</strong></p>
-<h3 id="highlights_2">Highlights<a class="headerlink" href="#highlights_2" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Major UI improvements: ST7789 display now shows Hostname, SSID, IP, and MAC address, with robust centering and fallback for missing values</li>
-<li>Font size and layout adjustments for better data fit and readability</li>
-<li>
-<p>Fixed MAC address display and improved sensor value handling</p>
-</li>
-<li>
-<p>Provided pinout maps for ESP32S3, ST7789 display, and Pico-LCD hardware components</p>
-</li>
-<li>Improved Makefile automation and .gitignore for secrets and generated files</li>
-<li>Updated <code>secrets.template.yaml</code> and documentation for secure workflow</li>
-<li>Refined check-in checklist and commit message standards</li>
-<li>General code cleanup, header consistency, and version reference updates</li>
-</ul>
-<h3 id="project-status_2">Project Status<a class="headerlink" href="#project-status_2" title="Permanent link">&para;</a></h3>
-<ul>
-<li>Modular YAML includes for all major subsystems</li>
-<li>Secure secrets management and onboarding template</li>
-<li>Automated build, upload, and logging via Makefile</li>
-<li>Comprehensive documentation and workflow standards</li>
-</ul>
-<hr />
-<blockquote>
-<p><strong>Note:</strong> This is a pre-release for internal and development use. v1.0.0 will mark the first stable public release.</p>
-</blockquote>
+<p>For more help, see the <a href="../FAQ/">FAQ</a> or open an issue on GitHub.</p>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href=".." class="btn btn-neutral float-left" title="READ ME"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../CHANGELOG/" class="btn btn-neutral float-right" title="CHANGELOG">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../Firmware-and-Configuration/" class="btn btn-neutral float-left" title="Firmware & Configuration"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../Developer-Guide/" class="btn btn-neutral float-right" title="Developer Guide">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -308,10 +237,10 @@ This document provides detailed release notes, milestones, and project status fo
         </span>
     
     
-      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../Firmware-and-Configuration/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../CHANGELOG/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../Developer-Guide/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>
