@@ -83,7 +83,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
+                <li class="toctree-l1"><a class="" href="../CONTRIBUTING.md">CONTRIBUTING</a>
                 </li>
               </ul>
               <ul>
@@ -125,13 +125,13 @@
     <ul class="current">
                 <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
+                <li class="toctree-l2"><a class="" href="../display_pcf8574.md">Display PCF8574</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
+                <li class="toctree-l2"><a class="" href="../indications.md">Indications</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
+                <li class="toctree-l2"><a class="" href="../mmu.md">MMU</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
+                <li class="toctree-l2"><a class="" href="../api.md">API</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
                 </li>
@@ -181,57 +181,52 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="component-logging">Component: logging<a class="headerlink" href="#component-logging" title="Permanent link">&para;</a></h1>
-<h1 id="source-homerhendelgitpumphousebosscommonloggingyaml">Source: /home/rhendel/git/PumpHouseBoss/common/logging.yaml<a class="headerlink" href="#source-homerhendelgitpumphousebosscommonloggingyaml" title="Permanent link">&para;</a></h1>
-<h1 id="generated-wed-jul-30-2025-103351-pm">Generated: Wed, Jul 30, 2025 10:33:51 PM<a class="headerlink" href="#generated-wed-jul-30-2025-103351-pm" title="Permanent link">&para;</a></h1>
-<div class="codehilite"><pre><span></span><code><span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1">#  File:         logging.yaml</span>
-<span class="c1">#  File Type:    ESPHome YAML Include</span>
-<span class="c1">#  Purpose:      Common ESPHome logging subsystem configuration</span>
-<span class="c1">#  Version:      0.7.1</span>
-<span class="c1">#  Date:         2025-07-24</span>
-<span class="c1">#  Author:       Roland Tembo Hendel &lt;rhendel@nexuslogic.com&gt;</span>
-<span class="c1">#</span>
-<span class="c1">#  Description:  Provides global and module-specific logging configuration for ESPHome nodes.</span>
-<span class="c1">#                Enables serial and OTA log output, controls verbosity, and allows</span>
-<span class="c1">#                custom actions on log message reception for diagnostics and automation.</span>
-<span class="c1">#</span>
-<span class="c1">#  License:      GNU General Public License v3.0</span>
-<span class="c1">#                SPDX-License-Identifier: GPL-3.0-or-later</span>
-<span class="c1">#  Copyright:    (c) 2025 Roland Tembo Hendel</span>
-<span class="c1">#                This program is free software: you can redistribute it and/or</span>
-<span class="c1">#                modify it under the terms of the GNU General Public License.</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1">#  YAML linter configuration</span>
-<span class="c1">#   - Disables quoted-strings rule for improved readability</span>
-<span class="c1">#   - Ensures that string values do not require unnecessary quotes, improving</span>
-<span class="c1">#     readability and maintainability of the YAML configuration.</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1"># yamllint disable rule:quoted-strings</span>
-
-
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1">#  ESPHome logging subsystem configuration</span>
-<span class="c1">#   - Enables serial and OTA log output for diagnostics and monitoring.</span>
-<span class="c1">#   - Controls global and module-specific verbosity for fine-grained logging.</span>
-<span class="c1">#   - Can trigger custom actions on log message reception (e.g., publish firmware version).</span>
-<span class="c1">#   - Parameters:</span>
-<span class="c1">#       level: Global log level (NONE, ERROR, WARN, INFO, DEBUG, VERBOSE)</span>
-<span class="c1">#       logs.main: Module-specific log level for &#39;main&#39;</span>
-<span class="c1">#       on_message: List of actions to perform on log message reception</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="nt">logger</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">level</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span><span class="w">           </span><span class="c1"># level: Global log level (NONE, ERROR, WARN, INFO, DEBUG, VERBOSE)</span>
-<span class="w">  </span><span class="nt">logs</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">main</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">DEBUG</span><span class="w">          </span><span class="c1"># logs.main: Module-specific log level for &#39;main&#39;</span>
-
-<span class="w">  </span><span class="c1">#  brief Action on log message reception</span>
-<span class="w">  </span><span class="c1">#   - Publishes firmware version to log on message</span>
-<span class="w">  </span><span class="nt">on_message</span><span class="p">:</span>
-<span class="w">    </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">lambda</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
-<span class="w">        </span><span class="no">ESP_LOGI(&quot;main&quot;, &quot;Firmware version: ${version}&quot;);</span>
-</code></pre></div>
+<h1 id="source-cygdriveccygwin64homerhendelgitpumphousebosscommonloggingyaml">Source: /cygdrive/c/cygwin64/home/rhendel/git/PumpHouseBoss/common/logging.yaml<a class="headerlink" href="#source-cygdriveccygwin64homerhendelgitpumphousebosscommonloggingyaml" title="Permanent link">&para;</a></h1>
+<h1 id="generated-sun-jul-27-2025-113346-pm">Generated: Sun, Jul 27, 2025 11:33:46 PM<a class="headerlink" href="#generated-sun-jul-27-2025-113346-pm" title="Permanent link">&para;</a></h1>
+<h1 id="-">------------------------------------------------------------------------------<a class="headerlink" href="#-" title="Permanent link">&para;</a></h1>
+<h1 id="file-loggingyaml">File:         logging.yaml<a class="headerlink" href="#file-loggingyaml" title="Permanent link">&para;</a></h1>
+<h1 id="file-type-esphome-yaml-include">File Type:    ESPHome YAML Include<a class="headerlink" href="#file-type-esphome-yaml-include" title="Permanent link">&para;</a></h1>
+<h1 id="purpose-common-esphome-logging-subsystem-configuration">Purpose:      Common ESPHome logging subsystem configuration<a class="headerlink" href="#purpose-common-esphome-logging-subsystem-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="version-070">Version:      0.7.0<a class="headerlink" href="#version-070" title="Permanent link">&para;</a></h1>
+<h1 id="date-2025-07-24">Date:         2025-07-24<a class="headerlink" href="#date-2025-07-24" title="Permanent link">&para;</a></h1>
+<h1 id="author-roland-tembo-hendel-rhendelnexuslogiccom">Author:       Roland Tembo Hendel <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;">&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;</a><a class="headerlink" href="#author-roland-tembo-hendel-rhendelnexuslogiccom" title="Permanent link">&para;</a></h1>
+<h1 id="_1"><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="description-provides-global-and-module-specific-logging-configuration-for-esphome-nodes">Description:  Provides global and module-specific logging configuration for ESPHome nodes.<a class="headerlink" href="#description-provides-global-and-module-specific-logging-configuration-for-esphome-nodes" title="Permanent link">&para;</a></h1>
+<h1 id="enables-serial-and-ota-log-output-controls-verbosity-and-allows">Enables serial and OTA log output, controls verbosity, and allows<a class="headerlink" href="#enables-serial-and-ota-log-output-controls-verbosity-and-allows" title="Permanent link">&para;</a></h1>
+<h1 id="custom-actions-on-log-message-reception-for-diagnostics-and-automation">custom actions on log message reception for diagnostics and automation.<a class="headerlink" href="#custom-actions-on-log-message-reception-for-diagnostics-and-automation" title="Permanent link">&para;</a></h1>
+<h1 id="_2"><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h1 id="license-gnu-general-public-license-v30">License:      GNU General Public License v3.0<a class="headerlink" href="#license-gnu-general-public-license-v30" title="Permanent link">&para;</a></h1>
+<h1 id="spdx-license-identifier-gpl-30-or-later">SPDX-License-Identifier: GPL-3.0-or-later<a class="headerlink" href="#spdx-license-identifier-gpl-30-or-later" title="Permanent link">&para;</a></h1>
+<h1 id="copyright-c-2025-roland-tembo-hendel">Copyright:    (c) 2025 Roland Tembo Hendel<a class="headerlink" href="#copyright-c-2025-roland-tembo-hendel" title="Permanent link">&para;</a></h1>
+<h1 id="this-program-is-free-software-you-can-redistribute-it-andor">This program is free software: you can redistribute it and/or<a class="headerlink" href="#this-program-is-free-software-you-can-redistribute-it-andor" title="Permanent link">&para;</a></h1>
+<h1 id="modify-it-under-the-terms-of-the-gnu-general-public-license">modify it under the terms of the GNU General Public License.<a class="headerlink" href="#modify-it-under-the-terms-of-the-gnu-general-public-license" title="Permanent link">&para;</a></h1>
+<h1 id="-_1">------------------------------------------------------------------------------<a class="headerlink" href="#-_1" title="Permanent link">&para;</a></h1>
+<h1 id="-_2">------------------------------------------------------------------------------<a class="headerlink" href="#-_2" title="Permanent link">&para;</a></h1>
+<h1 id="yaml-linter-configuration">YAML linter configuration<a class="headerlink" href="#yaml-linter-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="-disables-quoted-strings-rule-for-improved-readability">- Disables quoted-strings rule for improved readability<a class="headerlink" href="#-disables-quoted-strings-rule-for-improved-readability" title="Permanent link">&para;</a></h1>
+<h1 id="-ensures-that-string-values-do-not-require-unnecessary-quotes-improving">- Ensures that string values do not require unnecessary quotes, improving<a class="headerlink" href="#-ensures-that-string-values-do-not-require-unnecessary-quotes-improving" title="Permanent link">&para;</a></h1>
+<h1 id="readability-and-maintainability-of-the-yaml-configuration">readability and maintainability of the YAML configuration.<a class="headerlink" href="#readability-and-maintainability-of-the-yaml-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="-_3">------------------------------------------------------------------------------<a class="headerlink" href="#-_3" title="Permanent link">&para;</a></h1>
+<h1 id="yamllint-disable-rulequoted-strings">yamllint disable rule:quoted-strings<a class="headerlink" href="#yamllint-disable-rulequoted-strings" title="Permanent link">&para;</a></h1>
+<h1 id="-_4">------------------------------------------------------------------------------<a class="headerlink" href="#-_4" title="Permanent link">&para;</a></h1>
+<h1 id="esphome-logging-subsystem-configuration">ESPHome logging subsystem configuration<a class="headerlink" href="#esphome-logging-subsystem-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="-enables-serial-and-ota-log-output-for-diagnostics-and-monitoring">- Enables serial and OTA log output for diagnostics and monitoring.<a class="headerlink" href="#-enables-serial-and-ota-log-output-for-diagnostics-and-monitoring" title="Permanent link">&para;</a></h1>
+<h1 id="-controls-global-and-module-specific-verbosity-for-fine-grained-logging">- Controls global and module-specific verbosity for fine-grained logging.<a class="headerlink" href="#-controls-global-and-module-specific-verbosity-for-fine-grained-logging" title="Permanent link">&para;</a></h1>
+<h1 id="-can-trigger-custom-actions-on-log-message-reception-eg-publish-firmware-version">- Can trigger custom actions on log message reception (e.g., publish firmware version).<a class="headerlink" href="#-can-trigger-custom-actions-on-log-message-reception-eg-publish-firmware-version" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters">- Parameters:<a class="headerlink" href="#-parameters" title="Permanent link">&para;</a></h1>
+<h1 id="level-global-log-level-none-error-warn-info-debug-verbose">level: Global log level (NONE, ERROR, WARN, INFO, DEBUG, VERBOSE)<a class="headerlink" href="#level-global-log-level-none-error-warn-info-debug-verbose" title="Permanent link">&para;</a></h1>
+<h1 id="logsmain-module-specific-log-level-for-main">logs.main: Module-specific log level for 'main'<a class="headerlink" href="#logsmain-module-specific-log-level-for-main" title="Permanent link">&para;</a></h1>
+<h1 id="on_message-list-of-actions-to-perform-on-log-message-reception">on_message: List of actions to perform on log message reception<a class="headerlink" href="#on_message-list-of-actions-to-perform-on-log-message-reception" title="Permanent link">&para;</a></h1>
+<h1 id="-_5">------------------------------------------------------------------------------<a class="headerlink" href="#-_5" title="Permanent link">&para;</a></h1>
+<p>logger:
+  level: DEBUG           # level: Global log level (NONE, ERROR, WARN, INFO, DEBUG, VERBOSE)
+  logs:
+    main: DEBUG          # logs.main: Module-specific log level for 'main'</p>
+<p>#  brief Action on log message reception
+  #   - Publishes firmware version to log on message
+  on_message:
+    - lambda: |-
+        ESP_LOGI("main", "Firmware version: ${version}");</p>
               
             </div>
           </div><footer>

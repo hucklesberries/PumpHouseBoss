@@ -65,8 +65,6 @@
               <ul class="current">
                 <li class="toctree-l1 current"><a class="reference internal current" href="#">READ ME</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#table-of-contents">Table of Contents</a>
-    </li>
     <li class="toctree-l2"><a class="reference internal" href="#product-features">Product Features</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#authorship">Authorship</a>
@@ -89,21 +87,13 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#2-review-documentation">2. Review Documentation</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#wiki">Wiki</a>
-    </li>
     <li class="toctree-l3"><a class="reference internal" href="#3-configure-your-build">3. Configure Your Build</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#4-build-flash-and-test">4. Build, Flash, and Test</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#note-on-communication-path-comm_path">Note on Communication Path (COMM_PATH)</a>
-    </li>
-        </ul>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#collaboration">Collaboration</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#automations">Automations</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#faq-common-issues">FAQ / Common Issues</a>
     </li>
@@ -129,7 +119,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="CONTRIBUTING/">CONTRIBUTING</a>
+                <li class="toctree-l1"><a class="" href="CONTRIBUTING.md">CONTRIBUTING</a>
                 </li>
               </ul>
               <ul>
@@ -171,13 +161,13 @@
     <ul>
                 <li class="toctree-l2"><a class="reference internal" href="display_st7789/">Display</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="display_pcf8574/">Display PCF8574</a>
+                <li class="toctree-l2"><a class="" href="display_pcf8574.md">Display PCF8574</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="indications/">Indications</a>
+                <li class="toctree-l2"><a class="" href="indications.md">Indications</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="mmu/">MMU</a>
+                <li class="toctree-l2"><a class="" href="mmu.md">MMU</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="api/">API</a>
+                <li class="toctree-l2"><a class="" href="api.md">API</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="esp32/">esp32</a>
                 </li>
@@ -223,10 +213,6 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="pumphouseboss-esphome-pumphouse-monitor">PumpHouseBoss: ESPHome Pumphouse Monitor<a class="headerlink" href="#pumphouseboss-esphome-pumphouse-monitor" title="Permanent link">&para;</a></h1>
-<blockquote>
-<p><strong>Scope &amp; Purpose:</strong>
-This document provides a high-level overview, features, and onboarding information for the PumpHouseBoss project. It is the starting point for new contributors and users, describing the system, its capabilities, and how to get started.</p>
-</blockquote>
 <p>An ESPHome-based system for monitoring and managing commercial or residential pumphouse or water distribution/filtration systems.</p>
 <p><a href="https://www.gnu.org/licenses/gpl-3.0"><img alt="License: GPL v3" src="https://img.shields.io/badge/License-GPLv3-blue.svg" /></a>
 <a href="#"><img alt="Version" src="https://img.shields.io/badge/version-$(cat%20VERSION)-orange" /></a>
@@ -238,21 +224,9 @@ This document provides a high-level overview, features, and onboarding informati
 <blockquote>
 <p><strong>⚠️ <em>This project is currently under active development and is _not</em> ready for practical deployment. Use at your own risk!_ ⚠️</strong></p>
 </blockquote>
-<h2 id="table-of-contents">Table of Contents<a class="headerlink" href="#table-of-contents" title="Permanent link">&para;</a></h2>
-<ul>
-<li><a href="#product-features">Product Features</a></li>
-<li><a href="#authorship">Authorship</a></li>
-<li><a href="#license">License</a></li>
-<li><a href="#available-variants">Available Variants</a></li>
-<li><a href="#firmware-features">Firmware Features</a></li>
-<li><a href="#getting-started">Getting Started</a></li>
-<li><a href="#collaboration">Collaboration</a></li>
-<li><a href="#automations">Automations</a></li>
-<li><a href="#faq-common-issues">FAQ / Common Issues</a></li>
-<li><a href="#contact-support">Contact &amp; Support</a></li>
-</ul>
 <h2 id="product-features">Product Features<a class="headerlink" href="#product-features" title="Permanent link">&para;</a></h2>
 <ul>
+<li>Ingress and egress flow monitoring and metering</li>
 <li>Over/under flow-rate detection, alerts and alarms</li>
 <li>Automated solenoid control for emergency water-shutoff or water-flow management/control</li>
 <li>Manual emergency override (button) to shut-off water-flow</li>
@@ -319,79 +293,65 @@ SPDX-License-Identifier: GPL-3.0-or-later</p>
 <span class="nb">cd</span><span class="w"> </span>PumpHouseBoss
 
 │
-├──<span class="w"> </span>CHANGELOG.md<span class="w">                    </span><span class="c1"># Project changelog</span>
-├──<span class="w"> </span>common/<span class="w">                             </span><span class="c1"># Shared YAML configs and hardware includes</span>
-│<span class="w">   </span>├──<span class="w"> </span>display_st7789.yaml<span class="w">             </span><span class="c1"># ST7789 display config</span>
-│<span class="w">   </span>├──<span class="w"> </span>esp32.yaml<span class="w">                      </span><span class="c1"># ESP32 base config</span>
-│<span class="w">   </span>├──<span class="w"> </span>esp32s3.yaml<span class="w">                    </span><span class="c1"># ESP32-S3 base config</span>
-│<span class="w">   </span>├──<span class="w"> </span>logging.yaml<span class="w">                    </span><span class="c1"># Logging config</span>
-│<span class="w">   </span>├──<span class="w"> </span>ota.yaml<span class="w">                        </span><span class="c1"># OTA update config</span>
-│<span class="w">   </span>├──<span class="w"> </span>secrets.template.yaml<span class="w">           </span><span class="c1"># Template for secrets file</span>
-│<span class="w">   </span>├──<span class="w"> </span>secrets.yaml<span class="w">                    </span><span class="c1"># Actual secrets (not in repo)</span>
-│<span class="w">   </span>├──<span class="w"> </span>watchdog.yaml<span class="w">                   </span><span class="c1"># Watchdog timer config</span>
-│<span class="w">   </span>├──<span class="w"> </span>web_server.yaml<span class="w">                 </span><span class="c1"># Web server config</span>
-│<span class="w">   </span>└──<span class="w"> </span>wifi.yaml<span class="w">                       </span><span class="c1"># WiFi config</span>
-├──<span class="w"> </span>config/<span class="w">                         </span><span class="c1"># Build and variant configuration</span>
-│<span class="w">   </span>├──<span class="w"> </span>config.mk<span class="w">                       </span><span class="c1"># Main build config</span>
-│<span class="w">   </span>├──<span class="w"> </span>default.mk<span class="w">                      </span><span class="c1"># Default build settings</span>
-│<span class="w">   </span>├──<span class="w"> </span>phb-pro-test.mk<span class="w">                 </span><span class="c1"># Test config for Pro variant</span>
-│<span class="w">   </span>├──<span class="w"> </span>phb-std-test.mk<span class="w">                 </span><span class="c1"># Test config for Standard variant</span>
-│<span class="w">   </span>└──<span class="w"> </span>template.mk<span class="w">                     </span><span class="c1"># Template for new configs</span>
-├──<span class="w"> </span>docs/<span class="w">                           </span><span class="c1"># Documentation and MkDocs config</span>
-│<span class="w">   </span>└──<span class="w"> </span>mkdocs.yml<span class="w">                      </span><span class="c1"># MkDocs site config</span>
-├──<span class="w"> </span>CONTRIBUTING.md<span class="w">                 </span><span class="c1"># Contributor/developer guide, collaboration standards, and Copilot usage</span>
-├──<span class="w"> </span>icons/<span class="w">                          </span><span class="c1"># Status and WiFi icon images</span>
-│<span class="w">   </span>├──<span class="w"> </span>status_error.png<span class="w">                </span><span class="c1"># Error status icon</span>
-│<span class="w">   </span>├──<span class="w"> </span>status_ok.png<span class="w">                   </span><span class="c1"># OK status icon</span>
-│<span class="w">   </span>├──<span class="w"> </span>status_warn.png<span class="w">                 </span><span class="c1"># Warning status icon</span>
-│<span class="w">   </span>├──<span class="w"> </span>wifi-0.png<span class="w">                      </span><span class="c1"># WiFi signal icon (0%)</span>
-│<span class="w">   </span>├──<span class="w"> </span>wifi-100.png<span class="w">                    </span><span class="c1"># WiFi signal icon (100%)</span>
-│<span class="w">   </span>├──<span class="w"> </span>wifi_0.png<span class="w">                      </span><span class="c1"># WiFi signal icon (0%)</span>
-│<span class="w">   </span>├──<span class="w"> </span>wifi_1.png<span class="w">                      </span><span class="c1"># WiFi signal icon (25%)</span>
-│<span class="w">   </span>├──<span class="w"> </span>wifi_2.png<span class="w">                      </span><span class="c1"># WiFi signal icon (50%)</span>
-│<span class="w">   </span>├──<span class="w"> </span>wifi_3.png<span class="w">                      </span><span class="c1"># WiFi signal icon (75%)</span>
-│<span class="w">   </span>└──<span class="w"> </span>wifi_4.png<span class="w">                      </span><span class="c1"># WiFi signal icon (100%)</span>
-├──<span class="w"> </span>LICENSE<span class="w">                         </span><span class="c1"># Project license (GPLv3)</span>
-├──<span class="w"> </span>logs/<span class="w">                           </span><span class="c1"># Log files (created at runtime)</span>
-├──<span class="w"> </span>Makefile<span class="w">                        </span><span class="c1"># Main project Makefile</span>
-├──<span class="w"> </span>makefile.mk<span class="w">                     </span><span class="c1"># Makefile macros and helpers</span>
-├──<span class="w"> </span>README.md<span class="w">                       </span><span class="c1"># Project overview and documentation</span>
-├──<span class="w"> </span>RELEASE-CHECKLIST.md<span class="w">            </span><span class="c1"># Release checklist (if present)</span>
-├──<span class="w"> </span>RELEASE.md<span class="w">                      </span><span class="c1"># Release notes and instructions</span>
-├──<span class="w"> </span>scripts/<span class="w">                        </span><span class="c1"># Project scripts and automation</span>
-│<span class="w">   </span>├──<span class="w"> </span>.common.sh<span class="w">                      </span><span class="c1"># Shared shell functions for scripts</span>
-│<span class="w">   </span>└──<span class="w"> </span>regression-test.sh<span class="w">              </span><span class="c1"># Regression test automation</span>
-├──<span class="w"> </span>STANDARDS.md<span class="w">                    </span><span class="c1"># Coding standards and conventions</span>
-├──<span class="w"> </span>TODO.md<span class="w">                         </span><span class="c1"># Project TODOs and future plans</span>
-├──<span class="w"> </span>variants/<span class="w">                       </span><span class="c1"># Device variant definitions</span>
-│<span class="w">   </span>├──<span class="w"> </span>phb-pro/<span class="w">                        </span><span class="c1"># Pro variant files</span>
-│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>phb-pro-hardware.md<span class="w">             </span><span class="c1"># Pro hardware guide</span>
-│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>phb-pro-overview.md<span class="w">             </span><span class="c1"># Pro functional overview</span>
-│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>phb-pro.mk<span class="w">                      </span><span class="c1"># Pro variant Makefile config</span>
-│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>phb-pro.yaml<span class="w">                    </span><span class="c1"># Pro variant YAML config</span>
-│<span class="w">   </span>└──<span class="w"> </span>phb-std/<span class="w">                        </span><span class="c1"># Standard variant files</span>
-│<span class="w">       </span>├──<span class="w"> </span>phb-std-hardware.md<span class="w">             </span><span class="c1"># Standard hardware guide</span>
-│<span class="w">       </span>├──<span class="w"> </span>phb-std-overview.md<span class="w">             </span><span class="c1"># Standard functional overview</span>
-│<span class="w">       </span>├──<span class="w"> </span>phb-std.mk<span class="w">                      </span><span class="c1"># Standard variant Makefile config</span>
-│<span class="w">       </span>└──<span class="w"> </span>phb-std.yaml<span class="w">                    </span><span class="c1"># Standard variant YAML config</span>
-└──<span class="w"> </span>VERSION<span class="w">                         </span><span class="c1"># Project version string</span>
+├──<span class="w"> </span>CHANGELOG.md
+├──<span class="w"> </span>common
+│<span class="w">   </span>├──<span class="w"> </span>display_st7789.yaml
+│<span class="w">   </span>├──<span class="w"> </span>esp32.yaml
+│<span class="w">   </span>├──<span class="w"> </span>esp32s3.yaml
+│<span class="w">   </span>├──<span class="w"> </span>logging.yaml
+│<span class="w">   </span>├──<span class="w"> </span>ota.yaml
+│<span class="w">   </span>├──<span class="w"> </span>secrets.template.yaml
+│<span class="w">   </span>├──<span class="w"> </span>secrets.yaml
+│<span class="w">   </span>├──<span class="w"> </span>watchdog.yaml
+│<span class="w">   </span>├──<span class="w"> </span>web_server.yaml
+│<span class="w">   </span>└──<span class="w"> </span>wifi.yaml
+├──<span class="w"> </span>config
+│<span class="w">   </span>├──<span class="w"> </span>config.mk
+│<span class="w">   </span>├──<span class="w"> </span>default.mk
+│<span class="w">   </span>├──<span class="w"> </span>phb-pro-test.mk
+│<span class="w">   </span>├──<span class="w"> </span>phb-std-test.mk
+│<span class="w">   </span>└──<span class="w"> </span>template.mk
+├──<span class="w"> </span>RELEASE-CHECKLIST.md
+├──<span class="w"> </span>docs
+│<span class="w">   </span>└──<span class="w"> </span>mkdocs.yml
+├──<span class="w"> </span>GIT-COPILOT.md
+├──<span class="w"> </span>icons
+│<span class="w">   </span>├──<span class="w"> </span>status_error.png
+│<span class="w">   </span>├──<span class="w"> </span>status_ok.png
+│<span class="w">   </span>├──<span class="w"> </span>status_warn.png
+│<span class="w">   </span>├──<span class="w"> </span>wifi_0.png
+│<span class="w">   </span>├──<span class="w"> </span>wifi_1.png
+│<span class="w">   </span>├──<span class="w"> </span>wifi_2.png
+│<span class="w">   </span>├──<span class="w"> </span>wifi_3.png
+│<span class="w">   </span>├──<span class="w"> </span>wifi_4.png
+│<span class="w">   </span>├──<span class="w"> </span>wifi-0.png
+│<span class="w">   </span>└──<span class="w"> </span>wifi-100.png
+├──<span class="w"> </span>LICENSE
+├──<span class="w"> </span>Makefile
+├──<span class="w"> </span>makefile.mk
+├──<span class="w"> </span>pre-check-in.sh
+├──<span class="w"> </span>README.md
+├──<span class="w"> </span>regression-test.log
+├──<span class="w"> </span>regression-test.sh
+├──<span class="w"> </span>RELEASE.md
+├──<span class="w"> </span>STANDARDS.md
+├──<span class="w"> </span>TODO.md
+├──<span class="w"> </span>variants
+│<span class="w">   </span>├──<span class="w"> </span>phb-pro
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>phb-pro.mk
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>phb-pro.yaml
+│<span class="w">   </span>│<span class="w">   </span>├──<span class="w"> </span>phb-pro-hardware.md
+│<span class="w">   </span>│<span class="w">   </span>└──<span class="w"> </span>phb-pro-overview.md
+│<span class="w">   </span>└──<span class="w"> </span>phb-std
+│<span class="w">       </span>├──<span class="w"> </span>phb-std.mk
+│<span class="w">       </span>├──<span class="w"> </span>phb-std.yaml
+│<span class="w">       </span>├──<span class="w"> </span>phb-std-hardware.md
+│<span class="w">       </span>└──<span class="w"> </span>phb-std-overview.md
+└──<span class="w"> </span>VERSION
 </code></pre></div>
 
 <h3 id="2-review-documentation">2. Review Documentation<a class="headerlink" href="#2-review-documentation" title="Permanent link">&para;</a></h3>
 <p>Read all Markdown files in the project root for standards, changelogs, and workflow:</p>
-<h3 id="wiki">Wiki<a class="headerlink" href="#wiki" title="Permanent link">&para;</a></h3>
-<p>The project wiki is maintained in <code>docs/src/</code> for easy editing and backup. Key pages:</p>
-<ul>
-<li><strong>Wiki Home</strong>: docs/src/Home.md</li>
-<li><strong>Overview</strong>: docs/src/Overview.md</li>
-<li><strong>Getting Started</strong>: docs/src/Getting-Started.md</li>
-<li><strong>Hardware Overview</strong>: docs/src/Hardware-Overview.md</li>
-<li><strong>Firmware &amp; Configuration</strong>: docs/src/Firmware-and-Configuration.md</li>
-<li><strong>Usage and Troubleshooting</strong>: docs/src/Usage-and-Troubleshooting.md</li>
-<li><strong>Developer Guide</strong>: docs/src/Developer-Guide.md</li>
-<li><strong>FAQ</strong>: docs/src/FAQ.md</li>
-<li><strong>Contact &amp; Support</strong>: docs/src/Contact-and-Support.md</li>
-</ul>
 <table>
 <thead>
 <tr>
@@ -421,8 +381,8 @@ SPDX-License-Identifier: GPL-3.0-or-later</p>
 <td>(If present) Record of previous check-in status</td>
 </tr>
 <tr>
-<td><a href="CONTRIBUTING/">CONTRIBUTING.md</a></td>
-<td>Contributor/developer guide, session context, and Copilot usage</td>
+<td><a href="GIT-COPILOT/">GIT-COPILOT.md</a></td>
+<td>Session context, developer notes, and Copilot usage</td>
 </tr>
 <tr>
 <td><a href="TODO/">TODO.md</a></td>
@@ -458,39 +418,24 @@ Create and edit your build configuration:
   - <code>make flash-erase</code> – Erase entire platform flash memory (destructive!)</p>
 <p><strong>Documentation:</strong>
   - <code>make docs</code> – Generate all documentation (ESPHome and MkDocs)
-  - <code>make docs-esphome</code> – Generate ESPHome style documentation
-  - <code>make docs-mkdoc</code> – Generate MkDocs style documentation (local build only)
-  - <code>make docs-deploy</code> – Build and deploy MkDocs site to GitHub Pages (public docs), and sync docs/wiki/ to the GitHub Wiki repository</p>
+  - <code>make docs-esphome</code> – Generate ESPHome documentation
+  - <code>make docs-mkdoc</code> – Generate MkDocs documentation</p>
 <p><strong>Cleanup:</strong>
   - <code>make clean</code> – Remove build artifacts and logs
   - <code>make clean-cache</code> – Remove ESPHome build cache
   - <code>make clean-docs</code> – Remove all generated documentation
   - <code>make clobber</code> – Remove device directory and documentation
   - <code>make distclean</code> – Complete cleanup for archive/export</p>
-<p><strong>Test:</strong>
-  - <code>make regression-test</code> – Run regression tests for the project</p>
+<p><strong>Testing:</strong>
+  - <code>make regression-test</code> – Run regression tests on all device YAMLs</p>
 <p><strong>Utility:</strong>
   - <code>make version</code> – Show project and ESPHome version
   - <code>make buildvars</code> – Show current build configuration values
   - <code>make help</code> – Show help/target summary</p>
-<h4 id="note-on-communication-path-comm_path">Note on Communication Path (COMM_PATH)<a class="headerlink" href="#note-on-communication-path-comm_path" title="Permanent link">&para;</a></h4>
-<p>The Makefile uses the <code>COMM_PATH</code> variable to control how the build host machine communicates with the target ESP32/ESP32s3 device-either via serial port or the network (OTA).
-- If <code>COMM_PATH</code> is set to a device hostname (e.g., <code>some_device.local</code>), upload is performed over OTA (WiFi).
-- If <code>COMM_PATH</code> is set to a serial port (e.g., <code>COM8</code> or <code>/dev/ttyUSB0</code>), upload is performed over serial.</p>
-<p><strong>Examples:</strong>
-- <code>make upload COMM_PATH=phb-esp32-00.local</code> (OTA upload)
-- <code>make upload COMM_PATH=COM8</code> (Serial upload)</p>
 <h2 id="collaboration">Collaboration<a class="headerlink" href="#collaboration" title="Permanent link">&para;</a></h2>
 <p>Contributions, collaboration, suggestions, and critique are welcome.</p>
 <p>For a comprehensive guide to the implementation standards applied to this project,
 please refer to <a href="STANDARDS/">PHB Implementation Standards</a></p>
-<h2 id="automations">Automations<a class="headerlink" href="#automations" title="Permanent link">&para;</a></h2>
-<p>Several automations are included to streamline the development process. These automations can be exercised as make targets or run directly from the project 'scripts' directory.
-1. sanitize.sh        - performs standards conformance validation on a project file [TBD]
-2. regression-test.sh - performs build and basic regression testing across all makefile targets
-3. pre-check-in.sh    - perfomes pre-checkin process per project standards [TBD]
-4. check-in.sh        - perfomes checkin process per project standards [TBD]
-5. post-check-in.sh   - perfomes checkin process per project standards [TBD]</p>
 <h2 id="faq-common-issues">FAQ / Common Issues<a class="headerlink" href="#faq-common-issues" title="Permanent link">&para;</a></h2>
 <p><strong>Q: Build fails due to missing secrets or configuration files.</strong></p>
 <blockquote>
@@ -569,5 +514,5 @@ please refer to <a href="STANDARDS/">PHB Implementation Standards</a></p>
 
 <!--
 MkDocs version : 1.6.1
-Build Date UTC : 2025-07-31 05:33:54.909235+00:00
+Build Date UTC : 2025-07-31 05:48:14.327998+00:00
 -->

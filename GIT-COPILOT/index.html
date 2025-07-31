@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://hucklesberries.github.io/PumpHouseBoss/GIT-COPILOT/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>GIT-COPILOT.md — Session Context &amp; Developer Continuity - PumpHouseBoss Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "GIT-COPILOT.md \u2014 Session Context \u0026amp; Developer Continuity";
+        var mkdocs_page_input_path = "GIT-COPILOT.md";
+        var mkdocs_page_url = "/PumpHouseBoss/GIT-COPILOT/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> PumpHouseBoss Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../Home/">Home</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">DESCRIPTION</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Standard</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >PumpHouseBoss Professional</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-overview/">Overview</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro-hardware/">Hardware</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">READ ME</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE/">RELEASE NOTES</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../CHANGELOG/">CHANGELOG</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../STANDARDS/">STANDARDS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../RELEASE-CHECKLIST/">RELEASE-CHECKLIST</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="" href="../CONTRIBUTING.md">CONTRIBUTING</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../TODO/">TODO</a>
+                </li>
+              </ul>
+              <p class="caption"><span class="caption-text">WIKI</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" href="../Home/">Home</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Overview/">Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Getting-Started/">Getting Started</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Hardware-Overview/">Hardware Overview</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Firmware-and-Configuration/">Firmware & Configuration</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Usage-and-Troubleshooting/">Usage & Troubleshooting</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Developer-Guide/">Developer Guide</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../FAQ/">FAQ</a>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" href="../Contact-and-Support/">Contact & Support</a>
+                  </li>
+              </ul>
+              <p class="caption"><span class="caption-text">SOURCE CODE</span></p>
+              <ul>
+                  <li class="toctree-l1"><a class="reference internal" >Variants</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-std/">PHB Std</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../phb-pro/">PHB Pro</a>
+                </li>
+    </ul>
+                  </li>
+                  <li class="toctree-l1"><a class="reference internal" >Common</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../display_pcf8574.md">Display PCF8574</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../indications.md">Indications</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../mmu.md">MMU</a>
+                </li>
+                <li class="toctree-l2"><a class="" href="../api.md">API</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../esp32s3/">esp32s3</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../logging/">Logging</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../ota/">OTA</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../watchdog/">Watchdog</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../web_server/">Web Server</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../wifi/">WiFi</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../secrets.template/">Secrets Template</a>
+                </li>
+    </ul>
+                  </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">PumpHouseBoss Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">GIT-COPILOT.md — Session Context &amp; Developer Continuity</li>
+    <li class="wy-breadcrumbs-aside">
+          <a href="https://github.com/hucklesberries/PumpHouseBoss/edit/master/docs/GIT-COPILOT.md" class="icon icon-github"> Edit on GitHub</a>
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="git-copilotmd-session-context-developer-continuity">GIT-COPILOT.md — Session Context &amp; Developer Continuity<a class="headerlink" href="#git-copilotmd-session-context-developer-continuity" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>Maintained by GitHub Copilot to preserve technical context, session continuity, troubleshooting notes, and onboarding information for all contributors.
+For project overview and setup, see <code>README.md</code>.</p>
+</blockquote>
+<hr />
+<h2 id="session-status-current-work">Session Status &amp; Current Work<a class="headerlink" href="#session-status-current-work" title="Permanent link">&para;</a></h2>
+<p><strong>Last Updated:</strong> July 21, 2025</p>
+<p><strong>Recent updates:</strong>
+- Pinout maps for ESP32S3, ST7789 display, and Pico-LCD hardware
+- UI improvements: ST7789 display now shows Hostname, SSID, IP, and MAC address
+- Font/layout adjustments for readability
+- Improved secrets management, Makefile automation, and documentation</p>
+<p><strong>Current Work &amp; Action Items:</strong>
+- Makefile optimization and code quality improvements
+- Session continuity and header standardization
+- Version consistency (Makefile and VERSION file)
+- Always include the standard project header in new files
+- [ ] Test flash-verify functionality with current firmware
+- [ ] Explore additional esptool functions if needed
+- [ ] Continue ESPHome development with professional build system</p>
+<hr />
+<h2 id="development-environment-highlights">Development Environment Highlights<a class="headerlink" href="#development-environment-highlights" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Cygwin zsh terminal with Meslo Nerd Font</li>
+<li>VS Code integration (tasks.json, 9 ESPHome targets)</li>
+<li>Professional Makefile (24+ targets, auto-detected Python)</li>
+<li>Organized documentation (docs/esphome/, docs/html/, docs/latex/)</li>
+<li>Full esptool integration (erase, info, verify)</li>
+<li>Safety systems: PROTECTED_DIRS, dependency composition, error handling</li>
+<li>Consistent GPL v3.0 headers and versioning</li>
+</ul>
+<hr />
+<h2 id="quick-start-troubleshooting">Quick Start &amp; Troubleshooting<a class="headerlink" href="#quick-start-troubleshooting" title="Permanent link">&para;</a></h2>
+<h3 id="quick-start-commands">Quick Start Commands<a class="headerlink" href="#quick-start-commands" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Open VS Code in workspace: <code>&lt;your-workspace-path&gt;</code></li>
+<li>Verify environment: <code>make version</code> or <code>make help</code></li>
+<li>Check current config: <code>make buildvars</code></li>
+<li>Review last build: <code>cat build.log</code></li>
+</ol>
+<h3 id="development-workflow">Development Workflow<a class="headerlink" href="#development-workflow" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Configure: <code>make configure</code> (interactive setup)</li>
+<li>Build: <code>make build</code> (compile firmware)</li>
+<li>Upload: <code>make upload</code> (flash device)</li>
+<li>Debug: <code>make logs</code> (stream live logs)</li>
+<li>Full pipeline: <code>make run</code> (build + upload + logs)</li>
+</ol>
+<h3 id="check-in-process">Check-in Process<a class="headerlink" href="#check-in-process" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Pre-Commit: Follow <code>CHECKIN-CHECKLIST.md</code> validation steps</li>
+<li>Clean Build: <code>make clean &amp;&amp; make build</code></li>
+<li>Version Bump: Update <code>VERSION</code> file and Makefile header</li>
+<li>Archive Test: <code>make distclean</code></li>
+<li>Commit: Use structured commit message format</li>
+<li>Post-Commit: Update continuity files (KIBO.md, GIT-COPILOT.md)</li>
+</ol>
+<h3 id="documentation-generation">Documentation Generation<a class="headerlink" href="#documentation-generation" title="Permanent link">&para;</a></h3>
+<ul>
+<li>YAML module/file descriptions are extracted to Markdown using <code>docs/extract_yaml_headers.py</code>.</li>
+<li>Doxygen config: <code>docs/Doxyfile</code>.</li>
+<li>All generated documentation is output to <code>docs/esphome/</code>, <code>docs/html/</code>, and <code>docs/latex/</code>.</li>
+</ul>
+<p><strong>Commands:</strong>
+- All Docs: <code>make docs</code> (ESPHome + Doxygen)
+- ESPHome Only: <code>make docs-esphome</code>
+- Doxygen Only: <code>make docs-doxygen</code></p>
+<h3 id="flash-operations">Flash Operations<a class="headerlink" href="#flash-operations" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Chip Info: <code>make chip-info</code></li>
+<li>Flash Info: <code>make flash-info</code></li>
+<li>Flash Verify: <code>make flash-verify</code></li>
+<li>Flash Erase: <code>make flash-erase</code></li>
+</ol>
+<h3 id="cleanup-operations">Cleanup Operations<a class="headerlink" href="#cleanup-operations" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Basic Clean: <code>make clean</code></li>
+<li>Cache Clean: <code>make clean-cache</code></li>
+<li>Docs Clean: <code>make clean-docs</code></li>
+<li>Full Clean: <code>make clobber</code></li>
+<li>Archive Clean: <code>make distclean</code></li>
+</ol>
+<h3 id="wifi-troubleshooting">WiFi Troubleshooting<a class="headerlink" href="#wifi-troubleshooting" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Device experiencing WiFi AP registration problems</li>
+<li>Capture live logs during connection attempts</li>
+<li>May need to modify logs target to include tee logging for shared visibility</li>
+</ul>
+<hr />
+<h2 id="notes-tips">Notes &amp; Tips<a class="headerlink" href="#notes-tips" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Indent all shell code within Makefile recipes (for/while/if blocks) for readability, even if not required by shell.</strong></li>
+<li>Always use Unix (LF) file format when creating or editing files in this repository.</li>
+</ul>
+<hr />
+<p><em>This file is maintained by GitHub Copilot to preserve session context and development state.</em></p>
+<h1 id="appendix-display-and-ui-plan">Appendix: Display and UI Plan<a class="headerlink" href="#appendix-display-and-ui-plan" title="Permanent link">&para;</a></h1>
+<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Shows system status icons (e.g., checkmark), and can display status text.</li>
+<li>Blue background, framed by white and blue borders.</li>
+<li>
+<p>Used for cycling through sensor and solenoid data, and for menu interactions.</p>
+</li>
+<li>
+<p>Sensor/solenoid name</p>
+</li>
+<li>Solenoid state (ON/OFF)</li>
+<li>Smart shutoff status (enabled/disabled)</li>
+</ul>
+<h2 id="controls">Controls<a class="headerlink" href="#controls" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Four buttons:</li>
+<li><strong>A:</strong> Scroll up</li>
+<li>
+<p>Any joystick activity brings up a menu in the data pane for manual control.</p>
+</li>
+<li>
+<p>Operator can:</p>
+</li>
+<li>Turn any solenoid ON or OFF manually</li>
+<li>Menu times out and returns to idle cycling after inactivity.</li>
+</ul>
+<h2 id="uiux-notes">UI/UX Notes<a class="headerlink" href="#uiux-notes" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Use icons and color highlights for clarity (e.g., ON/OFF, smart shutoff status).</li>
+<li>Data pane can highlight the currently selected item in the menu.</li>
+</ul>
+<p>This plan will be implemented incrementally, starting with display layout and cycling logic, then adding controls and menu features.</p>
+<h1 id="github-copilot-session-context">GitHub Copilot Session Context<a class="headerlink" href="#github-copilot-session-context" title="Permanent link">&para;</a></h1>
+<h2 id="session-status">Session Status<a class="headerlink" href="#session-status" title="Permanent link">&para;</a></h2>
+<p><strong>Recent updates:</strong>
+- Provided pinout maps for ESP32S3, ST7789 display, and Pico-LCD hardware components
+- Major UI improvements: ST7789 display now shows Hostname, SSID, IP, and MAC address, with robust centering and fallback for missing values
+- Improved secrets management, Makefile automation, and documentation</p>
+<h2 id="development-environment-highlights_1">Development Environment Highlights<a class="headerlink" href="#development-environment-highlights_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li>VS Code integration (tasks.json, 9 ESPHome targets)</li>
+<li>Professional Makefile (24 targets, auto-detected Python)</li>
+<li>Consistent GPL v3.0 headers and versioning</li>
+</ul>
+<h2 id="current-work-action-items">Current Work &amp; Action Items<a class="headerlink" href="#current-work-action-items" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Makefile optimization and code quality improvements</li>
+<li>Session continuity and header standardization</li>
+<li>Version consistency (Makefile and VERSION file)</li>
+<li>Always include the standard project header in new files for consistency and traceability</li>
+<li>[ ] Test flash-verify functionality with current firmware</li>
+<li>[ ] Explore additional esptool functions if needed</li>
+<li>[ ] Continue ESPHome development with professional build system</li>
+</ul>
+<h2 id="troubleshooting-quick-start">Troubleshooting &amp; Quick Start<a class="headerlink" href="#troubleshooting-quick-start" title="Permanent link">&para;</a></h2>
+<h3 id="wifi-troubleshooting_1">WiFi Troubleshooting<a class="headerlink" href="#wifi-troubleshooting_1" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Device experiencing WiFi AP registration problems</li>
+<li>Capture live logs during connection attempts</li>
+<li>May need to modify logs target to include tee logging for shared visibility</li>
+</ul>
+<h3 id="quick-start-commands_1">Quick Start Commands<a class="headerlink" href="#quick-start-commands_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Open VS Code in workspace: <code>&lt;your-workspace-path&gt;</code></li>
+<li>Verify environment: <code>make version</code> or <code>make help</code></li>
+<li>Check current config: <code>make buildvars</code></li>
+<li>Review last build: <code>cat build.log</code></li>
+</ol>
+<h3 id="development-workflow_1">Development Workflow<a class="headerlink" href="#development-workflow_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Configure: <code>make configure</code> (interactive setup)</li>
+<li>Build: <code>make build</code> (compile firmware)</li>
+<li>Upload: <code>make upload</code> (flash device)</li>
+<li>Debug: <code>make logs</code> (stream live logs)</li>
+<li>Full pipeline: <code>make run</code> (build + upload + logs)</li>
+</ol>
+<h3 id="check-in-process_1">Check-in Process<a class="headerlink" href="#check-in-process_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Pre-Commit: Follow <code>CHECKIN-CHECKLIST.md</code> validation steps</li>
+<li>Clean Build: <code>make clean &amp;&amp; make build</code></li>
+<li>Version Bump: Update <code>VERSION</code> file and Makefile header</li>
+<li>Archive Test: <code>make distclean</code></li>
+<li>Commit: Use structured commit message format</li>
+<li>Post-Commit: Update continuity files (KIBO.md, GIT-COPILOT.md)</li>
+</ol>
+<h3 id="documentation-generation_1">Documentation Generation<a class="headerlink" href="#documentation-generation_1" title="Permanent link">&para;</a></h3>
+<h4 id="new-documentation-workflow-as-of-july-2025">New Documentation Workflow (as of July 2025)<a class="headerlink" href="#new-documentation-workflow-as-of-july-2025" title="Permanent link">&para;</a></h4>
+<ul>
+<li>YAML module/file descriptions are now extracted to Markdown using <code>docs/extract_yaml_headers.py</code>.</li>
+<li>The Doxygen configuration file is located at <code>docs/Doxyfile</code> (not the project root).</li>
+</ul>
+<p>To generate all documentation:
+  1. Run: <code>python docs/extract_yaml_headers.py</code> (extracts YAML headers to Markdown in <code>docs/</code>)
+  2. Run: <code>make docs</code> (generates ESPHome and Doxygen docs)</p>
+<ul>
+<li>To generate only ESPHome docs: <code>make docs-esphome</code></li>
+<li>To generate only Doxygen docs: <code>make docs-doxygen</code></li>
+<li>
+<p>All generated documentation is output to <code>docs/esphome/</code>, <code>docs/html/</code>, and <code>docs/latex/</code>.</p>
+</li>
+<li>
+<p>All Docs: <code>make docs</code> (ESPHome + Doxygen)</p>
+</li>
+<li>ESPHome Only: <code>make docs-esphome</code></li>
+<li>Doxygen Only: <code>make docs-doxygen</code></li>
+</ul>
+<h3 id="flash-operations_1">Flash Operations<a class="headerlink" href="#flash-operations_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Chip Info: <code>make chip-info</code></li>
+<li>Flash Info: <code>make flash-info</code></li>
+<li>Flash Verify: <code>make flash-verify</code></li>
+<li>Flash Erase: <code>make flash-erase</code></li>
+</ol>
+<h3 id="cleanup-operations_1">Cleanup Operations<a class="headerlink" href="#cleanup-operations_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Basic Clean: <code>make clean</code></li>
+<li>Cache Clean: <code>make clean-cache</code></li>
+<li>Docs Clean: <code>make clean-docs</code></li>
+<li>Full Clean: <code>make clobber</code></li>
+<li>Archive Clean: <code>make distclean</code></li>
+</ol>
+<h2 id="session-continuity-shared-context">Session Continuity &amp; Shared Context<a class="headerlink" href="#session-continuity-shared-context" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Always use the <code>.kibo</code> file in your home directory (<code>~/.kibo</code>) for session continuity and shared context across workspaces.</li>
+<li>When updating session context, run <code>~/sync-kibo.sh push</code> to sync changes back to <code>~/.kibo</code>.</li>
+<li>At the start of every session, read <code>.kibo</code> from the workspace (or from the symlink pointing to <code>~/.kibo</code>) to restore context.</li>
+<li>Do not use <code>.git-copilot</code> or <code>.git-copilot.md</code> for continuity—use <code>.kibo</code> exclusively.</li>
+<li>Ensure <code>.kibo</code> is listed in <code>.gitignore</code> to prevent accidental commits.</li>
+<li>If <code>.kibo</code> is not accessible, copy it into the workspace or provide its contents.</li>
+<li>All file creation and editing should use Unix (LF) line endings.</li>
+</ul>
+<hr />
+<p><em>These notes ensure robust, cross-workspace session continuity and prevent loss of shared context.</em></p>
+<h2 id="notes-tips_1">Notes &amp; Tips<a class="headerlink" href="#notes-tips_1" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>All shell code within Makefile recipes (such as inside for/while/if blocks) should be indented for human readability, even though the shell does not require it. This improves maintainability and clarity for all contributors.</strong></li>
+</ul>
+<hr />
+<p><em>This file is maintained by GitHub Copilot to preserve session context and development state.</em>
+Always use Unix (LF) file format when creating or editing files in this repository.</p>
+              
+            </div>
+          </div><footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/hucklesberries/PumpHouseBoss" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

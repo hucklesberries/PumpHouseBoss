@@ -83,7 +83,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
+                <li class="toctree-l1"><a class="" href="../CONTRIBUTING.md">CONTRIBUTING</a>
                 </li>
               </ul>
               <ul>
@@ -127,13 +127,13 @@
     <ul>
                 <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
+                <li class="toctree-l2"><a class="" href="../display_pcf8574.md">Display PCF8574</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
+                <li class="toctree-l2"><a class="" href="../indications.md">Indications</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
+                <li class="toctree-l2"><a class="" href="../mmu.md">MMU</a>
                 </li>
-                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
+                <li class="toctree-l2"><a class="" href="../api.md">API</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
                 </li>
@@ -181,148 +181,140 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="component-phb-std">Component: phb-std<a class="headerlink" href="#component-phb-std" title="Permanent link">&para;</a></h1>
-<h1 id="source-homerhendelgitpumphousebossvariantsphb-stdphb-stdyaml">Source: /home/rhendel/git/PumpHouseBoss/variants/phb-std/phb-std.yaml<a class="headerlink" href="#source-homerhendelgitpumphousebossvariantsphb-stdphb-stdyaml" title="Permanent link">&para;</a></h1>
-<h1 id="generated-wed-jul-30-2025-103352-pm">Generated: Wed, Jul 30, 2025 10:33:52 PM<a class="headerlink" href="#generated-wed-jul-30-2025-103352-pm" title="Permanent link">&para;</a></h1>
-<div class="codehilite"><pre><span></span><code><span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1">#  File:         phb-std.yaml</span>
-<span class="c1">#  File Type:    ESPHome YAML Main</span>
-<span class="c1">#  Purpose:      PumpHouseBoss Standard Variant Main</span>
-<span class="c1">#  Version:      0.7.1</span>
-<span class="c1">#  Date:         2025-07-24</span>
-<span class="c1">#  Author:       Roland Tembo Hendel &lt;rhendel@nexuslogic.com&gt;</span>
-<span class="c1">#</span>
-<span class="c1">#  Description:  PumpHouseBoss Standard Variant is a Water Distribution System</span>
-<span class="c1">#                Monitor and controller built on the ESP32 platform.</span>
-<span class="c1">#</span>
-<span class="c1">#  Features:     - Ingress and egress flow monitoring, metering</span>
-<span class="c1">#                - Over/under flow-rate detection, alerts and alarms</span>
-<span class="c1">#                - Automated solenoid control for emergency water-shutoff or</span>
-<span class="c1">#                  water-flow management/control</span>
-<span class="c1">#                - Manual emergency override to shut-off water-flow</span>
-<span class="c1">#                - 4 line LCD (lcd_pcf8574 interface)</span>
-<span class="c1">#                - Historical flow-rate/usage graphing</span>
-<span class="c1">#                - Home Assistant integration via ESPHome</span>
-<span class="c1">#                - Supports up to 5 MMUs</span>
-<span class="c1">#</span>
-<span class="c1">#  License:      GNU General Public License v3.0</span>
-<span class="c1">#                SPDX-License-Identifier: GPL-3.0-or-later</span>
-<span class="c1">#  Copyright:    (c) 2025 Roland Tembo Hendel</span>
-<span class="c1">#                This program is free software: you can redistribute it and/or</span>
-<span class="c1">#                modify it under the terms of the GNU General Public License.</span>
-<span class="c1">#</span>
-<span class="c1">#  Note:         Co-developed with GitHub Copilot by OpenAI.</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1">#  YAML linter configuration</span>
-<span class="c1">#   - Disables quoted-strings rule for improved readability</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1"># yamllint disable rule:quoted-strings</span>
-
-
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1">#  Node identity, version, and hardware pin assignments</span>
-<span class="c1">#   - Provides substitutions for node name, friendly name, version, and key pins</span>
-<span class="c1">#   - Used throughout the configuration for maintainability</span>
-<span class="c1">#   - Parameters:</span>
-<span class="c1">#       node_name: Node ID used in ESPHome and logs</span>
-<span class="c1">#       friendly_name: Human-readable name for dashboards</span>
-<span class="c1">#       version: Firmware version tag injected into logs and sensors</span>
-<span class="c1">#       flow_sensor_pin: Primary flow sensor pulse counter input</span>
-<span class="c1">#       test_output_pin: GPIO test and verification pin</span>
-<span class="c1">#       watchdog_timeout: Hardware watchdog timeout period</span>
-<span class="c1">#       watchdog_trigger_pin: External watchdog trigger output</span>
-<span class="c1">#       watchdog_early_trigger: Early trigger before timeout</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="nt">substitutions</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">chip_set</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__PLATFORM__</span>
-<span class="w">  </span><span class="nt">node_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__NODE_NAME__</span>
-<span class="w">  </span><span class="nt">friendly_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__FRIENDLY_NAME__</span>
-<span class="w">  </span><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__VERSION__</span>
-<span class="w">  </span><span class="nt">watchdog_timeout</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;30s&quot;</span>
-<span class="w">  </span><span class="nt">watchdog_trigger_pin</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GPIO07&quot;</span>
-<span class="w">  </span><span class="nt">watchdog_early_trigger</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;25s&quot;</span>
-
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1">#  Common package includes for modular configuration</span>
-<span class="c1">#   - Modularizes board, display, network, OTA, logging, and watchdog config</span>
-<span class="c1">#   - Parameters:</span>
-<span class="c1">#       esp32: ESP32 board and framework config</span>
-<span class="c1">#       display: Display configuration (e.g., ST7789V panel)</span>
-<span class="c1">#       wifi: Wi-Fi credentials, static IP, and fallback</span>
-<span class="c1">#       ota: OTA settings (port, auth)</span>
-<span class="c1">#       web: Web interface (http://&lt;device&gt;.local)</span>
-<span class="c1">#       logging: USB/UART logging config (level, baud)</span>
-<span class="c1">#       watchdog: System reliability watchdog component</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="nt">packages</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">esp32</span><span class="p">:</span><span class="w">    </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__PROJECT_ROOT__/common/__PLATFORM__.yaml</span>
-<span class="w">  </span><span class="nt">wifi</span><span class="p">:</span><span class="w">     </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__PROJECT_ROOT__/common/wifi.yaml</span>
-<span class="w">  </span><span class="nt">ota</span><span class="p">:</span><span class="w">      </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__PROJECT_ROOT__/common/ota.yaml</span>
-<span class="w">  </span><span class="nt">web</span><span class="p">:</span><span class="w">      </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__PROJECT_ROOT__/common/web_server.yaml</span>
-<span class="w">  </span><span class="nt">logging</span><span class="p">:</span><span class="w">  </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__PROJECT_ROOT__/common/logging.yaml</span>
-<span class="w">  </span><span class="nt">watchdog</span><span class="p">:</span><span class="w"> </span><span class="kt">!include</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__PROJECT_ROOT__/common/watchdog.yaml</span>
-
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1">#  ESPHome-specific metadata and on_boot logic</span>
-<span class="c1">#   - Sets node name and friendly name</span>
-<span class="c1">#   - Publishes firmware version to Home Assistant on boot</span>
-<span class="c1">#   - Parameters:</span>
-<span class="c1">#       name: Node name</span>
-<span class="c1">#       friendly_name: Human-readable name</span>
-<span class="c1">#       on_boot: Actions to perform on boot</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="nt">esphome</span><span class="p">:</span>
-<span class="w">  </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__NODE_NAME__</span>
-<span class="w">  </span><span class="nt">friendly_name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">__FRIENDLY_NAME__</span>
-<span class="w">  </span><span class="nt">on_boot</span><span class="p">:</span>
-<span class="w">    </span><span class="nt">priority</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">-100</span>
-<span class="w">    </span><span class="nt">then</span><span class="p">:</span>
-<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">text_sensor.template.publish</span><span class="p">:</span>
-<span class="w">          </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">firmware_version</span>
-<span class="w">          </span><span class="nt">state</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">version</span><span class="w">         </span><span class="c1"># Publishes version string to Home Assistant on boot</span>
-
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1">#  Template sensor exposing firmware version as Home Assistant text_sensor</span>
-<span class="c1">#   - Publishes the firmware version string to Home Assistant</span>
-<span class="c1">#   - Parameters:</span>
-<span class="c1">#       name: Sensor name</span>
-<span class="c1">#       id: Sensor ID</span>
-<span class="c1">#       icon: Home Assistant icon</span>
-<span class="c1">#       update_interval: Update frequency</span>
-<span class="c1">#       lambda: Lambda function for value</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="nt">text_sensor</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Firmware</span><span class="nv"> </span><span class="s">Version&quot;</span><span class="w">      </span><span class="c1"># User-visible sensor name in HA</span>
-<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">firmware_version</span>
-<span class="w">    </span><span class="nt">icon</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;mdi:tag&quot;</span>
-<span class="w">    </span><span class="nt">update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">never</span><span class="w">        </span><span class="c1"># Static value set only on boot</span>
-<span class="w">    </span><span class="nt">lambda</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
-<span class="w">      </span><span class="no">return {&quot;__VERSION__&quot;};</span>
-
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="c1">#  Uptime and flow rate sensors (hall-effect pulse counter)</span>
-<span class="c1">#   - Uptime sensor: seconds since boot</span>
-<span class="c1">#   - Flow rate sensor: hall-effect pulse counter, configurable input pin</span>
-<span class="c1">#   - Calibration factor converts pulses to L/min</span>
-<span class="c1">#   - Parameters:</span>
-<span class="c1">#       platform: Sensor platform (uptime, pulse_counter)</span>
-<span class="c1">#       pin: Input pin for pulse counter</span>
-<span class="c1">#       name: Sensor name</span>
-<span class="c1">#       id: Sensor ID</span>
-<span class="c1">#       update_interval: Update frequency</span>
-<span class="c1">#       count_mode: Pulse counting mode</span>
-<span class="c1">#       internal_filter: Filter for pulse input</span>
-<span class="c1">#       unit_of_measurement: Measurement units</span>
-<span class="c1">#       accuracy_decimals: Number of decimals</span>
-<span class="c1">#       filters: Calibration factor</span>
-<span class="c1"># ------------------------------------------------------------------------------</span>
-<span class="nt">sensor</span><span class="p">:</span>
-<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uptime</span>
-<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Uptime&quot;</span><span class="w">                </span><span class="c1"># Uptime in seconds since boot</span>
-<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">uptime_sensor</span>
-</code></pre></div>
+<h1 id="source-cygdriveccygwin64homerhendelgitpumphousebossvariantsphb-stdphb-stdyaml">Source: /cygdrive/c/cygwin64/home/rhendel/git/PumpHouseBoss/variants/phb-std/phb-std.yaml<a class="headerlink" href="#source-cygdriveccygwin64homerhendelgitpumphousebossvariantsphb-stdphb-stdyaml" title="Permanent link">&para;</a></h1>
+<h1 id="generated-sun-jul-27-2025-113347-pm">Generated: Sun, Jul 27, 2025 11:33:47 PM<a class="headerlink" href="#generated-sun-jul-27-2025-113347-pm" title="Permanent link">&para;</a></h1>
+<h1 id="-">------------------------------------------------------------------------------<a class="headerlink" href="#-" title="Permanent link">&para;</a></h1>
+<h1 id="file-phb-stdyaml">File:         phb-std.yaml<a class="headerlink" href="#file-phb-stdyaml" title="Permanent link">&para;</a></h1>
+<h1 id="file-type-esphome-yaml-main">File Type:    ESPHome YAML Main<a class="headerlink" href="#file-type-esphome-yaml-main" title="Permanent link">&para;</a></h1>
+<h1 id="purpose-pumphouseboss-standard-variant-main">Purpose:      PumpHouseBoss Standard Variant Main<a class="headerlink" href="#purpose-pumphouseboss-standard-variant-main" title="Permanent link">&para;</a></h1>
+<h1 id="version-070">Version:      0.7.0<a class="headerlink" href="#version-070" title="Permanent link">&para;</a></h1>
+<h1 id="date-2025-07-24">Date:         2025-07-24<a class="headerlink" href="#date-2025-07-24" title="Permanent link">&para;</a></h1>
+<h1 id="author-roland-tembo-hendel-rhendelnexuslogiccom">Author:       Roland Tembo Hendel <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;">&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;</a><a class="headerlink" href="#author-roland-tembo-hendel-rhendelnexuslogiccom" title="Permanent link">&para;</a></h1>
+<h1 id="_1"><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<h1 id="description-pumphouseboss-standard-variant-is-a-water-distribution-system">Description:  PumpHouseBoss Standard Variant is a Water Distribution System<a class="headerlink" href="#description-pumphouseboss-standard-variant-is-a-water-distribution-system" title="Permanent link">&para;</a></h1>
+<h1 id="monitor-and-controller-built-on-the-esp32-platform">Monitor and controller built on the ESP32 platform.<a class="headerlink" href="#monitor-and-controller-built-on-the-esp32-platform" title="Permanent link">&para;</a></h1>
+<h1 id="_2"><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h1 id="features-ingress-and-egress-flow-monitoring-metering">Features:     - Ingress and egress flow monitoring, metering<a class="headerlink" href="#features-ingress-and-egress-flow-monitoring-metering" title="Permanent link">&para;</a></h1>
+<h1 id="-overunder-flow-rate-detection-alerts-and-alarms">- Over/under flow-rate detection, alerts and alarms<a class="headerlink" href="#-overunder-flow-rate-detection-alerts-and-alarms" title="Permanent link">&para;</a></h1>
+<h1 id="-automated-solenoid-control-for-emergency-water-shutoff-or">- Automated solenoid control for emergency water-shutoff or<a class="headerlink" href="#-automated-solenoid-control-for-emergency-water-shutoff-or" title="Permanent link">&para;</a></h1>
+<h1 id="water-flow-managementcontrol">water-flow management/control<a class="headerlink" href="#water-flow-managementcontrol" title="Permanent link">&para;</a></h1>
+<h1 id="-manual-emergency-override-to-shut-off-water-flow">- Manual emergency override to shut-off water-flow<a class="headerlink" href="#-manual-emergency-override-to-shut-off-water-flow" title="Permanent link">&para;</a></h1>
+<h1 id="-4-line-lcd-lcd_pcf8574-interface">- 4 line LCD (lcd_pcf8574 interface)<a class="headerlink" href="#-4-line-lcd-lcd_pcf8574-interface" title="Permanent link">&para;</a></h1>
+<h1 id="-historical-flow-rateusage-graphing">- Historical flow-rate/usage graphing<a class="headerlink" href="#-historical-flow-rateusage-graphing" title="Permanent link">&para;</a></h1>
+<h1 id="-home-assistant-integration-via-esphome">- Home Assistant integration via ESPHome<a class="headerlink" href="#-home-assistant-integration-via-esphome" title="Permanent link">&para;</a></h1>
+<h1 id="-supports-up-to-5-mmus">- Supports up to 5 MMUs<a class="headerlink" href="#-supports-up-to-5-mmus" title="Permanent link">&para;</a></h1>
+<h1 id="_3"><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
+<h1 id="license-gnu-general-public-license-v30">License:      GNU General Public License v3.0<a class="headerlink" href="#license-gnu-general-public-license-v30" title="Permanent link">&para;</a></h1>
+<h1 id="spdx-license-identifier-gpl-30-or-later">SPDX-License-Identifier: GPL-3.0-or-later<a class="headerlink" href="#spdx-license-identifier-gpl-30-or-later" title="Permanent link">&para;</a></h1>
+<h1 id="copyright-c-2025-roland-tembo-hendel">Copyright:    (c) 2025 Roland Tembo Hendel<a class="headerlink" href="#copyright-c-2025-roland-tembo-hendel" title="Permanent link">&para;</a></h1>
+<h1 id="this-program-is-free-software-you-can-redistribute-it-andor">This program is free software: you can redistribute it and/or<a class="headerlink" href="#this-program-is-free-software-you-can-redistribute-it-andor" title="Permanent link">&para;</a></h1>
+<h1 id="modify-it-under-the-terms-of-the-gnu-general-public-license">modify it under the terms of the GNU General Public License.<a class="headerlink" href="#modify-it-under-the-terms-of-the-gnu-general-public-license" title="Permanent link">&para;</a></h1>
+<h1 id="_4"><a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
+<h1 id="note-co-developed-with-github-copilot-by-openai">Note:         Co-developed with GitHub Copilot by OpenAI.<a class="headerlink" href="#note-co-developed-with-github-copilot-by-openai" title="Permanent link">&para;</a></h1>
+<h1 id="-_1">------------------------------------------------------------------------------<a class="headerlink" href="#-_1" title="Permanent link">&para;</a></h1>
+<h1 id="-_2">------------------------------------------------------------------------------<a class="headerlink" href="#-_2" title="Permanent link">&para;</a></h1>
+<h1 id="yaml-linter-configuration">YAML linter configuration<a class="headerlink" href="#yaml-linter-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="-disables-quoted-strings-rule-for-improved-readability">- Disables quoted-strings rule for improved readability<a class="headerlink" href="#-disables-quoted-strings-rule-for-improved-readability" title="Permanent link">&para;</a></h1>
+<h1 id="-_3">------------------------------------------------------------------------------<a class="headerlink" href="#-_3" title="Permanent link">&para;</a></h1>
+<h1 id="yamllint-disable-rulequoted-strings">yamllint disable rule:quoted-strings<a class="headerlink" href="#yamllint-disable-rulequoted-strings" title="Permanent link">&para;</a></h1>
+<h1 id="-_4">------------------------------------------------------------------------------<a class="headerlink" href="#-_4" title="Permanent link">&para;</a></h1>
+<h1 id="node-identity-version-and-hardware-pin-assignments">Node identity, version, and hardware pin assignments<a class="headerlink" href="#node-identity-version-and-hardware-pin-assignments" title="Permanent link">&para;</a></h1>
+<h1 id="-provides-substitutions-for-node-name-friendly-name-version-and-key-pins">- Provides substitutions for node name, friendly name, version, and key pins<a class="headerlink" href="#-provides-substitutions-for-node-name-friendly-name-version-and-key-pins" title="Permanent link">&para;</a></h1>
+<h1 id="-used-throughout-the-configuration-for-maintainability">- Used throughout the configuration for maintainability<a class="headerlink" href="#-used-throughout-the-configuration-for-maintainability" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters">- Parameters:<a class="headerlink" href="#-parameters" title="Permanent link">&para;</a></h1>
+<h1 id="node_name-node-id-used-in-esphome-and-logs">node_name: Node ID used in ESPHome and logs<a class="headerlink" href="#node_name-node-id-used-in-esphome-and-logs" title="Permanent link">&para;</a></h1>
+<h1 id="friendly_name-human-readable-name-for-dashboards">friendly_name: Human-readable name for dashboards<a class="headerlink" href="#friendly_name-human-readable-name-for-dashboards" title="Permanent link">&para;</a></h1>
+<h1 id="version-firmware-version-tag-injected-into-logs-and-sensors">version: Firmware version tag injected into logs and sensors<a class="headerlink" href="#version-firmware-version-tag-injected-into-logs-and-sensors" title="Permanent link">&para;</a></h1>
+<h1 id="flow_sensor_pin-primary-flow-sensor-pulse-counter-input">flow_sensor_pin: Primary flow sensor pulse counter input<a class="headerlink" href="#flow_sensor_pin-primary-flow-sensor-pulse-counter-input" title="Permanent link">&para;</a></h1>
+<h1 id="test_output_pin-gpio-test-and-verification-pin">test_output_pin: GPIO test and verification pin<a class="headerlink" href="#test_output_pin-gpio-test-and-verification-pin" title="Permanent link">&para;</a></h1>
+<h1 id="watchdog_timeout-hardware-watchdog-timeout-period">watchdog_timeout: Hardware watchdog timeout period<a class="headerlink" href="#watchdog_timeout-hardware-watchdog-timeout-period" title="Permanent link">&para;</a></h1>
+<h1 id="watchdog_trigger_pin-external-watchdog-trigger-output">watchdog_trigger_pin: External watchdog trigger output<a class="headerlink" href="#watchdog_trigger_pin-external-watchdog-trigger-output" title="Permanent link">&para;</a></h1>
+<h1 id="watchdog_early_trigger-early-trigger-before-timeout">watchdog_early_trigger: Early trigger before timeout<a class="headerlink" href="#watchdog_early_trigger-early-trigger-before-timeout" title="Permanent link">&para;</a></h1>
+<h1 id="-_5">------------------------------------------------------------------------------<a class="headerlink" href="#-_5" title="Permanent link">&para;</a></h1>
+<p>substitutions:
+  chip_set: <strong>PLATFORM</strong>
+  node_name: <strong>NODE_NAME</strong>
+  friendly_name: <strong>FRIENDLY_NAME</strong>
+  version: <strong>VERSION</strong>
+  watchdog_timeout: "30s"
+  watchdog_trigger_pin: "GPIO07"
+  watchdog_early_trigger: "25s"</p>
+<h1 id="-_6">------------------------------------------------------------------------------<a class="headerlink" href="#-_6" title="Permanent link">&para;</a></h1>
+<h1 id="common-package-includes-for-modular-configuration">Common package includes for modular configuration<a class="headerlink" href="#common-package-includes-for-modular-configuration" title="Permanent link">&para;</a></h1>
+<h1 id="-modularizes-board-display-network-ota-logging-and-watchdog-config">- Modularizes board, display, network, OTA, logging, and watchdog config<a class="headerlink" href="#-modularizes-board-display-network-ota-logging-and-watchdog-config" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters_1">- Parameters:<a class="headerlink" href="#-parameters_1" title="Permanent link">&para;</a></h1>
+<h1 id="esp32-esp32-board-and-framework-config">esp32: ESP32 board and framework config<a class="headerlink" href="#esp32-esp32-board-and-framework-config" title="Permanent link">&para;</a></h1>
+<h1 id="display-display-configuration-eg-st7789v-panel">display: Display configuration (e.g., ST7789V panel)<a class="headerlink" href="#display-display-configuration-eg-st7789v-panel" title="Permanent link">&para;</a></h1>
+<h1 id="wifi-wi-fi-credentials-static-ip-and-fallback">wifi: Wi-Fi credentials, static IP, and fallback<a class="headerlink" href="#wifi-wi-fi-credentials-static-ip-and-fallback" title="Permanent link">&para;</a></h1>
+<h1 id="ota-ota-settings-port-auth">ota: OTA settings (port, auth)<a class="headerlink" href="#ota-ota-settings-port-auth" title="Permanent link">&para;</a></h1>
+<h1 id="web-web-interface-httplocal">web: Web interface (http://<device>.local)<a class="headerlink" href="#web-web-interface-httplocal" title="Permanent link">&para;</a></h1>
+<h1 id="logging-usbuart-logging-config-level-baud">logging: USB/UART logging config (level, baud)<a class="headerlink" href="#logging-usbuart-logging-config-level-baud" title="Permanent link">&para;</a></h1>
+<h1 id="watchdog-system-reliability-watchdog-component">watchdog: System reliability watchdog component<a class="headerlink" href="#watchdog-system-reliability-watchdog-component" title="Permanent link">&para;</a></h1>
+<h1 id="-_7">------------------------------------------------------------------------------<a class="headerlink" href="#-_7" title="Permanent link">&para;</a></h1>
+<p>packages:
+  esp32:    !include <strong>PROJECT_ROOT</strong>/common/<strong>PLATFORM</strong>.yaml
+  wifi:     !include <strong>PROJECT_ROOT</strong>/common/wifi.yaml
+  ota:      !include <strong>PROJECT_ROOT</strong>/common/ota.yaml
+  web:      !include <strong>PROJECT_ROOT</strong>/common/web_server.yaml
+  logging:  !include <strong>PROJECT_ROOT</strong>/common/logging.yaml
+  watchdog: !include <strong>PROJECT_ROOT</strong>/common/watchdog.yaml</p>
+<h1 id="-_8">------------------------------------------------------------------------------<a class="headerlink" href="#-_8" title="Permanent link">&para;</a></h1>
+<h1 id="esphome-specific-metadata-and-on_boot-logic">ESPHome-specific metadata and on_boot logic<a class="headerlink" href="#esphome-specific-metadata-and-on_boot-logic" title="Permanent link">&para;</a></h1>
+<h1 id="-sets-node-name-and-friendly-name">- Sets node name and friendly name<a class="headerlink" href="#-sets-node-name-and-friendly-name" title="Permanent link">&para;</a></h1>
+<h1 id="-publishes-firmware-version-to-home-assistant-on-boot">- Publishes firmware version to Home Assistant on boot<a class="headerlink" href="#-publishes-firmware-version-to-home-assistant-on-boot" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters_2">- Parameters:<a class="headerlink" href="#-parameters_2" title="Permanent link">&para;</a></h1>
+<h1 id="name-node-name">name: Node name<a class="headerlink" href="#name-node-name" title="Permanent link">&para;</a></h1>
+<h1 id="friendly_name-human-readable-name">friendly_name: Human-readable name<a class="headerlink" href="#friendly_name-human-readable-name" title="Permanent link">&para;</a></h1>
+<h1 id="on_boot-actions-to-perform-on-boot">on_boot: Actions to perform on boot<a class="headerlink" href="#on_boot-actions-to-perform-on-boot" title="Permanent link">&para;</a></h1>
+<h1 id="-_9">------------------------------------------------------------------------------<a class="headerlink" href="#-_9" title="Permanent link">&para;</a></h1>
+<p>esphome:
+  name: <strong>NODE_NAME</strong>
+  friendly_name: <strong>FRIENDLY_NAME</strong>
+  on_boot:
+    priority: -100
+    then:
+      - text_sensor.template.publish:
+          id: firmware_version
+          state: version         # Publishes version string to Home Assistant on boot</p>
+<h1 id="-_10">------------------------------------------------------------------------------<a class="headerlink" href="#-_10" title="Permanent link">&para;</a></h1>
+<h1 id="template-sensor-exposing-firmware-version-as-home-assistant-text_sensor">Template sensor exposing firmware version as Home Assistant text_sensor<a class="headerlink" href="#template-sensor-exposing-firmware-version-as-home-assistant-text_sensor" title="Permanent link">&para;</a></h1>
+<h1 id="-publishes-the-firmware-version-string-to-home-assistant">- Publishes the firmware version string to Home Assistant<a class="headerlink" href="#-publishes-the-firmware-version-string-to-home-assistant" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters_3">- Parameters:<a class="headerlink" href="#-parameters_3" title="Permanent link">&para;</a></h1>
+<h1 id="name-sensor-name">name: Sensor name<a class="headerlink" href="#name-sensor-name" title="Permanent link">&para;</a></h1>
+<h1 id="id-sensor-id">id: Sensor ID<a class="headerlink" href="#id-sensor-id" title="Permanent link">&para;</a></h1>
+<h1 id="icon-home-assistant-icon">icon: Home Assistant icon<a class="headerlink" href="#icon-home-assistant-icon" title="Permanent link">&para;</a></h1>
+<h1 id="update_interval-update-frequency">update_interval: Update frequency<a class="headerlink" href="#update_interval-update-frequency" title="Permanent link">&para;</a></h1>
+<h1 id="lambda-lambda-function-for-value">lambda: Lambda function for value<a class="headerlink" href="#lambda-lambda-function-for-value" title="Permanent link">&para;</a></h1>
+<h1 id="-_11">------------------------------------------------------------------------------<a class="headerlink" href="#-_11" title="Permanent link">&para;</a></h1>
+<p>text_sensor:
+  - platform: template
+    name: "Firmware Version"      # User-visible sensor name in HA
+    id: firmware_version
+    icon: "mdi:tag"
+    update_interval: never        # Static value set only on boot
+    lambda: |-
+      return {"<strong>VERSION</strong>"};</p>
+<h1 id="-_12">------------------------------------------------------------------------------<a class="headerlink" href="#-_12" title="Permanent link">&para;</a></h1>
+<h1 id="uptime-and-flow-rate-sensors-hall-effect-pulse-counter">Uptime and flow rate sensors (hall-effect pulse counter)<a class="headerlink" href="#uptime-and-flow-rate-sensors-hall-effect-pulse-counter" title="Permanent link">&para;</a></h1>
+<h1 id="-uptime-sensor-seconds-since-boot">- Uptime sensor: seconds since boot<a class="headerlink" href="#-uptime-sensor-seconds-since-boot" title="Permanent link">&para;</a></h1>
+<h1 id="-flow-rate-sensor-hall-effect-pulse-counter-configurable-input-pin">- Flow rate sensor: hall-effect pulse counter, configurable input pin<a class="headerlink" href="#-flow-rate-sensor-hall-effect-pulse-counter-configurable-input-pin" title="Permanent link">&para;</a></h1>
+<h1 id="-calibration-factor-converts-pulses-to-lmin">- Calibration factor converts pulses to L/min<a class="headerlink" href="#-calibration-factor-converts-pulses-to-lmin" title="Permanent link">&para;</a></h1>
+<h1 id="-parameters_4">- Parameters:<a class="headerlink" href="#-parameters_4" title="Permanent link">&para;</a></h1>
+<h1 id="platform-sensor-platform-uptime-pulse_counter">platform: Sensor platform (uptime, pulse_counter)<a class="headerlink" href="#platform-sensor-platform-uptime-pulse_counter" title="Permanent link">&para;</a></h1>
+<h1 id="pin-input-pin-for-pulse-counter">pin: Input pin for pulse counter<a class="headerlink" href="#pin-input-pin-for-pulse-counter" title="Permanent link">&para;</a></h1>
+<h1 id="name-sensor-name_1">name: Sensor name<a class="headerlink" href="#name-sensor-name_1" title="Permanent link">&para;</a></h1>
+<h1 id="id-sensor-id_1">id: Sensor ID<a class="headerlink" href="#id-sensor-id_1" title="Permanent link">&para;</a></h1>
+<h1 id="update_interval-update-frequency_1">update_interval: Update frequency<a class="headerlink" href="#update_interval-update-frequency_1" title="Permanent link">&para;</a></h1>
+<h1 id="count_mode-pulse-counting-mode">count_mode: Pulse counting mode<a class="headerlink" href="#count_mode-pulse-counting-mode" title="Permanent link">&para;</a></h1>
+<h1 id="internal_filter-filter-for-pulse-input">internal_filter: Filter for pulse input<a class="headerlink" href="#internal_filter-filter-for-pulse-input" title="Permanent link">&para;</a></h1>
+<h1 id="unit_of_measurement-measurement-units">unit_of_measurement: Measurement units<a class="headerlink" href="#unit_of_measurement-measurement-units" title="Permanent link">&para;</a></h1>
+<h1 id="accuracy_decimals-number-of-decimals">accuracy_decimals: Number of decimals<a class="headerlink" href="#accuracy_decimals-number-of-decimals" title="Permanent link">&para;</a></h1>
+<h1 id="filters-calibration-factor">filters: Calibration factor<a class="headerlink" href="#filters-calibration-factor" title="Permanent link">&para;</a></h1>
+<h1 id="-_13">------------------------------------------------------------------------------<a class="headerlink" href="#-_13" title="Permanent link">&para;</a></h1>
+<p>sensor:
+  - platform: uptime
+    name: "Uptime"                # Uptime in seconds since boot
+    id: uptime_sensor</p>
               
             </div>
           </div><footer>
