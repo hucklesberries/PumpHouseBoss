@@ -95,7 +95,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="" href="../CONTRIBUTING.md">CONTRIBUTING</a>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
                 </li>
               </ul>
               <ul>
@@ -137,13 +137,13 @@
     <ul>
                 <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../display_pcf8574.md">Display PCF8574</a>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../indications.md">Indications</a>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../mmu.md">MMU</a>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../api.md">API</a>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
                 </li>
@@ -189,39 +189,43 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="esphome-project-repository-disposition-checklist">ESPHome Project Repository Disposition (Checklist)<a class="headerlink" href="#esphome-project-repository-disposition-checklist" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Scope &amp; Purpose:</strong>
+This checklist ensures that every release of PumpHouseBoss is standards-compliant, well-documented, and ready for deployment. It guides contributors through pre-commit, commit, and post-commit steps.</p>
+</blockquote>
 <h2 id="1-version-branch">1. Version &amp; Branch<a class="headerlink" href="#1-version-branch" title="Permanent link">&para;</a></h2>
 <ol>
-<li>[ ] Version in <code>VERSION</code> file and Makefile is correct and in sync</li>
-<li>[ ] Version strings updated in headers and documentation</li>
-<li>[ ] Working on the correct branch for this release</li>
+<li>[x] Version in <code>VERSION</code> file and Makefile is correct and in sync</li>
+<li>[x] Version strings updated in headers and documentation</li>
+<li>[x] Working on the correct branch for this release</li>
 </ol>
 <h2 id="2-pre-commit">2. Pre-Commit<a class="headerlink" href="#2-pre-commit" title="Permanent link">&para;</a></h2>
 <ol>
-<li>[ ] Conduct a peer review: Request at least one other contributor to review all code and documentation changes before merging. Reviewers should check for code quality, adherence to project standards, clarity, maintainability, and correctness. Approve only when all checklist items and standards are satisfied.</li>
-<li>[ ] Review all project files for standards compliance as described in STANDARDS.md. This includes:<ul>
-<li>[ ] Tabs and indentation</li>
-<li>[ ] Line endings</li>
-<li>[ ] Line spacing</li>
-<li>[ ] File-type specific standards:</li>
-<li>[ ] Build Files</li>
-<li>[ ] Makefiles</li>
-<li>[ ] Shell Scripts</li>
-<li>[ ] Markdown Files</li>
+<li>[x] Conduct a peer review: Request at least one other contributor to review all code and documentation changes before merging. Reviewers should check for code quality, adherence to project standards, clarity, maintainability, and correctness. Approve only when all checklist items and standards are satisfied.</li>
+<li>[x] Review all project files for standards compliance as described in STANDARDS.md. This includes:<ul>
+<li>[x] Tabs and indentation</li>
+<li>[x] Line endings</li>
+<li>[x] Line spacing</li>
+<li>[x] File-type specific standards:</li>
+<li>[x] Build Files</li>
+<li>[x] Makefiles</li>
+<li>[x] Shell Scripts</li>
+<li>[x] Markdown Files</li>
 </ul>
 </li>
-<li>[ ] Upadte and validate all header files for standards conformance.</li>
-<li>[ ] Ensure all files contain the correct version string.</li>
-<li>[ ] Ensure all files have correct permissions.</li>
-<li>[ ] Run a spellcheck on all source and documentation files. Correct any spelling errors in code comments, documentation, and user-facing strings.</li>
-<li>[ ] Review <code>.gitignore</code> and use <code>git status</code> to ensure that no unwanted files are staged for commit or left untracked.</li>
-<li>[ ] Update and review the <code>README.md</code>, <code>TODO.md</code>, and <code>GIT-COPILOT.md</code> files with all relevant changes since the previous version was checked in.</li>
-<li>[ ] For every significant change, add a new entry to <code>CHANGELOG.md</code> describing the update.</li>
-<li>[ ] Update the repository file tree in <code>README.md</code>.</li>
-<li>[ ] Update the TOC in all documentation files.</li>
-<li>[ ] Validate links in documentation files.</li>
-<li>[ ] Run the <code>regression-test.sh</code> script and ensure all tests pass. Resolve any failures.</li>
-<li>[ ] If this is a release, tag the commit appropriately and follow the project release process.</li>
-<li>[ ] All code changes must be reviewed and approved by at least one other contributor before merging.</li>
+<li>[x] Upadte and validate all header files for standards conformance.</li>
+<li>[x] Ensure all files contain the correct version string.</li>
+<li>[x] Ensure all files have correct permissions.</li>
+<li>[x] Run a spellcheck on all source and documentation files. Correct any spelling errors in code comments, documentation, and user-facing strings.</li>
+<li>[x] Review <code>.gitignore</code> and use <code>git status</code> to ensure that no unwanted files are staged for commit or left untracked.</li>
+<li>[x] Update and review the <code>README.md</code>, <code>TODO.md</code>, and <code>CONTRIBUTING.md</code> files with all relevant changes since the previous version was checked in.</li>
+<li>[x] For every significant change, add a new entry to <code>CHANGELOG.md</code> describing the update.</li>
+<li>[x] Update the repository file tree in <code>README.md</code>.</li>
+<li>[x] Update the TOC in all documentation files.</li>
+<li>[x] Validate links in documentation files.</li>
+<li>[x] Run the <code>regression-test.sh</code> script and ensure all tests pass. Resolve any failures.</li>
+<li>[x] If this is a release, tag the commit appropriately and follow the project release process.</li>
+<li>[x] All code changes must be reviewed and approved by at least one other contributor before merging.</li>
 </ol>
 <h2 id="3-commit-push">3. Commit &amp; Push<a class="headerlink" href="#3-commit-push" title="Permanent link">&para;</a></h2>
 <ol>
@@ -251,7 +255,7 @@
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../STANDARDS/" class="btn btn-neutral float-left" title="STANDARDS"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../TODO/" class="btn btn-neutral float-right" title="TODO">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../CONTRIBUTING/" class="btn btn-neutral float-right" title="CONTRIBUTING">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -281,7 +285,7 @@
       <span><a href="../STANDARDS/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../TODO/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../CONTRIBUTING/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

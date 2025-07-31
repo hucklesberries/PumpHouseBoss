@@ -83,7 +83,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="" href="../CONTRIBUTING.md">CONTRIBUTING</a>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
                 </li>
               </ul>
               <ul>
@@ -125,13 +125,13 @@
     <ul class="current">
                 <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../display_pcf8574.md">Display PCF8574</a>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../indications.md">Indications</a>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../mmu.md">MMU</a>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../api.md">API</a>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
                 </li>
@@ -181,56 +181,62 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="component-ota">Component: ota<a class="headerlink" href="#component-ota" title="Permanent link">&para;</a></h1>
-<h1 id="source-cygdriveccygwin64homerhendelgitpumphousebosscommonotayaml">Source: /cygdrive/c/cygwin64/home/rhendel/git/PumpHouseBoss/common/ota.yaml<a class="headerlink" href="#source-cygdriveccygwin64homerhendelgitpumphousebosscommonotayaml" title="Permanent link">&para;</a></h1>
-<h1 id="generated-sun-jul-27-2025-113346-pm">Generated: Sun, Jul 27, 2025 11:33:46 PM<a class="headerlink" href="#generated-sun-jul-27-2025-113346-pm" title="Permanent link">&para;</a></h1>
-<h1 id="-">------------------------------------------------------------------------------<a class="headerlink" href="#-" title="Permanent link">&para;</a></h1>
-<h1 id="file-otayaml">File:         ota.yaml<a class="headerlink" href="#file-otayaml" title="Permanent link">&para;</a></h1>
-<h1 id="file-type-esphome-yaml-include">File Type:    ESPHome YAML Include<a class="headerlink" href="#file-type-esphome-yaml-include" title="Permanent link">&para;</a></h1>
-<h1 id="purpose-common-esphome-over-the-air-programming-subsystem-configuration">Purpose:      Common ESPHome Over-The-Air programming subsystem configuration<a class="headerlink" href="#purpose-common-esphome-over-the-air-programming-subsystem-configuration" title="Permanent link">&para;</a></h1>
-<h1 id="version-070">Version:      0.7.0<a class="headerlink" href="#version-070" title="Permanent link">&para;</a></h1>
-<h1 id="date-2025-07-24">Date:         2025-07-24<a class="headerlink" href="#date-2025-07-24" title="Permanent link">&para;</a></h1>
-<h1 id="author-github-copilot">Author:       GitHub Copilot <your-email><a class="headerlink" href="#author-github-copilot" title="Permanent link">&para;</a></h1>
-<h1 id="_1"><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h1 id="description-ota-update-configuration-for-esphome-nodes">Description:  OTA update configuration for ESPHome nodes.<a class="headerlink" href="#description-ota-update-configuration-for-esphome-nodes" title="Permanent link">&para;</a></h1>
-<h1 id="_2"><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
-<h1 id="license-gnu-general-public-license-v30">License:      GNU General Public License v3.0<a class="headerlink" href="#license-gnu-general-public-license-v30" title="Permanent link">&para;</a></h1>
-<h1 id="spdx-license-identifier-gpl-30-or-later">SPDX-License-Identifier: GPL-3.0-or-later<a class="headerlink" href="#spdx-license-identifier-gpl-30-or-later" title="Permanent link">&para;</a></h1>
-<h1 id="copyright-c-2025-roland-tembo-hendel">Copyright:    (c) 2025 Roland Tembo Hendel<a class="headerlink" href="#copyright-c-2025-roland-tembo-hendel" title="Permanent link">&para;</a></h1>
-<h1 id="this-program-is-free-software-you-can-redistribute-it-andor">This program is free software: you can redistribute it and/or<a class="headerlink" href="#this-program-is-free-software-you-can-redistribute-it-andor" title="Permanent link">&para;</a></h1>
-<h1 id="modify-it-under-the-terms-of-the-gnu-general-public-license">modify it under the terms of the GNU General Public License.<a class="headerlink" href="#modify-it-under-the-terms-of-the-gnu-general-public-license" title="Permanent link">&para;</a></h1>
-<h1 id="-_1">------------------------------------------------------------------------------<a class="headerlink" href="#-_1" title="Permanent link">&para;</a></h1>
-<h1 id="-_2">------------------------------------------------------------------------------<a class="headerlink" href="#-_2" title="Permanent link">&para;</a></h1>
-<h1 id="yaml-linter-configuration">YAML linter configuration<a class="headerlink" href="#yaml-linter-configuration" title="Permanent link">&para;</a></h1>
-<h1 id="-disables-quoted-strings-rule-for-improved-readability">- Disables quoted-strings rule for improved readability<a class="headerlink" href="#-disables-quoted-strings-rule-for-improved-readability" title="Permanent link">&para;</a></h1>
-<h1 id="-_3">------------------------------------------------------------------------------<a class="headerlink" href="#-_3" title="Permanent link">&para;</a></h1>
-<h1 id="yamllint-disable-rulequoted-strings">yamllint disable rule:quoted-strings<a class="headerlink" href="#yamllint-disable-rulequoted-strings" title="Permanent link">&para;</a></h1>
-<p>ota:</p>
-<h1 id="-_4">------------------------------------------------------------------------------<a class="headerlink" href="#-_4" title="Permanent link">&para;</a></h1>
-<h1 id="enables-ota-firmware-upload-over-wi-fi">Enables OTA firmware upload over Wi-Fi<a class="headerlink" href="#enables-ota-firmware-upload-over-wi-fi" title="Permanent link">&para;</a></h1>
-<h1 id="-password-is-loaded-from-the-secrets-file-for-security">- Password is loaded from the secrets file for security<a class="headerlink" href="#-password-is-loaded-from-the-secrets-file-for-security" title="Permanent link">&para;</a></h1>
-<h1 id="-platform-can-be-set-default-esphome">- Platform can be set (default: esphome)<a class="headerlink" href="#-platform-can-be-set-default-esphome" title="Permanent link">&para;</a></h1>
-<h1 id="-logs-a-message-on-ota-completion">- Logs a message on OTA completion<a class="headerlink" href="#-logs-a-message-on-ota-completion" title="Permanent link">&para;</a></h1>
-<h1 id="-parameters">- Parameters:<a class="headerlink" href="#-parameters" title="Permanent link">&para;</a></h1>
-<h1 id="password-ota-password-from-secrets-file">password: OTA password (from secrets file)<a class="headerlink" href="#password-ota-password-from-secrets-file" title="Permanent link">&para;</a></h1>
-<h1 id="platform-ota-platform-default-esphome">platform: OTA platform (default: esphome)<a class="headerlink" href="#platform-ota-platform-default-esphome" title="Permanent link">&para;</a></h1>
-<h1 id="on_end-actions-to-perform-on-ota-completion">on_end: Actions to perform on OTA completion<a class="headerlink" href="#on_end-actions-to-perform-on-ota-completion" title="Permanent link">&para;</a></h1>
-<h1 id="-_5">------------------------------------------------------------------------------<a class="headerlink" href="#-_5" title="Permanent link">&para;</a></h1>
-<p>password: !secret ota_password  # password Load OTA password from secrets file
-  platform: esphome               # platform OTA platform (default: esphome)</p>
-<p>#  brief Log message on OTA completion
-  #  details Logs a message to indicate OTA update finished
-  on_end:
-    then:
-      - logger.log: OTA update finished</p>
-<h1 id="-_6">------------------------------------------------------------------------------<a class="headerlink" href="#-_6" title="Permanent link">&para;</a></h1>
-<h1 id="safe-mode-logging-handler">Safe Mode logging handler<a class="headerlink" href="#safe-mode-logging-handler" title="Permanent link">&para;</a></h1>
-<h1 id="-triggered-when-device-boots-into-recovery-mode">- Triggered when device boots into recovery mode<a class="headerlink" href="#-triggered-when-device-boots-into-recovery-mode" title="Permanent link">&para;</a></h1>
-<h1 id="-logs-a-message-to-indicate-safe-mode-boot">- Logs a message to indicate safe mode boot<a class="headerlink" href="#-logs-a-message-to-indicate-safe-mode-boot" title="Permanent link">&para;</a></h1>
-<h1 id="-_7">------------------------------------------------------------------------------<a class="headerlink" href="#-_7" title="Permanent link">&para;</a></h1>
-<p>safe_mode:
-  on_safe_mode:
-    then:
-      - logger.log: Booted into safe mode</p>
+<h1 id="source-homerhendelgitpumphousebosscommonotayaml">Source: /home/rhendel/git/PumpHouseBoss/common/ota.yaml<a class="headerlink" href="#source-homerhendelgitpumphousebosscommonotayaml" title="Permanent link">&para;</a></h1>
+<h1 id="generated-wed-jul-30-2025-104926-pm">Generated: Wed, Jul 30, 2025 10:49:26 PM<a class="headerlink" href="#generated-wed-jul-30-2025-104926-pm" title="Permanent link">&para;</a></h1>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  File:         ota.yaml</span>
+<span class="c1">#  File Type:    ESPHome YAML Include</span>
+<span class="c1">#  Purpose:      Common ESPHome Over-The-Air programming subsystem configuration</span>
+<span class="c1">#  Version:      0.7.1</span>
+<span class="c1">#  Date:         2025-07-24</span>
+<span class="c1">#  Author:       GitHub Copilot &lt;your-email&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Description:  OTA update configuration for ESPHome nodes.</span>
+<span class="c1">#</span>
+<span class="c1">#  License:      GNU General Public License v3.0</span>
+<span class="c1">#                SPDX-License-Identifier: GPL-3.0-or-later</span>
+<span class="c1">#  Copyright:    (c) 2025 Roland Tembo Hendel</span>
+<span class="c1">#                This program is free software: you can redistribute it and/or</span>
+<span class="c1">#                modify it under the terms of the GNU General Public License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  YAML linter configuration</span>
+<span class="c1">#   - Disables quoted-strings rule for improved readability</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># yamllint disable rule:quoted-strings</span>
+
+
+<span class="nt">ota</span><span class="p">:</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Enables OTA firmware upload over Wi-Fi</span>
+<span class="c1">#   - Password is loaded from the secrets file for security</span>
+<span class="c1">#   - Platform can be set (default: esphome)</span>
+<span class="c1">#   - Logs a message on OTA completion</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       password: OTA password (from secrets file)</span>
+<span class="c1">#       platform: OTA platform (default: esphome)</span>
+<span class="c1">#       on_end: Actions to perform on OTA completion</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="w">  </span><span class="nt">password</span><span class="p">:</span><span class="w"> </span><span class="kt">!secret</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ota_password</span><span class="w">  </span><span class="c1"># password Load OTA password from secrets file</span>
+<span class="w">  </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">esphome</span><span class="w">               </span><span class="c1"># platform OTA platform (default: esphome)</span>
+
+<span class="w">  </span><span class="c1">#  brief Log message on OTA completion</span>
+<span class="w">  </span><span class="c1">#  details Logs a message to indicate OTA update finished</span>
+<span class="w">  </span><span class="nt">on_end</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">then</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">logger.log</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">OTA update finished</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Safe Mode logging handler</span>
+<span class="c1">#   - Triggered when device boots into recovery mode</span>
+<span class="c1">#   - Logs a message to indicate safe mode boot</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">safe_mode</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">on_safe_mode</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">then</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">logger.log</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Booted into safe mode</span>
+</code></pre></div>
               
             </div>
           </div><footer>

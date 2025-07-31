@@ -83,7 +83,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="" href="../CONTRIBUTING.md">CONTRIBUTING</a>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
                 </li>
               </ul>
               <ul>
@@ -127,13 +127,13 @@
     <ul class="current">
     </ul>
                 </li>
-                <li class="toctree-l2"><a class="" href="../display_pcf8574.md">Display PCF8574</a>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../indications.md">Indications</a>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../mmu.md">MMU</a>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../api.md">API</a>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
                 </li>
                 <li class="toctree-l2"><a class="reference internal" href="../esp32/">esp32</a>
                 </li>
@@ -181,270 +181,283 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="component-display_st7789">Component: display_st7789<a class="headerlink" href="#component-display_st7789" title="Permanent link">&para;</a></h1>
-<h1 id="source-cygdriveccygwin64homerhendelgitpumphousebosscommondisplay_st7789yaml">Source: /cygdrive/c/cygwin64/home/rhendel/git/PumpHouseBoss/common/display_st7789.yaml<a class="headerlink" href="#source-cygdriveccygwin64homerhendelgitpumphousebosscommondisplay_st7789yaml" title="Permanent link">&para;</a></h1>
-<h1 id="generated-sun-jul-27-2025-113346-pm">Generated: Sun, Jul 27, 2025 11:33:46 PM<a class="headerlink" href="#generated-sun-jul-27-2025-113346-pm" title="Permanent link">&para;</a></h1>
-<h1 id="-">------------------------------------------------------------------------------<a class="headerlink" href="#-" title="Permanent link">&para;</a></h1>
-<h1 id="file-display_st7789yaml">File:         display_st7789.yaml<a class="headerlink" href="#file-display_st7789yaml" title="Permanent link">&para;</a></h1>
-<h1 id="file-type-esphome-yaml-include">File Type:    ESPHome YAML Include<a class="headerlink" href="#file-type-esphome-yaml-include" title="Permanent link">&para;</a></h1>
-<h1 id="purpose-waveshare-pico-lcd-13-display-module-subsystem-configuration">Purpose:      Waveshare Pico LCD 1.3" Display Module subsystem configuration<a class="headerlink" href="#purpose-waveshare-pico-lcd-13-display-module-subsystem-configuration" title="Permanent link">&para;</a></h1>
-<h1 id="version-070">Version:      0.7.0<a class="headerlink" href="#version-070" title="Permanent link">&para;</a></h1>
-<h1 id="date-2025-07-24">Date:         2025-07-24<a class="headerlink" href="#date-2025-07-24" title="Permanent link">&para;</a></h1>
-<h1 id="author-roland-tembo-hendel-rhendelnexuslogiccom">Author:       Roland Tembo Hendel <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;">&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;</a><a class="headerlink" href="#author-roland-tembo-hendel-rhendelnexuslogiccom" title="Permanent link">&para;</a></h1>
-<h1 id="_1"><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h1 id="description-configuration-for-240x240-pixel-ips-display-4-buttons-joystick">Description:  Configuration for 240x240 pixel IPS display, 4 buttons, joystick,<a class="headerlink" href="#description-configuration-for-240x240-pixel-ips-display-4-buttons-joystick" title="Permanent link">&para;</a></h1>
-<h1 id="st7789v-driver-spi-interface-and-rpi-pico-compatibility">ST7789V driver, SPI interface, and rPi Pico compatibility.<a class="headerlink" href="#st7789v-driver-spi-interface-and-rpi-pico-compatibility" title="Permanent link">&para;</a></h1>
-<h1 id="_2"><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
-<h1 id="features-240x240-pixel-display-ips-65k-rgb-color">Features:     - 240x240 pixel display, IPS, 65k RGB color<a class="headerlink" href="#features-240x240-pixel-display-ips-65k-rgb-color" title="Permanent link">&para;</a></h1>
-<h1 id="-4-momentary-buttons-a-b-x-y">- 4 momentary buttons (A, B, X, Y)<a class="headerlink" href="#-4-momentary-buttons-a-b-x-y" title="Permanent link">&para;</a></h1>
-<h1 id="-4-way-joystick-with-select-button">- 4-way joystick with select button<a class="headerlink" href="#-4-way-joystick-with-select-button" title="Permanent link">&para;</a></h1>
-<h1 id="-st7789v-display-driver-support">- ST7789V display driver support<a class="headerlink" href="#-st7789v-display-driver-support" title="Permanent link">&para;</a></h1>
-<h1 id="-spi-interface-for-communication">- SPI interface for communication<a class="headerlink" href="#-spi-interface-for-communication" title="Permanent link">&para;</a></h1>
-<h1 id="-rpi-pico-pin-compatibility">- rPi Pico Pin compatibility<a class="headerlink" href="#-rpi-pico-pin-compatibility" title="Permanent link">&para;</a></h1>
-<h1 id="_3"><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
-<h1 id="license-gnu-general-public-license-v30">License:      GNU General Public License v3.0<a class="headerlink" href="#license-gnu-general-public-license-v30" title="Permanent link">&para;</a></h1>
-<h1 id="spdx-license-identifier-gpl-30-or-later">SPDX-License-Identifier: GPL-3.0-or-later<a class="headerlink" href="#spdx-license-identifier-gpl-30-or-later" title="Permanent link">&para;</a></h1>
-<h1 id="copyright-c-2025-roland-tembo-hendel">Copyright:    (c) 2025 Roland Tembo Hendel<a class="headerlink" href="#copyright-c-2025-roland-tembo-hendel" title="Permanent link">&para;</a></h1>
-<h1 id="this-program-is-free-software-you-can-redistribute-it-andor">This program is free software: you can redistribute it and/or<a class="headerlink" href="#this-program-is-free-software-you-can-redistribute-it-andor" title="Permanent link">&para;</a></h1>
-<h1 id="modify-it-under-the-terms-of-the-gnu-general-public-license">modify it under the terms of the GNU General Public License.<a class="headerlink" href="#modify-it-under-the-terms-of-the-gnu-general-public-license" title="Permanent link">&para;</a></h1>
-<h1 id="-_1">------------------------------------------------------------------------------<a class="headerlink" href="#-_1" title="Permanent link">&para;</a></h1>
-<h1 id="-_2">------------------------------------------------------------------------------<a class="headerlink" href="#-_2" title="Permanent link">&para;</a></h1>
-<h1 id="yaml-linter-configuration">YAML linter configuration<a class="headerlink" href="#yaml-linter-configuration" title="Permanent link">&para;</a></h1>
-<h1 id="-disables-quoted-strings-rule-for-improved-readability">- Disables quoted-strings rule for improved readability<a class="headerlink" href="#-disables-quoted-strings-rule-for-improved-readability" title="Permanent link">&para;</a></h1>
-<h1 id="-_3">------------------------------------------------------------------------------<a class="headerlink" href="#-_3" title="Permanent link">&para;</a></h1>
-<h1 id="yamllint-disable-rulequoted-strings">yamllint disable rule:quoted-strings<a class="headerlink" href="#yamllint-disable-rulequoted-strings" title="Permanent link">&para;</a></h1>
-<h1 id="-_4">------------------------------------------------------------------------------<a class="headerlink" href="#-_4" title="Permanent link">&para;</a></h1>
-<h1 id="waveshare-pico-lcd-13-display-standard-pinout-map-vertical-top-view">Waveshare Pico-LCD-1.3 Display Standard Pinout Map (Vertical, Top View)<a class="headerlink" href="#waveshare-pico-lcd-13-display-standard-pinout-map-vertical-top-view" title="Permanent link">&para;</a></h1>
-<h1 id="-_5">------------------------------------------------------------------------------<a class="headerlink" href="#-_5" title="Permanent link">&para;</a></h1>
-<h1 id="_4"><a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
-<h1 id="_5">┌──────────────────────┐<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
-<h1 id="vbus-40-01-nc">VBUS  ─┤ 40                01 ├─  NC<a class="headerlink" href="#vbus-40-01-nc" title="Permanent link">&para;</a></h1>
-<h1 id="vsys-39-02-nc">VSYS  ─┤ 39      ╔══╗      02 ├─  NC<a class="headerlink" href="#vsys-39-02-nc" title="Permanent link">&para;</a></h1>
-<h1 id="gnd-38-03-gnd">GND  ─┤ 38   ╔══╝  ╚══╗   03 ├─  GND<a class="headerlink" href="#gnd-38-03-gnd" title="Permanent link">&para;</a></h1>
-<h1 id="nc-37-04-joy_up">NC  ─┤ 37   ╚══╗  ╔══╝   04 ├─  JOY_UP<a class="headerlink" href="#nc-37-04-joy_up" title="Permanent link">&para;</a></h1>
-<h1 id="nc-36-05-joy_in">NC  ─┤ 36      ╚══╝      05 ├─  JOY_IN<a class="headerlink" href="#nc-36-05-joy_in" title="Permanent link">&para;</a></h1>
-<h1 id="nc-35-06-nc">NC  ─┤ 35                06 ├─  NC<a class="headerlink" href="#nc-35-06-nc" title="Permanent link">&para;</a></h1>
-<h1 id="nc-34-07-nc">NC  ─┤ 34 ┌────────────┐ 07 ├─  NC<a class="headerlink" href="#nc-34-07-nc" title="Permanent link">&para;</a></h1>
-<h1 id="gnd-33-08-gnd">GND  ─┤ 33 │            │ 08 ├─  GND<a class="headerlink" href="#gnd-33-08-gnd" title="Permanent link">&para;</a></h1>
-<h1 id="nc-32-09-nc">NC  ─┤ 32 │            │ 09 ├─  NC<a class="headerlink" href="#nc-32-09-nc" title="Permanent link">&para;</a></h1>
-<h1 id="nc-31-wavesharetm-10-nc">NC  ─┤ 31 │ Waveshare™ │ 10 ├─  NC<a class="headerlink" href="#nc-31-wavesharetm-10-nc" title="Permanent link">&para;</a></h1>
-<h1 id="nc-30-pico-lcd-11-dc">NC  ─┤ 30 │  Pico-LCD  │ 11 ├─  DC<a class="headerlink" href="#nc-30-pico-lcd-11-dc" title="Permanent link">&para;</a></h1>
-<h1 id="nc-29-13-12-cs">NC  ─┤ 29 │    1.3"    │ 12 ├─  CS<a class="headerlink" href="#nc-29-13-12-cs" title="Permanent link">&para;</a></h1>
-<h1 id="nc-28-13-gnd">NC  ─┤ 28 │            │ 13 ├─  GND<a class="headerlink" href="#nc-28-13-gnd" title="Permanent link">&para;</a></h1>
-<h1 id="btn_y-27-14-clk">BTN_Y  ─┤ 27 │            │ 14 ├─  CLK<a class="headerlink" href="#btn_y-27-14-clk" title="Permanent link">&para;</a></h1>
-<h1 id="joy_right-26-15-mosi">JOY_RIGHT  ─┤ 26 └────────────┘ 15 ├─  MOSI<a class="headerlink" href="#joy_right-26-15-mosi" title="Permanent link">&para;</a></h1>
-<h1 id="btn_x-25-16-rst">BTN_X  ─┤ 25                16 ├─  RST<a class="headerlink" href="#btn_x-25-16-rst" title="Permanent link">&para;</a></h1>
-<h1 id="joy_down-24-17-bl">JOY_DOWN  ─┤ 24                17 ├─  BL<a class="headerlink" href="#joy_down-24-17-bl" title="Permanent link">&para;</a></h1>
-<h1 id="gnd-23-18-gnd">GND  ─┤ 23  ┌─┐┌─┐┌─┐┌─┐  18 ├─  GND<a class="headerlink" href="#gnd-23-18-gnd" title="Permanent link">&para;</a></h1>
-<h1 id="btn_b-22-19-nc">BTN_B  ─┤ 22  └─┘└─┘└─┘└─┘  19 ├─  NC<a class="headerlink" href="#btn_b-22-19-nc" title="Permanent link">&para;</a></h1>
-<h1 id="joy_left-21-y-x-b-a-20-btn_a">JOY_LEFT  ─┤ 21   Y  X  B  A   20 ├─  BTN_A<a class="headerlink" href="#joy_left-21-y-x-b-a-20-btn_a" title="Permanent link">&para;</a></h1>
-<h1 id="_6">└──────────────────────┘<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
-<h1 id="_7"><a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
-<h1 id="notes">Notes:<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h1>
-<h1 id="-pin-40-vbus-5-vdc">- pin 40, VBUS; 5 VDC<a class="headerlink" href="#-pin-40-vbus-5-vdc" title="Permanent link">&para;</a></h1>
-<h1 id="-pin-39-vsys-nc">- pin 39, VSYS; NC<a class="headerlink" href="#-pin-39-vsys-nc" title="Permanent link">&para;</a></h1>
-<h1 id="-pin-11-dc-datacommand-high-for-data-low-for-command">- pin 11, DC;   Data/Command - high for data, low for command)<a class="headerlink" href="#-pin-11-dc-datacommand-high-for-data-low-for-command" title="Permanent link">&para;</a></h1>
-<h1 id="-pin-12-cs-chip-select-active-low">- pin 12, CS;   Chip Select  - active low<a class="headerlink" href="#-pin-12-cs-chip-select-active-low" title="Permanent link">&para;</a></h1>
-<h1 id="-pin-16-rst-reset-active-low">- pin 16, RST;  Reset        - active low<a class="headerlink" href="#-pin-16-rst-reset-active-low" title="Permanent link">&para;</a></h1>
-<h1 id="-pin-17-bl-backlight-active-high">- pin 17, BL;   Backlight    - active high<a class="headerlink" href="#-pin-17-bl-backlight-active-high" title="Permanent link">&para;</a></h1>
-<h1 id="_8"><a class="headerlink" href="#_8" title="Permanent link">&para;</a></h1>
-<h1 id="-_6">------------------------------------------------------------------------------<a class="headerlink" href="#-_6" title="Permanent link">&para;</a></h1>
-<h1 id="-_7">------------------------------------------------------------------------------<a class="headerlink" href="#-_7" title="Permanent link">&para;</a></h1>
-<h1 id="font-used-for-on-screen-display">Font used for on-screen display<a class="headerlink" href="#font-used-for-on-screen-display" title="Permanent link">&para;</a></h1>
-<h1 id="-loads-google-noto-sans-mono-font-for-display-text">- Loads Google Noto Sans Mono font for display text<a class="headerlink" href="#-loads-google-noto-sans-mono-font-for-display-text" title="Permanent link">&para;</a></h1>
-<h1 id="-sets-font-size-for-ui-elements">- Sets font size for UI elements<a class="headerlink" href="#-sets-font-size-for-ui-elements" title="Permanent link">&para;</a></h1>
-<h1 id="-parameters">- Parameters:<a class="headerlink" href="#-parameters" title="Permanent link">&para;</a></h1>
-<h1 id="file-font-file-or-url">file: Font file or URL<a class="headerlink" href="#file-font-file-or-url" title="Permanent link">&para;</a></h1>
-<h1 id="id-font-id-for-reference">id: Font ID for reference<a class="headerlink" href="#id-font-id-for-reference" title="Permanent link">&para;</a></h1>
-<h1 id="size-font-size-in-points">size: Font size in points<a class="headerlink" href="#size-font-size-in-points" title="Permanent link">&para;</a></h1>
-<h1 id="-_8">------------------------------------------------------------------------------<a class="headerlink" href="#-_8" title="Permanent link">&para;</a></h1>
-<p>font:
-  - file: gfonts://Noto Sans Mono
-    id: st7789_font
-    size: 22</p>
-<h1 id="-_9">------------------------------------------------------------------------------<a class="headerlink" href="#-_9" title="Permanent link">&para;</a></h1>
-<h1 id="status-icon-images">Status icon images<a class="headerlink" href="#status-icon-images" title="Permanent link">&para;</a></h1>
-<h1 id="-loads-png-images-for-status-and-wifi-signal-icons">- Loads PNG images for status and WiFi signal icons<a class="headerlink" href="#-loads-png-images-for-status-and-wifi-signal-icons" title="Permanent link">&para;</a></h1>
-<h1 id="-used-for-ui-status-bar-and-indicators">- Used for UI status bar and indicators<a class="headerlink" href="#-used-for-ui-status-bar-and-indicators" title="Permanent link">&para;</a></h1>
-<h1 id="-parameters_1">- Parameters:<a class="headerlink" href="#-parameters_1" title="Permanent link">&para;</a></h1>
-<h1 id="file-path-to-image-file">file: Path to image file<a class="headerlink" href="#file-path-to-image-file" title="Permanent link">&para;</a></h1>
-<h1 id="id-image-id-for-reference">id: Image ID for reference<a class="headerlink" href="#id-image-id-for-reference" title="Permanent link">&para;</a></h1>
-<h1 id="type-image-color-type-eg-rgb">type: Image color type (e.g., RGB)<a class="headerlink" href="#type-image-color-type-eg-rgb" title="Permanent link">&para;</a></h1>
-<h1 id="resize-resize-dimensions-pixels">resize: Resize dimensions (pixels)<a class="headerlink" href="#resize-resize-dimensions-pixels" title="Permanent link">&para;</a></h1>
-<h1 id="-_10">------------------------------------------------------------------------------<a class="headerlink" href="#-_10" title="Permanent link">&para;</a></h1>
-<p>image:
-  # Status icons
-  - file: "icons/status_ok.png"
-    id: status_ok_icon
-    type: RGB
-    resize: 32x32
-  - file: "icons/status_warn.png"
-    id: status_warn_icon
-    type: RGB
-    resize: 32x32
-  - file: "icons/status_error.png"
-    id: status_error_icon
-    type: RGB
-    resize: 32x32</p>
-<p># WiFi signal icons
-  - file: "icons/wifi_0.png"
-    id: wifi_0_icon
-    type: RGB
-    resize: 32x32
-  - file: "icons/wifi_1.png"
-    id: wifi_1_icon
-    type: RGB
-    resize: 32x32
-  - file: "icons/wifi_2.png"
-    id: wifi_2_icon
-    type: RGB
-    resize: 32x32
-  - file: "icons/wifi_3.png"
-    id: wifi_3_icon
-    type: RGB
-    resize: 32x32
-  - file: "icons/wifi_4.png"
-    id: wifi_4_icon
-    type: RGB
-    resize: 32x32</p>
-<h1 id="-_11">------------------------------------------------------------------------------<a class="headerlink" href="#-_11" title="Permanent link">&para;</a></h1>
-<h1 id="text-and-sensor-definitions">Text and sensor definitions<a class="headerlink" href="#text-and-sensor-definitions" title="Permanent link">&para;</a></h1>
-<h1 id="-exposes-wifi-info-hostname-date-and-time-as-text-sensors">- Exposes WiFi info, hostname, date, and time as text sensors<a class="headerlink" href="#-exposes-wifi-info-hostname-date-and-time-as-text-sensors" title="Permanent link">&para;</a></h1>
-<h1 id="-provides-template-sensors-for-custom-data">- Provides template sensors for custom data<a class="headerlink" href="#-provides-template-sensors-for-custom-data" title="Permanent link">&para;</a></h1>
-<h1 id="-parameters-per-sensor">- Parameters (per sensor):<a class="headerlink" href="#-parameters-per-sensor" title="Permanent link">&para;</a></h1>
-<h1 id="name-sensor-name">name: Sensor name<a class="headerlink" href="#name-sensor-name" title="Permanent link">&para;</a></h1>
-<h1 id="id-sensor-id">id: Sensor ID<a class="headerlink" href="#id-sensor-id" title="Permanent link">&para;</a></h1>
-<h1 id="lambda-lambda-function-for-value">lambda: Lambda function for value<a class="headerlink" href="#lambda-lambda-function-for-value" title="Permanent link">&para;</a></h1>
-<h1 id="update_interval-update-frequency">update_interval: Update frequency<a class="headerlink" href="#update_interval-update-frequency" title="Permanent link">&para;</a></h1>
-<h1 id="-_12">------------------------------------------------------------------------------<a class="headerlink" href="#-_12" title="Permanent link">&para;</a></h1>
-<p>text_sensor:
-  - platform: wifi_info
-    ip_address:
-      name: "WiFi IP Address"
-      id: ip_address
-    ssid:
-      name: "WiFi SSID"
-      id: ssid
-    mac_address:
-      name: "WiFi MAC Address"
-      id: mac_address
-  - platform: template
-    name: "Hostname"
-    id: hostname
-    lambda: |-
-      return App.get_name();
-    update_interval: 60s</p>
-<ul>
-<li>
-<p>platform: template
-    name: "Current Date"
-    id: current_date
-    # Returns the current date as YYYY-MM-DD
-    lambda: |-
-      char str[16];
-      time_t now = ::time(nullptr);
-      strftime(str, sizeof(str), "%Y-%m-%d", localtime(&amp;now));
-      return std::string(str);
-    update_interval: 60s</p>
-</li>
-<li>
-<p>platform: template
-    name: "Current Time"
-    id: current_time
-    # Returns the current time as HH:MM:SS
-    lambda: |-
-      char str[16];
-      time_t now = ::time(nullptr);
-      strftime(str, sizeof(str), "%H:%M:%S", localtime(&amp;now));
-      return std::string(str);
-    update_interval: 1s</p>
-</li>
-</ul>
-<p>sensor:
-  - platform: wifi_signal
-    name: WiFi Signal Strength
-    id: wifi_signal_strength
-    update_interval: 60s</p>
-<h1 id="-_13">------------------------------------------------------------------------------<a class="headerlink" href="#-_13" title="Permanent link">&para;</a></h1>
-<h1 id="display-driver-configuration-block-for-st7789v-lcd">Display driver configuration block for ST7789V LCD<a class="headerlink" href="#display-driver-configuration-block-for-st7789v-lcd" title="Permanent link">&para;</a></h1>
-<h1 id="-configures-resolution-pinout-refresh-rate-and-ui-rendering-logic">- Configures resolution, pinout, refresh rate, and UI rendering logic<a class="headerlink" href="#-configures-resolution-pinout-refresh-rate-and-ui-rendering-logic" title="Permanent link">&para;</a></h1>
-<h1 id="-includes-dynamic-rendering-of-flow-rate-sensor-value">- Includes dynamic rendering of flow rate sensor value<a class="headerlink" href="#-includes-dynamic-rendering-of-flow-rate-sensor-value" title="Permanent link">&para;</a></h1>
-<h1 id="-screen-is-cleared-to-teal-and-overlays-two-lines-of-text">- Screen is cleared to teal and overlays two lines of text<a class="headerlink" href="#-screen-is-cleared-to-teal-and-overlays-two-lines-of-text" title="Permanent link">&para;</a></h1>
-<h1 id="-parameters_2">- Parameters:<a class="headerlink" href="#-parameters_2" title="Permanent link">&para;</a></h1>
-<h1 id="platform-display-platform-st7789v">platform: Display platform (st7789v)<a class="headerlink" href="#platform-display-platform-st7789v" title="Permanent link">&para;</a></h1>
-<h1 id="model-display-model-custom">model: Display model (CUSTOM)<a class="headerlink" href="#model-display-model-custom" title="Permanent link">&para;</a></h1>
-<h1 id="cs_pin-chip-select-pin">cs_pin: Chip select pin<a class="headerlink" href="#cs_pin-chip-select-pin" title="Permanent link">&para;</a></h1>
-<h1 id="dc_pin-datacommand-pin">dc_pin: Data/command pin<a class="headerlink" href="#dc_pin-datacommand-pin" title="Permanent link">&para;</a></h1>
-<h1 id="reset_pin-reset-line">reset_pin: Reset line<a class="headerlink" href="#reset_pin-reset-line" title="Permanent link">&para;</a></h1>
-<h1 id="width-display-width-pixels">width: Display width (pixels)<a class="headerlink" href="#width-display-width-pixels" title="Permanent link">&para;</a></h1>
-<h1 id="height-display-height-pixels">height: Display height (pixels)<a class="headerlink" href="#height-display-height-pixels" title="Permanent link">&para;</a></h1>
-<h1 id="update_interval-refresh-interval">update_interval: Refresh interval<a class="headerlink" href="#update_interval-refresh-interval" title="Permanent link">&para;</a></h1>
-<h1 id="data_rate-spi-clock-frequency">data_rate: SPI clock frequency<a class="headerlink" href="#data_rate-spi-clock-frequency" title="Permanent link">&para;</a></h1>
-<h1 id="-_14">------------------------------------------------------------------------------<a class="headerlink" href="#-_14" title="Permanent link">&para;</a></h1>
-<p>display:
-  - platform: st7789v
-    model: CUSTOM
-    cs_pin: ${display_cs_pin}          # cs_pin Chip select pin
-    dc_pin: ${display_dc_pin}          # dc_pin Data/command pin
-    reset_pin: ${display_reset_pin}    # reset_pin Reset line
-    width: 240
-    height: 240
-    offset_width: 0
-    offset_height: 0
-    rotation: 0
-    update_interval: 1s     # update_interval Refresh every second
-    data_rate: 2MHz         # data_rate SPI clock frequency
-    auto_clear_enabled: false
-    lambda: |-
-      // Colors
-      auto white = Color(255, 255, 255);
-      auto blue  = Color(0, 0, 255);
-      auto teal  = Color(0, 128, 128);
-      auto black = Color(0, 0, 0);</p>
-<div class="codehilite"><pre><span></span><code><span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">establish</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="n">pane</span>
-<span class="w">  </span><span class="n">it</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">239</span><span class="p">,</span><span class="w"> </span><span class="mi">39</span><span class="p">,</span><span class="w"> </span><span class="n">white</span><span class="p">);</span>
+<h1 id="source-homerhendelgitpumphousebosscommondisplay_st7789yaml">Source: /home/rhendel/git/PumpHouseBoss/common/display_st7789.yaml<a class="headerlink" href="#source-homerhendelgitpumphousebosscommondisplay_st7789yaml" title="Permanent link">&para;</a></h1>
+<h1 id="generated-wed-jul-30-2025-104925-pm">Generated: Wed, Jul 30, 2025 10:49:25 PM<a class="headerlink" href="#generated-wed-jul-30-2025-104925-pm" title="Permanent link">&para;</a></h1>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  File:         display_st7789.yaml</span>
+<span class="c1">#  File Type:    ESPHome YAML Include</span>
+<span class="c1">#  Purpose:      Waveshare Pico LCD 1.3&quot; Display Module subsystem configuration</span>
+<span class="c1">#  Version:      0.7.0</span>
+<span class="c1">#  Date:         2025-07-24</span>
+<span class="c1">#  Author:       Roland Tembo Hendel &lt;rhendel@nexuslogic.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Description:  Configuration for 240x240 pixel IPS display, 4 buttons, joystick,</span>
+<span class="c1">#                ST7789V driver, SPI interface, and rPi Pico compatibility.</span>
+<span class="c1">#</span>
+<span class="c1">#  Features:     - 240x240 pixel display, IPS, 65k RGB color</span>
+<span class="c1">#                - 4 momentary buttons (A, B, X, Y)</span>
+<span class="c1">#                - 4-way joystick with select button</span>
+<span class="c1">#                - ST7789V display driver support</span>
+<span class="c1">#                - SPI interface for communication</span>
+<span class="c1">#                - rPi Pico Pin compatibility</span>
+<span class="c1">#</span>
+<span class="c1">#  License:      GNU General Public License v3.0</span>
+<span class="c1">#                SPDX-License-Identifier: GPL-3.0-or-later</span>
+<span class="c1">#  Copyright:    (c) 2025 Roland Tembo Hendel</span>
+<span class="c1">#                This program is free software: you can redistribute it and/or</span>
+<span class="c1">#                modify it under the terms of the GNU General Public License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
 
-<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">establish</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">pane</span>
-<span class="w">  </span><span class="n">it</span><span class="o">.</span><span class="n">filled_rectangle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">239</span><span class="p">,</span><span class="w"> </span><span class="mi">239</span><span class="p">,</span><span class="w"> </span><span class="n">blue</span><span class="p">);</span>
-<span class="w">  </span><span class="n">it</span><span class="o">.</span><span class="n">rectangle</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">239</span><span class="p">,</span><span class="w"> </span><span class="mi">239</span><span class="p">,</span><span class="w"> </span><span class="n">white</span><span class="p">);</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#    YAML linter configuration</span>
+<span class="c1">#      - Disables quoted-strings rule for improved readability</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># yamllint disable rule:quoted-strings</span>
 
-<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Draw</span><span class="w"> </span><span class="n">status_ok</span><span class="w"> </span><span class="n">icon</span><span class="w"> </span><span class="n">at</span><span class="w"> </span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="n">bar</span>
-<span class="w">  </span><span class="n">it</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">status_ok_icon</span><span class="p">));</span>
-<span class="w">  </span><span class="o">//</span><span class="w">   </span><span class="n">TODO</span><span class="p">:</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="n">logic</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">determine</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">status</span><span class="w"> </span><span class="n">icon</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">use</span>
 
-<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Draw</span><span class="w"> </span><span class="n">WiFi</span><span class="w"> </span><span class="n">icons</span><span class="w"> </span><span class="p">(</span><span class="n">Testing</span><span class="p">)</span>
-<span class="w">  </span><span class="n">it</span><span class="o">.</span><span class="n">image</span><span class="p">(</span><span class="mi">204</span><span class="p">,</span><span class="w"> </span><span class="mi">4</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">wifi_4_icon</span><span class="p">));</span>
-<span class="w">  </span><span class="o">//</span><span class="w">   </span><span class="n">TODO</span><span class="p">:</span><span class="w"> </span><span class="n">add</span><span class="w"> </span><span class="n">logic</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">determine</span><span class="w"> </span><span class="n">which</span><span class="w"> </span><span class="n">WiFi</span><span class="w"> </span><span class="n">icon</span><span class="w"> </span><span class="n">to</span><span class="w"> </span><span class="n">use</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#    Waveshare Pico-LCD-1.3 Display Standard Pinout Map (Vertical, Top View)</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#</span>
+<span class="c1">#                       ┌──────────────────────┐</span>
+<span class="c1">#                VBUS  ─┤ 40                01 ├─  NC</span>
+<span class="c1">#                VSYS  ─┤ 39      ╔══╗      02 ├─  NC</span>
+<span class="c1">#                 GND  ─┤ 38   ╔══╝  ╚══╗   03 ├─  GND</span>
+<span class="c1">#                  NC  ─┤ 37   ╚══╗  ╔══╝   04 ├─  JOY_UP</span>
+<span class="c1">#                  NC  ─┤ 36      ╚══╝      05 ├─  JOY_IN</span>
+<span class="c1">#                  NC  ─┤ 35                06 ├─  NC</span>
+<span class="c1">#                  NC  ─┤ 34 ┌────────────┐ 07 ├─  NC</span>
+<span class="c1">#                 GND  ─┤ 33 │            │ 08 ├─  GND</span>
+<span class="c1">#                  NC  ─┤ 32 │            │ 09 ├─  NC</span>
+<span class="c1">#                  NC  ─┤ 31 │ Waveshare™ │ 10 ├─  NC</span>
+<span class="c1">#                  NC  ─┤ 30 │  Pico-LCD  │ 11 ├─  DC</span>
+<span class="c1">#                  NC  ─┤ 29 │    1.3&quot;    │ 12 ├─  CS</span>
+<span class="c1">#                  NC  ─┤ 28 │            │ 13 ├─  GND</span>
+<span class="c1">#               BTN_Y  ─┤ 27 │            │ 14 ├─  CLK</span>
+<span class="c1">#           JOY_RIGHT  ─┤ 26 └────────────┘ 15 ├─  MOSI</span>
+<span class="c1">#               BTN_X  ─┤ 25                16 ├─  RST</span>
+<span class="c1">#            JOY_DOWN  ─┤ 24                17 ├─  BL</span>
+<span class="c1">#                 GND  ─┤ 23  ┌─┐┌─┐┌─┐┌─┐  18 ├─  GND</span>
+<span class="c1">#               BTN_B  ─┤ 22  └─┘└─┘└─┘└─┘  19 ├─  NC</span>
+<span class="c1">#            JOY_LEFT  ─┤ 21   Y  X  B  A   20 ├─  BTN_A</span>
+<span class="c1">#                       └──────────────────────┘</span>
+<span class="c1">#</span>
+<span class="c1">#    Notes:</span>
+<span class="c1">#      - pin 40, VBUS; 5 VDC</span>
+<span class="c1">#      - pin 39, VSYS; NC</span>
+<span class="c1">#      - pin 11, DC;   Data/Command - high for data, low for command)</span>
+<span class="c1">#      - pin 12, CS;   Chip Select  - active low</span>
+<span class="c1">#      - pin 16, RST;  Reset        - active low</span>
+<span class="c1">#      - pin 17, BL;   Backlight    - active high</span>
+<span class="c1">#</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
 
-<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Display</span><span class="w"> </span><span class="n">device</span><span class="w"> </span><span class="n">info</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="n">the</span><span class="w"> </span><span class="n">data</span><span class="w"> </span><span class="n">pane</span>
-<span class="w">  </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">56</span><span class="p">;</span>
-<span class="w">  </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="n">line_height</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">32</span><span class="p">;</span>
-<span class="w">  </span><span class="o">//</span><span class="w"> </span><span class="n">Estimate</span><span class="w"> </span><span class="n">average</span><span class="w"> </span><span class="n">character</span><span class="w"> </span><span class="n">width</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">Noto</span><span class="w"> </span><span class="n">Sans</span><span class="w"> </span><span class="n">Mono</span><span class="w"> </span><span class="mi">22</span><span class="n">pt</span>
-<span class="w">  </span><span class="k">const</span><span class="w"> </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="n">char_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span><span class="p">;</span>
-<span class="w">  </span><span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="w"> </span><span class="n">hostname_str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">hostname</span><span class="p">)</span><span class="o">.</span><span class="n">state</span><span class="p">;</span>
-<span class="w">  </span><span class="nb nb-Type">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">240</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">hostname_str</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">char_width</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="w">  </span><span class="n">it</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">st7789_font</span><span class="p">),</span><span class="w"> </span><span class="n">white</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">hostname_str</span><span class="o">.</span><span class="n">c_str</span><span class="p">());</span>
-<span class="w">  </span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">line_height</span><span class="p">;</span>
 
-<span class="w">  </span><span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="w"> </span><span class="n">ssid_str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">ssid</span><span class="p">)</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="err">?</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">(</span><span class="s2">&quot;SSID: N/A&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">ssid</span><span class="p">)</span><span class="o">.</span><span class="n">state</span><span class="p">;</span>
-<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">240</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">ssid_str</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">char_width</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="w">  </span><span class="n">it</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">st7789_font</span><span class="p">),</span><span class="w"> </span><span class="n">white</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ssid_str</span><span class="o">.</span><span class="n">c_str</span><span class="p">());</span>
-<span class="w">  </span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">line_height</span><span class="p">;</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#    Font used for on-screen display</span>
+<span class="c1">#      - Loads Google Noto Sans Mono font for display text</span>
+<span class="c1">#      - Sets font size for UI elements</span>
+<span class="c1">#      - Parameters:</span>
+<span class="c1">#          file: Font file or URL</span>
+<span class="c1">#          id: Font ID for reference</span>
+<span class="c1">#          size: Font size in points</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">font</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">gfonts://Noto Sans Mono</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">st7789_font</span>
+<span class="w">    </span><span class="nt">size</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">22</span>
 
-<span class="w">  </span><span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="w"> </span><span class="n">ip_str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="err">?</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">(</span><span class="s2">&quot;IP: N/A&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">ip_address</span><span class="p">)</span><span class="o">.</span><span class="n">state</span><span class="p">;</span>
-<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">240</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">ip_str</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">char_width</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="w">  </span><span class="n">it</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">st7789_font</span><span class="p">),</span><span class="w"> </span><span class="n">white</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">ip_str</span><span class="o">.</span><span class="n">c_str</span><span class="p">());</span>
-<span class="w">  </span><span class="n">y</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="n">line_height</span><span class="p">;</span>
 
-<span class="w">  </span><span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="w"> </span><span class="n">mac_str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">mac_address</span><span class="p">)</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">empty</span><span class="p">()</span><span class="w"> </span><span class="err">?</span><span class="w"> </span><span class="n">std</span><span class="p">::</span><span class="n">string</span><span class="p">(</span><span class="s2">&quot;MAC: N/A&quot;</span><span class="p">)</span><span class="w"> </span><span class="p">:</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">mac_address</span><span class="p">)</span><span class="o">.</span><span class="n">state</span><span class="p">;</span>
-<span class="w">  </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="mi">240</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="n">mac_str</span><span class="o">.</span><span class="n">length</span><span class="p">()</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">char_width</span><span class="p">))</span><span class="w"> </span><span class="o">/</span><span class="w"> </span><span class="mi">2</span><span class="p">;</span>
-<span class="w">  </span><span class="n">it</span><span class="o">.</span><span class="n">printf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">(</span><span class="n">st7789_font</span><span class="p">),</span><span class="w"> </span><span class="n">white</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">mac_str</span><span class="o">.</span><span class="n">c_str</span><span class="p">());</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#    Status icon images</span>
+<span class="c1">#      - Loads PNG images for status and WiFi signal icons</span>
+<span class="c1">#      - Used for UI status bar and indicators</span>
+<span class="c1">#      - Parameters:</span>
+<span class="c1">#          file: Path to image file</span>
+<span class="c1">#          id: Image ID for reference</span>
+<span class="c1">#          type: Image color type (e.g., RGB)</span>
+<span class="c1">#          resize: Resize dimensions (pixels)</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">image</span><span class="p">:</span>
+<span class="w">  </span><span class="c1"># Status icons</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;icons/status_ok.png&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">status_ok_icon</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RGB</span>
+<span class="w">    </span><span class="nt">resize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32x32</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;icons/status_warn.png&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">status_warn_icon</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RGB</span>
+<span class="w">    </span><span class="nt">resize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32x32</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;icons/status_error.png&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">status_error_icon</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RGB</span>
+<span class="w">    </span><span class="nt">resize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32x32</span>
+
+<span class="w">  </span><span class="c1"># WiFi signal icons</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;icons/wifi_0.png&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wifi_0_icon</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RGB</span>
+<span class="w">    </span><span class="nt">resize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32x32</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;icons/wifi_1.png&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wifi_1_icon</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RGB</span>
+<span class="w">    </span><span class="nt">resize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32x32</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;icons/wifi_2.png&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wifi_2_icon</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RGB</span>
+<span class="w">    </span><span class="nt">resize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32x32</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;icons/wifi_3.png&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wifi_3_icon</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RGB</span>
+<span class="w">    </span><span class="nt">resize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32x32</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">file</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;icons/wifi_4.png&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wifi_4_icon</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">RGB</span>
+<span class="w">    </span><span class="nt">resize</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">32x32</span>
+
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#    Text and sensor definitions</span>
+<span class="c1">#      - Exposes WiFi info, hostname, date, and time as text sensors</span>
+<span class="c1">#      - Provides template sensors for custom data</span>
+<span class="c1">#      - Parameters (per sensor):</span>
+<span class="c1">#          name: Sensor name</span>
+<span class="c1">#          id: Sensor ID</span>
+<span class="c1">#          lambda: Lambda function for value</span>
+<span class="c1">#          update_interval: Update frequency</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">text_sensor</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wifi_info</span>
+<span class="w">    </span><span class="nt">ip_address</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;WiFi</span><span class="nv"> </span><span class="s">IP</span><span class="nv"> </span><span class="s">Address&quot;</span>
+<span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ip_address</span>
+<span class="w">    </span><span class="nt">ssid</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;WiFi</span><span class="nv"> </span><span class="s">SSID&quot;</span>
+<span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">ssid</span>
+<span class="w">    </span><span class="nt">mac_address</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;WiFi</span><span class="nv"> </span><span class="s">MAC</span><span class="nv"> </span><span class="s">Address&quot;</span>
+<span class="w">      </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">mac_address</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Hostname&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">hostname</span>
+<span class="w">    </span><span class="nt">lambda</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">      </span><span class="no">return App.get_name();</span>
+<span class="w">    </span><span class="nt">update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60s</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Current</span><span class="nv"> </span><span class="s">Date&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">current_date</span>
+<span class="w">    </span><span class="c1"># Returns the current date as YYYY-MM-DD</span>
+<span class="w">    </span><span class="nt">lambda</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">      </span><span class="no">char str[16];</span>
+<span class="w">      </span><span class="no">time_t now = ::time(nullptr);</span>
+<span class="w">      </span><span class="no">strftime(str, sizeof(str), &quot;%Y-%m-%d&quot;, localtime(&amp;now));</span>
+<span class="w">      </span><span class="no">return std::string(str);</span>
+<span class="w">    </span><span class="nt">update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60s</span>
+
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">template</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Current</span><span class="nv"> </span><span class="s">Time&quot;</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">current_time</span>
+<span class="w">    </span><span class="c1"># Returns the current time as HH:MM:SS</span>
+<span class="w">    </span><span class="nt">lambda</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">      </span><span class="no">char str[16];</span>
+<span class="w">      </span><span class="no">time_t now = ::time(nullptr);</span>
+<span class="w">      </span><span class="no">strftime(str, sizeof(str), &quot;%H:%M:%S&quot;, localtime(&amp;now));</span>
+<span class="w">      </span><span class="no">return std::string(str);</span>
+<span class="w">    </span><span class="nt">update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1s</span>
+
+<span class="nt">sensor</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wifi_signal</span>
+<span class="w">    </span><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">WiFi Signal Strength</span>
+<span class="w">    </span><span class="nt">id</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">wifi_signal_strength</span>
+<span class="w">    </span><span class="nt">update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">60s</span>
+
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#    Display driver configuration block for ST7789V LCD</span>
+<span class="c1">#      - Configures resolution, pinout, refresh rate, and UI rendering logic</span>
+<span class="c1">#      - Includes dynamic rendering of flow rate sensor value</span>
+<span class="c1">#      - Screen is cleared to teal and overlays two lines of text</span>
+<span class="c1">#      - Parameters:</span>
+<span class="c1">#          platform: Display platform (st7789v)</span>
+<span class="c1">#          model: Display model (CUSTOM)</span>
+<span class="c1">#          cs_pin: Chip select pin</span>
+<span class="c1">#          dc_pin: Data/command pin</span>
+<span class="c1">#          reset_pin: Reset line</span>
+<span class="c1">#          width: Display width (pixels)</span>
+<span class="c1">#          height: Display height (pixels)</span>
+<span class="c1">#          update_interval: Refresh interval</span>
+<span class="c1">#          data_rate: SPI clock frequency</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">display</span><span class="p">:</span>
+<span class="w">  </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="nt">platform</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">st7789v</span>
+<span class="w">    </span><span class="nt">model</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">CUSTOM</span>
+<span class="w">    </span><span class="nt">cs_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${display_cs_pin}</span><span class="w">          </span><span class="c1"># cs_pin Chip select pin</span>
+<span class="w">    </span><span class="nt">dc_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${display_dc_pin}</span><span class="w">          </span><span class="c1"># dc_pin Data/command pin</span>
+<span class="w">    </span><span class="nt">reset_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">${display_reset_pin}</span><span class="w">    </span><span class="c1"># reset_pin Reset line</span>
+<span class="w">    </span><span class="nt">width</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">240</span>
+<span class="w">    </span><span class="nt">height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">240</span>
+<span class="w">    </span><span class="nt">offset_width</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">offset_height</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">rotation</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">0</span>
+<span class="w">    </span><span class="nt">update_interval</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">1s</span><span class="w">     </span><span class="c1"># update_interval Refresh every second</span>
+<span class="w">    </span><span class="nt">data_rate</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">2MHz</span><span class="w">         </span><span class="c1"># data_rate SPI clock frequency</span>
+<span class="w">    </span><span class="nt">auto_clear_enabled</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">false</span>
+<span class="w">    </span><span class="nt">lambda</span><span class="p">:</span><span class="w"> </span><span class="p p-Indicator">|-</span>
+<span class="w">      </span><span class="no">// Colors</span>
+<span class="w">      </span><span class="no">auto white = Color(255, 255, 255);</span>
+<span class="w">      </span><span class="no">auto blue  = Color(0, 0, 255);</span>
+<span class="w">      </span><span class="no">auto teal  = Color(0, 128, 128);</span>
+<span class="w">      </span><span class="no">auto black = Color(0, 0, 0);</span>
+
+<span class="w">      </span><span class="no">// establish status pane</span>
+<span class="w">      </span><span class="no">it.rectangle(0, 0, 239, 39, white);</span>
+
+<span class="w">      </span><span class="no">// establish data pane</span>
+<span class="w">      </span><span class="no">it.filled_rectangle(0, 40, 239, 239, blue);</span>
+<span class="w">      </span><span class="no">it.rectangle(0, 40, 239, 239, white);</span>
+
+<span class="w">      </span><span class="no">// Draw status_ok icon at (4,4) in the status bar</span>
+<span class="w">      </span><span class="no">it.image(4, 4, id(status_ok_icon));</span>
+<span class="w">      </span><span class="no">//   TODO: add logic to determine which status icon to use</span>
+
+<span class="w">      </span><span class="no">// Draw WiFi icons (Testing)</span>
+<span class="w">      </span><span class="no">it.image(204, 4, id(wifi_4_icon));</span>
+<span class="w">      </span><span class="no">//   TODO: add logic to determine which WiFi icon to use</span>
+
+<span class="w">      </span><span class="no">// Display device info in the data pane</span>
+<span class="w">      </span><span class="no">int y = 56;</span>
+<span class="w">      </span><span class="no">int line_height = 32;</span>
+<span class="w">      </span><span class="no">// Estimate average character width for Noto Sans Mono 22pt</span>
+<span class="w">      </span><span class="no">const int char_width = 12;</span>
+<span class="w">      </span><span class="no">std::string hostname_str = id(hostname).state;</span>
+<span class="w">      </span><span class="no">int x = (240 - (hostname_str.length() * char_width)) / 2;</span>
+<span class="w">      </span><span class="no">it.printf(x, y, id(st7789_font), white, &quot;%s&quot;, hostname_str.c_str());</span>
+<span class="w">      </span><span class="no">y += line_height;</span>
+
+<span class="w">      </span><span class="no">std::string ssid_str = id(ssid).state.empty() ? std::string(&quot;SSID: N/A&quot;) : id(ssid).state;</span>
+<span class="w">      </span><span class="no">x = (240 - (ssid_str.length() * char_width)) / 2;</span>
+<span class="w">      </span><span class="no">it.printf(x, y, id(st7789_font), white, &quot;%s&quot;, ssid_str.c_str());</span>
+<span class="w">      </span><span class="no">y += line_height;</span>
+
+<span class="w">      </span><span class="no">std::string ip_str = id(ip_address).state.empty() ? std::string(&quot;IP: N/A&quot;) : id(ip_address).state;</span>
+<span class="w">      </span><span class="no">x = (240 - (ip_str.length() * char_width)) / 2;</span>
+<span class="w">      </span><span class="no">it.printf(x, y, id(st7789_font), white, &quot;%s&quot;, ip_str.c_str());</span>
+<span class="w">      </span><span class="no">y += line_height;</span>
+
+<span class="w">      </span><span class="no">std::string mac_str = id(mac_address).state.empty() ? std::string(&quot;MAC: N/A&quot;) : id(mac_address).state;</span>
+<span class="w">      </span><span class="no">x = (240 - (mac_str.length() * char_width)) / 2;</span>
+<span class="w">      </span><span class="no">it.printf(x, y, id(st7789_font), white, &quot;%s&quot;, mac_str.c_str());</span>
 </code></pre></div>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
         <a href="../phb-pro/" class="btn btn-neutral float-left" title="PHB Pro"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-        <a href="../esp32/" class="btn btn-neutral float-right" title="esp32">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../display_pcf8574/" class="btn btn-neutral float-right" title="Display PCF8574">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
   <hr/>
@@ -474,7 +487,7 @@
       <span><a href="../phb-pro/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
-      <span><a href="../esp32/" style="color: #fcfcfc">Next &raquo;</a></span>
+      <span><a href="../display_pcf8574/" style="color: #fcfcfc">Next &raquo;</a></span>
     
   </span>
 </div>

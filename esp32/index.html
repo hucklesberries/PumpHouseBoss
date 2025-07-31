@@ -83,7 +83,7 @@
                 </li>
               </ul>
               <ul>
-                <li class="toctree-l1"><a class="" href="../CONTRIBUTING.md">CONTRIBUTING</a>
+                <li class="toctree-l1"><a class="reference internal" href="../CONTRIBUTING/">CONTRIBUTING</a>
                 </li>
               </ul>
               <ul>
@@ -125,13 +125,13 @@
     <ul class="current">
                 <li class="toctree-l2"><a class="reference internal" href="../display_st7789/">Display</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../display_pcf8574.md">Display PCF8574</a>
+                <li class="toctree-l2"><a class="reference internal" href="../display_pcf8574/">Display PCF8574</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../indications.md">Indications</a>
+                <li class="toctree-l2"><a class="reference internal" href="../indications/">Indications</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../mmu.md">MMU</a>
+                <li class="toctree-l2"><a class="reference internal" href="../mmu/">MMU</a>
                 </li>
-                <li class="toctree-l2"><a class="" href="../api.md">API</a>
+                <li class="toctree-l2"><a class="reference internal" href="../api/">API</a>
                 </li>
                 <li class="toctree-l2 current"><a class="reference internal current" href="#">esp32</a>
     <ul class="current">
@@ -181,121 +181,129 @@
             <div class="section" itemprop="articleBody">
               
                 <h1 id="component-esp32">Component: esp32<a class="headerlink" href="#component-esp32" title="Permanent link">&para;</a></h1>
-<h1 id="source-cygdriveccygwin64homerhendelgitpumphousebosscommonesp32yaml">Source: /cygdrive/c/cygwin64/home/rhendel/git/PumpHouseBoss/common/esp32.yaml<a class="headerlink" href="#source-cygdriveccygwin64homerhendelgitpumphousebosscommonesp32yaml" title="Permanent link">&para;</a></h1>
-<h1 id="generated-sun-jul-27-2025-113346-pm">Generated: Sun, Jul 27, 2025 11:33:46 PM<a class="headerlink" href="#generated-sun-jul-27-2025-113346-pm" title="Permanent link">&para;</a></h1>
-<h1 id="-">------------------------------------------------------------------------------<a class="headerlink" href="#-" title="Permanent link">&para;</a></h1>
-<h1 id="file-esp32yaml">File:         esp32.yaml<a class="headerlink" href="#file-esp32yaml" title="Permanent link">&para;</a></h1>
-<h1 id="file-type-esphome-yaml-include">File Type:    ESPHome YAML Include<a class="headerlink" href="#file-type-esphome-yaml-include" title="Permanent link">&para;</a></h1>
-<h1 id="purpose-esp32-board-and-framework-configuration">Purpose:      ESP32 board and framework configuration<a class="headerlink" href="#purpose-esp32-board-and-framework-configuration" title="Permanent link">&para;</a></h1>
-<h1 id="version-070">Version:      0.7.0<a class="headerlink" href="#version-070" title="Permanent link">&para;</a></h1>
-<h1 id="date-2025-07-24">Date:         2025-07-24<a class="headerlink" href="#date-2025-07-24" title="Permanent link">&para;</a></h1>
-<h1 id="author-roland-tembo-hendel-rhendelnexuslogiccom">Author:       Roland Tembo Hendel <a href="&#109;&#97;&#105;&#108;&#116;&#111;&#58;&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;">&#114;&#104;&#101;&#110;&#100;&#101;&#108;&#64;&#110;&#101;&#120;&#117;&#115;&#108;&#111;&#103;&#105;&#99;&#46;&#99;&#111;&#109;</a><a class="headerlink" href="#author-roland-tembo-hendel-rhendelnexuslogiccom" title="Permanent link">&para;</a></h1>
-<h1 id="_1"><a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<h1 id="description-modular-include-for-esphome-projects-targeting-esp32-s3">Description:  Modular include for ESPHome projects targeting ESP32-S3.<a class="headerlink" href="#description-modular-include-for-esphome-projects-targeting-esp32-s3" title="Permanent link">&para;</a></h1>
-<h1 id="_2"><a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
-<h1 id="license-gnu-general-public-license-v30">License:      GNU General Public License v3.0<a class="headerlink" href="#license-gnu-general-public-license-v30" title="Permanent link">&para;</a></h1>
-<h1 id="spdx-license-identifier-gpl-30-or-later">SPDX-License-Identifier: GPL-3.0-or-later<a class="headerlink" href="#spdx-license-identifier-gpl-30-or-later" title="Permanent link">&para;</a></h1>
-<h1 id="copyright-c-2025-roland-tembo-hendel">Copyright:    (c) 2025 Roland Tembo Hendel<a class="headerlink" href="#copyright-c-2025-roland-tembo-hendel" title="Permanent link">&para;</a></h1>
-<h1 id="this-program-is-free-software-you-can-redistribute-it-andor">This program is free software: you can redistribute it and/or<a class="headerlink" href="#this-program-is-free-software-you-can-redistribute-it-andor" title="Permanent link">&para;</a></h1>
-<h1 id="modify-it-under-the-terms-of-the-gnu-general-public-license">modify it under the terms of the GNU General Public License.<a class="headerlink" href="#modify-it-under-the-terms-of-the-gnu-general-public-license" title="Permanent link">&para;</a></h1>
-<h1 id="-_1">------------------------------------------------------------------------------<a class="headerlink" href="#-_1" title="Permanent link">&para;</a></h1>
-<h1 id="-_2">------------------------------------------------------------------------------<a class="headerlink" href="#-_2" title="Permanent link">&para;</a></h1>
-<h1 id="yaml-linter-configuration">YAML linter configuration<a class="headerlink" href="#yaml-linter-configuration" title="Permanent link">&para;</a></h1>
-<h1 id="-disables-quoted-strings-rule-for-improved-readability">- Disables quoted-strings rule for improved readability<a class="headerlink" href="#-disables-quoted-strings-rule-for-improved-readability" title="Permanent link">&para;</a></h1>
-<h1 id="-_3">------------------------------------------------------------------------------<a class="headerlink" href="#-_3" title="Permanent link">&para;</a></h1>
-<h1 id="yamllint-disable-rulequoted-strings">yamllint disable rule:quoted-strings<a class="headerlink" href="#yamllint-disable-rulequoted-strings" title="Permanent link">&para;</a></h1>
-<h1 id="-_4">------------------------------------------------------------------------------<a class="headerlink" href="#-_4" title="Permanent link">&para;</a></h1>
-<h1 id="esp32-30-pin-package-dev-module-standard-pinout-map-vertical-top-view">ESP32 (30 Pin Package) Dev Module standard Pinout Map (Vertical, Top View)<a class="headerlink" href="#esp32-30-pin-package-dev-module-standard-pinout-map-vertical-top-view" title="Permanent link">&para;</a></h1>
-<h1 id="-_5">------------------------------------------------------------------------------<a class="headerlink" href="#-_5" title="Permanent link">&para;</a></h1>
-<h1 id="_3"><a class="headerlink" href="#_3" title="Permanent link">&para;</a></h1>
-<h1 id="_4">┌────────────────┐<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h1>
-<h1 id="en-01-30-gpio23-spi_mosi-vspi_mosi">EN ─┤ 01 ┌──────┐ 30 ├─ GPIO23  SPI_MOSI  VSPI_MOSI<a class="headerlink" href="#en-01-30-gpio23-spi_mosi-vspi_mosi" title="Permanent link">&para;</a></h1>
-<h1 id="vp-adc1_ch0-gpio36-02-29-gpio22-i2c_scl">VP  ADC1_CH0  GPIO36 ─┤ 02 │      │ 29 ├─ GPIO22  I2C_SCL<a class="headerlink" href="#vp-adc1_ch0-gpio36-02-29-gpio22-i2c_scl" title="Permanent link">&para;</a></h1>
-<h1 id="vn-adc1_ch3-gpio39-03-28-gpio01-u0txd-clk3">VN  ADC1_CH3  GPIO39 ─┤ 03 │      │ 28 ├─ GPIO01  U0TXD     CLK3<a class="headerlink" href="#vn-adc1_ch3-gpio39-03-28-gpio01-u0txd-clk3" title="Permanent link">&para;</a></h1>
-<h1 id="adc1_ch6-gpio34-04-27-gpio03-u0rxd-clk2">ADC1_CH6  GPIO34 ─┤ 04 └──────┘ 27 ├─ GPIO03  U0RXD     CLK2<a class="headerlink" href="#adc1_ch6-gpio34-04-27-gpio03-u0rxd-clk2" title="Permanent link">&para;</a></h1>
-<h1 id="adc1_ch7-gpio35-05-26-gpio21-i2c_sda">ADC1_CH7  GPIO35 ─┤ 05          26 ├─ GPIO21  I2C_SDA<a class="headerlink" href="#adc1_ch7-gpio35-05-26-gpio21-i2c_sda" title="Permanent link">&para;</a></h1>
-<h1 id="xtal32-touch9-adc1_ch4-gpio32-06-25-gpio19-spi_miso-vspi_miso">XTAL32  TOUCH9  ADC1_CH4  GPIO32 ─┤ 06          25 ├─ GPIO19  SPI_MISO  VSPI_MISO<a class="headerlink" href="#xtal32-touch9-adc1_ch4-gpio32-06-25-gpio19-spi_miso-vspi_miso" title="Permanent link">&para;</a></h1>
-<h1 id="touch8-adc1_ch5-gpio33-07-24-gpio18-spi_sck-vspi_clk">TOUCH8  ADC1_CH5  GPIO33 ─┤ 07          24 ├─ GPIO18  SPI_SCK   VSPI_CLK<a class="headerlink" href="#touch8-adc1_ch5-gpio33-07-24-gpio18-spi_sck-vspi_clk" title="Permanent link">&para;</a></h1>
-<h1 id="dac1-adc2_ch8-gpio25-08-esp-32-23-gpio05-vspi_cs">DAC1  ADC2_CH8  GPIO25 ─┤ 08  ESP-32  23 ├─ GPIO05  VSPI_CS<a class="headerlink" href="#dac1-adc2_ch8-gpio25-08-esp-32-23-gpio05-vspi_cs" title="Permanent link">&para;</a></h1>
-<h1 id="dac2-adc2_ch9-gpio26-09-22-gpio17-u2txd">DAC2  ADC2_CH9  GPIO26 ─┤ 09          22 ├─ GPIO17  U2TXD<a class="headerlink" href="#dac2-adc2_ch9-gpio26-09-22-gpio17-u2txd" title="Permanent link">&para;</a></h1>
-<h1 id="touch7-adc2_ch7-gpio27-10-21-gpio16-u2rxd">TOUCH7  ADC2_CH7  GPIO27 ─┤ 10          21 ├─ GPIO16  U2RXD<a class="headerlink" href="#touch7-adc2_ch7-gpio27-10-21-gpio16-u2rxd" title="Permanent link">&para;</a></h1>
-<h1 id="hspi_clk-touch6-adc2_ch6-gpio14-11-20-gpio04-adc2_ch0-touch0">HSPI_CLK  TOUCH6  ADC2_CH6  GPIO14 ─┤ 11          20 ├─ GPIO04  ADC2_CH0  TOUCH0<a class="headerlink" href="#hspi_clk-touch6-adc2_ch6-gpio14-11-20-gpio04-adc2_ch0-touch0" title="Permanent link">&para;</a></h1>
-<h1 id="hspi_miso-touch5-adc2_ch5-gpio12-12-19-gpio02-adc2_ch2-touch2-spi_cs">HSPI_MISO TOUCH5  ADC2_CH5  GPIO12 ─┤ 12          19 ├─ GPIO02  ADC2_CH2  TOUCH2   SPI_CS<a class="headerlink" href="#hspi_miso-touch5-adc2_ch5-gpio12-12-19-gpio02-adc2_ch2-touch2-spi_cs" title="Permanent link">&para;</a></h1>
-<h1 id="hspi_mosi-touch4-adc2_ch4-gpio13-13-18-gpio15-adc2_ch3-touch3-hspi_cs">HSPI_MOSI TOUCH4  ADC2_CH4  GPIO13 ─┤ 13          18 ├─ GPIO15  ADC2_CH3  TOUCH3   HSPI_CS<a class="headerlink" href="#hspi_mosi-touch4-adc2_ch4-gpio13-13-18-gpio15-adc2_ch3-touch3-hspi_cs" title="Permanent link">&para;</a></h1>
-<h1 id="gnd-14-17-gnd">GND ─┤ 14          17 ├─ GND<a class="headerlink" href="#gnd-14-17-gnd" title="Permanent link">&para;</a></h1>
-<h1 id="5v-vin-15-16-vcc-33v">5V     VIN ─┤ 15          16 ├─ VCC     3.3V<a class="headerlink" href="#5v-vin-15-16-vcc-33v" title="Permanent link">&para;</a></h1>
-<h1 id="usb">└──────USB───────┘<a class="headerlink" href="#usb" title="Permanent link">&para;</a></h1>
-<h1 id="_5"><a class="headerlink" href="#_5" title="Permanent link">&para;</a></h1>
-<h1 id="notes">Notes:<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h1>
-<h1 id="-gpio6-11-are-used-for-spi-flash-and-are-not-available-for-user-io">- GPIO6-11 are used for SPI flash and are not available for user IO<a class="headerlink" href="#-gpio6-11-are-used-for-spi-flash-and-are-not-available-for-user-io" title="Permanent link">&para;</a></h1>
-<h1 id="-gpio1-tx0-gpio3-rx0-are-uart0-serial-console-pins">- GPIO1 (TX0), GPIO3 (RX0) are UART0 (serial console) pins<a class="headerlink" href="#-gpio1-tx0-gpio3-rx0-are-uart0-serial-console-pins" title="Permanent link">&para;</a></h1>
-<h1 id="-can-be-repurposed-if-not-using-serial-but-be-careful">- can be repurposed if not using serial, but be careful<a class="headerlink" href="#-can-be-repurposed-if-not-using-serial-but-be-careful" title="Permanent link">&para;</a></h1>
-<h1 id="if-you-need-serial-logging-or-programming">if you need serial logging or programming<a class="headerlink" href="#if-you-need-serial-logging-or-programming" title="Permanent link">&para;</a></h1>
-<h1 id="-gpio2-is-a-strapping-pin-must-be-low-at-boot-for-some-modules">- GPIO2 is a strapping pin; must be low at boot for some modules<a class="headerlink" href="#-gpio2-is-a-strapping-pin-must-be-low-at-boot-for-some-modules" title="Permanent link">&para;</a></h1>
-<h1 id="-this-pin-should-not-be-pulled-high-or-low-at-bootreset">- this pin should not be pulled high or low at boot/reset<a class="headerlink" href="#-this-pin-should-not-be-pulled-high-or-low-at-bootreset" title="Permanent link">&para;</a></h1>
-<h1 id="-avoid-using-for-output-that-could-interfere-with-boot">- avoid using for output that could interfere with boot<a class="headerlink" href="#-avoid-using-for-output-that-could-interfere-with-boot" title="Permanent link">&para;</a></h1>
-<h1 id="-gpio5-is-a-strapping-pin-must-be-high-at-boot">- GPIO5  is a strapping pin; must be high at boot<a class="headerlink" href="#-gpio5-is-a-strapping-pin-must-be-high-at-boot" title="Permanent link">&para;</a></h1>
-<h1 id="-this-pin-should-not-be-pulled-low-at-bootreset">- this pin should not be pulled low at boot/reset<a class="headerlink" href="#-this-pin-should-not-be-pulled-low-at-bootreset" title="Permanent link">&para;</a></h1>
-<h1 id="-avoid-using-for-output-or-with-pull-ups">- avoid using for output or with pull-ups<a class="headerlink" href="#-avoid-using-for-output-or-with-pull-ups" title="Permanent link">&para;</a></h1>
-<h1 id="-gpio3-is-rx-pin-for-flashingdebugging">- GPIO3 is Rx pin for flashing/debugging<a class="headerlink" href="#-gpio3-is-rx-pin-for-flashingdebugging" title="Permanent link">&para;</a></h1>
-<h1 id="-gpio12-is-a-strapping-pin-high-at-boot-selects-high-voltage-for-flash">- GPIO12 is a strapping pin; high at boot selects high voltage for flash<a class="headerlink" href="#-gpio12-is-a-strapping-pin-high-at-boot-selects-high-voltage-for-flash" title="Permanent link">&para;</a></h1>
-<h1 id="-this-pin-should-not-be-pulled-high-or-low-at-bootreset_1">- this pin should not be pulled high or low at boot/reset<a class="headerlink" href="#-this-pin-should-not-be-pulled-high-or-low-at-bootreset_1" title="Permanent link">&para;</a></h1>
-<h1 id="-avoid-using-for-output-or-with-pull-ups_1">- avoid using for output or with pull-ups<a class="headerlink" href="#-avoid-using-for-output-or-with-pull-ups_1" title="Permanent link">&para;</a></h1>
-<h1 id="-gpio15-is-a-strapping-pin-must-be-low-at-boot">- GPIO15 is a strapping pin; must be low at boot<a class="headerlink" href="#-gpio15-is-a-strapping-pin-must-be-low-at-boot" title="Permanent link">&para;</a></h1>
-<h1 id="-this-pin-should-not-be-pulled-high-or-low-at-bootreset_2">- this pin should not be pulled high or low at boot/reset<a class="headerlink" href="#-this-pin-should-not-be-pulled-high-or-low-at-bootreset_2" title="Permanent link">&para;</a></h1>
-<h1 id="-avoid-using-for-output-or-with-pull-ups_2">- avoid using for output or with pull-ups<a class="headerlink" href="#-avoid-using-for-output-or-with-pull-ups_2" title="Permanent link">&para;</a></h1>
-<h1 id="-gpio16-gpio17-is-used-for-psram-on-some-modules">- GPIO16, GPIO17 is used for PSRAM on some modules<a class="headerlink" href="#-gpio16-gpio17-is-used-for-psram-on-some-modules" title="Permanent link">&para;</a></h1>
-<h1 id="-check-your-boards-datasheet-before-using">- check your board’s datasheet before using<a class="headerlink" href="#-check-your-boards-datasheet-before-using" title="Permanent link">&para;</a></h1>
-<h1 id="-gpio20-gpio24-is-not-available-on-most-esp32-modules">- GPIO20, GPIO24 is not available on most ESP32 modules<a class="headerlink" href="#-gpio20-gpio24-is-not-available-on-most-esp32-modules" title="Permanent link">&para;</a></h1>
-<h1 id="-gpio34-gpio39-are-input-only">- GPIO34-GPIO39 are input only<a class="headerlink" href="#-gpio34-gpio39-are-input-only" title="Permanent link">&para;</a></h1>
-<h1 id="-not-all-pins-are-available-on-all-modules-check-your-boards-datasheet">- not all pins are available on all modules; check your board's datasheet<a class="headerlink" href="#-not-all-pins-are-available-on-all-modules-check-your-boards-datasheet" title="Permanent link">&para;</a></h1>
-<h1 id="-see-esp32-datasheet-for-full-alternate-functions">- see ESP32 datasheet for full alternate functions<a class="headerlink" href="#-see-esp32-datasheet-for-full-alternate-functions" title="Permanent link">&para;</a></h1>
-<h1 id="_6"><a class="headerlink" href="#_6" title="Permanent link">&para;</a></h1>
-<h1 id="esp32-datasheet">ESP32 Datasheet:<a class="headerlink" href="#esp32-datasheet" title="Permanent link">&para;</a></h1>
-<h1 id="httpswwwespressifcomsitesdefaultfilesdocumentationesp32_datasheet_enpdf">https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf<a class="headerlink" href="#httpswwwespressifcomsitesdefaultfilesdocumentationesp32_datasheet_enpdf" title="Permanent link">&para;</a></h1>
-<h1 id="_7"><a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
-<h1 id="-_6">------------------------------------------------------------------------------<a class="headerlink" href="#-_6" title="Permanent link">&para;</a></h1>
-<h1 id="-_7">------------------------------------------------------------------------------<a class="headerlink" href="#-_7" title="Permanent link">&para;</a></h1>
-<h1 id="target-esp32-board-and-arduino-framework-declaration">Target ESP32 board and Arduino framework declaration<a class="headerlink" href="#target-esp32-board-and-arduino-framework-declaration" title="Permanent link">&para;</a></h1>
-<h1 id="-board-target-esp32-dev-module-esp-wroom-32">- board: Target ESP32 Dev Module (ESP-WROOM-32)<a class="headerlink" href="#-board-target-esp32-dev-module-esp-wroom-32" title="Permanent link">&para;</a></h1>
-<h1 id="-framework-arduino-core-for-esp32">- framework: Arduino core for ESP32<a class="headerlink" href="#-framework-arduino-core-for-esp32" title="Permanent link">&para;</a></h1>
-<h1 id="-parameters">- Parameters:<a class="headerlink" href="#-parameters" title="Permanent link">&para;</a></h1>
-<h1 id="board-target-board-eg-esp32dev">board: Target board (e.g., esp32dev)<a class="headerlink" href="#board-target-board-eg-esp32dev" title="Permanent link">&para;</a></h1>
-<h1 id="frameworktype-framework-type-eg-arduino">framework.type: Framework type (e.g., arduino)<a class="headerlink" href="#frameworktype-framework-type-eg-arduino" title="Permanent link">&para;</a></h1>
-<h1 id="-_8">------------------------------------------------------------------------------<a class="headerlink" href="#-_8" title="Permanent link">&para;</a></h1>
-<p>esp32:
-  board: esp32dev                 # board Target board: ESP32 Dev Module (ESP-WROOM-32)
-  framework:
-    type: arduino                 # framework.type Arduino core for ESP32</p>
-<h1 id="-_9">------------------------------------------------------------------------------<a class="headerlink" href="#-_9" title="Permanent link">&para;</a></h1>
-<h1 id="spi-bus-configuration-for-st7789v-display-module">SPI bus configuration for ST7789V display module<a class="headerlink" href="#spi-bus-configuration-for-st7789v-display-module" title="Permanent link">&para;</a></h1>
-<h1 id="-configures-spi-bus-for-display-communication">- Configures SPI bus for display communication<a class="headerlink" href="#-configures-spi-bus-for-display-communication" title="Permanent link">&para;</a></h1>
-<h1 id="-assigns-clock-and-mosi-pins">- Assigns clock and MOSI pins<a class="headerlink" href="#-assigns-clock-and-mosi-pins" title="Permanent link">&para;</a></h1>
-<h1 id="-parameters_1">- Parameters:<a class="headerlink" href="#-parameters_1" title="Permanent link">&para;</a></h1>
-<h1 id="clk_pin-clock-pin-for-spi">clk_pin: Clock pin for SPI<a class="headerlink" href="#clk_pin-clock-pin-for-spi" title="Permanent link">&para;</a></h1>
-<h1 id="mosi_pin-mosi-data-pin">mosi_pin: MOSI data pin<a class="headerlink" href="#mosi_pin-mosi-data-pin" title="Permanent link">&para;</a></h1>
-<h1 id="-_10">------------------------------------------------------------------------------<a class="headerlink" href="#-_10" title="Permanent link">&para;</a></h1>
-<p>spi:
-  clk_pin: GPIO18              # clk_pin Clock pin for SPI
-  mosi_pin: GPIO23             # param mosi_pin MOSI data pin</p>
-<h1 id="-_11">------------------------------------------------------------------------------<a class="headerlink" href="#-_11" title="Permanent link">&para;</a></h1>
-<h1 id="display-interface-configuration">Display Interface Configuration<a class="headerlink" href="#display-interface-configuration" title="Permanent link">&para;</a></h1>
-<h1 id="-configures-gpio-pins-for-display-communication">- Configures GPIO pins for display communication<a class="headerlink" href="#-configures-gpio-pins-for-display-communication" title="Permanent link">&para;</a></h1>
-<h1 id="-assigns-chip-select-datacommand-and-reset-pins">- Assigns Chip Select, Data/Command, and Reset pins<a class="headerlink" href="#-assigns-chip-select-datacommand-and-reset-pins" title="Permanent link">&para;</a></h1>
-<h1 id="-parameters_2">- Parameters:<a class="headerlink" href="#-parameters_2" title="Permanent link">&para;</a></h1>
-<h1 id="display_cs-pin-chip-select-pin">display_cs: pin Chip Select pin<a class="headerlink" href="#display_cs-pin-chip-select-pin" title="Permanent link">&para;</a></h1>
-<h1 id="display_dc-pin-datacommand-pin">display_dc: pin Data/Command pin<a class="headerlink" href="#display_dc-pin-datacommand-pin" title="Permanent link">&para;</a></h1>
-<h1 id="display_reset-pin-reset-pin">display_reset: pin Reset pin<a class="headerlink" href="#display_reset-pin-reset-pin" title="Permanent link">&para;</a></h1>
-<h1 id="-_12">------------------------------------------------------------------------------<a class="headerlink" href="#-_12" title="Permanent link">&para;</a></h1>
-<p>substitutions:
-  display_cs_pin:    "GPIO13"       # cs_pin Chip select pin
-  display_dc_pin:    "GPIO04"       # dc_pin Data/command pin
-  display_reset_pin: "GPIO17"       # reset_pin Reset line</p>
+<h1 id="source-homerhendelgitpumphousebosscommonesp32yaml">Source: /home/rhendel/git/PumpHouseBoss/common/esp32.yaml<a class="headerlink" href="#source-homerhendelgitpumphousebosscommonesp32yaml" title="Permanent link">&para;</a></h1>
+<h1 id="generated-wed-jul-30-2025-104925-pm">Generated: Wed, Jul 30, 2025 10:49:25 PM<a class="headerlink" href="#generated-wed-jul-30-2025-104925-pm" title="Permanent link">&para;</a></h1>
+<div class="codehilite"><pre><span></span><code><span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  File:         esp32.yaml</span>
+<span class="c1">#  File Type:    ESPHome YAML Include</span>
+<span class="c1">#  Purpose:      ESP32 board and framework configuration</span>
+<span class="c1">#  Version:      0.7.1</span>
+<span class="c1">#  Date:         2025-07-24</span>
+<span class="c1">#  Author:       Roland Tembo Hendel &lt;rhendel@nexuslogic.com&gt;</span>
+<span class="c1">#</span>
+<span class="c1">#  Description:  Modular include for ESPHome projects targeting ESP32-S3.</span>
+<span class="c1">#</span>
+<span class="c1">#  License:      GNU General Public License v3.0</span>
+<span class="c1">#                SPDX-License-Identifier: GPL-3.0-or-later</span>
+<span class="c1">#  Copyright:    (c) 2025 Roland Tembo Hendel</span>
+<span class="c1">#                This program is free software: you can redistribute it and/or</span>
+<span class="c1">#                modify it under the terms of the GNU General Public License.</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  YAML linter configuration</span>
+<span class="c1">#   - Disables quoted-strings rule for improved readability</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1"># yamllint disable rule:quoted-strings</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  ESP32 (30 Pin Package) Dev Module standard Pinout Map (Vertical, Top View)</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#</span>
+<span class="c1">#                                     ┌────────────────┐</span>
+<span class="c1">#                                 EN ─┤ 01 ┌──────┐ 30 ├─ GPIO23  SPI_MOSI  VSPI_MOSI</span>
+<span class="c1">#               VP  ADC1_CH0  GPIO36 ─┤ 02 │      │ 29 ├─ GPIO22  I2C_SCL</span>
+<span class="c1">#               VN  ADC1_CH3  GPIO39 ─┤ 03 │      │ 28 ├─ GPIO01  U0TXD     CLK3</span>
+<span class="c1">#                   ADC1_CH6  GPIO34 ─┤ 04 └──────┘ 27 ├─ GPIO03  U0RXD     CLK2</span>
+<span class="c1">#                   ADC1_CH7  GPIO35 ─┤ 05          26 ├─ GPIO21  I2C_SDA</span>
+<span class="c1">#   XTAL32  TOUCH9  ADC1_CH4  GPIO32 ─┤ 06          25 ├─ GPIO19  SPI_MISO  VSPI_MISO</span>
+<span class="c1">#           TOUCH8  ADC1_CH5  GPIO33 ─┤ 07          24 ├─ GPIO18  SPI_SCK   VSPI_CLK</span>
+<span class="c1">#             DAC1  ADC2_CH8  GPIO25 ─┤ 08  ESP-32  23 ├─ GPIO05  VSPI_CS</span>
+<span class="c1">#             DAC2  ADC2_CH9  GPIO26 ─┤ 09          22 ├─ GPIO17  U2TXD</span>
+<span class="c1">#           TOUCH7  ADC2_CH7  GPIO27 ─┤ 10          21 ├─ GPIO16  U2RXD</span>
+<span class="c1"># HSPI_CLK  TOUCH6  ADC2_CH6  GPIO14 ─┤ 11          20 ├─ GPIO04  ADC2_CH0  TOUCH0</span>
+<span class="c1"># HSPI_MISO TOUCH5  ADC2_CH5  GPIO12 ─┤ 12          19 ├─ GPIO02  ADC2_CH2  TOUCH2   SPI_CS</span>
+<span class="c1"># HSPI_MOSI TOUCH4  ADC2_CH4  GPIO13 ─┤ 13          18 ├─ GPIO15  ADC2_CH3  TOUCH3   HSPI_CS</span>
+<span class="c1">#                                GND ─┤ 14          17 ├─ GND</span>
+<span class="c1">#                         5V     VIN ─┤ 15          16 ├─ VCC     3.3V</span>
+<span class="c1">#                                     └──────USB───────┘</span>
+<span class="c1">#</span>
+<span class="c1">#  Notes:</span>
+<span class="c1">#    - GPIO6-11 are used for SPI flash and are not available for user IO</span>
+<span class="c1">#    - GPIO1 (TX0), GPIO3 (RX0) are UART0 (serial console) pins</span>
+<span class="c1">#      - can be repurposed if not using serial, but be careful</span>
+<span class="c1">#        if you need serial logging or programming</span>
+<span class="c1">#    - GPIO2 is a strapping pin; must be low at boot for some modules</span>
+<span class="c1">#      - this pin should not be pulled high or low at boot/reset</span>
+<span class="c1">#      - avoid using for output that could interfere with boot</span>
+<span class="c1">#    - GPIO5  is a strapping pin; must be high at boot</span>
+<span class="c1">#      - this pin should not be pulled low at boot/reset</span>
+<span class="c1">#      - avoid using for output or with pull-ups</span>
+<span class="c1">#    - GPIO3 is Rx pin for flashing/debugging</span>
+<span class="c1">#    - GPIO12 is a strapping pin; high at boot selects high voltage for flash</span>
+<span class="c1">#      - this pin should not be pulled high or low at boot/reset</span>
+<span class="c1">#      - avoid using for output or with pull-ups</span>
+<span class="c1">#    - GPIO15 is a strapping pin; must be low at boot</span>
+<span class="c1">#      - this pin should not be pulled high or low at boot/reset</span>
+<span class="c1">#      - avoid using for output or with pull-ups</span>
+<span class="c1">#    - GPIO16, GPIO17 is used for PSRAM on some modules</span>
+<span class="c1">#        - check your board’s datasheet before using</span>
+<span class="c1">#    - GPIO20, GPIO24 is not available on most ESP32 modules</span>
+<span class="c1">#    - GPIO34-GPIO39 are input only</span>
+<span class="c1">#    - not all pins are available on all modules; check your board&#39;s datasheet</span>
+<span class="c1">#    - see ESP32 datasheet for full alternate functions</span>
+<span class="c1">#</span>
+<span class="c1">#  ESP32 Datasheet: </span>
+<span class="c1">#      https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf</span>
+<span class="c1">#</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Target ESP32 board and Arduino framework declaration</span>
+<span class="c1">#   - board: Target ESP32 Dev Module (ESP-WROOM-32)</span>
+<span class="c1">#   - framework: Arduino core for ESP32</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       board: Target board (e.g., esp32dev)</span>
+<span class="c1">#       framework.type: Framework type (e.g., arduino)</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">esp32</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">board</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">esp32dev</span><span class="w">                 </span><span class="c1"># board Target board: ESP32 Dev Module (ESP-WROOM-32)</span>
+<span class="w">  </span><span class="nt">framework</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">type</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">arduino</span><span class="w">                 </span><span class="c1"># framework.type Arduino core for ESP32</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  SPI bus configuration for ST7789V display module</span>
+<span class="c1">#   - Configures SPI bus for display communication</span>
+<span class="c1">#   - Assigns clock and MOSI pins</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       clk_pin: Clock pin for SPI</span>
+<span class="c1">#       mosi_pin: MOSI data pin</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">spi</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">clk_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GPIO18</span><span class="w">              </span><span class="c1"># clk_pin Clock pin for SPI</span>
+<span class="w">  </span><span class="nt">mosi_pin</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">GPIO23</span><span class="w">             </span><span class="c1"># param mosi_pin MOSI data pin</span>
+
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="c1">#  Display Interface Configuration</span>
+<span class="c1">#   - Configures GPIO pins for display communication</span>
+<span class="c1">#   - Assigns Chip Select, Data/Command, and Reset pins</span>
+<span class="c1">#   - Parameters:</span>
+<span class="c1">#       display_cs: pin Chip Select pin</span>
+<span class="c1">#       display_dc: pin Data/Command pin</span>
+<span class="c1">#       display_reset: pin Reset pin</span>
+<span class="c1"># ------------------------------------------------------------------------------</span>
+<span class="nt">substitutions</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">display_cs_pin</span><span class="p">:</span><span class="w">    </span><span class="s">&quot;GPIO13&quot;</span><span class="w">       </span><span class="c1"># cs_pin Chip select pin</span>
+<span class="w">  </span><span class="nt">display_dc_pin</span><span class="p">:</span><span class="w">    </span><span class="s">&quot;GPIO04&quot;</span><span class="w">       </span><span class="c1"># dc_pin Data/command pin</span>
+<span class="w">  </span><span class="nt">display_reset_pin</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;GPIO17&quot;</span><span class="w">       </span><span class="c1"># reset_pin Reset line</span>
+</code></pre></div>
               
             </div>
           </div><footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../display_st7789/" class="btn btn-neutral float-left" title="Display"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../api/" class="btn btn-neutral float-left" title="API"><span class="icon icon-circle-arrow-left"></span> Previous</a>
         <a href="../esp32s3/" class="btn btn-neutral float-right" title="esp32s3">Next <span class="icon icon-circle-arrow-right"></span></a>
     </div>
 
@@ -323,7 +331,7 @@
         </span>
     
     
-      <span><a href="../display_st7789/" style="color: #fcfcfc">&laquo; Previous</a></span>
+      <span><a href="../api/" style="color: #fcfcfc">&laquo; Previous</a></span>
     
     
       <span><a href="../esp32s3/" style="color: #fcfcfc">Next &raquo;</a></span>
