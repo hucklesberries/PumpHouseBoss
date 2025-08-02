@@ -1,26 +1,39 @@
 # Release Notes
 
-> **⚠️ _This project is currently under active development and is _not_ ready for practical deployment. Use at your own risk!_ ⚠️**
-## Version 0.7.1 – July 28, 2025
+> **Scope & Purpose:**
+> This document provides detailed release notes, milestones, and project status for each version of PumpHouseBoss. It is the authoritative record of changes and improvements for each release.
 
-**Milestone: Standards compliance, versioning, and automation improvements**
+> **⚠️ _This project is currently under active development and is _not_ ready for practical deployment. Use at your own risk!_ ⚠️**
+
+
+## Version 0.8.0d – 2025-08-02
+
+**Milestone: YAML core improvements, header standardization, PCO framework, and enhanced automation**
 
 ### Highlights
-- Checked and fixed file permissions for scripts and assets (icons)
-- Improved README.md: file tree now includes concise comments for every file
-- Ensured all automation, Makefiles, and scripts are standards-compliant
-- Added/updated documentation for check-in and release process
-- General code and documentation cleanup for clarity and maintainability
+- Refined and standardized headers in all YAML, Bash, and Makefile files
+- Improved quoting and substitution practices in YAML for ESPHome compatibility
+- Modularized configuration and package includes for maintainability
+- Enhanced template sensors and metadata blocks for Home Assistant integration
+- Upgraded pre-commit.sh for modular, maintainable, and DRY checks
+- Populated arrays for YAML, Bash, and Makefile discovery in automation scripts
+- Added the full PCO pre-commit framework for automated standards enforcement
+- Provided example PCO scripts (pass, warn, fail) for framework demonstration
+- Implemented the first functional PCO script to check version numbers in YAML files
+- Planned new script for strict header standards enforcement across all project files
+- Validated build, upload, and logging workflows for ESPHome devices
+- Addressed and resolved issues with serial logging and firmware output
+- Maintained code quality and project standards through automation and review
 
 ### Project Status
-- All major files and scripts are now standards-compliant
-- Versioning and permissions are consistent across the project
-- Automated build, upload, and logging via Makefile
-- Comprehensive documentation and workflow standards
+- YAML and automation scripts are now robust, maintainable, and standards-compliant
+- Header and quoting practices are consistent across the project
+- Build, upload, and logging workflows validated for all variants
+- Standards enforcement and automation are integrated into the workflow
 
 ---
 
-## Version 0.7.0 – July 26, 2025
+## Version 0.7.0 – 2025-07-26
 
 **Pre-release milestone: Support for multiple Variants, and improved/automated processes and documentation**
 
@@ -43,7 +56,7 @@
 
 ---
 
-## Version 0.6.7 – July 23, 2025
+## Version 0.6.7 – 2025-07-23
 
 **Pre-release milestone: Modular, maintainable, and secure ESPHome system for ESP32S3**
 
@@ -66,4 +79,5 @@
 
 ---
 
-> **Note:** This is a pre-release for internal and development use. v1.0.0 will mark the first stable public release.
+> **Note:** This is a pre-release for internal and development use. v1.x.y will mark the first stable public release.
+

@@ -1,5 +1,8 @@
 # PumpHouseBoss: ESPHome Pumphouse Monitor
 
+> **Scope & Purpose:**
+> This document provides a high-level overview, features, and onboarding information for the PumpHouseBoss project. It is the starting point for new contributors and users, describing the system, its capabilities, and how to get started.
+
 An ESPHome-based system for monitoring and managing commercial or residential pumphouse or water distribution/filtration systems.
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -14,12 +17,17 @@ An ESPHome-based system for monitoring and managing commercial or residential pu
 
 
 ## Table of Contents
+
+## Table of Contents
 - [Product Features](#product-features)
 - [Authorship](#authorship)
 - [License](#license)
 - [Available Variants](#available-variants)
 - [Firmware Features](#firmware-features)
 - [Getting Started](#getting-started)
+- [Review Documentation](#review-documentation)
+- [Configure Your Build](#configure-your-build)
+- [Build, Flash, and Test](#build-flash-and-test)
 - [Collaboration](#collaboration)
 - [Automations](#automations)
 - [FAQ / Common Issues](#faq--common-issues)
@@ -93,68 +101,23 @@ See the `variants/` directory for detailed configuration and hardware mapping fo
 git clone https://github.com/hucklesberries/PumpHouseBoss.git
 cd PumpHouseBoss
 
-│
-├── CHANGELOG.md                    # Project changelog
-├── common/                             # Shared YAML configs and hardware includes
-│   ├── display_st7789.yaml             # ST7789 display config
-│   ├── esp32.yaml                      # ESP32 base config
-│   ├── esp32s3.yaml                    # ESP32-S3 base config
-│   ├── logging.yaml                    # Logging config
-│   ├── ota.yaml                        # OTA update config
-│   ├── secrets.template.yaml           # Template for secrets file
-│   ├── secrets.yaml                    # Actual secrets (not in repo)
-│   ├── watchdog.yaml                   # Watchdog timer config
-│   ├── web_server.yaml                 # Web server config
-│   └── wifi.yaml                       # WiFi config
-├── config/                         # Build and variant configuration
-│   ├── config.mk                       # Main build config
-│   ├── default.mk                      # Default build settings
-│   ├── phb-pro-test.mk                 # Test config for Pro variant
-│   ├── phb-std-test.mk                 # Test config for Standard variant
-│   └── template.mk                     # Template for new configs
-├── docs/                           # Documentation and MkDocs config
-│   └── mkdocs.yml                      # MkDocs site config
-├── GIT-COPILOT.md                  # Copilot session context and usage notes
-├── icons/                          # Status and WiFi icon images
-│   ├── status_error.png                # Error status icon
-│   ├── status_ok.png                   # OK status icon
-│   ├── status_warn.png                 # Warning status icon
-│   ├── wifi-0.png                      # WiFi signal icon (0%)
-│   ├── wifi-100.png                    # WiFi signal icon (100%)
-│   ├── wifi_0.png                      # WiFi signal icon (0%)
-│   ├── wifi_1.png                      # WiFi signal icon (25%)
-│   ├── wifi_2.png                      # WiFi signal icon (50%)
-│   ├── wifi_3.png                      # WiFi signal icon (75%)
-│   └── wifi_4.png                      # WiFi signal icon (100%)
-├── LICENSE                         # Project license (GPLv3)
-├── logs/                           # Log files (created at runtime)
-├── Makefile                        # Main project Makefile
-├── makefile.mk                     # Makefile macros and helpers
-├── README.md                       # Project overview and documentation
-├── RELEASE-CHECKLIST.md            # Release checklist (if present)
-├── RELEASE.md                      # Release notes and instructions
-├── scripts/                        # Project scripts and automation
-│   ├── .common.sh                      # Shared shell functions for scripts
-│   └── regression-test.sh              # Regression test automation
-├── STANDARDS.md                    # Coding standards and conventions
-├── TODO.md                         # Project TODOs and future plans
-├── variants/                       # Device variant definitions
-│   ├── phb-pro/                        # Pro variant files
-│   │   ├── phb-pro-hardware.md             # Pro hardware guide
-│   │   ├── phb-pro-overview.md             # Pro functional overview
-│   │   ├── phb-pro.mk                      # Pro variant Makefile config
-│   │   └── phb-pro.yaml                    # Pro variant YAML config
-│   └── phb-std/                        # Standard variant files
-│       ├── phb-std-hardware.md             # Standard hardware guide
-│       ├── phb-std-overview.md             # Standard functional overview
-│       ├── phb-std.mk                      # Standard variant Makefile config
-│       └── phb-std.yaml                    # Standard variant YAML config
-└── VERSION                         # Project version string
-```
 
 
 ### 2. Review Documentation
 Read all Markdown files in the project root for standards, changelogs, and workflow:
+
+### Wiki
+The project wiki is maintained in `docs/src/` for easy editing and backup. Key pages:
+
+- **Wiki Home**: docs/src/Home.md
+- **Overview**: docs/src/Overview.md
+- **Getting Started**: docs/src/Getting-Started.md
+- **Hardware Overview**: docs/src/Hardware-Overview.md
+- **Firmware & Configuration**: docs/src/Firmware-and-Configuration.md
+- **Usage and Troubleshooting**: docs/src/Usage-and-Troubleshooting.md
+- **Developer Guide**: docs/src/Developer-Guide.md
+- **FAQ**: docs/src/FAQ.md
+- **Contact & Support**: docs/src/Contact-and-Support.md
 
 | Document Title | Description |
 |---|---|
@@ -163,7 +126,7 @@ Read all Markdown files in the project root for standards, changelogs, and workf
 | [RELEASE.md](RELEASE.md) | Release notes and instructions for new versions |
 | [CHANGELOG.md](CHANGELOG.md) | Project changelog; documents all major changes and releases |
 | [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md) | (If present) Record of previous check-in status |
-| [GIT-COPILOT.md](GIT-COPILOT.md) | Session context, developer notes, and Copilot usage |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Contributor/developer guide, session context, and Copilot usage |
 | [TODO.md](TODO.md) | Project TODOs and possible future enhancements |
 
 ### 3. Configure Your Build
@@ -174,6 +137,58 @@ Copy the secrets template and edit your secrets:
   ```
 Create and edit your build configuration:
   ```sh
+│
+├── CHANGELOG.md                  # Project changelog
+├── CHECKIN-CHECKLIST.md          # Check-in checklist
+├── configure.sh                  # Build/configuration script
+├── GIT-COPILOT.md                # Copilot usage notes
+├── LICENSE                       # Project license (GPLv3)
+├── Makefile                      # Main project Makefile
+├── Makefile.in                   # Makefile template
+├── README.md                     # Project overview and documentation
+├── regression-test.sh            # Regression test automation
+├── RELEASE.md                    # Release notes and instructions
+├── secrets.template.yaml         # Template for secrets file
+├── VERSION                       # Project version string
+├── build/                        # Build output
+│   ├── phb-esp32-00/
+│   │   └── phb-esp32-00.yaml
+│   └── phb-esp32s3-00/
+│       └── phb-esp32s3-00.yaml
+├── common/                       # Shared YAML configs and hardware includes
+│   ├── display_st7789.yaml
+│   ├── esp32.yaml
+│   ├── esp32s3.yaml
+│   ├── logging.yaml
+│   ├── ota.yaml
+│   ├── secrets.yaml              # Actual secrets (not in repo)
+│   ├── watchdog.yaml
+│   ├── web_server.yaml
+│   └── wifi.yaml
+├── config/
+│   └── phb-esp32-00.in
+├── docs/
+│   ├── mkdocs.yml
+│   └── yaml-md.py
+├── icons/
+│   ├── status_error.png
+│   ├── status_ok.png
+│   ├── status_warn.png
+│   ├── wifi_0.png
+│   ├── wifi_1.png
+│   ├── wifi_2.png
+│   ├── wifi_3.png
+│   ├── wifi_4.png
+│   ├── wifi-0.png
+│   └── wifi-100.png
+├── logs/
+│   ├── phb-esp32-00-*.log
+│   └── ...
+├── variants/
+│   ├── esg32-no-display/
+│   │   └── main.yaml
+│   └── esg32s3-ws-pico-lcd-1.3/
+│       └── main.yaml
   cp configuration/template.mk configuration/config.mk
   # Edit configuration/config.mk to match your hardware and preferences
   ```
@@ -201,8 +216,9 @@ Use the following Makefile targets for common tasks:
 
   **Documentation:**
   - `make docs` – Generate all documentation (ESPHome and MkDocs)
-  - `make docs-esphome` – Generate ESPHome documentation
-  - `make docs-mkdoc` – Generate MkDocs documentation
+  - `make docs-esphome` – Generate ESPHome style documentation
+  - `make docs-mkdoc` – Generate MkDocs style documentation (local build only)
+  - `make docs-deploy` – Build and deploy MkDocs site to GitHub Pages (public docs), and sync docs/wiki/ to the GitHub Wiki repository
 
   **Cleanup:**
   - `make clean` – Remove build artifacts and logs
@@ -218,6 +234,15 @@ Use the following Makefile targets for common tasks:
   - `make version` – Show project and ESPHome version
   - `make buildvars` – Show current build configuration values
   - `make help` – Show help/target summary
+
+#### Note on Communication Path (COMM_PATH)
+The Makefile uses the `COMM_PATH` variable to control how the build host machine communicates with the target ESP32/ESP32s3 device-either via serial port or the network (OTA).
+- If `COMM_PATH` is set to a device hostname (e.g., `some_device.local`), upload is performed over OTA (WiFi).
+- If `COMM_PATH` is set to a serial port (e.g., `COM8` or `/dev/ttyUSB0`), upload is performed over serial.
+
+**Examples:**
+- `make upload COMM_PATH=phb-esp32-00.local` (OTA upload)
+- `make upload COMM_PATH=COM8` (Serial upload)
 
 
 ## Collaboration

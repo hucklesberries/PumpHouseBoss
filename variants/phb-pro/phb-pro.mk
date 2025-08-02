@@ -2,7 +2,7 @@
 #  File:         variant.mk
 #  File Type:    Makefile Variant Configuration
 #  Purpose:      PumpHouseBoss Pro Variant build variables and defaults
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-26
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -30,11 +30,4 @@
 VARIANT        ?= phb-pro
 PLATFORM       ?= esp32s3
 DEVICE_NAME    ?= phb-pro
-NODE_NAME      ?= phb-pro-00
 FRIENDLY_NAME  ?= PumpHouse Boss - Pro
-
-# [Optional] static network values
-NUM_PORTS      ?= 8
-
-# [Optional] programming values
-OTA_NAME       ?= phb-pro-00.local

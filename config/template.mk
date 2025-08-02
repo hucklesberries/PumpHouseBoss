@@ -2,7 +2,7 @@
 #  File:         template.mk
 #  File Type:    Makefile Include
 #  Purpose:      PumpHouse Boss Build Configuration Template
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -37,9 +37,6 @@ DEVICE_NAME    ?=
 NODE_NAME      ?=
 FRIENDLY_NAME  ?=
 
-# [Required] Variant Options [REQUIRED]
-NUM_PORTS      ?= 1
-
 # [Optional] static network values
 STATIC_IP      ?=
 STATIC_GATEWAY ?=
@@ -47,6 +44,5 @@ STATIC_SUBNET  ?=
 STATIC_DNS1    ?=
 STATIC_DNS2    ?=
 
-# [Optional] programming values (required for uploading and other device operations)
-OTA_NAME       ?=
-SERIAL_ID      ?=
+# [Optional] communications poth to target
+COMM_PATH     ?=

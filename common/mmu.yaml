@@ -1,0 +1,53 @@
+
+# ===============================================================================
+#  File:         mmu.yaml
+#  File Type:    ESPHome YAML Include
+#  Purpose:      MMU PWM Sensor Logic Block (modular include)
+#  Project:      PumpHouseBoss
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Measures PWM pulse width on the specified MMU sensor pin (set via substitution).
+#                - Reports pulse width in microseconds (us) using ESPHome's pulse_width sensor.
+#                - Logs the measured value to the ESPHome log every second for diagnostics.
+#                - Designed for modular inclusion in device YAMLs (one block per MMU sensor).
+#                - Set the pin using a substitution (e.g., mmu_sensor_0_pin).
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ===============================================================================
+
+# ------------------------------------------------------------------------------
+#  YAML linter configuration
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+#  PWM Sensor Block: MMU Sensor 0
+#   - Measures pulse width on ${mmu_sensor_0_pin} (set via substitution)
+#   - Reports value in microseconds (us)
+#   - Logs value to ESPHome log every second (for debugging/diagnostics)
+#   - Parameters:
+#       pin: GPIO pin (from substitution, e.g., mmu_sensor_0_pin)
+#       name: Sensor name (e.g., "MMU Sensor 0 PWM")
+#       id: Sensor ID (e.g., mmu_sensor_0_pwm)
+#       update_interval: How often to sample (1s recommended)
+#       internal: true (not exposed to Home Assistant)
+# ------------------------------------------------------------------------------
+sensor:
+  - platform: pulse_width
+    pin: ${mmu_sensor_0_pin}
+    name: "MMU Flow Sensor 0"
+    id: mmu_sensor_0_pwm
+    update_interval: 1s
+    internal: true
+
+interval:
+  - interval: 3s
+    then:
+      - lambda: |-
+          ESP_LOGI("mmu", "MMU Sensor 0 PWM: %f us", id(mmu_sensor_0_pwm).state);

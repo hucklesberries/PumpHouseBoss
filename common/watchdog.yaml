@@ -2,7 +2,7 @@
 #  File:         watchdog.yaml
 #  File Type:    ESPHome YAML Include
 #  Purpose:      System reliability watchdog component for ESP32 platforms
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #

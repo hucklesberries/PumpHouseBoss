@@ -1,0 +1,46 @@
+# ===============================================================================
+#  File:         display_pcf8574.yaml
+#  File Type:    ESPHome YAML Include
+#  Purpose:      LCD display (PCF8574 I2C backpack) configuration fragment
+#  Project:      PumpHouseBoss
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  I2C LCD display configuration for ESP32/ESP32-S3 using PCF8574
+#                backpack. Supports 16x2 or 20x4 displays. Placeholders are
+#                replaced by the Makefile during build.#
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ===============================================================================
+
+
+# ------------------------------------------------------------------------------
+#  YAML linter configuration
+#   - Disables quoted-strings rule for improved readability
+#   - Ensures that string values do not require unnecessary quotes, improving
+#     readability and maintainability of the YAML configuration.
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+#  LCD Display (PCF8574 I2C Backpack) Configuration
+#   - Configures a character LCD display (16x2 or 20x4) using the PCF8574 I2C backpack
+#   - Parameters:
+#       platform: Display platform (lcd_pcf8574)
+#       dimensions: Display size (columns x rows, e.g., 20x4)
+#       address: I2C address of the PCF8574 (0x27 or 0x3F typical)
+#       lambda: Custom rendering logic for display content
+#   - Example usage:
+#       - Shows device name and firmware version centered on the display
+# ------------------------------------------------------------------------------
+display:
+  - platform: lcd_pcf8574
+    dimensions: 20x4
+    address: 0x27  # or 0x3F, check your module
+    lambda: |-
+      it.print(0, 1, "PumpHouseBoss Pro");
+      it.printf(1, 2, "FW Version: %s", id(firmware_version).state.c_str());

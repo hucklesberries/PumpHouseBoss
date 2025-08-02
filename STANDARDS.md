@@ -1,5 +1,8 @@
 # STANDARDS.md — Project Conventions & Coding Standards
 
+> **Scope & Purpose:**
+> This document defines the conventions, standards, and best practices for all contributors to PumpHouseBoss. It ensures code quality, maintainability, and a consistent developer experience across the project.
+
 This document defines the conventions, standards, and best practices for all contributors to the PumpHouseBoss project. Adhering to these standards ensures code quality, maintainability, and a consistent developer experience.
 
 For the purpose of this project, the following terms are defined:
@@ -10,10 +13,14 @@ For the purpose of this project, the following terms are defined:
 
 ---
 
+## Table of Contents
 
 ## Table of Contents
 - [General Principles](#general-principles)
 - [Project Files](#project-files)
+- [Tabs and Indentation](#tabs-and-indentation)
+- [Line Endings](#line-endings)
+- [Line Spacing](#line-spacing)
 - [Build Files](#build-files)
 - [Makefiles](#makefiles)
 - [Shell Scripts](#shell-scripts)
@@ -146,7 +153,7 @@ Makefiles are a type of build file and must follow all build file standards in a
 
 
 ## Session Continuity
-- Use `GIT-COPILOT.md` for session context and developer continuity.
+- Use `CONTRIBUTING.md` for session context and developer continuity.
 
 ---
 

@@ -17,9 +17,9 @@ build/
 **/.trunk
 
 # Documentation directories
-docs/esphome
-docs/mkdocs
-docs/html
+docs/mkdocs-staged
+docs/site-staged
+docs/wiki-staged
 
 # Log Files
 logs/

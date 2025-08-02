@@ -2,7 +2,7 @@
 #  File:         default.mk
 #  File Type:    Makefile Include
 #  Purpose:      PumpHouse Boss Build Default Configuration
-#  Version:      0.7.0
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #

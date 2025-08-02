@@ -1,0 +1,109 @@
+# ------------------------------------------------------------------------------
+#  File:         indications.yaml
+#  File Type:    ESPHome YAML Include
+#  Purpose:      System status LED driver/logic
+#  Version:      0.8.0d
+#  Date:         2025-07-24
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Drives 4 status LEDs for system state indication:
+#                  - White: Power/Status (blinks before boot, steady ON after boot)
+#                  - Green: WiFi (ON if connected, blinks if not)
+#                  - Blue: Home Assistant/API (ON if connected, blinks if not)
+#                  - Red:  MMU/Alert (currently fast blink as placeholder)
+#                Uses ESPHome interval and lambda logic for flexible, real-time
+#                status indication. Pin assignments are set via substitutions.
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+#  YAML linter configuration
+#   - Disables quoted-strings rule for improved readability
+#   - Ensures that string values do not require unnecessary quotes, improving
+#     readability and maintainability of the YAML configuration.
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+#  LED Indication Logic
+#   - Drives 4 status LEDs (pins assigned via substitutions)
+#   - Each LED is defined as a binary output
+#   - LED logic is handled in a 500ms interval lambda block
+# ------------------------------------------------------------------------------
+output:
+  - platform: gpio
+    id: led_power
+    pin: ${led_power_pin}
+  - platform: gpio
+    id: led_wifi_status
+    pin: ${led_wifi_status_pin}
+  - platform: gpio
+    id: led_host_status
+    pin: ${led_host_status_pin}
+  - platform: gpio
+    id: led_mmu_status
+    pin: ${led_mmu_status_pin}
+
+
+# ------------------------------------------------------------------------------
+#  LED Logic:
+#    - White (Power/Status):
+#        * Blinks before system boot
+#        * Steady ON after boot
+#    - Green (WiFi):
+#        * ON if WiFi connected
+#        * Blinks if not connected
+#    - Blue (Home Assistant/API):
+#        * ON if Home Assistant API connected
+#        * Blinks if not connected
+#    - Red (MMU/Alert):
+#        * Fast blink (placeholder for future MMU/alert logic)
+# ------------------------------------------------------------------------------
+interval:
+  - interval: 500ms
+    then:
+      - lambda: |-
+          // White LED (Power/Status): Blink before boot, steady ON after boot
+          static bool white_blink = false;
+          if (id(system_boot).state) {
+            id(led_power).turn_on();
+          } else {
+            white_blink = !white_blink;
+            if (white_blink) id(led_power).turn_on();
+            else id(led_power).turn_off();
+          }
+          // Green LED (WiFi): ON if connected, blink if not
+          static bool green_blink = false;
+          if (id(wifi_connected).state) {
+            id(led_wifi_status).turn_on();
+          } else {
+            green_blink = !green_blink;
+            if (green_blink) id(led_wifi_status).turn_on();
+            else id(led_wifi_status).turn_off();
+          }
+          // Blue LED (HA/API): ON if connected, blink if not
+          static bool blue_blink = false;
+          if (id(ha_connected)) {
+            id(led_host_status).turn_on();
+          } else {
+            blue_blink = !blue_blink;
+            if (blue_blink) id(led_host_status).turn_on();
+            else id(led_host_status).turn_off();
+          }
+          // Red LED: fast blink (placeholder)
+          static bool red_state = false;
+          red_state = !red_state;
+          if (red_state) id(led_mmu_status).turn_on();
+          else id(led_mmu_status).turn_off();

@@ -2,7 +2,7 @@
 #  File:         variant.mk
 #  File Type:    Makefile Variant Configuration
 #  Purpose:      PumpHouseBoss Standard Variant build variables and defaults
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-26
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -30,11 +30,4 @@
 VARIANT        ?= phb-std
 PLATFORM       ?= esp32
 DEVICE_NAME    ?= phb-std
-NODE_NAME      ?= phb-std-00
 FRIENDLY_NAME  ?= PumpHouse Boss - Standard
-
-# [Optional] static network values
-NUM_PORTS      ?= 1
-
-# [Optional] programming values
-OTA_NAME       ?= phb-std-00.local

@@ -2,7 +2,7 @@
 #  File:         phb-pro.yaml
 #  File Type:    ESPHome YAML Main
 #  Purpose:      PumpHouseBoss Pro Variant Main
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -24,6 +24,15 @@
 #  Copyright:    (c) 2025 Roland Tembo Hendel
 #                This program is free software: you can redistribute it and/or
 #                modify it under the terms of the GNU General Public License.
+#
+#  Note:         Build-time Variable Substitution:
+#                - Variables in the form __VAR_NAME__ are automatically replaced
+#                  with project-specific values during the build process
+#                  (see Makefile and sed logic).
+#                - This enables flexible, reusable configuration for multiple
+#                  hardware variants.
+#                - Do not edit these variables directly in the build output.
+#                  (Example: __NODE_NAME__, __PLATFORM__, __VERSION__)
 #
 #  Note:         Co-developed with GitHub Copilot by OpenAI.
 # ------------------------------------------------------------------------------
@@ -50,19 +59,23 @@
 #       watchdog_early_trigger: Early trigger before timeout
 # ------------------------------------------------------------------------------
 substitutions:
-  chip_set: __PLATFORM__
-  node_name: __NODE_NAME__
-  friendly_name: __FRIENDLY_NAME__
-  version: __VERSION__
+  chip_set: "__PLATFORM__"
+  node_name: "__NODE_NAME__"
+  friendly_name: "__FRIENDLY_NAME__"
+  version: "__VERSION__"
   watchdog_timeout: "30s"
   watchdog_trigger_pin: "GPIO07"
   watchdog_early_trigger: "25s"
+  led_power_pin: "GPIO7"
+  led_wifi_status_pin: "GPIO15"
+  led_host_status_pin: "GPIO16"
+  led_mmu_status_pin: "GPIO17"
+  mmu_sensor_0_pin: "GPIO19"
+
 
 # ------------------------------------------------------------------------------
 #  Common package includes for modular configuration
 #   - Modularizes board, display, network, OTA, logging, and watchdog config
-#   - Parameters:
-#       esp32s3: ESP32s3 board and framework config
 #       display: Display configuration (e.g., ST7789V panel)
 #       wifi: Wi-Fi credentials, static IP, and fallback
 #       ota: OTA settings (port, auth)
@@ -71,12 +84,34 @@ substitutions:
 #       watchdog: System reliability watchdog component
 # ------------------------------------------------------------------------------
 packages:
-  esp32s3:  !include __PROJECT_ROOT__/common/__PLATFORM__.yaml
-  wifi:     !include __PROJECT_ROOT__/common/wifi.yaml
-  ota:      !include __PROJECT_ROOT__/common/ota.yaml
-  web:      !include __PROJECT_ROOT__/common/web_server.yaml
-  logging:  !include __PROJECT_ROOT__/common/logging.yaml
-  watchdog: !include __PROJECT_ROOT__/common/watchdog.yaml
+  esp32s3:     !include common/__PLATFORM__.yaml
+  wifi:        !include common/wifi.yaml
+  ota:         !include common/ota.yaml
+  api:         !include common/api.yaml
+  web:         !include common/web_server.yaml
+  logging:     !include common/logging.yaml
+  watchdog:    !include common/watchdog.yaml
+  indications: !include common/indications.yaml
+  display:     !include common/display_pcf8574.yaml
+  mmu:         !include common/mmu.yaml
+
+
+# ------------------------------------------------------------------------------
+#  Global Variables
+#   - Defines internal variables for use in automations and logic blocks
+#   - Example: ha_connected tracks Home Assistant API connection status
+#   - Parameters:
+#       id: Variable name (referenced in lambdas)
+#       type: Data type (e.g., bool, int, float)
+#       restore_value: Whether to restore value after reboot (no for runtime state)
+#       initial_value: Value at boot
+# ------------------------------------------------------------------------------
+globals:
+  - id: ha_connected
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
 
 # ------------------------------------------------------------------------------
 #  ESPHome-specific metadata and on_boot logic
@@ -86,6 +121,8 @@ packages:
 #       name: Node name
 #       friendly_name: Human-readable name
 #       on_boot: Actions to perform on boot
+#   - NOTE: ESPHome does not currently support reset diagnostics on ESP32-S3.
+#           These are placeholders until native support is available.
 # ------------------------------------------------------------------------------
 esphome:
   name: __NODE_NAME__
@@ -95,26 +132,51 @@ esphome:
     then:
       - text_sensor.template.publish:
           id: firmware_version
-          state: version         # Publishes version string to Home Assistant on boot
+          state: "__VERSION__"
+      - text_sensor.template.publish:
+          id: reset_reason
+          state: "Power On Reset"
+      - sensor.template.publish:
+          id: last_reset_code
+          state: 1
+
 
 # ------------------------------------------------------------------------------
-#  Template sensor exposing firmware version as Home Assistant text_sensor
-#   - Publishes the firmware version string to Home Assistant
-#   - Parameters:
-#       name: Sensor name
-#       id: Sensor ID
-#       icon: Home Assistant icon
-#       update_interval: Update frequency
-#       lambda: Lambda function for value
+#  I2C Bus Configuration
+#   - Configures the I2C bus for peripherals (e.g., LCD, sensors)
+#   - sda: GPIO pin used for I2C data (SDA)
+#   - scl: GPIO pin used for I2C clock (SCL)
+#   - scan: true enables automatic device address scanning (shows in logs)
 # ------------------------------------------------------------------------------
-text_sensor:
+i2c:
+  sda: 18
+  scl: 9
+  scan: true
+
+
+# ------------------------------------------------------------------------------
+#  ESP32 Reset Diagnostics (Fallback for ESP32-S3)
+#   - ESPHome does not yet support esp32_reset_reason/last_reset on ESP32-S3.
+#   - These template sensors default to 'Power On Reset' (string) and 1 (numeric).
+#   - Update to native sensors when ESPHome adds support for ESP32-S3.
+#   - Parameters:
+#       platform: template
+#       name: Sensor name (shown in Home Assistant)
+#       id: Sensor ID for internal reference
+#   - NOTE: ESPHome does not currently support reset diagnostics on ESP32-S3.
+#           These are placeholders until native support is available.
+# ------------------------------------------------------------------------------
+sensor:
   - platform: template
-    name: "Firmware Version"      # User-visible sensor name in HA
-    id: firmware_version
-    icon: "mdi:tag"
-    update_interval: never        # Static value set only on boot
+    name: "Last Reset Code"      # Fallback: always 1 (Power On Reset code)
+    id: last_reset_code
     lambda: |-
-      return {"__VERSION__"};
+      return 1;
+    update_interval: never
+  - platform: uptime
+    name: "Uptime"                # Uptime in seconds since boot
+    id: uptime_sensor
+
 
 # ------------------------------------------------------------------------------
 #  Uptime and flow rate sensors (hall-effect pulse counter)
@@ -133,7 +195,43 @@ text_sensor:
 #       accuracy_decimals: Number of decimals
 #       filters: Calibration factor
 # ------------------------------------------------------------------------------
-sensor:
-  - platform: uptime
-    name: "Uptime"                # Uptime in seconds since boot
-    id: uptime_sensor
+binary_sensor:
+  - platform: status
+    id: wifi_connected
+  - platform: template
+    id: system_boot
+    name: "System Boot"
+    lambda: |-
+      // Always true after boot
+      return true;
+
+
+# ------------------------------------------------------------------------------
+#  Template text sensors
+#   - Firmware Version: Publishes the firmware version string to Home Assistant
+#   - Reset Reason: Fallback for ESP32-S3, always 'Power On Reset'
+#   - Parameters:
+#       platform: template
+#       name: Sensor name
+#       id: Sensor ID
+#       icon: Home Assistant icon (optional)
+#       update_interval: Update frequency
+#       lambda: Lambda function for value
+#
+# NOTE: ESPHome does not currently support reset diagnostics on ESP32-S3.
+# This is a placeholder until native support is available.
+# ------------------------------------------------------------------------------
+text_sensor:
+  - platform: template
+    name: "Firmware Version"      # User-visible sensor name in HA
+    id: firmware_version
+    icon: "mdi:tag"
+    update_interval: never        # Static value set only on boot
+    lambda: |-
+      return {"__VERSION__"};
+  - platform: template
+    name: "Reset Reason"          # Fallback: always 'Power On Reset' on ESP32-S3
+    id: reset_reason
+    update_interval: never
+    lambda: |-
+      return {"Power On Reset"};

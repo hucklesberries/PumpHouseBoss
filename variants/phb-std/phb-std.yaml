@@ -2,7 +2,7 @@
 #  File:         phb-std.yaml
 #  File Type:    ESPHome YAML Main
 #  Purpose:      PumpHouseBoss Standard Variant Main
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -50,10 +50,10 @@
 #       watchdog_early_trigger: Early trigger before timeout
 # ------------------------------------------------------------------------------
 substitutions:
-  chip_set: __PLATFORM__
-  node_name: __NODE_NAME__
-  friendly_name: __FRIENDLY_NAME__
-  version: __VERSION__
+  chip_set: "__PLATFORM__"
+  node_name: "__NODE_NAME__"
+  friendly_name: "__FRIENDLY_NAME__"
+  version: "__VERSION___"
   watchdog_timeout: "30s"
   watchdog_trigger_pin: "GPIO07"
   watchdog_early_trigger: "25s"

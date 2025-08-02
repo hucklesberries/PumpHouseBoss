@@ -2,7 +2,7 @@
 #  File:         ota.yaml
 #  File Type:    ESPHome YAML Include
 #  Purpose:      Common ESPHome Over-The-Air programming subsystem configuration
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       GitHub Copilot <your-email>
 #

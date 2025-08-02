@@ -3,7 +3,7 @@
 #  File:         regression-test.sh
 #  File Type:    bash script
 #  Purpose:      Project regression test runner for ESPHome-based device management
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -49,7 +49,7 @@ source "$(dirname "$0")/.common.sh"
 # List of targets to check (matches Makefile)
 UTILITY_TARGETS="help version buildvars"
 BUILD_TARGETS="build"
-DOC_TARGETS="docs-esphome docs-mkdoc docs"
+DOC_TARGETS="docs"
 CLEAN_TARGETS="clean clean-cache clean-docs"
 
 # Find all test config files under config/

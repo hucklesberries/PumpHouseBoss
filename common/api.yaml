@@ -1,0 +1,51 @@
+#------------------------------------------------------------------------------
+#  File:         api.yaml
+#  File Type:    ESPHome YAML Include
+#  Purpose:      Common ESPHome API subsystem configuration
+#  Version:      0.8.0d
+#  Date:         2025-07-29
+#  Author:       GitHub Copilot <your-email>
+#
+#  Description:  API configuration for ESPHome nodes, enabling Home Assistant
+#                integration, remote logging, and secure communication.
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+#------------------------------------------------------------------------------
+
+# ------------------------------------------------------------------------------
+#  YAML linter configuration
+#   - Disables quoted-strings rule for improved readability
+# ------------------------------------------------------------------------------
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+#  Enables Home Assistant API integration and remote logging
+#   - Password is loaded from the secrets file for security
+#   - Encryption key can be set for secure communication
+#   - Port can be changed (default: 6053)
+#   - Reboot timeout can be set for auto-recovery
+#   - Custom actions on client connect/disconnect
+#   - Parameters:
+#       password: API password (from secrets file)
+#       port: API TCP port (default: 6053)
+#       reboot_timeout: Time before reboot if disconnected (default: 15min)
+#       encryption: Enable encryption (key from secrets file)
+#       on_client_connected: Actions on client connect
+#       on_client_disconnected: Actions on client disconnect
+# ------------------------------------------------------------------------------
+api:
+  port: 6053                            # API TCP port (default: 6053)
+  reboot_timeout: 10min                 # Reboot if HA disconnects for this long
+  on_client_connected:
+    - logger.log: "Home Assistant connected via API"
+    - lambda: |-
+        id(ha_connected) = true;
+  on_client_disconnected:
+    - logger.log: "Home Assistant disconnected from API"
+    - lambda: |-
+        id(ha_connected) = false;

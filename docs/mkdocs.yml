@@ -2,7 +2,7 @@
 #  File:         mkdocs.yml
 #  File Type:    MkDocs Configuration
 #  Purpose:      Documentation site configuration for PumpHouse Boss
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -17,27 +17,44 @@
 # ------------------------------------------------------------------------------
 
 site_name: PumpHouseBoss Documentation
+repo_url: https://github.com/hucklesberries/PumpHouseBoss
+site_url: https://hucklesberries.github.io/PumpHouseBoss/
 nav:
-  - Home: README.md
-  - DESCRIPTION:
+  - HOME: 
+      - Start Here: Home.md
+      - Overview: Overview.md
+      - Getting Started: Getting-Started.md
+      - Hardware Overview: Hardware-Overview.md
+      - Firmware & Configuration: Firmware-and-Configuration.md
+      - Usage & Troubleshooting: Usage-and-Troubleshooting.md
+      - Developer Guide: Developer-Guide.md
+      - FAQ: FAQ.md
+      - Contact & Support: Contact-and-Support.md
+  - PRODUCT VARIANTS:
      - PumpHouseBoss Standard:
         - Overview: phb-std-overview.md
         - Hardware: phb-std-hardware.md
      - PumpHouseBoss Professional:
         - Overview: phb-pro-overview.md
         - Hardware: phb-pro-hardware.md
-  - RELEASE NOTES: RELEASE.md
-  - CHANGELOG: CHANGELOG.md
-  - STANDARDS: STANDARDS.md
-  - RELEASE-CHECKLIST: RELEASE-CHECKLIST.md
-  - GIT-COPILOT: GIT-COPILOT.md
-  - TODO: TODO.md
+  - PROJECT DOCUMENTATION:
+     - READ ME: README.md
+     - CONTRIBUTING: CONTRIBUTING.md
+     - STANDARDS: STANDARDS.md
+     - RELEASE-CHECKLIST: RELEASE-CHECKLIST.md
+     - RELEASE NOTES: RELEASE.md
+     - CHANGELOG: CHANGELOG.md
+     - TODO: TODO.md
   - SOURCE CODE:
      - Variants:
         - PHB Std: phb-std.md
         - PHB Pro: phb-pro.md
      - Common:
         - Display: display_st7789.md
+        - Display PCF8574: display_pcf8574.md
+        - Indications: indications.md
+        - MMU: mmu.md
+        - API: api.md
         - esp32: esp32.md
         - esp32s3: esp32s3.md
         - Logging: logging.md
@@ -46,7 +63,6 @@ nav:
         - Web Server: web_server.md
         - WiFi: wifi.md
         - Secrets Template: secrets.template.md
-repo_url: https://github.com/hucklesberries/PumpHouseBoss
 theme:
   name: readthedocs
   color_mode: auto
@@ -56,5 +72,5 @@ markdown_extensions:
   - codehilite
   - toc:
       permalink: true
-docs_dir: md
-site_dir: html
+docs_dir: mkdocs-staged
+site_dir: site-staged

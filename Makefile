@@ -2,7 +2,7 @@
 #  File:         Makefile
 #  File Type:    Makefile
 #  Purpose:      Master Makefile for ESPHome-based device management
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -81,31 +81,38 @@ endif
 endif
 
 # Project-wide variables and pre-compile defaults
-SRC_DIRS            := $(PROJECT_ROOT) $(PROJECT_ROOT)/common $(PROJECT_ROOT)/variants/phb-std $(PROJECT_ROOT)/variants/phb-pro
-SRC_FILES           := $(filter-out %/secrets.yaml, $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.yaml)))
-YAML_DEPS           := $(SRC_MAIN) $(SECRETS_FILE) $(wildcard $(PROJECT_ROOT)/common/*.yaml) $(wildcard $(PROJECT_ROOT)/variants/$(VARIANT)/*.yaml)
-MD_FILES            := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.md))
-SECRETS_FILE        := $(PROJECT_ROOT)/common/secrets.yaml
-SECRETS_TEMPLATE    := $(PROJECT_ROOT)/common/secrets.template.yaml
-SRC_MAIN            ?= $(PROJECT_ROOT)/variants/$(VARIANT)/$(VARIANT).yaml
-BUILD_DIR           := $(PROJECT_ROOT)/build/$(VARIANT)/$(NODE_NAME)
-BUILD_LOG           ?= $(PROJECT_ROOT)/build.log
-RUN_LOG             ?= $(PROJECT_ROOT)/logs/$(NODE_NAME)-$(shell date +%Y%m%d_%H%M%S).log
+YAML_DIRS              := $(PROJECT_ROOT) $(PROJECT_ROOT)/common $(PROJECT_ROOT)/variants/phb-std $(PROJECT_ROOT)/variants/phb-pro
+YAML_FILES             := $(filter-out %/secrets.yaml, $(foreach dir,$(YAML_DIRS),$(wildcard $(dir)/*.yaml)))
+BLD_DEPS               := $(YAML_MAIN) $(SECRETS_FILE) $(wildcard $(PROJECT_ROOT)/common/*.yaml) $(wildcard $(PROJECT_ROOT)/variants/$(VARIANT)/*.yaml)
+MD_FILES               := $(foreach dir,$(YAML_DIRS),$(wildcard $(dir)/*.md))
+YAML_MAIN              ?= $(PROJECT_ROOT)/variants/$(VARIANT)/$(VARIANT).yaml
+SECRETS_FILE           := $(PROJECT_ROOT)/common/secrets.yaml
+SECRETS_TEMPLATE       := $(PROJECT_ROOT)/common/secrets.template.yaml
+BUILD_DIR              := $(PROJECT_ROOT)/build/$(VARIANT)/$(NODE_NAME)
+DOC_DIR                ?= $(PROJECT_ROOT)/docs
+DOC_SITE_MD_DIR        ?= $(DOC_DIR)/site-md
+DOC_WIKI_MD_DIR        ?= $(DOC_DIR)/wiki-md
+DOC_COMMON_MD_DIR      ?= $(DOC_DIR)/common-md
+DOC_MKDOCS_STAGED_DIR  ?= $(DOC_DIR)/mkdocs-staged
+DOC_SITE_STAGED_DIR    ?= $(DOC_DIR)/site-staged
+DOC_WIKI_STAGED_DIR    ?= $(DOC_DIR)/wiki-staged
+BUILD_LOG              ?= $(PROJECT_ROOT)/build.log
+RUN_LOG                ?= $(PROJECT_ROOT)/logs/$(NODE_NAME)-$(shell date +%Y%m%d_%H%M%S).log
 
 # Files and directories to be protected from accidental deletion
-PROTECTED_DIRS      := / ~ ./ $(PROJECT_ROOT)/common $(PROJECT_ROOT)/variants/ $(PROJECT_ROOT)/config $(PROJECT_ROOT)/docs $(PROJECT_ROOT)/icons
+PROTECTED_DIRS         := / ~ ./ $(PROJECT_ROOT)/common $(PROJECT_ROOT)/variants/ $(PROJECT_ROOT)/config $(PROJECT_ROOT)/docs $(PROJECT_ROOT)/icons
 
 # RELATIVE_BUILD_PATH is the YAML path relative to the project root
 #   IMPORTANT: Always use a relative path to the YAML file when calling ESPHome.
 #   Using an absolute path causes ESPHome to misresolve includes and assets, and produces misleading errors.
-RELATIVE_BUILD_PATH := build/$(VARIANT)/$(NODE_NAME)/$(NODE_NAME).yaml
+RELATIVE_BUILD_PATH    := build/$(VARIANT)/$(NODE_NAME)/$(NODE_NAME).yaml
 
 # helper scripts
 SCRIPT_DIR             ?= $(PROJECT_ROOT)/scripts
 REGRESSION_TEST_SCRIPT := $(SCRIPT_DIR)/regression-test.sh
 
 # export for sub/recursive makes
-export VARIANT PLATFORM DEVICE_NAME NODE_NAME FRIENDLY_NAME NUM_PORTS UPLOAD_PATH SRC_MAIN SECRETS_FILE RELATIVE_BUILD_PATH
+export VARIANT PLATFORM DEVICE_NAME NODE_NAME FRIENDLY_NAME COMM_PATH YAML_MAIN SECRETS_FILE RUN_LOG RELATIVE_BUILD_PATH
 
 
 # ------------------------------------------------------------------------------
@@ -113,10 +120,10 @@ export VARIANT PLATFORM DEVICE_NAME NODE_NAME FRIENDLY_NAME NUM_PORTS UPLOAD_PAT
 # ------------------------------------------------------------------------------
 
 # Compile the ESPHome firmware for the specified device
-$(BUILD_DIR)/$(NODE_NAME).yaml: $(YAML_DEPS)
-	@echo "[START] Generating $(BUILD_DIR)/$(NODE_NAME).yaml from $(SRC_MAIN)..."
-	@$(MAKE) VARS_TO_VALIDATE="VARIANT PLATFORM DEVICE_NAME NODE_NAME FRIENDLY_NAME NUM_PORTS" _validate_vars
-	@$(MAKE) FILES_TO_VALIDATE="$(SRC_MAIN) $(SECRETS_FILE)" _validate_files
+$(BUILD_DIR)/$(NODE_NAME).yaml: $(BLD_DEPS)
+	@echo "[START] Generating YAMLs with substitutions for $(NODE_NAME)..."
+	@$(MAKE) VARS_TO_VALIDATE="VARIANT PLATFORM DEVICE_NAME NODE_NAME FRIENDLY_NAME" _validate_vars
+	@$(MAKE) FILES_TO_VALIDATE="$(YAML_MAIN) $(SECRETS_FILE)" _validate_files
 	@mkdir -p $(BUILD_DIR)
 	@echo "s|__PROJECT_ROOT__|../../..|g" > .sedargs
 	@echo "s|__VERSION__|$(VERSION)|g" >> .sedargs
@@ -125,16 +132,17 @@ $(BUILD_DIR)/$(NODE_NAME).yaml: $(YAML_DEPS)
 	@echo "s|__DEVICE_NAME__|$(DEVICE_NAME)|g" >> .sedargs
 	@echo "s|__NODE_NAME__|$(NODE_NAME)|g" >> .sedargs
 	@echo "s|__FRIENDLY_NAME__|$(FRIENDLY_NAME)|g" >> .sedargs
-	@echo "s|__NUM_PORTS__|$(NUM_PORTS)|g" >> .sedargs
-	@echo "s|__UPLOAD_PATH__|$(UPLOAD_PATH)|g" >> .sedargs
 	@echo "s|__STATIC_STATIC_IP__|$(STATIC_STATIC_IP)|g" >> .sedargs
 	@echo "s|__STATIC_GATEWAY__|$(STATIC_GATEWAY)|g" >> .sedargs
 	@echo "s|__STATIC_SUBNET__|$(STATIC_SUBNET)|g" >> .sedargs
 	@echo "s|__STATIC_DNS1__|$(STATIC_DNS1)|g" >> .sedargs
 	@echo "s|__STATIC_DNS2__|$(STATIC_DNS2)|g" >> .sedargs
-	@echo "s|__OTA_NAME__|$(OTA_NAME)|g" >> .sedargs
-	@echo "s|__SERIAL_ID__|$(SERIAL_ID)|g" >> .sedargs
-	@sed -f .sedargs < $(SRC_MAIN) > $(BUILD_DIR)/$(NODE_NAME).yaml
+	# Process all YAML source files with sed and output to build dir
+	@for f in $(YAML_FILES); do \
+		out="$(BUILD_DIR)/$$(basename $$f)"; \
+		sed -f .sedargs < "$$f" > "$$out"; \
+	done
+	@sed -f .sedargs < $(YAML_MAIN) > $(BUILD_DIR)/$(NODE_NAME).yaml
 	@rm -f .sedargs
 	   # Copy icons directory if it exists
 	   @if [ -d "icons" ]; then \
@@ -160,20 +168,26 @@ build: $(BUILD_DIR)/$(NODE_NAME).yaml
 # ------------------------------------------------------------------------------
 # Platform Targets
 # ------------------------------------------------------------------------------
+# NOTE: The upload mechanism is flexible. Set COMM_PATH to an OTA address
+#       (e.g., 'phb-esp32-00.local') for wireless uploads, 
+#       or to a serial port (e.g., '/dev/ttyUSB0' or 'COM3') for wired uploads.
+#       The Makefile and all upload/flash/verify targets will use COMM_PATH
+#       consistently.
+# ------------------------------------------------------------------------------
 
 # Upload current firmware build to the device
 .PHONY: upload
 upload: build
 	@echo "[START] Uploading firmware to $(NODE_NAME)..."
-	@$(MAKE) VARS_TO_VALIDATE="UPLOAD_PATH RELATIVE_BUILD_PATH" _validate_vars
-	@cd $(PROJECT_ROOT) && esphome upload $(RELATIVE_BUILD_PATH) --device $(UPLOAD_PATH)
+	@$(MAKE) VARS_TO_VALIDATE="COMM_PATH RELATIVE_BUILD_PATH" _validate_vars
+	@cd $(PROJECT_ROOT) && esphome upload $(RELATIVE_BUILD_PATH) --device $(COMM_PATH)
 	@echo "[DONE] Upload complete for $(NODE_NAME)."
 
 # Verify flash contents against current firmware build
 .PHONY: flash-verify
 flash-verify: build
 	@echo "[START] Verifying flash contents against current firmware build..."
-	@$(MAKE) VARS_TO_VALIDATE="UPLOAD_PATH" _validate_vars
+	@$(MAKE) VARS_TO_VALIDATE="COMM_PATH" _validate_vars
 	@FIRMWARE_PATH="$(BUILD_DIR)/.esphome/build/$(NODE_NAME)/firmware.bin"; \
 	if [ -f "$$FIRMWARE_PATH" ]; then \
 		echo "Using firmware binary: $$FIRMWARE_PATH"; \
@@ -193,8 +207,8 @@ run: upload logs logs-follow
 # Erase the entire flash memory of the chipset
 .PHONY: flash-erase
 flash-erase:
-	@echo "[START] Erasing flash memory on $(NODE_NAME) via $(UPLOAD_PATH)..."
-	@$(MAKE) VARS_TO_VALIDATE="NODE_NAME UPLOAD_PATH" _validate_vars
+	@echo "[START] Erasing flash memory via $(COMM_PATH)..."
+	@$(MAKE) VARS_TO_VALIDATE="COMM_PATH" _validate_vars
 	@echo -e "$(WARN): This will completely erase all firmware and data!"
 	@echo "Press Ctrl+C within 5 seconds to cancel..."
 	@sleep 5
@@ -204,16 +218,16 @@ flash-erase:
 # Display flash memory information and layout
 .PHONY: flash-info
 flash-info:
-	@echo "[START] Reading flash memory information via $(UPLOAD_PATH)..."
-	@$(MAKE) VARS_TO_VALIDATE="PLATFORM NODE_NAME ESPTOOL_CMD UPLOAD_PATH" _validate_vars
+	@echo "[START] Reading flash memory information via $(COMM_PATH)..."
+	@$(MAKE) VARS_TO_VALIDATE="COMM_PATH" _validate_vars
 	@$(ESPTOOL_CMD) flash_id
 	@echo "[DONE] Flash info read."
 
 # Display chipset information and capabilities
 .PHONY: chip-info
 chip-info:
-	@echo "[START] Reading $(PLATFORM) information via $(UPLOAD_PATH)..."
-	@$(MAKE) VARS_TO_VALIDATE="PLATFORM UPLOAD_PATH" _validate_vars
+	@echo "[START] Reading $(PLATFORM) information via $(COMM_PATH)..."
+	@$(MAKE) VARS_TO_VALIDATE="COMM_PATH" _validate_vars
 	@$(ESPTOOL_CMD) chip_id
 	@echo "[DONE] Chip info read."
 
@@ -286,59 +300,52 @@ logs-follow-new: logs-start-bg
 # Documentation Targets
 # ------------------------------------------------------------------------------
 
-
-# Documentation Targets (ESPHome only)
-docs-esphome: build
-	@echo "[START] Generating ESPHome documentation from device configuration..."
-	@$(MAKE) VARS_TO_VALIDATE="VARIANT RELATIVE_BUILD_PATH" _validate_vars
-	@$(MAKE) FILES_TO_VALIDATE="$(BUILD_DIR)/$(NODE_NAME).yaml" _validate_files
-	@mkdir -p docs/esphome/$(VARIANT)
-	@if [ -f "$(BUILD_DIR)/$(NODE_NAME)/$(NODE_NAME).yaml" ]; then \
-		esphome compile $(RELATIVE_BUILD_PATH) --only-generate > docs/esphome/$(VARIANT)/$(NODE_NAME)-config.txt 2>&1 || echo -e "$(WARN) Failed to generate docs for $(NODE_NAME).yaml"; \
-	else \
-		$(MAKE) _build; \
-		esphome compile $(RELATIVE_BUILD_PATH) --only-generate > docs/esphome/$(VARIANT)/$(NODE_NAME)-config.txt 2>&1 || echo -e "$(WARN) Failed to generate docs for $(NODE_NAME).yaml"; \
-	fi
-	@for file in $(SRC_FILES); do \
-		name=$$(basename $$file .yaml); \
-		echo "→ $$file"; \
-		echo "# ESPHome Component: $$name" > docs/esphome/$(VARIANT)/$$name-component.txt; \
-		echo "# Source: $$file" >> docs/esphome/$(VARIANT)/$$name-component.txt; \
-		echo "# Generated: $$(date)" >> docs/esphome/$(VARIANT)/$$name-component.txt; \
-		echo "" >> docs/esphome/$(VARIANT)/$$name-component.txt; \
-		cat $$file >> docs/esphome/$(VARIANT)/$$name-component.txt; \
-	done
-	@echo "ESPHome documentation saved to docs/esphome/$(VARIANT)/"
-	@echo "[DONE] ESPHome documentation generated."
-
-
-# MkDocs documentation build target
-.PHONY: docs-mkdoc
-docs-mkdoc:
-	@echo "[START] Preparing documentation files for MkDocs..."
-	@mkdir -p docs/md
-	# Copy or stub all Markdown files from MD_FILES
+# Stage documentation source for processing by mkdocs
+.PHONY: _mkdocs
+_mkdocs:
+	@echo "[START] Staging documentation source files for mkdocs..."
+	@rm -rf $(DOC_MKDOCS_STAGED_DIR)
+	@mkdir -p $(DOC_MKDOCS_STAGED_DIR)
+	@cp -a $(DOC_SITE_MD_DIR)/* $(DOC_MKDOCS_STAGED_DIR)
+	@cp -a $(DOC_COMMON_MD_DIR)/* $(DOC_MKDOCS_STAGED_DIR)
 	@for f in $(MD_FILES); do \
 		base=$$(basename $$f); \
-		cp -f "$$f" docs/md/ 2>/dev/null || echo "# Stub for $$base" > docs/md/$$base; \
+		cp -f "$$f" $(DOC_MKDOCS_STAGED_DIR)/ 2>/dev/null || echo "# Stub for $$base" > $(DOC_MKDOCS_STAGED_DIR); \
 	done
-	@echo "Building MkDocs documentation files into docs/md..."
-	@for yaml in $(SRC_FILES); do \
+	@for yaml in $(YAML_FILES); do \
 		comp=$$(basename $$yaml .yaml); \
-		md="docs/md/$${comp}.md"; \
+		md="$(DOC_MKDOCS_STAGED_DIR)/$${comp}.md"; \
 		echo "# Component: $$comp" > "$$md"; \
 		echo "# Source: $$yaml" >> "$$md"; \
 		echo "# Generated: $$(date)" >> "$$md"; \
 		echo "" >> "$$md"; \
+		echo '```yaml' >> "$$md"; \
 		cat "$$yaml" >> "$$md"; \
+		echo '```' >> "$$md"; \
 	done
-	@echo "Building MkDocs documentation site into docs/html..."
-	@mkdocs build --clean --config-file docs/mkdocs.yml
-	@echo "[DONE] MkDocs site built at docs/html/index.html"
+	@echo "[DONE] Documentation source files staged for mkdocs."
 
-# Generate all documentation (ESPHome only)
+# Generate all documentation
 .PHONY: docs
-docs: docs-esphome docs-mkdoc
+docs: _mkdocs
+	@echo "Building MkDocs documentation site into $(DOC_SITE_STAGED_DIR)..."
+	@mkdocs build --clean --config-file $(DOC_DIR)/mkdocs.yml
+	@echo "[DONE] MkDocs site built at $(DOC_SITE_STAGED_DIR)."
+
+# 1. Deploy mkdocs site to GitHub Pages
+# 2. Update GitHub wiki
+.PHONY: docs-deploy
+docs-deploy: _mkdocs
+	@echo "[START] Deploying documentation for hosting..."
+	@echo " Deploying mkdocs site to GitHub Pages at https://hucklesberries.github.io/PumpHouseBoss/"
+	@mkdocs gh-deploy --config-file $(DOC_DIR)/mkdocs.yml --remote-branch gh-pages
+	@echo " Deploying Github wiki at https://github.com/hucklesberries/PumpHouseBoss/wiki"
+	@rm -rf $(DOC_WIKI_STAGED_DIR) && git clone --depth 1 https://github.com/hucklesberries/PumpHouseBoss.wiki.git $(DOC_WIKI_STAGED_DIR)
+	@cp -r $(DOC_WIKI_MD_DIR)/* $(DOC_WIKI_STAGED_DIR)
+	@cp -r $(DOC_COMMON_MD_DIR)/* $(DOC_WIKI_STAGED_DIR)
+	@cd $(DOC_WIKI_STAGED_DIR) && git add . && git commit -am "Sync wiki from main repo [automated]" || echo "No changes to commit."
+	@cd $(DOC_WIKI_STAGED_DIR) && git push
+	@echo "[DONE] Documentation deployed."
 
 
 # ------------------------------------------------------------------------------
@@ -370,7 +377,6 @@ clean:
 	@sh -c '$(call SAFE_RM,docs/esphome/$(VARIANT))'
 	@echo "[DONE] Clean complete."
 
-
 # Remove ESPHome build cache and compiled objects
 .PHONY: clean-cache
 clean-cache:
@@ -382,9 +388,9 @@ clean-cache:
 .PHONY: clean-docs
 clean-docs:
 	@echo "[START] Cleaning documentation files..."
-	@-sh -c '$(call SAFE_RM,docs/esphome)'
-	@-sh -c '$(call SAFE_RM,docs/md)'
-	@-sh -c '$(call SAFE_RM,docs/html)'
+	@-sh -c '$(call SAFE_RM,$(DOC_MKDOCS_STAGED_DIR))'
+	@-sh -c '$(call SAFE_RM,$(DOC_SITE_STAGED_DIR))'
+	@-sh -c '$(call SAFE_RM,$(DOC_WIKI_STAGED_DIR))'
 	@echo "[DONE] Documentation files cleaned."
 
 # Remove entire device directory (generated YAML + all build artifacts)
@@ -395,7 +401,6 @@ clobber: clean-cache clean-docs
 	@echo "[DONE] Device build directory clobbered."
 
 # Remove all generated content for fresh start
-
 .PHONY: distclean
 distclean: clean-docs
 	@echo "[START] Performing complete cleanup for archive/export..."
@@ -432,17 +437,13 @@ buildvars:
 	@echo "Device name....: $(if $(DEVICE_NAME),$(DEVICE_NAME),[ MISSING ])"
 	@echo "Node name......: $(if $(NODE_NAME),$(NODE_NAME),[ MISSING ])"
 	@echo "Friendly name..: $(if $(FRIENDLY_NAME),$(FRIENDLY_NAME),[ MISSING ])"
-	@echo "Max Controllers: $(if $(NUM_PORTS),$(NUM_PORTS),[ MISSING ])"
-	@echo "Upload path....: $(if $(UPLOAD_PATH),$(UPLOAD_PATH),[ MISSING ])"
 	@echo "WiFi IP........: $(if $(STATIC_STATIC_IP),$(STATIC_STATIC_IP),[ dynamic ])"
 	@echo "WiFi Gateway...: $(if $(STATIC_GATEWAY),$(STATIC_GATEWAY),[ dynamic ])"
 	@echo "WiFi Subnet....: $(if $(STATIC_SUBNET),$(STATIC_SUBNET),[ dynamic ])"
 	@echo "WiFi DNS1......: $(if $(STATIC_DNS1),$(STATIC_DNS1),[ dynamic ])"
 	@echo "WiFi DNS2......: $(if $(STATIC_DNS2),$(STATIC_DNS2),[ dynamic ])"
-	@echo "Network Name...: $(if $(OTA_NAME),$(OTA_NAME),[ dynamic ])"
-	@echo "Serial ID......: $(if $(SERIAL_ID),$(SERIAL_ID),[ NOT SET ])"
 	@echo "Build Directory: $(if $(DEVICE_NAME),$(BUILD_DIR),[ NOT_SET ])"
-	@echo "Upload Path....: $(if $(DEVICE_NAME),$(UPLOAD_PATH),[ NOT_SET ])"
+	@echo "Comm Path......: $(if $(DEVICE_NAME),$(COMM_PATH),[ NOT_SET ])"
 	@echo "Build Log File.: $(if $(DEVICE_NAME),$(BUILD_LOG),[ NOT_SET ])"
 	@echo "Run Log File...: $(if $(DEVICE_NAME),$(RUN_LOG),[ NOT_SET ])"
 
@@ -459,7 +460,7 @@ help:
 	@echo "  build               Build (compile) firmware for the selected device variant"
 	@echo ""
 	@echo "Platform Targets:"
-	@echo "  upload              Upload compiled firmware to the device (via $(UPLOAD_PATH))"
+	@echo "  upload              Upload compiled firmware to the device (via $(COMM_PATH))"
 	@echo "  flash-verify        Verify device flash contents against current firmware build"
 	@echo "  run                 Build, upload, and stream logs (combo pipeline)"
 	@echo "  flash-erase         Erase entire device flash memory (CAREFUL: destructive!)"
@@ -474,9 +475,8 @@ help:
 	@echo "  logs-follow-new     Start new background logging and follow its output"
 	@echo ""
 	@echo "Documentation Targets:"
-	@echo "  docs                Generate all documentation (ESPHome)"
-	@echo "  docs-esphome        Generate ESPHome style documentation"
-	@echo "  docs-mkdoc          Generate MkDocs style documentation"
+	@echo "  docs                Generate project documentation"
+	@echo "  docs-deploy         Generate and documentation to GitHub Pages and GitHub Wiki repository"
 	@echo ""
 	@echo "Test Targets:"
 	@echo "  regression-test     Run regression tests on all device YAMLs"
@@ -484,7 +484,7 @@ help:
 	@echo "Cleanup Targets:"
 	@echo "  clean               Remove temporary build artifacts and logs"
 	@echo "  clean-cache         Remove ESPHome build cache"
-	@echo "  clean-docs          Remove all generated documentation (ESPHome)"
+	@echo "  clean-docs          Remove generated documentation"
 	@echo "  clobber             Remove entire device directory and documentation"
 	@echo "  distclean           Complete cleanup for archive/export"
 	@echo ""

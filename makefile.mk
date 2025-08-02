@@ -2,7 +2,7 @@
 #  File:         makefile.mk
 #  File Type:    Makefile Include
 #  Purpose:      Make Macros and Helper Functions
-#  Version:      0.7.1
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -16,46 +16,43 @@
 #                - Colorized output macros for consistent messaging
 #                - Designed for inclusion in project Makefiles
 #
-#  License:      GNU General Public License v3.0
-#                SPDX-License-Identifier: GPL-3.0-or-later
-#  Copyright:    (c) 2025 Roland Tembo Hendel
-#                This program is free software: you can redistribute it and/or
-#                modify it under the terms of the GNU General Public License.
+#  license:      gnu general public license v3.0
+#                spdx-license-identifier: gpl-3.0-or-later
+#  copyright:    (c) 2025 roland tembo hendel
+#                this program is free software: you can redistribute it and/or
+#                modify it under the terms of the gnu general public license.
 # ------------------------------------------------------------------------------
 
 
-# Detect OS (necessary for path/EOL conversion from stupid MS Windows)
-UNAME_S := $(shell uname -s)
-ifeq ($(findstring CYGWIN,$(UNAME_S)),CYGWIN)
-	WIN_CMD = 1
-else ifeq ($(findstring MINGW,$(UNAME_S)),MINGW)
-	WIN_CMD = 1
+# detect os (necessary for path/eol conversion from stupid ms windows)
+uname_s := $(shell uname -s)
+ifeq ($(findstring cygwin,$(uname_s)),cygwin)
+	win_cmd = 1
+else ifeq ($(findstring mingw,$(uname_s)),mingw)
+	win_cmd = 1
 else
-	WIN_CMD = 0
+	win_cmd = 0
 endif
 
-# Auto-detect Python executable with esptool module
-#   Windows users: If esptool is only available in your Windows Python, override this variable in your environment:
-#   export PYTHON_WITH_ESPTOOL=/cygdrive/c/Users/youruser/AppData/Local/Programs/Python/Python311/python.exe
-#   (adjust the path as needed; see Makefile docs for details)
-PYTHON_WITH_ESPTOOL ?= $(shell \
+# auto-detect python executable with esptool module
+python_with_esptool ?= $(shell \
 	for py in python3 python; do \
 		if "$$py" -c "import esptool" 2>/dev/null; then echo "$$py"; break; fi \
 	done)
 
 # Macro: Run esptool command via Python (single-line variable for safe recipe expansion)
-ESPTOOL_CMD = $(PYTHON_WITH_ESPTOOL) -m esptool --chip $(PLATFORM) --port $(UPLOAD_PATH)
+ESPTOOL_CMD = $(PYTHON_WITH_ESPTOOL) -m esptool --chip $(PLATFORM) --port $(COMM_PATH)
 
 # Macro: Safe recursive delete
 SAFE_RM = \
-	if [ -z "$1" ]; then \
-		echo -e "$(RED)[SAFE_RM]$(NC) Refusing to delete: directory not specified"; \
-	elif [ "$(if $(filter $(1),$(PROTECTED_DIRS)),yes,no)" = "yes" ]; then \
-		echo -e "$(RED)[SAFE_RM]$(NC) Refusing to delete protected directory: $1"; \
-	else \
-		echo -e "$(YELLOW)[SAFE_RM]$(NC) Deleting directory: $1"; \
-		rm -rf "$1"; \
-	fi
+  if [ -z "$1" ]; then \
+	echo -e "$(RED)[SAFE_RM]$(NC) Refusing to delete: directory not specified"; \
+  elif [ "$(if $(filter $(1),$(PROTECTED_DIRS)),yes,no)" = "yes" ]; then \
+	echo -e "$(RED)[SAFE_RM]$(NC) Refusing to delete protected directory: $1"; \
+  else \
+	echo -e "$(YELLOW)[SAFE_RM]$(NC) Deleting directory: $1"; \
+	rm -rf "$1"; \
+  fi
 
 # Color support detection and color variables
 ifeq (,$(findstring dumb,$(TERM)))

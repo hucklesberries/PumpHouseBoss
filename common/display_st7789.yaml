@@ -2,7 +2,7 @@
 #  File:         display_st7789.yaml
 #  File Type:    ESPHome YAML Include
 #  Purpose:      Waveshare Pico LCD 1.3" Display Module subsystem configuration
-#  Version:      0.7.0
+#  Version:      0.8.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
