@@ -1,21 +1,21 @@
-# ===============================================================================
+# ==============================================================================
 #  File:         display_pcf8574.yaml
-#  File Type:    ESPHome YAML Include
+#  File Type:    YAML File
 #  Purpose:      LCD display (PCF8574 I2C backpack) configuration fragment
-#  Project:      PumpHouseBoss
-#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#  Version:      0.9.0d
+#  Date:         2025-08-08
+#  Author:       GitHub Copilot <your-email>
 #
 #  Description:  I2C LCD display configuration for ESP32/ESP32-S3 using PCF8574
 #                backpack. Supports 16x2 or 20x4 displays. Placeholders are
-#                replaced by the Makefile during build.#
+#                replaced by the Makefile during build.
 #
 #  License:      GNU General Public License v3.0
 #                SPDX-License-Identifier: GPL-3.0-or-later
 #  Copyright:    (c) 2025 Roland Tembo Hendel
 #                This program is free software: you can redistribute it and/or
 #                modify it under the terms of the GNU General Public License.
-# ===============================================================================
-
+# ==============================================================================
 
 # ------------------------------------------------------------------------------
 #  YAML linter configuration
@@ -42,5 +42,7 @@ display:
     dimensions: 20x4
     address: 0x27  # or 0x3F, check your module
     lambda: |-
-      it.print(0, 1, "PumpHouseBoss Pro");
-      it.printf(1, 2, "FW Version: %s", id(firmware_version).state.c_str());
+      it.print(0, 0, id(tsFriendlyName).state.c_str());
+      it.printf(0, 1, "FV: %s", id(tsVersion).state.c_str());
+      it.printf(0, 2, "ID: %s", id(tsNodeName).state.c_str());
+      it.printf(0, 3, "IP: %s", id(tsIPAddress).state.c_str());

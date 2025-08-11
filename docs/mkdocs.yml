@@ -1,8 +1,8 @@
-# ------------------------------------------------------------------------------
+# ==============================================================================
 #  File:         mkdocs.yml
-#  File Type:    MkDocs Configuration
+#  File Type:    YAML File
 #  Purpose:      Documentation site configuration for PumpHouse Boss
-#  Version:      0.8.0d
+#  Version:      0.9.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -14,7 +14,7 @@
 #  Copyright:    (c) 2025 Roland Tembo Hendel
 #                This program is free software: you can redistribute it and/or
 #                modify it under the terms of the GNU General Public License.
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 site_name: PumpHouseBoss Documentation
 repo_url: https://github.com/hucklesberries/PumpHouseBoss
@@ -37,6 +37,9 @@ nav:
      - PumpHouseBoss Professional:
         - Overview: phb-pro-overview.md
         - Hardware: phb-pro-hardware.md
+     - PumpHouseBoss Test Harness:
+        - Overview: phb-test-overview.md
+        - Hardware: phb-test-hardware.md
   - PROJECT DOCUMENTATION:
      - READ ME: README.md
      - CONTRIBUTING: CONTRIBUTING.md
@@ -47,8 +50,9 @@ nav:
      - TODO: TODO.md
   - SOURCE CODE:
      - Variants:
-        - PHB Std: phb-std.md
-        - PHB Pro: phb-pro.md
+        - PHB Standard: phb-std.md
+        - PHB Professional: phb-pro.md
+        - PHB Test Harness: phb-test.md
      - Common:
         - Display: display_st7789.md
         - Display PCF8574: display_pcf8574.md
@@ -59,7 +63,6 @@ nav:
         - esp32s3: esp32s3.md
         - Logging: logging.md
         - OTA: ota.md
-        - Watchdog: watchdog.md
         - Web Server: web_server.md
         - WiFi: wifi.md
         - Secrets Template: secrets.template.md

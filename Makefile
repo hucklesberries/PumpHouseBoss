@@ -1,14 +1,15 @@
-# ===============================================================================
+# ==============================================================================
 #  File:         Makefile
 #  File Type:    Makefile
 #  Purpose:      Master Makefile for ESPHome-based device management
-#  Version:      0.8.0d
+#  Version:      0.9.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
 #  Description:  Drives the build, upload, and configuration process for ESPHome
-#                projects. Leverages a configuration file for per-device definitions
-#                and includes safety mechanisms to prevent destructive errors.
+#                projects. Leverages a configuration file for per-device
+#                definitions and includes safety mechanisms to prevent
+#                destructive errors.
 #
 #  Features:     - Per-device configuration and build
 #                - Safety checks for secrets and version
@@ -26,7 +27,7 @@
 #  Copyright:    (c) 2025 Roland Tembo Hendel
 #                This program is free software: you can redistribute it and/or
 #                modify it under the terms of the GNU General Public License.
-# ===============================================================================
+# ==============================================================================
 
 
 # include helper macros and functions
@@ -38,17 +39,14 @@ include makefile.mk
 # ------------------------------------------------------------------------------
 
 # Load project version string
-VERSION        ?= $(shell cat VERSION)
+VERSION        := $(strip $(shell cat VERSION 2>/dev/null))
 
 # Project root directory (no trailing slash)
 PROJECT_ROOT   := $(abspath .)
 
-# Default target - full pipeline: build + upload + logs
-.DEFAULT_GOAL  := run
-
 # User-specified CONFIG file from the command line, these take precedence
-ifeq ($(origin CONFIG),command line)
-ifeq ($(shell [ -r $(CONFIG) ] && echo yes),yes)
+ifeq ($(origin CONFIG), command line)
+ifeq ($(shell [ -r $(CONFIG) ] && echo yes), yes)
 include $(CONFIG)
 else
 $(error User config file '$(CONFIG)' is not readable)
@@ -56,39 +54,27 @@ endif
 endif
 
 # Default custom configuration file (will not override established values)
-ifeq ($(shell [ -r $(PROJECT_ROOT)/config/config.mk ] && echo yes),yes)
+ifeq ($(shell [ -r $(PROJECT_ROOT)/config/config.mk ] && echo yes), yes)
 include $(PROJECT_ROOT)/config/config.mk
-else
-$(error Default config file '$(PROJECT_ROOT)/config/config.mk' is not readable)
 endif
 
 # Project global defaults (will not override established values)
-ifeq ($(shell [ -r $(PROJECT_ROOT)/config/default.mk ] && echo yes),yes)
-include $(PROJECT_ROOT)/config/default.mk
-else
-$(error Default config file '$(PROJECT_ROOT)/config/default.mk' is not readable)
+ifeq ($(shell [ -r $(PROJECT_ROOT)/config/$(VARIANT).mk ] && echo yes), yes)
+include $(PROJECT_ROOT)/config/$(VARIANT).mk
 endif
 
 # Variant defaults (will not override established values)
-ifeq ($(strip $(VARIANT)),)
-$(error VARIANT is not set. Please specify a build variant.)
-else
-ifneq ($(shell [ -r $(PROJECT_ROOT)/variants/$(VARIANT)/$(VARIANT).mk ] && echo yes),yes)
-$(error Variant file '$(PROJECT_ROOT)/variants/$(VARIANT)/$(VARIANT).mk' is not readable)
-else
+ifeq ($(shell [ -r $(PROJECT_ROOT)/variants/$(VARIANT)/$(VARIANT).mk ] && echo yes), yes)
 include $(PROJECT_ROOT)/variants/$(VARIANT)/$(VARIANT).mk
-endif
 endif
 
 # Project-wide variables and pre-compile defaults
-YAML_DIRS              := $(PROJECT_ROOT) $(PROJECT_ROOT)/common $(PROJECT_ROOT)/variants/phb-std $(PROJECT_ROOT)/variants/phb-pro
-YAML_FILES             := $(filter-out %/secrets.yaml, $(foreach dir,$(YAML_DIRS),$(wildcard $(dir)/*.yaml)))
-BLD_DEPS               := $(YAML_MAIN) $(SECRETS_FILE) $(wildcard $(PROJECT_ROOT)/common/*.yaml) $(wildcard $(PROJECT_ROOT)/variants/$(VARIANT)/*.yaml)
-MD_FILES               := $(foreach dir,$(YAML_DIRS),$(wildcard $(dir)/*.md))
-YAML_MAIN              ?= $(PROJECT_ROOT)/variants/$(VARIANT)/$(VARIANT).yaml
+VARIANT_LIST           := phb-std phb-pro phb-test
+SRC_DIRS               := $(PROJECT_ROOT) $(PROJECT_ROOT)/common $(foreach v,$(VARIANT_LIST),$(PROJECT_ROOT)/variants/$(v))
+YAML_FILES             := $(strip $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.yaml)))
+MD_FILES               := $(strip $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.md)))
 SECRETS_FILE           := $(PROJECT_ROOT)/common/secrets.yaml
-SECRETS_TEMPLATE       := $(PROJECT_ROOT)/common/secrets.template.yaml
-BUILD_DIR              := $(PROJECT_ROOT)/build/$(VARIANT)/$(NODE_NAME)
+BUILD_DIR              := $(PROJECT_ROOT)/build/$(NODE_NAME)
 DOC_DIR                ?= $(PROJECT_ROOT)/docs
 DOC_SITE_MD_DIR        ?= $(DOC_DIR)/site-md
 DOC_WIKI_MD_DIR        ?= $(DOC_DIR)/wiki-md
@@ -96,34 +82,34 @@ DOC_COMMON_MD_DIR      ?= $(DOC_DIR)/common-md
 DOC_MKDOCS_STAGED_DIR  ?= $(DOC_DIR)/mkdocs-staged
 DOC_SITE_STAGED_DIR    ?= $(DOC_DIR)/site-staged
 DOC_WIKI_STAGED_DIR    ?= $(DOC_DIR)/wiki-staged
-BUILD_LOG              ?= $(PROJECT_ROOT)/build.log
 RUN_LOG                ?= $(PROJECT_ROOT)/logs/$(NODE_NAME)-$(shell date +%Y%m%d_%H%M%S).log
 
 # Files and directories to be protected from accidental deletion
 PROTECTED_DIRS         := / ~ ./ $(PROJECT_ROOT)/common $(PROJECT_ROOT)/variants/ $(PROJECT_ROOT)/config $(PROJECT_ROOT)/docs $(PROJECT_ROOT)/icons
 
-# RELATIVE_BUILD_PATH is the YAML path relative to the project root
+# BUILD_TARGET is the YAML path relative to the project root
 #   IMPORTANT: Always use a relative path to the YAML file when calling ESPHome.
 #   Using an absolute path causes ESPHome to misresolve includes and assets, and produces misleading errors.
-RELATIVE_BUILD_PATH    := build/$(VARIANT)/$(NODE_NAME)/$(NODE_NAME).yaml
+BUILD_TARGET           := build/$(NODE_NAME)/variants/$(VARIANT)/$(VARIANT).yaml
 
 # helper scripts
 SCRIPT_DIR             ?= $(PROJECT_ROOT)/scripts
 REGRESSION_TEST_SCRIPT := $(SCRIPT_DIR)/regression-test.sh
 
 # export for sub/recursive makes
-export VARIANT PLATFORM DEVICE_NAME NODE_NAME FRIENDLY_NAME COMM_PATH YAML_MAIN SECRETS_FILE RUN_LOG RELATIVE_BUILD_PATH
+export VARIANT PLATFORM DEVICE_NAME NODE_NAME FRIENDLY_NAME COMM_PATH SECRETS_FILE RUN_LOG BUILD_TARGET
+
+# set default goal as build
+.DEFAULT_GOAL          := build
 
 
 # ------------------------------------------------------------------------------
 # Build Target
 # ------------------------------------------------------------------------------
-
-# Compile the ESPHome firmware for the specified device
-$(BUILD_DIR)/$(NODE_NAME).yaml: $(BLD_DEPS)
+$(BUILD_TARGET): $(YAML_FILES)
 	@echo "[START] Generating YAMLs with substitutions for $(NODE_NAME)..."
 	@$(MAKE) VARS_TO_VALIDATE="VARIANT PLATFORM DEVICE_NAME NODE_NAME FRIENDLY_NAME" _validate_vars
-	@$(MAKE) FILES_TO_VALIDATE="$(YAML_MAIN) $(SECRETS_FILE)" _validate_files
+	@$(MAKE) FILES_TO_VALIDATE="$(SECRETS_FILE)" _validate_files
 	@mkdir -p $(BUILD_DIR)
 	@echo "s|__PROJECT_ROOT__|../../..|g" > .sedargs
 	@echo "s|__VERSION__|$(VERSION)|g" >> .sedargs
@@ -137,32 +123,23 @@ $(BUILD_DIR)/$(NODE_NAME).yaml: $(BLD_DEPS)
 	@echo "s|__STATIC_SUBNET__|$(STATIC_SUBNET)|g" >> .sedargs
 	@echo "s|__STATIC_DNS1__|$(STATIC_DNS1)|g" >> .sedargs
 	@echo "s|__STATIC_DNS2__|$(STATIC_DNS2)|g" >> .sedargs
-	# Process all YAML source files with sed and output to build dir
 	@for f in $(YAML_FILES); do \
-		out="$(BUILD_DIR)/$$(basename $$f)"; \
+		relpath=$$(realpath --relative-to="$(PROJECT_ROOT)" "$$f"); \
+		out="$(BUILD_DIR)/$$relpath"; \
+		outdir=$$(dirname "$$out"); \
+		mkdir -p "$$outdir"; \
 		sed -f .sedargs < "$$f" > "$$out"; \
 	done
-	@sed -f .sedargs < $(YAML_MAIN) > $(BUILD_DIR)/$(NODE_NAME).yaml
 	@rm -f .sedargs
-	   # Copy icons directory if it exists
-	   @if [ -d "icons" ]; then \
-			   echo "Copying icons/ to \"$(BUILD_DIR)/icons\"..."; \
-			   cp -r "icons" "$(BUILD_DIR)/"; \
-	   fi
-	   # Copy common directory if it exists
-	   @if [ -d "common" ]; then \
-			   echo "Copying common/ to \"$(BUILD_DIR)/common\"..."; \
-			   cp -r "common" "$(BUILD_DIR)/"; \
-	   fi
 	@echo "[DONE] Generation complete."
 	@echo "[START] Building firmware for $(NODE_NAME)..."
-	esphome compile $(RELATIVE_BUILD_PATH)
+	@esphome compile $(BUILD_TARGET)
 	@echo "[DONE] Build complete for $(NODE_NAME)."
 
 
 # User build target
 .PHONY: build
-build: $(BUILD_DIR)/$(NODE_NAME).yaml
+build: $(BUILD_TARGET)
 
 
 # ------------------------------------------------------------------------------
@@ -179,8 +156,8 @@ build: $(BUILD_DIR)/$(NODE_NAME).yaml
 .PHONY: upload
 upload: build
 	@echo "[START] Uploading firmware to $(NODE_NAME)..."
-	@$(MAKE) VARS_TO_VALIDATE="COMM_PATH RELATIVE_BUILD_PATH" _validate_vars
-	@cd $(PROJECT_ROOT) && esphome upload $(RELATIVE_BUILD_PATH) --device $(COMM_PATH)
+	@$(MAKE) VARS_TO_VALIDATE="COMM_PATH BUILD_TARGET" _validate_vars
+	@cd $(PROJECT_ROOT) && esphome upload $(BUILD_TARGET) --device $(COMM_PATH)
 	@echo "[DONE] Upload complete for $(NODE_NAME)."
 
 # Verify flash contents against current firmware build
@@ -240,8 +217,8 @@ chip-info:
 .PHONY: logs
 logs:
 	@echo "[START] Streaming logs from $(NODE_NAME)..."
-	@$(MAKE) VARS_TO_VALIDATE="NODE_NAME RELATIVE_BUILD_PATH" _validate_vars
-	@cd $(PROJECT_ROOT) && esphome logs $(RELATIVE_BUILD_PATH)
+	@$(MAKE) VARS_TO_VALIDATE="NODE_NAME BUILD_TARGET" _validate_vars
+	@cd $(PROJECT_ROOT) && esphome logs $(BUILD_TARGET)
 	@echo "[DONE] Streaming logs from $(NODE_NAME)."
 
 # Start background logging to file
@@ -256,7 +233,7 @@ logs-start-bg:
 	@echo "Stopping any pre-existing logging sessions..."
 	@pkill -f "esphome logs.*$(NODE_NAME)" 2>/dev/null || echo "No previous logging processes found"
 	@echo "Starting fresh logging session to $(RUN_LOG)..."
-	@cd $(PROJECT_ROOT) && esphome logs $(RELATIVE_BUILD_PATH) > $(RUN_LOG) 2>&1 &
+	@cd $(PROJECT_ROOT) && esphome logs $(BUILD_TARGET) > $(RUN_LOG) 2>&1 &
 	@echo "Creating symlink to latest log file..."
 	@cd logs && ln -sf $(shell basename $(RUN_LOG)) $(NODE_NAME).log
 	@echo "Logs are being written to: $(RUN_LOG)"
@@ -309,9 +286,12 @@ _mkdocs:
 	@cp -a $(DOC_SITE_MD_DIR)/* $(DOC_MKDOCS_STAGED_DIR)
 	@cp -a $(DOC_COMMON_MD_DIR)/* $(DOC_MKDOCS_STAGED_DIR)
 	@for f in $(MD_FILES); do \
-		base=$$(basename $$f); \
-		cp -f "$$f" $(DOC_MKDOCS_STAGED_DIR)/ 2>/dev/null || echo "# Stub for $$base" > $(DOC_MKDOCS_STAGED_DIR); \
+		[ -n "$$f" ] && { \
+			base=$$(basename $$f); \
+			cp -f "$$f" "$(DOC_MKDOCS_STAGED_DIR)/$$base"; \
+		}; \
 	done
+	@rm -f $(DOC_MKDOCS_STAGED_DIR)/secrets.md
 	@for yaml in $(YAML_FILES); do \
 		comp=$$(basename $$yaml .yaml); \
 		md="$(DOC_MKDOCS_STAGED_DIR)/$${comp}.md"; \
@@ -323,6 +303,7 @@ _mkdocs:
 		cat "$$yaml" >> "$$md"; \
 		echo '```' >> "$$md"; \
 	done
+	@rm -f $(DOC_MKDOCS_STAGED_DIR)/secrets.md
 	@echo "[DONE] Documentation source files staged for mkdocs."
 
 # Generate all documentation
@@ -367,50 +348,48 @@ regression-test:
 # Remove temporary build artifacts and logs
 .PHONY: clean
 clean:
-	@echo "[START] Cleaning build artifacts ($(BUILD_LOG), .sedargs)..."
-	@rm -f $(BUILD_LOG) .sedargs
+	@echo "[START] Cleaning build artifacts..."
+	@rm -f .sedargs
 	@echo "Cleaning build directory ($(BUILD_DIR))..."
-	@sh -c '$(call SAFE_RM,$(BUILD_DIR))'
-	@echo "Cleaning logs for $(NODE_NAME)..."
-	@rm -f logs/$(NODE_NAME).log logs/$(NODE_NAME)-*.log
-	@echo "Cleaning generated documentation for variant ($(VARIANT))..."
-	@sh -c '$(call SAFE_RM,docs/esphome/$(VARIANT))'
+	@-$(SAFE_RM) $(BUILD_DIR)
 	@echo "[DONE] Clean complete."
 
 # Remove ESPHome build cache and compiled objects
 .PHONY: clean-cache
 clean-cache:
 	@echo "[START] Removing ESPHome build cache..."
-	@-sh -c '$(call SAFE_RM,$(BUILD_DIR)/.esphome)'
+	@-$(SAFE_RM) $(BUILD_DIR)/.esphome
 	@echo "[DONE] ESPHome build cache removed."
 
 # Remove generated documentation files (ESPHome and MkDocs)
 .PHONY: clean-docs
 clean-docs:
 	@echo "[START] Cleaning documentation files..."
-	@-sh -c '$(call SAFE_RM,$(DOC_MKDOCS_STAGED_DIR))'
-	@-sh -c '$(call SAFE_RM,$(DOC_SITE_STAGED_DIR))'
-	@-sh -c '$(call SAFE_RM,$(DOC_WIKI_STAGED_DIR))'
+	@-$(SAFE_RM) $(DOC_MKDOCS_STAGED_DIR)
+	@-$(SAFE_RM) $(DOC_SITE_STAGED_DIR)
+	@-$(SAFE_RM) $(DOC_WIKI_STAGED_DIR)
 	@echo "[DONE] Documentation files cleaned."
 
 # Remove entire device directory (generated YAML + all build artifacts)
 .PHONY: clobber
 clobber: clean-cache clean-docs
-	@echo "[START] Clobbering device build directory..."
-	@-sh -c '$(call SAFE_RM,$(BUILD_DIR))'
-	@echo "[DONE] Device build directory clobbered."
+	@echo "[START] Clobbering build artifacts..."
+	@rm -f .sedargs
+	@-$(SAFE_RM) "scripts/__pycache__"
+	@echo "[START] Clobbering root build directory..."
+	@-$(SAFE_RM) build
+	@echo "[DONE] Root build directory clobbered."
 
 # Remove all generated content for fresh start
 .PHONY: distclean
-distclean: clean-docs
+distclean: clobber
 	@echo "[START] Performing complete cleanup for archive/export..."
-	@-rm -f .sedargs $(BUILD_LOG) 2>/dev/null || true
-	@-sh -c '$(call SAFE_RM,build)' 2>/dev/null || true
-	@-sh -c '$(call SAFE_RM,logs)' 2>/dev/null || true
+	@-rm -f .sedargs 2>/dev/null || true
+	@-$(SAFE_RM) logs 2>/dev/null || true
 	@set -- */; \
 	if [ "$$1" != "*/" ]; then \
 		(set +e; for dir in "$@"; do \
-			[ -d "$$dir" ] && sh -c '$(call SAFE_RM,$$dir)' || true; \
+			[ -d "$$dir" ] && $(SAFE_RM) "$$dir" || true; \
 		done); \
 	fi
 	@echo "[DONE] Distclean complete - workspace ready for archive."
@@ -432,20 +411,19 @@ version:
 # Display the currently loaded configuration variables
 .PHONY: buildvars
 buildvars:
-	@echo "Variant........: $(if $(VARIANT),$(VARIANT),[ MISSING ])"
-	@echo "Platform.......: $(if $(PLATFORM),$(PLATFORM),[ MISSING ])"
-	@echo "Device name....: $(if $(DEVICE_NAME),$(DEVICE_NAME),[ MISSING ])"
-	@echo "Node name......: $(if $(NODE_NAME),$(NODE_NAME),[ MISSING ])"
-	@echo "Friendly name..: $(if $(FRIENDLY_NAME),$(FRIENDLY_NAME),[ MISSING ])"
-	@echo "WiFi IP........: $(if $(STATIC_STATIC_IP),$(STATIC_STATIC_IP),[ dynamic ])"
-	@echo "WiFi Gateway...: $(if $(STATIC_GATEWAY),$(STATIC_GATEWAY),[ dynamic ])"
-	@echo "WiFi Subnet....: $(if $(STATIC_SUBNET),$(STATIC_SUBNET),[ dynamic ])"
-	@echo "WiFi DNS1......: $(if $(STATIC_DNS1),$(STATIC_DNS1),[ dynamic ])"
-	@echo "WiFi DNS2......: $(if $(STATIC_DNS2),$(STATIC_DNS2),[ dynamic ])"
-	@echo "Build Directory: $(if $(DEVICE_NAME),$(BUILD_DIR),[ NOT_SET ])"
-	@echo "Comm Path......: $(if $(DEVICE_NAME),$(COMM_PATH),[ NOT_SET ])"
-	@echo "Build Log File.: $(if $(DEVICE_NAME),$(BUILD_LOG),[ NOT_SET ])"
-	@echo "Run Log File...: $(if $(DEVICE_NAME),$(RUN_LOG),[ NOT_SET ])"
+	@echo "Variant........: $(if $(VARIANT), $(VARIANT), [ MISSING ])"
+	@echo "Platform.......: $(if $(PLATFORM), $(PLATFORM), [ MISSING ])"
+	@echo "Device name....: $(if $(DEVICE_NAME), $(DEVICE_NAME), [ MISSING ])"
+	@echo "Node name......: $(if $(NODE_NAME), $(NODE_NAME), [ MISSING ])"
+	@echo "Friendly name..: $(if $(FRIENDLY_NAME), $(FRIENDLY_NAME), [ MISSING ])"
+	@echo "WiFi IP........: $(if $(STATIC_STATIC_IP), $(STATIC_STATIC_IP), [ dynamic ])"
+	@echo "WiFi Gateway...: $(if $(STATIC_GATEWAY), $(STATIC_GATEWAY), [ dynamic ])"
+	@echo "WiFi Subnet....: $(if $(STATIC_SUBNET), $(STATIC_SUBNET), [ dynamic ])"
+	@echo "WiFi DNS1......: $(if $(STATIC_DNS1), $(STATIC_DNS1), [ dynamic ])"
+	@echo "WiFi DNS2......: $(if $(STATIC_DNS2), $(STATIC_DNS2), [ dynamic ])"
+	@echo "Build Directory: $(if $(DEVICE_NAME), $(BUILD_DIR), [ NOT_SET ])"
+	@echo "Comm Path......: $(if $(DEVICE_NAME), $(COMM_PATH), [ NOT_SET ])"
+	@echo "Run Log File...: $(if $(DEVICE_NAME), $(RUN_LOG), [ NOT_SET ])"
 
 
 

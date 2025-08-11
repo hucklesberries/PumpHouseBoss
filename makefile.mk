@@ -1,14 +1,15 @@
-# ------------------------------------------------------------------------------
+# ==============================================================================
 #  File:         makefile.mk
-#  File Type:    Makefile Include
+#  File Type:    Makefile
 #  Purpose:      Make Macros and Helper Functions
-#  Version:      0.8.0d
+#  Version:      0.9.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
 #  Description:  Shared Makefile macros and helper functions for ESPHome-based
 #                device management. Provides OS detection, Python/esptool
-#                auto-detection, safe recursive delete, and colorized output macros.
+#                auto-detection, safe recursive delete, and colorized output
+#                macros.
 #
 #  Features:     - OS detection for cross-platform compatibility
 #                - Python/esptool auto-detection for firmware operations
@@ -16,13 +17,12 @@
 #                - Colorized output macros for consistent messaging
 #                - Designed for inclusion in project Makefiles
 #
-#  license:      gnu general public license v3.0
-#                spdx-license-identifier: gpl-3.0-or-later
-#  copyright:    (c) 2025 roland tembo hendel
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
 #                this program is free software: you can redistribute it and/or
 #                modify it under the terms of the gnu general public license.
-# ------------------------------------------------------------------------------
-
+# ==============================================================================
 
 # detect os (necessary for path/eol conversion from stupid ms windows)
 uname_s := $(shell uname -s)
@@ -44,15 +44,7 @@ python_with_esptool ?= $(shell \
 ESPTOOL_CMD = $(PYTHON_WITH_ESPTOOL) -m esptool --chip $(PLATFORM) --port $(COMM_PATH)
 
 # Macro: Safe recursive delete
-SAFE_RM = \
-  if [ -z "$1" ]; then \
-	echo -e "$(RED)[SAFE_RM]$(NC) Refusing to delete: directory not specified"; \
-  elif [ "$(if $(filter $(1),$(PROTECTED_DIRS)),yes,no)" = "yes" ]; then \
-	echo -e "$(RED)[SAFE_RM]$(NC) Refusing to delete protected directory: $1"; \
-  else \
-	echo -e "$(YELLOW)[SAFE_RM]$(NC) Deleting directory: $1"; \
-	rm -rf "$1"; \
-  fi
+SAFE_RM = $(PROJECT_ROOT)/scripts/safe_rm.sh
 
 # Color support detection and color variables
 ifeq (,$(findstring dumb,$(TERM)))

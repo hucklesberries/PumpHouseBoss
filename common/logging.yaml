@@ -1,21 +1,22 @@
-# ------------------------------------------------------------------------------
+# ==============================================================================
 #  File:         logging.yaml
-#  File Type:    ESPHome YAML Include
+#  File Type:    YAML File
 #  Purpose:      Common ESPHome logging subsystem configuration
-#  Version:      0.8.0d
-#  Date:         2025-07-24
-#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#  Version:      0.9.0d
+#  Date:         2025-08-08
+#  Author:       GitHub Copilot <your-email>
 #
-#  Description:  Provides global and module-specific logging configuration for ESPHome nodes.
-#                Enables serial and OTA log output, controls verbosity, and allows
-#                custom actions on log message reception for diagnostics and automation.
+#  Description:  Provides global and module-specific logging configuration for
+#                ESPHome nodes. Enables serial and OTA log output, controls
+#                verbosity, and allows custom actions on log message reception
+#                for diagnostics and automation.
 #
 #  License:      GNU General Public License v3.0
 #                SPDX-License-Identifier: GPL-3.0-or-later
 #  Copyright:    (c) 2025 Roland Tembo Hendel
 #                This program is free software: you can redistribute it and/or
 #                modify it under the terms of the GNU General Public License.
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # ------------------------------------------------------------------------------
 #  YAML linter configuration
@@ -30,7 +31,8 @@
 #  ESPHome logging subsystem configuration
 #   - Enables serial and OTA log output for diagnostics and monitoring.
 #   - Controls global and module-specific verbosity for fine-grained logging.
-#   - Can trigger custom actions on log message reception (e.g., publish firmware version).
+#   - Can trigger custom actions on log message reception (e.g., publish
+#     firmware version).
 #   - Parameters:
 #       level: Global log level (NONE, ERROR, WARN, INFO, DEBUG, VERBOSE)
 #       logs.main: Module-specific log level for 'main'

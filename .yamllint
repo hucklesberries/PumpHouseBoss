@@ -6,3 +6,7 @@ rules:
   line-length: disable
   colons:
     max-spaces-after: -1  # -1 disables the check for spaces after colon
+
+ignore: |
+  build
+  .esphome

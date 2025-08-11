@@ -3,15 +3,13 @@
 #  File Type:    YAML File
 #  Purpose:      System status LED driver/logic
 #  Version:      0.9.0d
-#  Date:         2025-08-08
-#  Author:       GitHub Copilot <your-email>
+#  Date:         2025-07-24
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
-#  Description:  Drives 4 status LEDs for system state indication:
-#                - White: Power/Status (blinks before boot, steady ON after
-#                  boot)
-#                - Green: WiFi (ON if connected, blinks if not)
-#                - Blue: Home Assistant/API (ON if connected, blinks if not)
-#                - Red:  MMU/Alert (currently fast blink as placeholder)
+#  Description:  Drives 2 status LEDs for system state indication:
+#                  - White: Power/Status (blinks before boot, steady ON after
+#                    boot)
+#                  - Green: WiFi (ON if connected, blinks if not)
 #                Uses ESPHome interval and lambda logic for flexible, real-time
 #                status indication. Pin assignments are set via substitutions.
 #
@@ -44,15 +42,6 @@ output:
   - platform: gpio
     id: outputLEDWiFIConnected
     pin: ${pinLEDWiFiConnected}
-  - platform: gpio
-    id: outputLEDHostConnected
-    pin: ${pinLEDHostConnected}
-  - platform: gpio
-    id: outputMMU0Status
-    pin: ${pinMMU0Status}
-  - platform: gpio
-    id: outputMMU0Control
-    pin: ${pinMMU0Control}
 
 
 # ------------------------------------------------------------------------------
@@ -74,12 +63,12 @@ interval:
     then:
       - lambda: |-
           // White LED (Power/Status): Blink before boot, steady ON after boot
-          static bool white_blink = false;
+          static bool whiteBlink = false;
           if (id(bsSystemInitialized).state) {
             id(outputSystemInitialized).turn_on();
           } else {
-            white_blink = !white_blink;
-            if (white_blink) id(outputSystemInitialized).turn_on();
+            whiteBlink = !whiteBlink;
+            if (whiteBlink) id(outputSystemInitialized).turn_on();
             else id(outputSystemInitialized).turn_off();
           }
           // Green LED (WiFi): ON if connected, blink if not
@@ -91,17 +80,3 @@ interval:
             if (green_blink) id(outputLEDWiFIConnected).turn_on();
             else id(outputLEDWiFIConnected).turn_off();
           }
-          // Blue LED (HA/API): ON if connected, blink if not
-          static bool blue_blink = false;
-          if (id(gHAConnected)) {
-            id(outputLEDHostConnected).turn_on();
-          } else {
-            blue_blink = !blue_blink;
-            if (blue_blink) id(outputLEDHostConnected).turn_on();
-            else id(outputLEDHostConnected).turn_off();
-          }
-          // Red LED: fast blink (placeholder)
-          static bool red_state = false;
-          red_state = !red_state;
-          if (red_state) id(outputMMU0Status).turn_on();
-          else id(outputMMU0Status).turn_off();

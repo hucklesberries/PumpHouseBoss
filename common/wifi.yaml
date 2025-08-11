@@ -1,10 +1,10 @@
-# ------------------------------------------------------------------------------
+# ==============================================================================
 #  File:         wifi.yaml
-#  File Type:    ESPHome YAML Include
+#  File Type:    YAML File
 #  Purpose:      Common ESPHome WiFi subsystem configuration
-#  Version:      0.8.0d
-#  Date:         2025-07-24
-#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#  Version:      0.9.0d
+#  Date:         2025-08-08
+#  Author:       GitHub Copilot <your-email>
 #
 #  Description:  WiFi configuration for ESPHome nodes.
 #
@@ -13,7 +13,7 @@
 #  Copyright:    (c) 2025 Roland Tembo Hendel
 #                This program is free software: you can redistribute it and/or
 #                modify it under the terms of the GNU General Public License.
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # ------------------------------------------------------------------------------
 #  YAML linter configuration
@@ -46,6 +46,12 @@ wifi:
   fast_connect: false                    # fast_connect Wait for DHCP before continuing
   output_power: 20.0                     # output_power Transmit power in dBm
   reboot_timeout: 30s                    # reboot_timeout Reboot if connection not established
+  on_connect:
+    then:
+      - text_sensor.template.publish:
+          id: tsIPAddress
+          state: !lambda 'return WiFi.localIP().toString().c_str();'
+
 
   # --------------------------------------------------------------------------
   #  Fallback Access Point when Wi-Fi fails

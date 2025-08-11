@@ -37,3 +37,6 @@ Thumbs.db
 *.code-workspace
 .vscode/
 .idea/
+
+# Python bytecode cache
+__pycache__/

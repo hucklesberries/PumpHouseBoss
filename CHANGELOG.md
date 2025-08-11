@@ -3,6 +3,35 @@
 > **Scope & Purpose:**
 > This changelog provides a concise, developer-focused summary of all significant changes to PumpHouseBoss. For detailed release notes, see RELEASE.md.
 
+## [0.9.0d] - 2025-08-10
+### Added
+-- Refactored header validation script (`pco-header.py`) with a robust state machine for strict schema enforcement, field order, multiline, and blank line rules
+-- New PumpHouseBoss Test Harness variant (`phb-test.yaml`) for hardware and firmware testing, including PWM output and LCD support
+-- Improved error reporting with precise line numbers and context for all header validation failures
+-- Debug instrumentation for tracing state transitions and parser logic
+-- Updated documentation and code comments for maintainability and onboarding
+
+### Changed
+- Major reorganization of Python scripts for clarity and maintainability
+- State machine logic now enforces schema-driven validation, including multiline and blank line rules
+- Multiline continuation logic is stricter and more predictable; all indented lines must conform to standards
+- Blank line enforcement after multiline fields is now schema-driven
+- Improved copyright and license validation to match project standards
+- Removed duplicate and stray function definitions, reducing code bloat and errors
+- Enhanced developer workflow with better error messages and debug output
+
+### Fixed
+- Fatal errors due to missing or misordered function definitions
+- Logic errors in multiline continuation and field transitions
+- Issues with header parsing for Makefile, YAML, and Python files
+- Improved standards enforcement and automation for all project files
+
+### Developer Impact
+- All contributors must follow new header and multiline standards for all project files
+- Test harness variant enables hardware regression and integration testing
+- Debug output and error reporting make troubleshooting and onboarding easier
+- Documentation and code comments updated for clarity and standards compliance
+
 ## [0.8.0d] - 2025-08-02
 ### Added
 -- Standardized and refined headers in YAML, Bash, and Makefile files

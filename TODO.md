@@ -28,7 +28,6 @@
 - [ ] Investigate why BLUE LED starts blinking after a while
 - [ ] Implement Display Updates
 - [ ] Implement Controls
-
 - [ ] Refine documentation for wiki and doc library
 ## Documentation
 

@@ -1,8 +1,8 @@
-# ------------------------------------------------------------------------------
+# ==============================================================================
 #  File:         phb-pro.yaml
-#  File Type:    ESPHome YAML Main
+#  File Type:    YAML File
 #  Purpose:      PumpHouseBoss Pro Variant Main
-#  Version:      0.8.0d
+#  Version:      0.9.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -19,12 +19,6 @@
 #                - Home Assistant integration via ESPHome
 #                - Supports up to 8 MMUs
 #
-#  License:      GNU General Public License v3.0
-#                SPDX-License-Identifier: GPL-3.0-or-later
-#  Copyright:    (c) 2025 Roland Tembo Hendel
-#                This program is free software: you can redistribute it and/or
-#                modify it under the terms of the GNU General Public License.
-#
 #  Note:         Build-time Variable Substitution:
 #                - Variables in the form __VAR_NAME__ are automatically replaced
 #                  with project-specific values during the build process
@@ -34,8 +28,11 @@
 #                - Do not edit these variables directly in the build output.
 #                  (Example: __NODE_NAME__, __PLATFORM__, __VERSION__)
 #
-#  Note:         Co-developed with GitHub Copilot by OpenAI.
-# ------------------------------------------------------------------------------
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+# ==============================================================================
 
 # ------------------------------------------------------------------------------
 #  YAML linter configuration
@@ -54,52 +51,25 @@
 #       version: Firmware version tag injected into logs and sensors
 #       flow_sensor_pin: Primary flow sensor pulse counter input
 #       test_output_pin: GPIO test and verification pin
-#       watchdog_timeout: Hardware watchdog timeout period
-#       watchdog_trigger_pin: External watchdog trigger output
-#       watchdog_early_trigger: Early trigger before timeout
 # ------------------------------------------------------------------------------
 substitutions:
-  chip_set: "__PLATFORM__"
-  node_name: "__NODE_NAME__"
-  friendly_name: "__FRIENDLY_NAME__"
-  version: "__VERSION__"
-  watchdog_timeout: "30s"
-  watchdog_trigger_pin: "GPIO07"
-  watchdog_early_trigger: "25s"
-  led_power_pin: "GPIO7"
-  led_wifi_status_pin: "GPIO15"
-  led_host_status_pin: "GPIO16"
-  led_mmu_status_pin: "GPIO17"
-  mmu_sensor_0_pin: "GPIO19"
-
-
-# ------------------------------------------------------------------------------
-#  Common package includes for modular configuration
-#   - Modularizes board, display, network, OTA, logging, and watchdog config
-#       display: Display configuration (e.g., ST7789V panel)
-#       wifi: Wi-Fi credentials, static IP, and fallback
-#       ota: OTA settings (port, auth)
-#       web: Web interface (http://<device>.local)
-#       logging: USB/UART logging config (level, baud)
-#       watchdog: System reliability watchdog component
-# ------------------------------------------------------------------------------
-packages:
-  esp32s3:     !include common/__PLATFORM__.yaml
-  wifi:        !include common/wifi.yaml
-  ota:         !include common/ota.yaml
-  api:         !include common/api.yaml
-  web:         !include common/web_server.yaml
-  logging:     !include common/logging.yaml
-  watchdog:    !include common/watchdog.yaml
-  indications: !include common/indications.yaml
-  display:     !include common/display_pcf8574.yaml
-  mmu:         !include common/mmu.yaml
+  chip_set:                "__PLATFORM__"
+  node_name:               "__NODE_NAME__"
+  friendly_name:           "__FRIENDLY_NAME__"
+  version:                 "__VERSION__"
+  pinLEDSystemInitialized: "GPIO07"
+  pinLEDWiFiConnected:     "GPIO15"
+  pinLEDHostConnected:     "GPIO16"
+  pinBTNControl:           "GPIO06"
+  pinMMU0Status:           "GPIO17"
+  pinMMU0Control:          "GPIO47"
+  pinMMU0Sense:            "GPIO19"
 
 
 # ------------------------------------------------------------------------------
 #  Global Variables
 #   - Defines internal variables for use in automations and logic blocks
-#   - Example: ha_connected tracks Home Assistant API connection status
+#   - Example: gHAConnected tracks Home Assistant API connection status
 #   - Parameters:
 #       id: Variable name (referenced in lambdas)
 #       type: Data type (e.g., bool, int, float)
@@ -107,7 +77,7 @@ packages:
 #       initial_value: Value at boot
 # ------------------------------------------------------------------------------
 globals:
-  - id: ha_connected
+  - id: gHAConnected
     type: bool
     restore_value: no
     initial_value: 'false'
@@ -125,19 +95,28 @@ globals:
 #           These are placeholders until native support is available.
 # ------------------------------------------------------------------------------
 esphome:
-  name: __NODE_NAME__
+  name: __DEVICE_NAME__
   friendly_name: __FRIENDLY_NAME__
   on_boot:
-    priority: -100
+    priority: 100
     then:
       - text_sensor.template.publish:
-          id: firmware_version
+          id: tsFriendlyName
+          state: "__FRIENDLY_NAME__"
+      - text_sensor.template.publish:
+          id: tsVersion
           state: "__VERSION__"
       - text_sensor.template.publish:
-          id: reset_reason
+          id: tsNodeName
+          state: "__NODE_NAME__"
+      - text_sensor.template.publish:
+          id: tsIPAddress
+          state: "No Connection"
+      - text_sensor.template.publish:
+          id: tsResetReason
           state: "Power On Reset"
       - sensor.template.publish:
-          id: last_reset_code
+          id: sResetCode
           state: 1
 
 
@@ -149,8 +128,8 @@ esphome:
 #   - scan: true enables automatic device address scanning (shows in logs)
 # ------------------------------------------------------------------------------
 i2c:
-  sda: 18
-  scl: 9
+  sda:  "GPIO18"
+  scl:  "GPIO09"
   scan: true
 
 
@@ -169,13 +148,13 @@ i2c:
 sensor:
   - platform: template
     name: "Last Reset Code"      # Fallback: always 1 (Power On Reset code)
-    id: last_reset_code
+    id: sResetCode
     lambda: |-
       return 1;
     update_interval: never
   - platform: uptime
     name: "Uptime"                # Uptime in seconds since boot
-    id: uptime_sensor
+    id: sUptime
 
 
 # ------------------------------------------------------------------------------
@@ -197,10 +176,10 @@ sensor:
 # ------------------------------------------------------------------------------
 binary_sensor:
   - platform: status
-    id: wifi_connected
+    id: bsWiFiConnected
   - platform: template
-    id: system_boot
-    name: "System Boot"
+    id: bsSystemInitialized
+    name: "System Initialized"
     lambda: |-
       // Always true after boot
       return true;
@@ -223,15 +202,58 @@ binary_sensor:
 # ------------------------------------------------------------------------------
 text_sensor:
   - platform: template
-    name: "Firmware Version"      # User-visible sensor name in HA
-    id: firmware_version
+    name: "Variant"
+    id: tsFriendlyName
     icon: "mdi:tag"
-    update_interval: never        # Static value set only on boot
+    update_interval: never
+    lambda: |-
+      return {"__FRIENDLY_NAME__"};
+  - platform: template
+    name: "Firmware Version"
+    id: tsVersion
+    icon: "mdi:tag"
+    update_interval: never
     lambda: |-
       return {"__VERSION__"};
   - platform: template
-    name: "Reset Reason"          # Fallback: always 'Power On Reset' on ESP32-S3
-    id: reset_reason
+    name: "Node Name"
+    id: tsNodeName
+    icon: "mdi:tag"
+    update_interval: never
+    lambda: |-
+      return {"__NODE_NAME__"};
+  - platform: template
+    name: "IP Address"
+    id: tsIPAddress
+    icon: "mdi:tag"
+    update_interval: never
+    lambda: |-
+      return {"No Connection"};
+  - platform: template
+    name: "Reset Reason"
+    id: tsResetReason
     update_interval: never
     lambda: |-
       return {"Power On Reset"};
+
+
+# ------------------------------------------------------------------------------
+#  Common package includes for modular configuration
+#   - Modularizes ESPHome and custom components
+#       display: Display configuration (e.g., ST7789V panel)
+#       wifi: Wi-Fi credentials, static IP, and fallback
+#       ota: OTA settings (port, auth)
+#       web: Web interface (http://<device>.local)
+#       logging: USB/UART logging config (level, baud)
+# ------------------------------------------------------------------------------
+packages:
+  esp32s3:     !include ../../common/esp32s3.yaml
+  wifi:        !include ../../common/wifi.yaml
+  ota:         !include ../../common/ota.yaml
+  api:         !include ../../common/api.yaml
+  web:         !include ../../common/web_server.yaml
+  logging:     !include ../../common/logging.yaml
+  indications: !include ../../common/indications.yaml
+  display:     !include ../../common/display_pcf8574.yaml
+  mmu:         !include ../../common/mmu.yaml
+

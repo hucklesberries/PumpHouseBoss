@@ -1,8 +1,8 @@
-# ------------------------------------------------------------------------------
+# ==============================================================================
 #  File:         web_server.yaml
-#  File Type:    ESPHome YAML Include
+#  File Type:    YAML File
 #  Purpose:      Common ESPHome Web Server subsystem configuration
-#  Version:      0.8.0d
+#  Version:      0.9.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -13,7 +13,7 @@
 #  Copyright:    (c) 2025 Roland Tembo Hendel
 #                This program is free software: you can redistribute it and/or
 #                modify it under the terms of the GNU General Public License.
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # ------------------------------------------------------------------------------
 #  YAML linter configuration

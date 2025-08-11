@@ -25,13 +25,10 @@ An ESPHome-based system for monitoring and managing commercial or residential pu
 - [Available Variants](#available-variants)
 - [Firmware Features](#firmware-features)
 - [Getting Started](#getting-started)
-- [Review Documentation](#review-documentation)
-- [Configure Your Build](#configure-your-build)
-- [Build, Flash, and Test](#build-flash-and-test)
 - [Collaboration](#collaboration)
 - [Automations](#automations)
-- [FAQ / Common Issues](#faq--common-issues)
-- [Contact & Support](#contact--support)
+- [FAQ / Common Issues](#faq-and-common-issues)
+- [Contact & Support](#contact-and-support)
 
 
 ## Product Features
@@ -55,7 +52,7 @@ GNU General Public License v3.0
 SPDX-License-Identifier: GPL-3.0-or-later
 
 ## Available Variants
-The PumpHouseBoss project supports two hardware variants:
+The PumpHouseBoss project supports three hardware variants:
 
 ### PumpHouseBoss Standard
 - **Platform:** Espressif ESP32 (30 pin)
@@ -72,12 +69,18 @@ The PumpHouseBoss project supports two hardware variants:
 - **Platform:** Espressif ESP32-S3 (44 pin)
 - **MMUs:** 8
 - **Indications:** 4 LED status outputs
-- **Controls:**  4 button; Display Control, Systemm Reset, Manual MMU Control (shut-off)
+- **Controls:**  4 button; Display Control, System Reset, Manual MMU Control (shut-off)
 - **Display:** 4 line by 20 character display (lcd_pcf8574 I2C interface)
 - **Other:** USB programming/debugging port
 - **Reference:**
     - [PHB Professional Functional Overview](phb-pro-overview.md)
     - [PHB Professional Hardware Guide](phb-pro-hardware.md)
+
+### PumpHouseBoss Test Harness
+- **Platform:** Espressif ESP32/ESP32S3
+- **Purpose:** Hardware and firmware test fixture for regression and integration testing
+- **Features:** 8 PWM outputs, 4 line LCD, menu-driven output control
+- **Reference:** [PHB Test Harness Overview](phb-test-overview.md)
 
 See the `variants/` directory for detailed configuration and hardware mapping for each variant.
 
@@ -100,8 +103,83 @@ See the `variants/` directory for detailed configuration and hardware mapping fo
 ```sh
 git clone https://github.com/hucklesberries/PumpHouseBoss.git
 cd PumpHouseBoss
+```
 
-
+```
+├── CHANGELOG.md                           # Project changelog
+├── common/                                # Shared YAML configs and hardware includes
+│   ├── api.yaml                           # API config
+│   ├── display_pcf8574.yaml               # PCF8574 display config
+│   ├── esp32.yaml                         # ESP32 base config
+│   ├── esp32s3.yaml                       # ESP32-S3 base config
+│   ├── indications.yaml                   # Indications config
+│   ├── logging.yaml                       # Logging config
+│   ├── mmu.yaml                           # MMU config
+│   ├── ota.yaml                           # OTA update config
+│   ├── secrets.template.yaml              # Template for secrets file
+│   ├── secrets.yaml                       # Actual secrets (not in repo)
+│   ├── web_server.yaml                    # Web server config
+│   └── wifi.yaml                          # WiFi config
+├── config/                                # Build and variant configuration
+│   ├── config.mk                          # Main build config
+│   ├── phb-pro.mk                         # Pro variant build config
+│   ├── phb-std.mk                         # Standard variant build config
+│   ├── phb-test.mk                        # Test harness build config
+│   └── template.mk                        # Template for new configs
+├── CONTRIBUTING.md                        # Contributor/developer guide
+├── docs/                                  # Documentation and MkDocs config
+│   ├── common-md/                         # Common markdown docs
+│   │   ├── Contact-and-Support.md         # Contact/support info
+│   │   ├── Developer-Guide.md             # Developer guide
+│   │   ├── FAQ.md                         # Frequently asked questions
+│   │   ├── Firmware-and-Configuration.md  # Firmware/configuration guide
+│   │   ├── Getting-Started.md             # Getting started guide
+│   │   ├── Hardware-Overview.md           # Hardware overview
+│   │   ├── Overview.md                    # Project overview
+│   │   └── Usage-and-Troubleshooting.md   # Usage/troubleshooting
+│   ├── mkdocs.yml                         # MkDocs site config
+│   ├── README-DOCS.md                     # Additional documentation
+│   ├── site-md/                           # Site markdown docs
+│   │   └── Home.md                        # Site home page
+│   └── wiki-md/                           # Wiki markdown docs
+│       └── Home.md                        # Wiki home page
+├── LICENSE                                # Project license (GPLv3)
+├── logs/                                  # Build and regression logs
+│   ├── pre-commit.log                     # Pre-commit log
+│   └── regression-test.log                # Regression test log
+├── Makefile                               # Main project Makefile
+├── makefile.mk                            # Makefile macros and helpers
+├── README.md                              # Project overview and documentation
+├── RELEASE.md                             # Release notes and instructions
+├── RELEASE-CHECKLIST.md                   # Release checklist
+├── scripts/                               # Project scripts and automation
+│   ├── pco_common.py                      # Shared Python utilities
+│   ├── pco-header.py                      # Header validation script
+│   ├── pco-version.py                     # Version check script
+│   ├── pre-commit.py                      # Pre-commit checks
+│   ├── regression-test.py                 # Regression test automation
+│   └── safe_rm.sh                         # Safe file removal script
+├── STANDARDS.md                           # Coding standards and conventions
+├── TODO.md                                # Project TODOs and future plans
+├── variants/                              # Device variant definitions
+│   ├── phb-pro/                           # Pro variant files
+│   │   ├── phb-pro.mk                     # Pro build config
+│   │   ├── phb-pro.yaml                   # Pro YAML config
+│   │   ├── phb-pro-hardware.md            # Pro hardware guide
+│   │   └── phb-pro-overview.md            # Pro functional overview
+│   ├── phb-std/                           # Standard variant files
+│   │   ├── phb-std.mk                     # Standard build config
+│   │   ├── phb-std.yaml                   # Standard YAML config
+│   │   ├── phb-std-hardware.md            # Standard hardware guide
+│   │   └── phb-std-overview.md            # Standard functional overview
+│   └── phb-test/                          # Test harness variant files
+│       ├── indications.yaml               # Test harness indications config
+│       ├── phb-test.mk                    # Test harness build config
+│       ├── phb-test.yaml                  # Test harness YAML config
+│       ├── phb-test-hardware.md           # Test harness hardware guide
+│       └── phb-test-overview.md           # Test harness functional overview
+└── VERSION                                # Project version string
+```
 
 ### 2. Review Documentation
 Read all Markdown files in the project root for standards, changelogs, and workflow:
@@ -137,103 +215,49 @@ Copy the secrets template and edit your secrets:
   ```
 Create and edit your build configuration:
   ```sh
-│
-├── CHANGELOG.md                  # Project changelog
-├── CHECKIN-CHECKLIST.md          # Check-in checklist
-├── configure.sh                  # Build/configuration script
-├── GIT-COPILOT.md                # Copilot usage notes
-├── LICENSE                       # Project license (GPLv3)
-├── Makefile                      # Main project Makefile
-├── Makefile.in                   # Makefile template
-├── README.md                     # Project overview and documentation
-├── regression-test.sh            # Regression test automation
-├── RELEASE.md                    # Release notes and instructions
-├── secrets.template.yaml         # Template for secrets file
-├── VERSION                       # Project version string
-├── build/                        # Build output
-│   ├── phb-esp32-00/
-│   │   └── phb-esp32-00.yaml
-│   └── phb-esp32s3-00/
-│       └── phb-esp32s3-00.yaml
-├── common/                       # Shared YAML configs and hardware includes
-│   ├── display_st7789.yaml
-│   ├── esp32.yaml
-│   ├── esp32s3.yaml
-│   ├── logging.yaml
-│   ├── ota.yaml
-│   ├── secrets.yaml              # Actual secrets (not in repo)
-│   ├── watchdog.yaml
-│   ├── web_server.yaml
-│   └── wifi.yaml
-├── config/
-│   └── phb-esp32-00.in
-├── docs/
-│   ├── mkdocs.yml
-│   └── yaml-md.py
-├── icons/
-│   ├── status_error.png
-│   ├── status_ok.png
-│   ├── status_warn.png
-│   ├── wifi_0.png
-│   ├── wifi_1.png
-│   ├── wifi_2.png
-│   ├── wifi_3.png
-│   ├── wifi_4.png
-│   ├── wifi-0.png
-│   └── wifi-100.png
-├── logs/
-│   ├── phb-esp32-00-*.log
-│   └── ...
-├── variants/
-│   ├── esg32-no-display/
-│   │   └── main.yaml
-│   └── esg32s3-ws-pico-lcd-1.3/
-│       └── main.yaml
-  cp configuration/template.mk configuration/config.mk
-  # Edit configuration/config.mk to match your hardware and preferences
+  
+  # Edit config/config.mk to match your hardware and preferences
   ```
 
 ### 4. Build, Flash, and Test
 Use the following Makefile targets for common tasks:
 
-  **Build & Flash:**
-  - `make build` – Compile firmware for the selected device
-  - `make upload` – Upload firmware to the device
-  - `make run` – Build, upload, and start logging (all-in-one)
+**Build Targets:**
+- `make build`               Build (compile) firmware for the selected device variant
 
-  **Logging:**
-  - `make logs` – Start background logging to logs/DEVICE.log
-  - `make logs-follow` – Follow logs in real-time
-  - `make logs-stop` – Stop background logging processes
-  - `make logs-interactive` – Stream logs interactively (blocks terminal)
-  - `make logs-fresh` – Start fresh logging session and follow immediately
+**Platform Targets:**
+- `make upload`              Upload compiled firmware to the device (via COMM_PATH)
+- `make flash-verify`        Verify device flash contents against current firmware build
+- `make run`                 Build, upload, and stream logs (combo pipeline)
+- `make flash-erase`         Erase entire device flash memory (CAREFUL: destructive!)
+- `make flash-info`          Show flash memory information and layout
+- `make chip-info`           Show device chipset information and capabilities
 
-  **Device Info & Flash:**
-  - `make chip-info` – Display platform chip information
-  - `make flash-info` – Display flash memory information
-  - `make flash-verify` – Verify flash contents against firmware build
-  - `make flash-erase` – Erase entire platform flash memory (destructive!)
+**Logging Targets:**
+- `make logs`                Stream logs in the foreground (interactive, blocks terminal)
+- `make logs-start-bg`       Start background logging to file (creates logs/DEVICE.log symlink)
+- `make logs-stop-bg`        Stop background logging processes for this device
+- `make logs-follow`         Follow logs in real-time from the background log file
+- `make logs-follow-new`     Start new background logging and follow its output
 
-  **Documentation:**
-  - `make docs` – Generate all documentation (ESPHome and MkDocs)
-  - `make docs-esphome` – Generate ESPHome style documentation
-  - `make docs-mkdoc` – Generate MkDocs style documentation (local build only)
-  - `make docs-deploy` – Build and deploy MkDocs site to GitHub Pages (public docs), and sync docs/wiki/ to the GitHub Wiki repository
+**Documentation Targets:**
+- `make docs`                Generate project documentation
+- `make docs-deploy`         Generate and deploy documentation to GitHub Pages and GitHub Wiki repository
 
-  **Cleanup:**
-  - `make clean` – Remove build artifacts and logs
-  - `make clean-cache` – Remove ESPHome build cache
-  - `make clean-docs` – Remove all generated documentation
-  - `make clobber` – Remove device directory and documentation
-  - `make distclean` – Complete cleanup for archive/export
+**Test Targets:**
+- `make regression-test`     Run regression tests on all device YAMLs
 
-  **Test:**
-  - `make regression-test` – Run regression tests for the project
+**Cleanup Targets:**
+- `make clean`               Remove temporary build artifacts and logs
+- `make clean-cache`         Remove ESPHome build cache
+- `make clean-docs`          Remove generated documentation
+- `make clobber`             Remove entire device directory and documentation
+- `make distclean`           Complete cleanup for archive/export
 
-  **Utility:**
-  - `make version` – Show project and ESPHome version
-  - `make buildvars` – Show current build configuration values
-  - `make help` – Show help/target summary
+**Utility Targets:**
+- `make version`             Show platform and ESPHome version
+- `make buildvars`           Show current build configuration values
+- `make help`                Show this message
 
 #### Note on Communication Path (COMM_PATH)
 The Makefile uses the `COMM_PATH` variable to control how the build host machine communicates with the target ESP32/ESP32s3 device-either via serial port or the network (OTA).
@@ -241,7 +265,7 @@ The Makefile uses the `COMM_PATH` variable to control how the build host machine
 - If `COMM_PATH` is set to a serial port (e.g., `COM8` or `/dev/ttyUSB0`), upload is performed over serial.
 
 **Examples:**
-- `make upload COMM_PATH=phb-esp32-00.local` (OTA upload)
+- `make upload COMM_PATH=phb-pro-00.local` (OTA upload)
 - `make upload COMM_PATH=COM8` (Serial upload)
 
 
@@ -253,14 +277,18 @@ please refer to [PHB Implementation Standards](STANDARDS.md)
 
 
 ## Automations
-Several automations are included to streamline the development process. These automations can be exercised as make targets or run directly from the project 'scripts' directory.
-1. sanitize.sh        - performs standards conformance validation on a project file [TBD]
-2. regression-test.sh - performs build and basic regression testing across all makefile targets
-3. pre-check-in.sh    - perfomes pre-checkin process per project standards [TBD]
-4. check-in.sh        - perfomes checkin process per project standards [TBD]
-5. post-check-in.sh   - perfomes checkin process per project standards [TBD]
+The following automation scripts are included to streamline development. These can be run directly from the `scripts/` directory or integrated into your workflow:
+- `pco-header.py`      – Validates file headers for standards conformance
+- `pco-version.py`     – Checks and manages project version consistency
+- `pco_common.py`      – Python module with shared utilities for PCO scripts
+- `pre-commit.py`      – Runs pre-commit checks for code and documentation
+- `regression-test.py` – Automates regression testing for the project
+- `safe_rm.sh`         – Safely removes files and directories (used by Makefile)
 
-## FAQ / Common Issues
+Refer to each script for usage details and integration points. Most build, test, and clean operations are managed via Makefile targets.
+
+
+## FAQ and Common Issues
 
 **Q: Build fails due to missing secrets or configuration files.**
 > Ensure you have copied the secrets template (`common/secrets.template.yaml`) to `common/secrets.yaml` and the configuration template (`configuration/template.mk`) to `configuration/config.mk`, then edited them for your environment.
@@ -277,7 +305,7 @@ Several automations are included to streamline the development process. These au
 For more troubleshooting, see the [project wiki](#) or open an issue.
 
 
-## Contact & Support
+## Contact and Support
 
 For bug reports, questions, or contributions:
 - Open an issue or pull request on [GitHub](https://github.com/hucklesberries/PumpHouseBoss)

@@ -23,14 +23,13 @@ PumpHouseBoss is an ESPHome-based system for monitoring and managing commercial 
 ## Table of Contents
 
 ## Table of Contents
-1. [Welcome & Project Summary](#pumphouseboss-wiki-home)
-2. [Getting Started](#getting-started)
-3. [Hardware Overview](#hardware-overview)
-4. [Firmware and Configuration](#firmware-and-configuration)
-5. [Usage and Troubleshooting](#usage-and-troubleshooting)
-6. [Developer Guide](#developer-guide)
-7. [FAQ](#faq)
-8. [Contact and Support](#contact-and-support)
+1. [Getting Started](#getting-started)
+2. [Hardware Overview](#hardware-overview)
+3. [Firmware and Configuration](#firmware-and-configuration)
+4. [Usage and Troubleshooting](#usage-and-troubleshooting)
+5. [Developer Guide](#developer-guide)
+6. [FAQ](#faq)
+7. [Contact and Support](#contact-and-support)
 
 ---
 

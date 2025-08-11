@@ -1,12 +1,5 @@
 # ESPHome Project Repository Disposition (Checklist)
 
-## Table of Contents
-- [Version & Branch](#1-version--branch)
-- [Pre-Commit](#2-pre-commit)
-- [Commit & Push](#3-commit--push)
-- [Post-Commit/Pre-Release](#4-post-commitpre-release)
-- [Reset for Next Cycle](#5-reset-for-next-cycle)
-
 > **Scope & Purpose:**
 > This checklist ensures that every release of PumpHouseBoss is standards-compliant, well-documented, and ready for deployment. It guides contributors through pre-commit, commit, and post-commit steps.
 
@@ -39,6 +32,8 @@
 13. [ ] Run the `regression-test.sh` script and ensure all tests pass. Resolve any failures.
 14. [ ] If this is a release, tag the commit appropriately and follow the project release process.
 15. [ ] All code changes must be reviewed and approved by at least one other contributor before merging.
+16. [ ] Make & deploy documentation.
+17. [ ] Make distclean
 
 ## 3. Commit & Push
 1.  [ ] Commit message follows standards (concise, descriptive, references issues if needed)

@@ -1,23 +1,18 @@
 # ==============================================================================
-#  File:         phb-std.yaml
+#  File:         phb-test.yaml
 #  File Type:    YAML File
-#  Purpose:      PumpHouseBoss Standard Variant Main
+#  Purpose:      PumpHouseBoss Test Harness Variant Main
 #  Version:      0.9.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
-#  Description:  PumpHouseBoss Standard Variant is a Water Distribution System
-#                Monitor and controller built on the ESP32 platform.
+#  Description:  PumpHouseBoss Test Harness is a hardware test fixture for the
+#                PumpHouseBoss Pro and PumpHouseBoss Standard Water Distribution
+#                System Monitor and Controllers.
 #
-#  Features:     - Ingress and egress flow monitoring, metering
-#                - Over/under flow-rate detection, alerts and alarms
-#                - Automated solenoid control for emergency water-shutoff or
-#                  water-flow management/control
-#                - Manual emergency override to shut-off water-flow
+#  Features:     - 8 programmable PWM output lines
 #                - 4 line LCD (lcd_pcf8574 interface)
-#                - Historical flow-rate/usage graphing
-#                - Home Assistant integration via ESPHome
-#                - Supports 1 MMU
+#                - menu driven line toggle enable/disable
 #
 #  License:      GNU General Public License v3.0
 #                SPDX-License-Identifier: GPL-3.0-or-later
@@ -29,7 +24,7 @@
 # ------------------------------------------------------------------------------
 #  YAML linter configuration
 #   - Disables quoted-strings rule for improved readability
-# ------------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
 # yamllint disable rule:quoted-strings
 
 
@@ -48,43 +43,11 @@ substitutions:
   chip_set:                "__PLATFORM__"
   node_name:               "__NODE_NAME__"
   friendly_name:           "__FRIENDLY_NAME__"
-  version:                 "__VERSION__"
-  pinLEDSystemInitialized: "GPIO32"
-  pinLEDWiFiConnected:     "GPIO33"
-  pinLEDHostConnected:     "GPIO25"
-  pinMMU0Status:           "GPIO26"
-  pinMMU0Control:          "GPIO16"
-  pinMMU0Sense:            "GPIO04"
-
-
-# ------------------------------------------------------------------------------
-#  Global Variables
-#   - Defines internal variables for use in automations and logic blocks
-#   - Example: ha_connected tracks Home Assistant API connection status
-#   - Parameters:
-#       id: Variable name (referenced in lambdas)
-#       type: Data type (e.g., bool, int, float)
-#       restore_value: Whether to restore value after reboot (no for runtime state)
-#       initial_value: Value at boot
-# ------------------------------------------------------------------------------
-globals:
-  - id: gHAConnected
-    type: bool
-    restore_value: no
-    initial_value: 'false'
-
-
-# ------------------------------------------------------------------------------
-#  I2C Bus Configuration
-#   - Configures the I2C bus for peripherals (e.g., LCD, sensors)
-#   - sda: GPIO pin used for I2C data (SDA)
-#   - scl: GPIO pin used for I2C clock (SCL)
-#   - scan: true enables automatic device address scanning (shows in logs)
-# ------------------------------------------------------------------------------
-i2c:
-  sda:  "GPIO21"
-  scl:  "GPIO22"
-  scan: true
+  version:                 "__VERSION___"
+  pinBTNDisp:              "GPIO43"
+  pinBTNCtrl:              "GPIO44"
+  pinLEDSystemInitialized: "GPIO01"
+  pinLEDWiFiConnected:     "GPIO02"
 
 
 # ------------------------------------------------------------------------------
@@ -95,8 +58,6 @@ i2c:
 #       name: Node name
 #       friendly_name: Human-readable name
 #       on_boot: Actions to perform on boot
-#   - NOTE: ESPHome does not currently support reset diagnostics on ESP32-S3.
-#           These are placeholders until native support is available.
 # ------------------------------------------------------------------------------
 esphome:
   name: __DEVICE_NAME__
@@ -122,6 +83,19 @@ esphome:
       - sensor.template.publish:
           id: sResetCode
           state: 1
+
+
+# ------------------------------------------------------------------------------
+#  I2C Bus Configuration
+#   - Configures the I2C bus for peripherals (e.g., LCD, sensors)
+#   - sda: GPIO pin used for I2C data (SDA)
+#   - scl: GPIO pin used for I2C clock (SCL)
+#   - scan: true enables automatic device address scanning (shows in logs)
+# ------------------------------------------------------------------------------
+i2c:
+  sda:  "GPIO18"
+  scl:  "GPIO09"
+  scan: true
 
 
 # ------------------------------------------------------------------------------
@@ -231,8 +205,6 @@ text_sensor:
 # ------------------------------------------------------------------------------
 #  Common package includes for modular configuration
 #   - Modularizes ESPHome and custom components
-#   - Parameters:
-#       esp32: ESP32 board and framework config
 #       display: Display configuration (e.g., ST7789V panel)
 #       wifi: Wi-Fi credentials, static IP, and fallback
 #       ota: OTA settings (port, auth)
@@ -240,13 +212,11 @@ text_sensor:
 #       logging: USB/UART logging config (level, baud)
 # ------------------------------------------------------------------------------
 packages:
-  esp32:       !include ../../common/esp32.yaml
+  indications: !include indications.yaml
+  esp32s3:     !include ../../common/esp32s3.yaml
   wifi:        !include ../../common/wifi.yaml
   ota:         !include ../../common/ota.yaml
-  api:         !include ../../common/api.yaml
   web:         !include ../../common/web_server.yaml
   logging:     !include ../../common/logging.yaml
-  indications: !include ../../common/indications.yaml
   display:     !include ../../common/display_pcf8574.yaml
-  mmu:         !include ../../common/mmu.yaml
 

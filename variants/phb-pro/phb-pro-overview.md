@@ -17,7 +17,7 @@ PumpHouseBoss Professional is an Advanced Water Distribution System Monitor and 
 
 ## Controls
 |CONTROL|INPUT|FUNCTION|
-|---------|--------------------|------------------------------|
+|---|---|---|
 |BTN_DISP|||
 ||press/releases|rotate active MMU in display|
 ||hold 3s|toggle freeze display|
@@ -30,7 +30,8 @@ PumpHouseBoss Professional is an Advanced Water Distribution System Monitor and 
 
 ## Indications
 |LED|ACTIVITY|INDICATION|
-|---------|--------------------|------------------------------|
+|---|---|---|
+|---|---|---|
 |LED_WHITE|||
 ||solid|normal operation|
 ||slow flash|system initialization|

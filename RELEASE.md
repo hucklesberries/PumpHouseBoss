@@ -6,6 +6,31 @@
 > **⚠️ _This project is currently under active development and is _not_ ready for practical deployment. Use at your own risk!_ ⚠️**
 
 
+## Version 0.9.0d – 2025-08-10
+
+**Milestone: Header validation refactor, state machine restoration, and strict standards enforcement**
+
+### Highlights
+- Added new PumpHouseBoss Test Harness variant (`phb-test.yaml`) for hardware and firmware testing
+- Refactored PCO framework and all files as Python scripts
+- Refactored header validation script (`pco-header.py`) for strict schema enforcement and maintainability
+- Restored and improved state machine parsing logic
+- Fixed multiline field handling and blank line rules
+- Improved error reporting and debug instrumentation
+- Removed duplicate and stray function definitions
+- Enhanced copyright and license validation
+- Updated documentation and code comments for clarity
+
+### Bug Fixes
+- Fixed fatal errors due to missing or misordered function definitions
+- Corrected logic for multiline continuation and field transitions
+
+### Other
+- Manual and automated code cleanups
+- Improved code organization and readability
+
+---
+
 ## Version 0.8.0d – 2025-08-02
 
 **Milestone: YAML core improvements, header standardization, PCO framework, and enhanced automation**

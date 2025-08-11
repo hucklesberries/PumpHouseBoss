@@ -1,10 +1,10 @@
-# ------------------------------------------------------------------------------
+# ==============================================================================
 #  File:         esp32s3.yaml
-#  File Type:    ESPHome YAML Include
+#  File Type:    YAML File
 #  Purpose:      ESP32-S3 board and framework configuration
-#  Version:      0.8.0d
-#  Date:         2025-07-24
-#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#  Version:      0.9.0d
+#  Date:         2025-08-08
+#  Author:       GitHub Copilot <your-email>
 #
 #  Description:  Modular include for ESPHome projects targeting ESP32-S3.
 #
@@ -13,7 +13,7 @@
 #  Copyright:    (c) 2025 Roland Tembo Hendel
 #                This program is free software: you can redistribute it and/or
 #                modify it under the terms of the GNU General Public License.
-# ------------------------------------------------------------------------------
+# ==============================================================================
 
 # ------------------------------------------------------------------------------
 #  YAML linter configuration
@@ -81,29 +81,4 @@ esp32:
   board: esp32-s3-devkitc-1       # board Target board: DevKitC-1 (8MB flash, no PSRAM)
   framework:
     type: arduino                 # framework.type Arduino core for ESP32-S3
-
-# ------------------------------------------------------------------------------
-#  SPI bus configuration
-#   - Configures SPI bus for communication
-#   - Assigns clock and MOSI pins
-#   - Parameters:
-#       clk_pin: Clock pin for SPI
-#       mosi_pin: MOSI data pin
-# ------------------------------------------------------------------------------
-spi:
-  clk_pin: GPIO10              # clk_pin Clock pin for SPI
-  mosi_pin: GPIO11             # param mosi_pin MOSI data pin
-
-# ------------------------------------------------------------------------------
-#  Display Interface Configuration
-#   - Configures GPIO pins for display communication
-#   - Assigns Chip Select, Data/Command, and Reset pins
-#   - Parameters:
-#       display_cs: pin Chip Select pin
-#       display_dc: pin Data/Command pin
-#       display_reset: pin Reset pin
-# ------------------------------------------------------------------------------
-substitutions:
-  display_cs_pin:    "GPIO09"       # cs_pin Chip select pin
-  display_dc_pin:    "GPIO08"       # dc_pin Data/command pin
-  display_reset_pin: "GPIO12"       # reset_pin Reset line
+  
