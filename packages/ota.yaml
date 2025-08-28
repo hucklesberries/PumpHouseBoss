@@ -2,7 +2,7 @@
 #  File:         ota.yaml
 #  File Type:    YAML File
 #  Purpose:      Common ESPHome Over-The-Air programming subsystem configuration
-#  Version:      0.9.0d
+#  Version:      0.10.0d
 #  Date:         2025-08-08
 #  Author:       GitHub Copilot <your-email>
 #
@@ -15,14 +15,9 @@
 #                modify it under the terms of the GNU General Public License.
 # ==============================================================================
 
-# ------------------------------------------------------------------------------
-#  YAML linter configuration
-#   - Disables quoted-strings rule for improved readability
-# ------------------------------------------------------------------------------
 # yamllint disable rule:quoted-strings
 
 
-ota:
 # ------------------------------------------------------------------------------
 #  Enables OTA firmware upload over Wi-Fi
 #   - Password is loaded from the secrets file for security
@@ -32,22 +27,27 @@ ota:
 #       password: OTA password (from secrets file)
 #       platform: OTA platform (default: esphome)
 #       on_end: Actions to perform on OTA completion
-# ------------------------------------------------------------------------------
-  password: !secret ota_password  # password Load OTA password from secrets file
-  platform: esphome               # platform OTA platform (default: esphome)
+#
+ota:
+    password: !secret ota_password  # password Load OTA password from secrets file
+    platform: esphome               # platform OTA platform (default: esphome)
+    on_begin:
+        then:
+            - logger.log: OTA update started.
+    on_end:
+        then:
+            - logger.log: OTA update completed.
 
-  #  brief Log message on OTA completion
-  #  details Logs a message to indicate OTA update finished
-  on_end:
-    then:
-      - logger.log: OTA update finished
 
 # ------------------------------------------------------------------------------
 #  Safe Mode logging handler
 #   - Triggered when device boots into recovery mode
 #   - Logs a message to indicate safe mode boot
-# ------------------------------------------------------------------------------
+#
 safe_mode:
-  on_safe_mode:
-    then:
-      - logger.log: Booted into safe mode
+    on_safe_mode:
+        then:
+            - text_sensor.template.publish:
+                  id: textOperatingMode
+                  state: "SAFE"
+            - logger.log: WARNING! Booted into safe mode.

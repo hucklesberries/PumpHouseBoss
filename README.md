@@ -17,18 +17,23 @@ An ESPHome-based system for monitoring and managing commercial or residential pu
 
 
 ## Table of Contents
-
-## Table of Contents
 - [Product Features](#product-features)
 - [Authorship](#authorship)
 - [License](#license)
 - [Available Variants](#available-variants)
 - [Firmware Features](#firmware-features)
 - [Getting Started](#getting-started)
+  - [Install Dependencies](#1-install-dependencies)
+  - [Clone the Repository](#2-clone-the-repository)
+  - [Project Manifest](#project-manifest)
+  - [Review Documentation](#3-review-documentation)
+  - [Configure Your Build](#4-configure-your-build)
+  - [Build, Flash, and Test](#5build-flash-and-test)
+  - [Note on Communication Path (COMM_PATH)](#note-on-communication-path-comm_path)
 - [Collaboration](#collaboration)
 - [Automations](#automations)
-- [FAQ / Common Issues](#faq-and-common-issues)
-- [Contact & Support](#contact-and-support)
+- [FAQ and Common Issues](#faq-and-common-issues)
+- [Contact and Support](#contact-and-support)
 
 
 ## Product Features
@@ -42,14 +47,17 @@ An ESPHome-based system for monitoring and managing commercial or residential pu
 - Support for up to 8 MMUs (Monitor/Management Units) to monitor and manage up to 8 water-lines
 - Extensible to other flow-monitoring and and management operations and fluid-types
 
+
 ## Authorship
 Project developed and maintained by:
 - Roland Tembo Hendel (author, architect)
 - GitHub Copilot (AI automation and documentation support)
 
+
 ## License
 GNU General Public License v3.0
 SPDX-License-Identifier: GPL-3.0-or-later
+
 
 ## Available Variants
 The PumpHouseBoss project supports three hardware variants:
@@ -80,9 +88,12 @@ The PumpHouseBoss project supports three hardware variants:
 - **Platform:** Espressif ESP32/ESP32S3
 - **Purpose:** Hardware and firmware test fixture for regression and integration testing
 - **Features:** 8 PWM outputs, 4 line LCD, menu-driven output control
-- **Reference:** [PHB Test Harness Overview](phb-test-overview.md)
+- **TestPoints:** 8
+- **Indications:** 4 LED status outputs
+- **Controls:**  4 button control inputs
+- **Display:** 4 line by 20 character display (lcd_pcf8574 I2C interface)
+- **Reference:** [PHB Test Harness Specification](variants/phb-test/phb-test-specification.md)
 
-See the `variants/` directory for detailed configuration and hardware mapping for each variant.
 
 ## Firmware Features
 - Modular YAML configuration for all hardware components and variants
@@ -98,28 +109,56 @@ See the `variants/` directory for detailed configuration and hardware mapping fo
 
 ## Getting Started
 
-### 1. Clone the Repository
+### 1 Install Dependencies
+
+This project requires the following dependencies:
+
+- **Python** (Recommended: latest version for Windows)
+- **ESPHome** (Install via pip)
+
+1. **Install Python**
+
+   Download and install Python from [python.org](https://www.python.org/downloads//).
+   Make sure to add Python to your system PATH during installation.
+
+2. **Install ESPHome**
+
+   Open a Windows Command Prompt and run:
+   ```
+   pip install esphome
+   ```
+
+3. **Verify ESPHome Installation**
+
+   Run:
+   ```
+   esphome --version
+   ```
+   You should see the ESPHome version output.
+
+
+4.  **Install Python Dependencies**
+
+### 2 Clone the Repository
+
+   Open a Windows Command Prompt and run:
+   ```
+   pip install yamllint mkdocs colorama cursor yaspin
+   ```
 
 ```sh
 git clone https://github.com/hucklesberries/PumpHouseBoss.git
 cd PumpHouseBoss
 ```
 
+
+## Project Manifest
 ```
 ├── CHANGELOG.md                           # Project changelog
-├── common/                                # Shared YAML configs and hardware includes
-│   ├── api.yaml                           # API config
-│   ├── display_pcf8574.yaml               # PCF8574 display config
-│   ├── esp32.yaml                         # ESP32 base config
-│   ├── esp32s3.yaml                       # ESP32-S3 base config
-│   ├── indications.yaml                   # Indications config
-│   ├── logging.yaml                       # Logging config
-│   ├── mmu.yaml                           # MMU config
-│   ├── ota.yaml                           # OTA update config
-│   ├── secrets.template.yaml              # Template for secrets file
-│   ├── secrets.yaml                       # Actual secrets (not in repo)
-│   ├── web_server.yaml                    # Web server config
-│   └── wifi.yaml                          # WiFi config
+├── components                             # Custom projects components
+│   └── esp32bootcode                      # ESP32 bootcode support
+│       ├── component.yaml                 # component registration
+│       └── esp32bootcode.h                # component implementation header file
 ├── config/                                # Build and variant configuration
 │   ├── config.mk                          # Main build config
 │   ├── phb-pro.mk                         # Pro variant build config
@@ -144,11 +183,21 @@ cd PumpHouseBoss
 │   └── wiki-md/                           # Wiki markdown docs
 │       └── Home.md                        # Wiki home page
 ├── LICENSE                                # Project license (GPLv3)
-├── logs/                                  # Build and regression logs
-│   ├── pre-commit.log                     # Pre-commit log
-│   └── regression-test.log                # Regression test log
 ├── Makefile                               # Main project Makefile
 ├── makefile.mk                            # Makefile macros and helpers
+├── packages                               # Project packages
+│   ├── api.yaml                           # API config
+│   ├── display_pcf8574.yaml               # PCF8574 display config
+│   ├── esp32.yaml                         # ESP32 base config
+│   ├── esp32s3.yaml                       # ESP32-S3 base config
+│   ├── indications.yaml                   # Indications config
+│   ├── logging.yaml                       # Logging config
+│   ├── mmu.yaml                           # MMU config
+│   ├── ota.yaml                           # OTA update config
+│   ├── secrets.template.yaml              # Template for secrets file
+│   ├── secrets.yaml                       # Actual secrets (not in repo)
+│   ├── web_server.yaml                    # Web server config
+│   └── wifi.yaml                          # WiFi config
 ├── README.md                              # Project overview and documentation
 ├── RELEASE.md                             # Release notes and instructions
 ├── RELEASE-CHECKLIST.md                   # Release checklist
@@ -163,25 +212,38 @@ cd PumpHouseBoss
 ├── TODO.md                                # Project TODOs and future plans
 ├── variants/                              # Device variant definitions
 │   ├── phb-pro/                           # Pro variant files
-│   │   ├── phb-pro.mk                     # Pro build config
-│   │   ├── phb-pro.yaml                   # Pro YAML config
+│   │   ├── phb-pro.mk                     # Pro build configuration
+│   │   ├── phb-pro.yaml                   # Pro YAML configuration
 │   │   ├── phb-pro-hardware.md            # Pro hardware guide
 │   │   └── phb-pro-overview.md            # Pro functional overview
 │   ├── phb-std/                           # Standard variant files
-│   │   ├── phb-std.mk                     # Standard build config
-│   │   ├── phb-std.yaml                   # Standard YAML config
+│   │   ├── phb-std.mk                     # Standard build configuration
+│   │   ├── phb-std.yaml                   # Standard YAML configuration
 │   │   ├── phb-std-hardware.md            # Standard hardware guide
 │   │   └── phb-std-overview.md            # Standard functional overview
-│   └── phb-test/                          # Test harness variant files
-│       ├── indications.yaml               # Test harness indications config
-│       ├── phb-test.mk                    # Test harness build config
-│       ├── phb-test.yaml                  # Test harness YAML config
-│       ├── phb-test-hardware.md           # Test harness hardware guide
-│       └── phb-test-overview.md           # Test harness functional overview
+│   └── phb-test/                          # Test harness variant implementation
+│       ├── components                     # Variant custom components
+│       │   └── phb-test                   # Core variant custom component
+│       │       ├── component.yaml         # Component registration
+│       │       └── phb-test.h             # Component implementation header file
+│       ├── fragments                      # Variant fragments
+│       │   ├── binary_sensors.yaml        # Variant binary-sensor definitions
+│       │   ├── numbers.yaml               # Variant numbers definitions
+│       │   ├── outputs.yaml               # Variant output definitions
+│       │   ├── sensors.yaml               # Variant sensor definitions
+│       │   ├── switches.yaml              # Variant switch definitions
+│       │   └── text_sensors.yaml          # Variant text-sensor definitions
+│       ├── packages                       # Variant packages
+│       │   ├── controls.yaml              # Variant control and timer logic
+│       │   └── display.yaml               # variant display logic and functionsal implementation
+│       ├── phb-test.mk                    # Variant build configuration
+│       ├── phb-test.yaml                  # Variant YAML configuration
+│       └── phb-test-specification.md      # Variant specification
 └── VERSION                                # Project version string
 ```
 
-### 2. Review Documentation
+
+### 3 Review Documentation
 Read all Markdown files in the project root for standards, changelogs, and workflow:
 
 ### Wiki
@@ -207,7 +269,8 @@ The project wiki is maintained in `docs/src/` for easy editing and backup. Key p
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Contributor/developer guide, session context, and Copilot usage |
 | [TODO.md](TODO.md) | Project TODOs and possible future enhancements |
 
-### 3. Configure Your Build
+
+### 4 Configure Your Build
 Copy the secrets template and edit your secrets:
   ```sh
   cp common/secrets.template.yaml common/secrets.yaml
@@ -219,7 +282,8 @@ Create and edit your build configuration:
   # Edit config/config.mk to match your hardware and preferences
   ```
 
-### 4. Build, Flash, and Test
+
+### 5Build, Flash, and Test
 Use the following Makefile targets for common tasks:
 
 **Build Targets:**
@@ -258,6 +322,7 @@ Use the following Makefile targets for common tasks:
 - `make version`             Show platform and ESPHome version
 - `make buildvars`           Show current build configuration values
 - `make help`                Show this message
+
 
 #### Note on Communication Path (COMM_PATH)
 The Makefile uses the `COMM_PATH` variable to control how the build host machine communicates with the target ESP32/ESP32s3 device-either via serial port or the network (OTA).

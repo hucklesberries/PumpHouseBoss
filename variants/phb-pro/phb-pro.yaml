@@ -101,19 +101,19 @@ esphome:
     priority: 100
     then:
       - text_sensor.template.publish:
-          id: tsFriendlyName
+          id: textFriendlyName
           state: "__FRIENDLY_NAME__"
       - text_sensor.template.publish:
-          id: tsVersion
+          id: textVersion
           state: "__VERSION__"
       - text_sensor.template.publish:
-          id: tsNodeName
+          id: textNodeName
           state: "__NODE_NAME__"
       - text_sensor.template.publish:
-          id: tsIPAddress
+          id: textIPAddress
           state: "No Connection"
       - text_sensor.template.publish:
-          id: tsResetReason
+          id: textResetReason
           state: "Power On Reset"
       - sensor.template.publish:
           id: sResetCode
@@ -154,7 +154,7 @@ sensor:
     update_interval: never
   - platform: uptime
     name: "Uptime"                # Uptime in seconds since boot
-    id: sUptime
+    id: sensorUpTime
 
 
 # ------------------------------------------------------------------------------
@@ -203,35 +203,35 @@ binary_sensor:
 text_sensor:
   - platform: template
     name: "Variant"
-    id: tsFriendlyName
+    id: textFriendlyName
     icon: "mdi:tag"
     update_interval: never
     lambda: |-
       return {"__FRIENDLY_NAME__"};
   - platform: template
     name: "Firmware Version"
-    id: tsVersion
+    id: textVersion
     icon: "mdi:tag"
     update_interval: never
     lambda: |-
       return {"__VERSION__"};
   - platform: template
     name: "Node Name"
-    id: tsNodeName
+    id: textNodeName
     icon: "mdi:tag"
     update_interval: never
     lambda: |-
       return {"__NODE_NAME__"};
   - platform: template
     name: "IP Address"
-    id: tsIPAddress
+    id: textIPAddress
     icon: "mdi:tag"
     update_interval: never
     lambda: |-
       return {"No Connection"};
   - platform: template
     name: "Reset Reason"
-    id: tsResetReason
+    id: textResetReason
     update_interval: never
     lambda: |-
       return {"Power On Reset"};

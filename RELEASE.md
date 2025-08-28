@@ -5,6 +5,38 @@
 
 > **⚠️ _This project is currently under active development and is _not_ ready for practical deployment. Use at your own risk!_ ⚠️**
 
+## Version 0.10.0d – 2025-08-28
+
+**Milestone: Major refactor, modularization, and Test Harness hardening**
+
+### Highlights
+- Major refactor of PumpHouseBoss Test Harness codebase
+  - Implement display functionality
+  - Inplemented (button) control functionality
+  - Inplemented (LED) indication functionaliPumpHouseBoss Test Harness:
+  - Segmented code into `components`, `fragments`, and `packages` subdirectories for improved maintainability
+  - Simplified main YAML file structure and modularized configuration
+  - Completed input, output, control, and display logic for the `phb-test` variant
+- Implemented robust singleton pattern and defensive programming in C++ helpers
+  - Added comprehensive error logging, bounds checks, and pointer initialization
+  - Hardened code against operator error and misconfiguration
+- Standardized terminology and capitalization (e.g., "TestPoint") across code and documentation
+- Created and consolidated documentation in `phb-test-specification.md`
+  - Updated table of contents, section headings, and hardware details
+  - Improved documentation blocks in all YAML fragments
+- Improved Makefile and build scripts for safety, modularity, and clarity
+
+### Bug Fixes
+- Corrected typos, spelling, and grammar in documentation and code comments
+- Fixed pointer initialization and null checks in C++ code to prevent runtime errors
+- Addressed issues with output frequency setting and PWM reliability on ESP32 LEDC
+
+### Project Status
+- Only `phb-test` variant compiles; integration with new framework pending
+- Not all documentation has been updated; further polish planned
+- Hardened codebase and configuration for production readiness
+
+---
 
 ## Version 0.9.0d – 2025-08-10
 

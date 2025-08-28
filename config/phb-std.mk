@@ -2,7 +2,7 @@
 #  File:         phb-std.mk
 #  File Type:    Makefile
 #  Purpose:      PumpHouse Boss Std Build Custom Configuration
-#  Version:      0.9.0d
+#  Version:      0.10.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #

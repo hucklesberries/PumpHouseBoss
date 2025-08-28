@@ -25,7 +25,9 @@
 
 ## Quick Start
 1. Open VS Code in this workspace
-2. Configure your device: `make configure`
+2. Configure your device:
+   - create or edit configuration in .//config
+   - create your own secrets.yaml file from template
 3. Build firmware: `make build`
 4. Upload to device: `make upload`
 5. Stream logs: `make logs`
@@ -40,12 +42,8 @@
 ## Documentation and Automation
 - YAML headers and comments are extracted to Markdown for MkDocs
 - Documentation targets:
-  - `make docs` – Generate all documentation (ESPHome and MkDocs)
-  - `make docs-esphome` – Generate ESPHome style documentation
-  - `make docs-mkdoc` – Generate MkDocs style documentation (local build only)
-  - `make docs-deploy` – Build and deploy MkDocs site to GitHub Pages (public docs), and sync docs/wiki/ to the GitHub Wiki repository
-- Docs output: `docs/esphome/`, `docs/html/`, and (if used) `docs/latex/`
-- See `docs/extract_yaml_headers.py` for YAML-to-Markdown automation
+  - `make docs` – Generate all documentation
+  - `make docs-deploy` – Build and deploy documentation to GitHub Pages (public docs), and sync docs/wiki/ to the GitHub Wiki repository
 
 ## Troubleshooting and Tips
 - Use `make buildvars` to check current build configuration

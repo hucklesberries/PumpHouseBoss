@@ -1,0 +1,91 @@
+# ==============================================================================
+#  File:         switches.yaml
+#  File Type:    YAML Fragment
+#  Purpose:      Switch definitions for PumpHouseBoss Test Harness
+#  Version:      0.10.0d
+#  Date:         2025-08-22
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Contains all switch definitions
+#                - TestPoint enable/disable switches
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ==============================================================================
+
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# TestPoint Enable/Disable Switches
+#
+- &switchTPX
+  platform: template
+  name: "TP0 Enable"
+  id: switchTP0
+  icon: "mdi:toggle-switch"
+  optimistic: true
+  restore_mode: ALWAYS_OFF
+  turn_on_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPEnable(0);'
+  turn_off_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPDisable(0);'
+
+- <<: *switchTPX
+  name: "TP1 Enable"
+  id: switchTP1
+  turn_on_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPEnable(1);'
+  turn_off_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPDisable(1);'
+
+- <<: *switchTPX
+  name: "TP2 Enable"
+  id: switchTP2
+  turn_on_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPEnable(2);'
+  turn_off_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPDisable(2);'
+
+- <<: *switchTPX
+  name: "TP3 Enable"
+  id: switchTP3
+  turn_on_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPEnable(3);'
+  turn_off_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPDisable(3);'
+
+- <<: *switchTPX
+  name: "TP4 Enable"
+  id: switchTP4
+  turn_on_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPEnable(4);'
+  turn_off_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPDisable(4);'
+
+- <<: *switchTPX
+  name: "TP5 Enable"
+  id: switchTP5
+  turn_on_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPEnable(5);'
+  turn_off_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPDisable(5);'
+
+- <<: *switchTPX
+  name: "TP6 Enable"
+  id: switchTP6
+  turn_on_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPEnable(6);'
+  turn_off_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPDisable(6);'
+
+- <<: *switchTPX
+  name: "TP7 Enable"
+  id: switchTP7
+  turn_on_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPEnable(7);'
+  turn_off_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mTPDisable(7);'

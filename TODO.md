@@ -24,11 +24,11 @@
 
 
 ## Source
-- [ ] Troubleshoot PWM not-reporting (pending parts arrival)
-- [ ] Investigate why BLUE LED starts blinking after a while
-- [ ] Implement Display Updates
-- [ ] Implement Controls
 - [ ] Refine documentation for wiki and doc library
+- [ ] Finalize phb-test-specification.yaml
+- [ ] Review frequency/duty-cycle update sequencing
+
+
 ## Documentation
 
 

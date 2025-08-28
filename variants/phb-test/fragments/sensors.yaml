@@ -1,0 +1,38 @@
+# ==============================================================================
+#  File:         sensors.yaml
+#  File Type:    YAML Fragment
+#  Purpose:      Sensor definitions for PumpHouseBoss Test Harness
+#  Version:      0.10.0d
+#  Date:         2025-08-22
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Contains all sensor definitions.
+#                - system uptime sensor
+#                - WiFi signal sensor
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ==============================================================================
+
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# System Sensors
+# - Uptime sensor tracks total system runtime since last boot.
+# - WiFi signal sensor reports RSSI (Received Signal Strength Indicator) in dB.
+#
+- platform: uptime
+  name: "System: Uptime"
+  id: sensorUpTime
+  icon: "mdi:clock-outline"
+
+- platform: wifi_signal
+  name: "System: WiFi Signal Strength"
+  id: sensorWiFiSignalStrength
+  update_interval: 10s
+  icon: "mdi:wifi"
+  unit_of_measurement: "dB"

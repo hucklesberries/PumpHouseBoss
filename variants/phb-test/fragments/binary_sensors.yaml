@@ -1,0 +1,134 @@
+# ==============================================================================
+#  File:         binary_sensors.yaml
+#  File Type:    YAML Fragment
+#  Purpose:      Binary sensor definitions for PumpHouseBoss Test Harness
+#  Version:      0.10.0d
+#  Date:         2025-08-22
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Contains all binary sensor platform definitions, including
+#                system status, buttons, and TestPoint inputs.
+#                - system status sensors
+#                - button sensors
+#                - TestPoint input sensors
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ==============================================================================
+
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# System Binary Sensors
+# - defines system status sensors such as WiFi connectivity
+# - used for monitoring and indicating overall system health and connectivity
+#
+- platform: status
+  id: bsWiFiConnected
+
+
+# ------------------------------------------------------------------------------
+# Control Sensors (Buttons)
+# - defines hardware binary sensors for Scroll and Select buttons
+# - button logic and state machine automations are implemented in display.yaml
+#
+- platform: gpio
+  id: buttonScrollUp
+  name: "Scroll Up Button"
+  icon: "mdi:gesture-tap-button"
+  pin: ${pinBTNBlue}
+  internal: true
+  filters:
+    - delayed_on: 10ms
+    - delayed_off: 10ms
+  on_press:
+    then:
+      - number.increment:
+          id: numScrollUpEvents
+
+- platform: gpio
+  id: buttonScrollDown
+  name: "Scroll Down Button"
+  icon: "mdi:gesture-tap-button"
+  pin: ${pinBTNYellow}
+  internal: true
+  filters:
+    - delayed_on: 10ms
+    - delayed_off: 10ms
+  on_press:
+    then:
+      - number.increment:
+          id: numScrollDownEvents
+
+- platform: gpio
+  id: buttonSelect
+  name: "Select Button"
+  icon: "mdi:gesture-tap-button"
+  pin: ${pinBTNGreen}
+  internal: true
+  filters:
+    - delayed_on: 10ms
+    - delayed_off: 10ms
+  on_press:
+    then:
+      - number.increment:
+          id: numSelectEvents
+
+
+# ------------------------------------------------------------------------------
+# TestPoint Inputs
+# - defines hardware binary sensors for each TestPoint input pin
+# - these sensors monitor the digital state (high/low) at each test point,
+#   enabling display and logging of input status
+#
+- platform: gpio
+  id: inputTP0
+  name: TP0 Input
+  icon: "mdi:pipe-valve"
+  pin: ${pinTP0In}
+
+- platform: gpio
+  id: inputTP1
+  name: TP1 Input
+  icon: "mdi:pipe-valve"
+  pin: ${pinTP1In}
+
+- platform: gpio
+  id: inputTP2
+  name: TP2 Input
+  icon: "mdi:pipe-valve"
+  pin: ${pinTP2In}
+
+- platform: gpio
+  id: inputTP3
+  name: TP3 Input
+  icon: "mdi:pipe-valve"
+  pin: ${pinTP3In}
+
+- platform: gpio
+  id: inputTP4
+  name: TP4 Input
+  icon: "mdi:pipe-valve"
+  pin: ${pinTP4In}
+
+- platform: gpio
+  id: inputTP5
+  name: TP5 Input
+  icon: "mdi:pipe-valve"
+  pin: ${pinTP5In}
+
+- platform: gpio
+  id: inputTP6
+  name: TP6 Input
+  icon: "mdi:pipe-valve"
+  pin: ${pinTP6In}
+
+- platform: gpio
+  id: inputTP7
+  name: TP7 Input
+  icon: "mdi:pipe-valve"
+  pin: ${pinTP7In}

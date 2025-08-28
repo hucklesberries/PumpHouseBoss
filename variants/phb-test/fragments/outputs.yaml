@@ -1,0 +1,76 @@
+# ==============================================================================
+#  File:         outputs.yaml
+#  File Type:    YAML Fragment
+#  Purpose:      Output definitions for PumpHouseBoss Test Harness
+#  Version:      0.10.0d
+#  Date:         2025-08-22
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Contains all output definitions.
+#                - LED indication outputs
+#                - TestPoint (PWM) outputs
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ==============================================================================
+
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# LED Indication Outputs
+#
+- platform: gpio
+  id: outputLEDWhite
+  pin: ${pinLEDWhite}
+
+- platform: gpio
+  id: outputLEDGreen
+  pin: ${pinLEDGreen}
+
+- platform: gpio
+  id: outputLEDBlue
+  pin: ${pinLEDBlue}
+
+- platform: gpio
+  id: outputLEDRed
+  pin: ${pinLEDRed}
+
+
+# ------------------------------------------------------------------------------
+# Test Point PWM Outputs
+#
+- platform: ledc
+  id: outputTP0
+  pin: ${pinTP0Out}
+
+- platform: ledc
+  id: outputTP1
+  pin: ${pinTP1Out}
+
+- platform: ledc
+  id: outputTP2
+  pin: ${pinTP2Out}
+
+- platform: ledc
+  id: outputTP3
+  pin: ${pinTP3Out}
+
+- platform: ledc
+  id: outputTP4
+  pin: ${pinTP4Out}
+
+- platform: ledc
+  id: outputTP5
+  pin: ${pinTP5Out}
+
+- platform: ledc
+  id: outputTP6
+  pin: ${pinTP6Out}
+
+- platform: ledc
+  id: outputTP7
+  pin: ${pinTP7Out}

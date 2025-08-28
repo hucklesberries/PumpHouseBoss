@@ -1,0 +1,29 @@
+# =============================================================================
+#  File:         component.yaml
+#  File Type:    YAML File
+#  Purpose:      Register Core Component for PumpHouseBoss Test Harness
+#  Version:      0.10.0d
+#  Date:         2025-08-25
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Registers the core 'phb_test' component.
+#
+#  Note:         Due to problems encountered with the ESPHome local component
+#                registration method, the class was implemented as a singleton.
+#                When the underlying issues are resolved, this component will be
+#                integrated with ESPhome via the prescribed registration
+#                method.
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# =============================================================================
+
+# yamllint disable rule:quoted-strings
+
+
+name: "phb_test"
+files:
+    - phb-test.h

@@ -1,0 +1,26 @@
+# ==============================================================================
+#  File:         component.yaml
+#  File Type:    YAML File
+#  Purpose:      Registers BootCodeNVS custom component for persistent boot code
+#                and native ESP32 reset reason reporting.
+#  Version:      0.10.0d
+#  Date:         2025-08-20
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Declares files for BootCodeNVS external component, enabling
+#                integration with ESPHome and use in YAML configs.
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ==============================================================================
+
+# yamllint disable rule:quoted-strings
+
+
+name: "BootCodeNVS"
+files:
+    - esp32bootcode.h
+    - esp32bootcode.cpp

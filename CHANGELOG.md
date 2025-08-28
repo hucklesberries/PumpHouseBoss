@@ -3,6 +3,40 @@
 > **Scope & Purpose:**
 > This changelog provides a concise, developer-focused summary of all significant changes to PumpHouseBoss. For detailed release notes, see RELEASE.md.
 
+
+## [0.10.0d] - 2025-08-28
+### Added
+- Major refactor of 
+  - Implemented input (solenoid emulation) and output (Hall-Effect flow sensor)
+  - Implement display functionality
+  - Implemented (button) control functionality
+  - Implemented (LED) indication functionaliPumpHouseBoss Test Harness
+  - Segmented code into `components`, `fragments`, and `packages` subdirectories for maintainability
+  - Implemented robust singleton pattern and defensive programming in C++ helpers
+  - Added comprehensive error logging and bounds checks in all helper functions
+  - Modularized YAML configuration for hardware, controls, display, and logic
+  - Added and standardized documentation blocks to all YAML fragments
+  - Created `phb-test-specification.md` to consolidate hardware, features, and operator info
+  - Improved Makefile and build scripts for safety, modularity, and clarity
+
+### Changed
+- Standardized capitalization and terminology (e.g., "TestPoint") across code and documentation
+- Updated table of contents and section headings in documentation for clarity and accuracy
+- Refined and simplified main YAML file structure
+- Improved event handling and debounce logic for button inputs
+- Enhanced display logic and lambda usage for LCD updates
+
+### Fixed
+- Corrected typos, spelling, and grammar in documentation and code comments
+- Fixed pointer initialization and null checks in C++ code to prevent runtime errors
+- Addressed issues with output frequency setting and PWM reliability on ESP32 LEDC
+
+### Developer Impact
+- Contributors must use new modular configuration and documentation standards
+- Improved onboarding and maintainability for new hardware variants
+- Hardened codebase against operator
+
+
 ## [0.9.0d] - 2025-08-10
 ### Added
 -- Refactored header validation script (`pco-header.py`) with a robust state machine for strict schema enforcement, field order, multiline, and blank line rules
@@ -31,6 +65,7 @@
 - Test harness variant enables hardware regression and integration testing
 - Debug output and error reporting make troubleshooting and onboarding easier
 - Documentation and code comments updated for clarity and standards compliance
+
 
 ## [0.8.0d] - 2025-08-02
 ### Added
@@ -61,6 +96,7 @@
 - Addressed and resolved issues with serial logging and firmware output
 - Makefile automation, .gitignore, and documentation
 
+
 ## [0.7.1] - 2025-07-28
 ### Changed
 - Checked and fixed file permissions for scripts and assets (icons)
@@ -68,6 +104,8 @@
 - Ensured all automation, Makefiles, and scripts are standards-compliant
 - Added/updated documentation for check-in and release process
 - General code and documentation cleanup for clarity and maintainability
+
+
 ## [0.7.0] - 2025-07-26
 ### Added
 - Support for multiple hardware variants with modular configuration
@@ -79,9 +117,11 @@
 - Improved onboarding workflow and Getting Started instructions
 - Cleaned up and organized project TODOs and release notes
 
+
 ## [0.6.8] - 2025-07-24
 ### Changed
 - Repository name changed from sysmon-ph to PumpHouseBoss
+
 
 ## [0.6.7] - 2025-07-23
 ### Added
@@ -91,6 +131,7 @@
 ### Changed
 - Improved Makefile automation, .gitignore, and documentation
 - Refined check-in checklist and commit message standards
+
 
 ## [0.6.1] - 2025-07-19
 ### Added
@@ -102,17 +143,21 @@
 - Migrated to independent sysmon-ph repository
 - Improved check-in checklist, .gitignore, and documentation
 
+
 ## [baseline-makefile-auto] - 2025-07-18
 - Snapshot before major Makefile automation overhaul
+
 
 ## [0.5.0] - 2025-07-10
 - Migrated to independent sysmon-ph repository
 - Quality assurance system added
 - Improved documentation, workflow, and check-in checklist
 
+
 ## [0.3.0] - 2025-06-20
 - Major refactor and cleanup
 - Improved modularity, build scripts, and Makefile automation
+
 
 ## [0.1.0] - 2025-06-01
 - First working version of ESPHome configuration

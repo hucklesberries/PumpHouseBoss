@@ -74,51 +74,59 @@ def ValidateHeaderLineFormat(line, lineNum, allow_blank=False):
         raise HeaderCheckError(f"Line {lineNum}: Trailing whitespace is forbidden.")
     if len(line) > 80:
         raise HeaderCheckError(f"Line {lineNum}: Line exceeds 80 characters.")
-    if allow_blank:
-        if line != "#":
-            raise HeaderCheckError(f"Line {lineNum}: Blank separator must be exactly a single hash (#) with no trailing whitespace.")
+        if allow_blank:
+            if line not in ("#", "//"):
+                raise HeaderCheckError(
+                    f"Line {lineNum}: Blank separator must be exactly a single hash (#) or double slash (//) with no trailing whitespace."
+                ) 
 
-def IsFieldLine(line):
+def IsFieldLine(line, delimiter_style):
     FieldNames = [
         "File", "File Type", "Purpose", "Version", "Date", "Author",
         "Description", "Features", "Usage", "Note", "WARNING", "License", "Copyright"
     ]
-    Pattern = r"^#  (" + "|".join(re.escape(Name) for Name in FieldNames) + "):"
+    if delimiter_style == '//':
+        Pattern = r"^//  (" + "|".join(re.escape(Name) for Name in FieldNames) + "):"
+    else:
+        Pattern = r"^#  (" + "|".join(re.escape(Name) for Name in FieldNames) + "):"
     match = re.match(Pattern, line)
     if match:
-        # Field value must start at column 18 (index 17)
         if len(line) < 18:
-            raise HeaderCheckError(f"Line {lineNum}: Field value must start at column 18 (after 17 chars)")
+            raise HeaderCheckError(f"Field value must start at column 18 (after 17 chars)")
     return bool(match)
 
-def IsIndentedLine(line):
-    # Multiline continuation: must start with "#" + at least 17 spaces (total 18 cols)
-#    print("DEBUG: line is ->" + {line} + "<-")
-#    printf("DEBUG: first test: " + line.startswith("#         
-    return line.startswith("#                ")
+def IsIndentedLine(line, delimiter_style):
+    if delimiter_style == '//':
+        return line.startswith("//               ")
+    else:
+        return line.startswith("#                ")
 
 # -------------------------------------------------------------------------------
 # Field-Specific Validation Functions
 # - these must be declared *before* the Schema Table is defined, because Python
 #   is not a real programming language
 # -------------------------------------------------------------------------------
-def ValidateFileField(Line, Filename, LineNum):
-    Match = re.match(r"^#  File:\s*(.*)$", Line)
-    if not Match:
-        raise HeaderCheckError(f"{Filename}: Line {LineNum}: Malformed File: field: {Line}")
-    FileField = Match.group(1).strip()
-    Base = os.path.basename(Filename)
-    if FileField != Base:
-        raise HeaderCheckError(f"{Filename}: Line {LineNum}: File: field value '{FileField}' does not match filename '{Base}'")
+def ValidateFileField(line, filename, lineNum):
+    match = re.match(r'^(#|//)\s{2}File:\s*(.*)$', line) 
+    if not match:
+        raise HeaderCheckError(f"{filename}: Line {lineNum}: Malformed File: field: {line}")
+    fileField = match.group(2).strip()
+    base = os.path.basename(filename)
+    if fileField != base:
+        raise HeaderCheckError(f"{filename}: Line {lineNum}: File: field value '{fileField}' does not match filename '{base}'")
 
 def ValidateFileTypeField(line, filename, lineNum):
-    match = re.match(r"^#  File Type:\s*(.*)$", line)
+    match = re.match(r'^(#|//)\s{2}File Type:\s*(.*)$', line) 
     if not match:
         raise HeaderCheckError(f"{filename}: Line {lineNum}: Malformed File Type: field: {line}")
-    fileType = match.group(1).strip()
+    fileType = match.group(2).strip()
     allowedTypes = {
         "Makefile",
         "YAML File",
+        "C Header File"
+        "C Source File",
+        "C++ Header File",
+        "C++ Source File",
         "Python Script",
         "Shell Script",
         # Add more allowed types as needed
@@ -148,10 +156,10 @@ def ValidateFileTypeField(line, filename, lineNum):
     )
 
 def ValidateVersionField(line, filename, lineNum):
-    match = re.match(r"^#  Version:\s*(.*)$", line)
+    match = re.match(r'^(#|//)\s{2}Version:\s*(.*)$', line) 
     if not match:
         raise HeaderCheckError(f"{filename}: Line {lineNum}: Malformed Version: field: {line}")
-    versionField = match.group(1).strip()
+    versionField = match.group(2).strip()
     # Always use the workspace root (sandbox) as project root
     # Find the directory containing this script, then its parent (sandbox)
     script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -170,7 +178,9 @@ def ValidateLicenseField(line, filename, lineNum):
     # Must match exactly the License block specified in STANDARDS.md.
     required_lines = [
         "#  License:      GNU General Public License v3.0",
-        "#                SPDX-License-Identifier: GPL-3.0-or-later"
+        "#                SPDX-License-Identifier: GPL-3.0-or-later",
+        "//  License:      GNU General Public License v3.0",
+        "//                SPDX-License-Identifier: GPL-3.0-or-later"
     ]
     # Accept either line as the start of the License block
     if line.strip() not in required_lines:
@@ -181,7 +191,10 @@ def ValidateCopyrightField(line, filename, lineNum):
     required_lines = [
         "#  Copyright:    (c) 2025 Roland Tembo Hendel",
         "#                This program is free software: you can redistribute it and/or",
-        "#                modify it under the terms of the GNU General Public License."
+        "#                modify it under the terms of the GNU General Public License.",
+        "//  Copyright:    (c) 2025 Roland Tembo Hendel",
+        "//                This program is free software: you can redistribute it and/or",
+        "//                modify it under the terms of the GNU General Public License."
     ]
     if line.strip() not in required_lines:
         raise HeaderCheckError(f"{filename}: Line {lineNum}: Copyright field does not match required text")
@@ -198,22 +211,22 @@ def ValidateCopyrightField(line, filename, lineNum):
 #        blank_after: int,          # 1 if blank line required after, else 0
 #        validator: function|None   # Field-specific validation function or None
 #    Example:
-#        "File", re.compile(r"^#  File:.*"), True, False, 0, validate_file_field
+#        "File", re.compile(r'^(#|//)\s*$'  File:.*"), True, False, 0, validate_file_field
 #
 HEADER_SCHEMA = [
-    ("File",        re.compile(r"^#  File:.*"),         True,  False, 0, ValidateFileField),
-    ("File Type",   re.compile(r"^#  File Type:.*"),    True,  False, 0, ValidateFileTypeField),
-    ("Purpose",     re.compile(r"^#  Purpose:.*"),      True,  True,  0, None),
-    ("Version",     re.compile(r"^#  Version:.*"),      True,  False, 0, ValidateVersionField),
-    ("Date",        re.compile(r"^#  Date:.*"),         True,  True,  0, None),
-    ("Author",      re.compile(r"^#  Author:.*"),       True,  True,  1, None),
-    ("Description", re.compile(r"^#  Description:.*"),  False, True,  1, None),
-    ("Features",    re.compile(r"^#  Features:.*"),     False, True,  1, None),
-    ("Usage",       re.compile(r"^#  Usage:.*"),        False, True,  1, None),
-    ("Note",        re.compile(r"^#  Note:.*"),         False, True,  1, None),
-    ("WARNING",     re.compile(r"^#  WARNING:.*"),      False, True,  1, None),
-    ("License",     re.compile(r"^#  License:.*"),      True,  True,  0, ValidateLicenseField),
-    ("Copyright",   re.compile(r"^#  Copyright:.*"),    True,  True,  0, ValidateCopyrightField),
+    ("File",        re.compile(r"^(#|//)  File:.*"),         True,  False, 0, ValidateFileField),
+    ("File Type",   re.compile(r"^(#|//)  File Type:.*"),    True,  False, 0, ValidateFileTypeField),
+    ("Purpose",     re.compile(r"^(#|//)  Purpose:.*"),      True,  True,  0, None),
+    ("Version",     re.compile(r"^(#|//)  Version:.*"),      True,  False, 0, ValidateVersionField),
+    ("Date",        re.compile(r"^(#|//)  Date:.*"),         True,  True,  0, None),
+    ("Author",      re.compile(r"^(#|//)  Author:.*"),       True,  True,  1, None),
+    ("Description", re.compile(r"^(#|//)  Description:.*"),  False, True,  1, None),
+    ("Features",    re.compile(r"^(#|//)  Features:.*"),     False, True,  1, None),
+    ("Usage",       re.compile(r"^(#|//)  Usage:.*"),        False, True,  1, None),
+    ("Note",        re.compile(r"^(#|//)  Note:.*"),         False, True,  1, None),
+    ("WARNING",     re.compile(r"^(#|//)  WARNING:.*"),      False, True,  1, None),
+    ("License",     re.compile(r"^(#|//)  License:.*"),      True,  True,  0, ValidateLicenseField),
+    ("Copyright",   re.compile(r"^(#|//)  Copyright:.*"),    True,  True,  0, ValidateCopyrightField),
 ]
 
 
@@ -221,42 +234,42 @@ HEADER_SCHEMA = [
 #  State Machine Implementation
 # ------------------------------------------------------------------------------
 #  States:
-#    parseStartDelimeter   - Look for the header start delimiter
+#    parseStartDelimiter   - Look for the header start delimiter
 #    parseField            - Parse and validate a header field line
 #    parseMultline         - Consume multiline/indented lines for a field
 #    parseSeparator        - Expect and validate a blank separator line
-#    parseEndDelimeter     - Look for the header end delimiter
+#    parseEndDelimiter     - Look for the header end delimiter
 #    error                 - Handle any error, print and exit
 #    done                  - Successfully finished parsing
 #
 #  State Transition Table:
 #    Current State                Input/Condition                Next State
 #    ---------------------------------------------------------------------------
-#    parseStartDelimeter   Found start delimiter              parseField
-#    parseStartDelimeter   Not found, EOF or error            error
+#    parseStartDelimiter   Found start delimiter              parseField
+#    parseStartDelimiter   Not found, EOF or error            error
 #    parseField            Field multiline                    parseMultline
 #    parseField            Field not multiline, needs blank   parseSeparator
 #    parseField            Field not multiline, no blank      parseField
-#    parseField            End delimiter                      parseEndDelimeter
+#    parseField            End delimiter                      parseEndDelimiter
 #    parseField            Error                              error
 #    parseMultline         More indented lines                parseMultline
 #    parseMultline         End of multiline, needs blank      parseSeparator
 #    parseMultline         End of multiline, no blank         parseField
-#    parseMultline         End delimiter                      parseEndDelimeter
+#    parseMultline         End delimiter                      parseEndDelimiter
 #    parseMultline         Error                              error
 #    parseSeparator        Found blank line                   parseField
 #    parseSeparator        Not found or error                 error
-#    parseEndDelimeter     Found end delimiter                done
-#    parseEndDelimeter     Not found or error                 error
+#    parseEndDelimiter     Found end delimiter                done
+#    parseEndDelimiter     Not found or error                 error
 #    done                  -                                  (exit success)
 #    error                 -                                  (exit fail)
 #
 class State(Enum):
-    ParseStartDelimeter = auto()
+    ParseStartDelimiter = auto()
     ParseField          = auto()
     ParseMultline       = auto()
     ParseSeparator      = auto()
-    ParseEndDelimeter   = auto()
+    ParseEndDelimiter   = auto()
     Error               = auto()
     Done                = auto()
 
@@ -296,16 +309,16 @@ def StateMachine(HeaderLines, HeaderLineNumbers, Filename):
         'schemaIdx': 0,
         'lastBlank': False,
         'prevBlankIdx': None,
-        'delimiter': '# ' + '=' * 78,
-        'state': State.ParseStartDelimeter,
+        'delimiter': '// ' + '=' * 77 if str(Filename).endswith(('.h', '.hpp', '.cpp', '.c')) else '# ' + '=' * 78,
+        'state': State.ParseStartDelimiter,
         'error': None,
     }
     stateFunctions = {
-        State.ParseStartDelimeter: ParseStartDelimeter,
+        State.ParseStartDelimiter: ParseStartDelimiter,
         State.ParseField: ParseField,
         State.ParseMultline: ParseMultline,
         State.ParseSeparator: ParseSeparator,
-        State.ParseEndDelimeter: ParseEndDelimeter,
+        State.ParseEndDelimiter: ParseEndDelimiter,
         State.Error: ErrorHandler,
         State.Done: DoneHandler,
     }
@@ -323,8 +336,8 @@ def StateMachine(HeaderLines, HeaderLineNumbers, Filename):
 # -------------------------------------------------------------------------------
 # State Machine Function Implementations
 # -------------------------------------------------------------------------------
-# Each state handler function (smFunctionParseStartDelimeter, smFunctionParseField,
-# smFunctionParseMultline, smFunctionParseSeparator, smFunctionParseEndDelimeter,
+# Each state handler function (smFunctionParseStartDelimiter, smFunctionParseField,
+# smFunctionParseMultline, smFunctionParseSeparator, smFunctionParseEndDelimiter,
 # smFunctionError, smFunctionDone) is responsible for:
 #   - Examining the current context (ctx) and the relevant line(s) of the header.
 #   - Performing validation and updating the context (e.g., advancing idx, schema_idx,
@@ -332,7 +345,7 @@ def StateMachine(HeaderLines, HeaderLineNumbers, Filename):
 #   - Returning the next state (as a state enum value) to drive the state machine.
 #
 # General responsibilities:
-# - smFunctionParseStartDelimeter: Find and validate the header start delimiter. On success,
+# - smFunctionParseStartDelimiter: Find and validate the header start delimiter. On success,
 #   advance to the first field; on failure, transition to error.
 # - smFunctionParseField: Match the current line to the expected schema field, validate, and
 #   determine if multiline or blank separator is needed. Handles end delimiter detection.
@@ -340,7 +353,7 @@ def StateMachine(HeaderLines, HeaderLineNumbers, Filename):
 #   field. Decide if a blank separator or next field is expected.
 # - smFunctionParseSeparator: Ensure a required blank line follows the previous field. On success,
 #   advance to the next field.
-# - smFunctionParseEndDelimeter: Validate the header end delimiter. On success, transition to done;
+# - smFunctionParseEndDelimiter: Validate the header end delimiter. On success, transition to done;
 #   on failure, to error.
 # - smFunctionError: Print error and exit.
 # - smFunctionDone: Parsing complete; exit successfully.
@@ -350,7 +363,7 @@ def StateMachine(HeaderLines, HeaderLineNumbers, Filename):
 # - Use reporting utilities from pco_common.py for all output.
 # - Return the next state or None (to stay in the same state).
 #
-def ParseStartDelimeter(Ctx):
+def ParseStartDelimiter(Ctx):
     idx = Ctx['idx']
     hlen = Ctx['hlen']
     headerLines = Ctx['headerLines']
@@ -371,13 +384,16 @@ def ParseField(Ctx):
     headerLines = Ctx['headerLines']
     headerLineNumbers = Ctx['headerLineNumbers']
     delimiter = Ctx['delimiter']
+    delimiter_style = '//' if str(Ctx['filename']).endswith(('.h', '.hpp', '.cpp', '.c')) else '#'
+
+
     if idx >= hlen:
         Ctx['error'] = f"{Ctx['filename']}: Line {headerLineNumbers[-1] if headerLineNumbers else '?'}: Unexpected end of header while expecting field."
         return State.Error
     line = headerLines[idx]
     lineNum = headerLineNumbers[idx]
     if line.rstrip() == delimiter:
-        return State.ParseEndDelimeter
+        return State.ParseEndDelimiter
     if schemaIdx >= len(HEADER_SCHEMA):
         Ctx['error'] = f"{Ctx['filename']}: Line {lineNum}: Extra lines found after expected header fields."
         return State.Error
@@ -390,7 +406,7 @@ def ParseField(Ctx):
                 return State.Error
             field, regex, required, multiline, blankAfter, validator = HEADER_SCHEMA[Ctx['schemaIdx']]
             continue
-        if IsFieldLine(line):
+        if IsFieldLine(line, delimiter_style):
             Ctx['error'] = f"{Ctx['filename']}: Line {lineNum}: Expected field '{field}' but got: {line}"
         else:
             Ctx['error'] = f"{Ctx['filename']}: Line {lineNum}: Unknown or misspelled header field: {line}"
@@ -414,26 +430,29 @@ def ParseMultline(Ctx):
     headerLines = Ctx['headerLines']
     headerLineNumbers = Ctx['headerLineNumbers']
     delimiter = Ctx['delimiter']
+    delimiter_style = '//' if str(Ctx['filename']).endswith(('.h', '.hpp', '.cpp', '.c')) else '#'
     field, regex, required, multiline, blankAfter, validator = HEADER_SCHEMA[schemaIdx]
     found_indented = False
+
     while idx < hlen:
         line = headerLines[idx]
         lineNum = headerLineNumbers[idx]
         # End delimiter: finish header
         if line.rstrip() == delimiter:
             Ctx['idx'] = idx
-            return State.ParseEndDelimeter
+            return State.ParseEndDelimiter
         # Blank separator after multiline field
-        if blankAfter and re.match(r'^#\s*$', line):
+        blank_pattern = r'^' + re.escape(delimiter_style) + r'\s*$'
+        if blankAfter and re.match(blank_pattern, line):
             Ctx['idx'] = idx
             return State.ParseSeparator
         # Next field (not multiline, no blank required)
-        if not blankAfter and IsFieldLine(line):
+        if not blankAfter and IsFieldLine(line, delimiter_style):
             Ctx['idx'] = idx
             Ctx['schemaIdx'] += 1
             return State.ParseField
         # Multiline continuation
-        if IsIndentedLine(line):
+        if IsIndentedLine(line, delimiter_style):
             ValidateHeaderLineFormat(line, lineNum)
             idx += 1
             found_indented = True
@@ -455,7 +474,10 @@ def ParseSeparator(Ctx):
     headerLines = Ctx['headerLines']
     headerLineNumbers = Ctx['headerLineNumbers']
     schemaIdx = Ctx['schemaIdx']
-    if idx < hlen and re.match(r'^#\s*$', headerLines[idx]):
+    delimiter_style = '//' if str(Ctx['filename']).endswith(('.h', '.hpp', '.cpp', '.c')) else '#'
+    blank_pattern = r'^' + re.escape(delimiter_style) + r'\s*$'
+
+    if idx < hlen and re.match(blank_pattern, headerLines[idx]):
         ValidateHeaderLineFormat(headerLines[idx], headerLineNumbers[idx], allow_blank=True)
         Ctx['idx'] += 1
         Ctx['lastBlank'] = True
@@ -468,7 +490,7 @@ def ParseSeparator(Ctx):
         Ctx['error'] = f"{Ctx['filename']}: Line {ln}: Missing required blank comment line after field '{field}'"
         return State.Error
 
-def ParseEndDelimeter(Ctx):
+def ParseEndDelimiter(Ctx):
     idx = Ctx['idx']
     hlen = Ctx['hlen']
     headerLines = Ctx['headerLines']
@@ -494,7 +516,12 @@ def DoneHandler(Ctx):
 
 def FindHeaderStart(Lines, Filename):
     Idx = 0
-    Delimiter = '# ' + '=' * 78 + '\n'
+
+    if str(Filename).endswith(('.h', '.hpp', '.cpp', '.c')):
+        Delimiter = '// ' + '=' * 77 + '\n'
+    else:
+        Delimiter = '# ' + '=' * 78 + '\n'
+
     while Idx < len(Lines):
         Line = Lines[Idx]
         if Line.startswith('#!') or Line.strip() == '---':
@@ -510,7 +537,13 @@ def ParseHeaderBlock(Lines, Filename):
     StartIdx = FindHeaderStart(Lines, Filename)
     Header = []
     HeaderLineNumbers = []
-    Delimiter = '# ' + '=' * 78
+
+    if str(Filename).endswith(('.h', '.hpp', '.cpp', '.c')):
+        Delimiter = '// ' + '=' * 77 + '\n'
+    else:
+        Delimiter = '# ' + '=' * 78 + '\n'
+
+
     for I, Line in enumerate(Lines[StartIdx : StartIdx + 1 + MAX_HEADER_LINES], start=StartIdx):
         Header.append(Line.rstrip('\n'))
         HeaderLineNumbers.append(I + 1)  # 1-based line number
@@ -539,7 +572,7 @@ def Main():
 
     try:
         # initiailize PCO common module
-        pco_common.pcoInit()  # Populate YAML_FILES, SCRIPT_FILES, MAKEFILES, ALL_FILES
+        pco_common.pcoInit()  # Populate YAML_FILES, CPP_FILES, SCRIPT_FILES, MAKEFILES, ALL_FILES
 
         # parse CLAs
         Args = pco_common.ParseArgs("pco-header.py", "1.0", PCO_DESCRIPTION)
@@ -547,7 +580,7 @@ def Main():
             Files = [Path(F) for F in Args.filelist]
         else:
             # applies to all project file types except markdown files
-            Files = [Path(F) for F in pco_common.MAKEFILES + pco_common.YAML_FILES + pco_common.PYTHON_SCRIPTS + pco_common.BASH_SCRIPTS]
+            Files = [Path(F) for F in pco_common.MAKEFILES + pco_common.YAML_FILES + pco_common.CPP_FILES + pco_common.PYTHON_SCRIPTS + pco_common.BASH_SCRIPTS]
 
         if len(Files) > 1:
             pco_common.PrintBanner(PCO_DESCRIPTION)

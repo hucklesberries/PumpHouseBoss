@@ -1,18 +1,21 @@
 # ==============================================================================
 #  File:         phb-test.yaml
-#  File Type:    YAML File
+#  File Type:    YAML Main
 #  Purpose:      PumpHouseBoss Test Harness Variant Main
-#  Version:      0.9.0d
-#  Date:         2025-07-24
+#  Version:      0.10.0d
+#  Date:         2025-08-22
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
-#  Description:  PumpHouseBoss Test Harness is a hardware test fixture for the
-#                PumpHouseBoss Pro and PumpHouseBoss Standard Water Distribution
-#                System Monitor and Controllers.
+#  Description:  Hardware test fixture for PumpHouseBoss Line of Water
+#                Distribution System Monitor and Controllers.
 #
-#  Features:     - 8 programmable PWM output lines
+#  Features:     - 8 programmable PWM output lines to simulate Hall-effect
+#                  flow sensors
+#                - 8 input lines to simulate external solenoid control
 #                - 4 line LCD (lcd_pcf8574 interface)
-#                - menu driven line toggle enable/disable
+#                - Menu-driven line toggle enable/disable
+#                - Modular configuration via YAML fragments
+#                - System state, diagnostics, and network info
 #
 #  License:      GNU General Public License v3.0
 #                SPDX-License-Identifier: GPL-3.0-or-later
@@ -21,202 +24,126 @@
 #                modify it under the terms of the GNU General Public License.
 # ==============================================================================
 
-# ------------------------------------------------------------------------------
-#  YAML linter configuration
-#   - Disables quoted-strings rule for improved readability
-# -----------------------------------------------------------------------------
 # yamllint disable rule:quoted-strings
 
 
 # ------------------------------------------------------------------------------
 #  Node identity, version, and hardware pin assignments
-#   - Provides substitutions for node name, friendly name, version, and key pins
-#   - Used throughout the configuration for maintainability
-#   - Parameters:
-#       node_name: Node ID used in ESPHome and logs
-#       friendly_name: Human-readable name for dashboards
-#       version: Firmware version tag injected into logs and sensors
-#       flow_sensor_pin: Primary flow sensor pulse counter input
-#       test_output_pin: GPIO test and verification pin
-# ------------------------------------------------------------------------------
+#
 substitutions:
-  chip_set:                "__PLATFORM__"
-  node_name:               "__NODE_NAME__"
-  friendly_name:           "__FRIENDLY_NAME__"
-  version:                 "__VERSION___"
-  pinBTNDisp:              "GPIO43"
-  pinBTNCtrl:              "GPIO44"
-  pinLEDSystemInitialized: "GPIO01"
-  pinLEDWiFiConnected:     "GPIO02"
+  defNodeName:         "__NODE_NAME__"
+  defFriendlyName:     "__FRIENDLY_NAME__"
+  defVersion:          "__VERSION__"
+  defControlPoints:    "__CONTROL_POINTS__"
+  defManualModeTimer:  60
+  defAutoScrollTimer:  3
+  pinSDA:              "GPIO18"
+  pinSCL:              "GPIO09"
+  pinBTNBlue:          "GPIO04"
+  pinBTNGreen:         "GPIO05"
+  pinBTNYellow:        "GPIO06"
+  pinLEDWhite:         "GPIO07"
+  pinLEDGreen:         "GPIO15"
+  pinLEDBlue:          "GPIO16"
+  pinLEDRed:           "GPIO17"
+  pinTP0Out:           "GPIO43"
+  pinTP0In:            "GPIO44"
+  pinTP1Out:           "GPIO01"
+  pinTP1In:            "GPIO02"
+  pinTP2Out:           "GPIO42"
+  pinTP2In:            "GPIO41"
+  pinTP3Out:           "GPIO40"
+  pinTP3In:            "GPIO39"
+  pinTP4Out:           "GPIO48"
+  pinTP4In:            "GPIO47"
+  pinTP5Out:           "GPIO21"
+  pinTP5In:            "GPIO20"
+  pinTP6Out:           "GPIO13"
+  pinTP6In:            "GPIO12"
+  pinTP7Out:           "GPIO11"
+  pinTP7In:            "GPIO10"
 
 
 # ------------------------------------------------------------------------------
-#  ESPHome-specific metadata and on_boot logic
-#   - Sets node name and friendly name
-#   - Publishes firmware version to Home Assistant on boot
-#   - Parameters:
-#       name: Node name
-#       friendly_name: Human-readable name
-#       on_boot: Actions to perform on boot
+#  External Components
+#  Note; something is broken in the esphome component registration process
+#        Until this is fixed, we need to include the components manually.
+#        See esphome:includes (below)
+#
+external_components:
+  - source:
+      type: local
+      path: ../../components/esp32bootcode
+  - source:
+      type: local
+      path: components/phb-test
+
+
 # ------------------------------------------------------------------------------
+#  Common and local package includes for modular configuration
+#
+packages:
+  # common (shared) YAML packages
+  esp32s3:     !include ../../packages/esp32s3.yaml
+  wifi:        !include ../../packages/wifi.yaml
+  ota:         !include ../../packages/ota.yaml
+  web:         !include ../../packages/web_server.yaml
+  logging:     !include ../../packages/logging.yaml
+  # local YAML packages
+  control:     !include packages/controls.yaml
+  display:     !include packages/display.yaml
+
+
+# ------------------------------------------------------------------------------
+#  Hardware & Logic Fragments
+#
+output:        !include fragments/outputs.yaml
+sensor:        !include fragments/sensors.yaml
+binary_sensor: !include fragments/binary_sensors.yaml
+number:        !include fragments/numbers.yaml
+text_sensor:   !include fragments/text_sensors.yaml
+switch:        !include fragments/switches.yaml
+
+
+# ------------------------------------------------------------------------------
+#  ESPHome metadata and boot logic
+#  Note: something is broken in the esphome component registration process
+#        Until this is fixed, we need to include the components manually.
+#        See esphome:includes (below)
+#
 esphome:
   name: __DEVICE_NAME__
   friendly_name: __FRIENDLY_NAME__
+  includes:
+    - ../../components/esp32bootcode/esp32bootcode.h
+    -  components/phb-test/phb-test.h
   on_boot:
-    priority: 100
+    priority: 600
     then:
       - text_sensor.template.publish:
-          id: tsFriendlyName
+          id: textFriendlyName
           state: "__FRIENDLY_NAME__"
       - text_sensor.template.publish:
-          id: tsVersion
+          id: textVersion
           state: "__VERSION__"
       - text_sensor.template.publish:
-          id: tsNodeName
+          id: textNodeName
           state: "__NODE_NAME__"
       - text_sensor.template.publish:
-          id: tsIPAddress
+          id: textIPAddress
           state: "No Connection"
       - text_sensor.template.publish:
-          id: tsResetReason
-          state: "Power On Reset"
-      - sensor.template.publish:
-          id: sResetCode
-          state: 1
+          id: textOperatingMode
+          state: "NORMAL"
+      - lambda: |-
+          auto &bootReason = esphome::bootcode::BootCode::get();
+          id(textResetReason).publish_state(bootReason.mGetBootReason().c_str());
 
 
 # ------------------------------------------------------------------------------
 #  I2C Bus Configuration
-#   - Configures the I2C bus for peripherals (e.g., LCD, sensors)
-#   - sda: GPIO pin used for I2C data (SDA)
-#   - scl: GPIO pin used for I2C clock (SCL)
-#   - scan: true enables automatic device address scanning (shows in logs)
-# ------------------------------------------------------------------------------
-i2c:
-  sda:  "GPIO18"
-  scl:  "GPIO09"
-  scan: true
-
-
-# ------------------------------------------------------------------------------
-#  ESP32 Reset Diagnostics (Fallback for ESP32-S3)
-#   - ESPHome does not yet support esp32_reset_reason/last_reset on ESP32-S3.
-#   - These template sensors default to 'Power On Reset' (string) and 1 (numeric).
-#   - Update to native sensors when ESPHome adds support for ESP32-S3.
-#   - Parameters:
-#       platform: template
-#       name: Sensor name (shown in Home Assistant)
-#       id: Sensor ID for internal reference
-#   - NOTE: ESPHome does not currently support reset diagnostics on ESP32-S3.
-#           These are placeholders until native support is available.
-# ------------------------------------------------------------------------------
-sensor:
-  - platform: template
-    name: "Last Reset Code"      # Fallback: always 1 (Power On Reset code)
-    id: sResetCode
-    lambda: |-
-      return 1;
-    update_interval: never
-  - platform: uptime
-    name: "Uptime"                # Uptime in seconds since boot
-    id: sUptime
-
-
-# ------------------------------------------------------------------------------
-#  Uptime and flow rate sensors (hall-effect pulse counter)
-#   - Uptime sensor: seconds since boot
-#   - Flow rate sensor: hall-effect pulse counter, configurable input pin
-#   - Calibration factor converts pulses to L/min
-#   - Parameters:
-#       platform: Sensor platform (uptime, pulse_counter)
-#       pin: Input pin for pulse counter
-#       name: Sensor name
-#       id: Sensor ID
-#       update_interval: Update frequency
-#       count_mode: Pulse counting mode
-#       internal_filter: Filter for pulse input
-#       unit_of_measurement: Measurement units
-#       accuracy_decimals: Number of decimals
-#       filters: Calibration factor
-# ------------------------------------------------------------------------------
-binary_sensor:
-  - platform: status
-    id: bsWiFiConnected
-  - platform: template
-    id: bsSystemInitialized
-    name: "System Initialized"
-    lambda: |-
-      // Always true after boot
-      return true;
-
-
-# ------------------------------------------------------------------------------
-#  Template text sensors
-#   - Firmware Version: Publishes the firmware version string to Home Assistant
-#   - Reset Reason: Fallback for ESP32-S3, always 'Power On Reset'
-#   - Parameters:
-#       platform: template
-#       name: Sensor name
-#       id: Sensor ID
-#       icon: Home Assistant icon (optional)
-#       update_interval: Update frequency
-#       lambda: Lambda function for value
 #
-# NOTE: ESPHome does not currently support reset diagnostics on ESP32-S3.
-# This is a placeholder until native support is available.
-# ------------------------------------------------------------------------------
-text_sensor:
-  - platform: template
-    name: "Variant"
-    id: tsFriendlyName
-    icon: "mdi:tag"
-    update_interval: never
-    lambda: |-
-      return {"__FRIENDLY_NAME__"};
-  - platform: template
-    name: "Firmware Version"
-    id: tsVersion
-    icon: "mdi:tag"
-    update_interval: never
-    lambda: |-
-      return {"__VERSION__"};
-  - platform: template
-    name: "Node Name"
-    id: tsNodeName
-    icon: "mdi:tag"
-    update_interval: never
-    lambda: |-
-      return {"__NODE_NAME__"};
-  - platform: template
-    name: "IP Address"
-    id: tsIPAddress
-    icon: "mdi:tag"
-    update_interval: never
-    lambda: |-
-      return {"No Connection"};
-  - platform: template
-    name: "Reset Reason"
-    id: tsResetReason
-    update_interval: never
-    lambda: |-
-      return {"Power On Reset"};
-
-
-# ------------------------------------------------------------------------------
-#  Common package includes for modular configuration
-#   - Modularizes ESPHome and custom components
-#       display: Display configuration (e.g., ST7789V panel)
-#       wifi: Wi-Fi credentials, static IP, and fallback
-#       ota: OTA settings (port, auth)
-#       web: Web interface (http://<device>.local)
-#       logging: USB/UART logging config (level, baud)
-# ------------------------------------------------------------------------------
-packages:
-  indications: !include indications.yaml
-  esp32s3:     !include ../../common/esp32s3.yaml
-  wifi:        !include ../../common/wifi.yaml
-  ota:         !include ../../common/ota.yaml
-  web:         !include ../../common/web_server.yaml
-  logging:     !include ../../common/logging.yaml
-  display:     !include ../../common/display_pcf8574.yaml
-
+i2c:
+  sda: ${pinSDA}
+  scl: ${pinSCL}
+  scan: true

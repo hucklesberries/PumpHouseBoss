@@ -2,7 +2,7 @@
 #  File:         phb-test.mk
 #  File Type:    Makefile
 #  Purpose:      PumpHouseBoss Test Harness Variant build variables and defaults
-#  Version:      0.9.0d
+#  Version:      0.10.0d
 #  Date:         2025-07-26
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -23,5 +23,6 @@
 VARIANT        ?= phb-test
 PLATFORM       ?= esp32s3
 DEVICE_NAME    ?= phb-test
+CONTROL_POINTS ?= 8
 NODE_NAME      ?= phb-test-node
 FRIENDLY_NAME  ?= PumpHouseBoss Test

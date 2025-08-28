@@ -1,0 +1,155 @@
+# ==============================================================================
+#  File:         numbers.yaml
+#  File Type:    YAML Fragment
+#  Purpose:      Number variables for PumpHouseBoss Test Harness
+#  Version:      0.10.0d
+#  Date:         2025-08-22
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Contains all number definitions.
+#                - bootcode (reason)
+#                - TestPoint output frequency
+#                - TestPoint output duty cycle
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ==============================================================================
+
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# Standard System Numerics
+#
+- platform: template
+  id: numBootCode
+  min_value: 0
+  max_value: 2
+  step: 1
+  restore_value: true
+  initial_value: 0
+  optimistic: true
+  internal: true
+
+
+# ------------------------------------------------------------------------------
+# TestPoint Output Frequency
+#
+- &TPXOutputFrequency
+  platform: template
+  name: "TP0 Output Frequency"
+  id: numTP0Frequency
+  min_value: 60
+  max_value: 8000
+  step: 10
+  unit_of_measurement: "Hz"
+  optimistic: true
+  initial_value: 100
+  restore_value: true
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetFrequency(0, x);'
+
+- <<: *TPXOutputFrequency
+  name: "TP1 Output Frequency"
+  id: numTP1Frequency
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetFrequency(1, x);'
+
+- <<: *TPXOutputFrequency
+  name: "TP2 Output Frequency"
+  id: numTP2Frequency
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetFrequency(2, x);'
+
+- <<: *TPXOutputFrequency
+  name: "TP3 Output Frequency"
+  id: numTP3Frequency
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetFrequency(3, x);'
+
+- <<: *TPXOutputFrequency
+  name: "TP4 Output Frequency"
+  id: numTP4Frequency
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetFrequency(4, x);'
+
+- <<: *TPXOutputFrequency
+  name: "TP5 Output Frequency"
+  id: numTP5Frequency
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetFrequency(5, x);'
+
+- <<: *TPXOutputFrequency
+  name: "TP6 Output Frequency"
+  id: numTP6Frequency
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetFrequency(6, x);'
+
+- <<: *TPXOutputFrequency
+  name: "TP7 Output Frequency"
+  id: numTP7Frequency
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetFrequency(7, x);'
+
+
+# ------------------------------------------------------------------------------
+# TestPoint Output Duty Cycle
+# ------------------------------------------------------------------------------
+- &TPXDutyCycle
+  platform: template
+  name: "TP0 Output Duty Cycle"
+  id: numTP0DutyCycle
+  min_value: 0
+  max_value: 100
+  step: 5
+  unit_of_measurement: "%"
+  optimistic: true
+  initial_value: 0
+  restore_value: true
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetDutyCycle(0, x);'
+
+- <<: *TPXDutyCycle
+  name: "TP1 Output Duty Cycle"
+  id: numTP1DutyCycle
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetDutyCycle(1, x);'
+
+- <<: *TPXDutyCycle
+  name: "TP2 Output Duty Cycle"
+  id: numTP2DutyCycle
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetDutyCycle(2, x);'
+
+- <<: *TPXDutyCycle
+  name: "TP3 Output Duty Cycle"
+  id: numTP3DutyCycle
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetDutyCycle(3, x);'
+
+- <<: *TPXDutyCycle
+  name: "TP4 Output Duty Cycle"
+  id: numTP4DutyCycle
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetDutyCycle(4, x);'
+
+- <<: *TPXDutyCycle
+  name: "TP5 Output Duty Cycle"
+  id: numTP5DutyCycle
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetDutyCycle(5, x);'
+
+- <<: *TPXDutyCycle
+  name: "TP6 Output Duty Cycle"
+  id: numTP6DutyCycle
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetDutyCycle(6, x);'
+
+- <<: *TPXDutyCycle
+  name: "TP7 Output Duty Cycle"
+  id: numTP7DutyCycle
+  set_action:
+    - lambda: 'esphome::phb_test::phb_test::mGet().mSetDutyCycle(7, x);'

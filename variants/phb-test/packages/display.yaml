@@ -1,0 +1,270 @@
+# ==============================================================================
+#  File:         display.yaml
+#  File Type:    YAML Package
+#  Purpose:      LCD display logic for PumpHouseBoss Test Harness
+#  Version:      0.10.0d
+#  Date:         2025-08-25
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:
+#                Implements all LCD display logic for the PumpHouseBoss test
+#                harness.
+#                Handles screen rendering, countdown timers, TestPoint data
+#                presentation, and user navigation via button events. Integrates
+#                with centralized control logic and external TestPoint component
+#                for clean indexed access.
+#
+#  Features:     - LCD screen rendering (20x4 via lcd_pcf8574)
+#                - Info/status screen with device metadata
+#                - Indexed TestPoint data display (frequency, duty cycle, input,
+#                  enabled)
+#                - Countdown and auto-scroll timers for AUTO/MANUAL modes
+#                - Button event handling for screen navigation and TestPoint
+#                  toggling
+#                - LED indications for input/output states
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ==============================================================================
+
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# Operating Mode Select
+# - defines AUTO (auto-scroll) and MANUAL (user navigation) operating modes
+# - updates countdown timer based on selected mode
+#
+select:
+  - platform: template
+    id: selectOperatingMode
+    optimistic: true
+    internal: true
+    options:
+      - "AUTO"
+      - "MANUAL"
+    on_value:
+      then:
+        - if:
+            condition:
+              lambda: 'return (x == "MANUAL");'
+            then:
+              - number.set:
+                  id: numCountdownTimer
+                  value: ${defManualModeTimer}
+        - if:
+            condition:
+              lambda: 'return (x == "AUTO");'
+            then:
+              - number.set:
+                  id: numCountdownTimer
+                  value: ${defAutoScrollTimer}
+
+
+# ------------------------------------------------------------------------------
+# Active Screen Number
+# - tracks active screen for display/configuration
+# - updates input/output state LED Indications
+#
+number:
+  - platform: template
+    id: numActiveScreen
+    min_value: 0
+    max_value: ${defControlPoints}  # 0..7 = TestPoints, 8 = Info/Status screen
+    initial_value: ${defControlPoints}
+    step: 1
+    optimistic: true
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            auto &testPoint = esphome::phb_test::phb_test::mGet();
+            if (testPoint.mIsEnabled(int(id(numActiveScreen).state)) == true) {
+                // output is enabled, turn on blue LED
+                id(outputLEDBlue).turn_on();
+            }
+            else {
+                // output is disabled, turn off blue LED
+                id(outputLEDBlue).turn_off();
+            }
+            if (testPoint.mGetInputState(int(id(numActiveScreen).state)) == true) {
+                // input is high, turn on red LED
+                id(outputLEDRed).turn_on();
+            }
+            else {
+                // input is low, turn off red LED
+                id(outputLEDRed).turn_off();
+            }
+
+
+# ------------------------------------------------------------------------------
+# Countdown Timer Number
+# - number of seconds before the next screen is displayed
+# - this value is a function of the selected operating mode
+#
+  - platform: template
+    id: numCountdownTimer
+    min_value: 0
+    max_value: ${defManualModeTimer}
+    step: 1
+    optimistic: true
+    internal: true
+
+
+# ------------------------------------------------------------------------------
+# Scroll-Up Event Counter
+# - tracks number of times the scroll up button is pressed (resets after events
+#   are processed)
+# - updates operating mode
+# - advances active screen
+#
+  - platform: template
+    id: numScrollUpEvents
+    step: 1
+    min_value: 0
+    max_value: ${defControlPoints}
+    internal: true
+    optimistic: true
+    on_value:
+      then:
+        - lambda: |-
+            if (int(id(numScrollUpEvents).state) > 0) {
+                // Move to previous screen and reset event counter
+                id(numActiveScreen).publish_state((((int(id(numActiveScreen).state) - int(id(numScrollUpEvents).state)) % (${defControlPoints} + 1)) + (${defControlPoints} + 1)) % (${defControlPoints} + 1));
+                id(selectOperatingMode).publish_state("MANUAL");
+                id(numScrollUpEvents).publish_state(0);
+            }
+
+
+# ------------------------------------------------------------------------------
+# Scroll-Down Event Counter
+# - tracks number of times the scroll down button is pressed (resets after events
+#   are processed)
+# - updates operating mode
+# - advances active screen
+#
+  - platform: template
+    id: numScrollDownEvents
+    step: 1
+    min_value: 0
+    max_value: ${defControlPoints}
+    internal: true
+    optimistic: true
+    on_value:
+      then:
+        - lambda: |-
+            if (int(id(numScrollDownEvents).state) > 0) {
+                // Move to next screen and reset event counter
+                id(numActiveScreen).publish_state((int(id(numActiveScreen).state) + int(id(numScrollDownEvents).state)) % (${defControlPoints} + 1));
+                id(selectOperatingMode).publish_state("MANUAL");
+                id(numScrollDownEvents).publish_state(0);
+            }
+
+
+# ------------------------------------------------------------------------------
+# Select Event Counter
+# - tracks number of times the select button is pressed (resets after events
+#   are processed)
+# - on information screen, select events toggle operating modes between
+#   AUTO and MANUAL
+# - on TestPoint screens, select events toggle the corresponding switch/output
+#
+  - platform: template
+    id: numSelectEvents
+    step: 1
+    min_value: 0
+    max_value: 1
+    internal: true
+    optimistic: true
+    on_value:
+      then:
+        - lambda: |-
+            char *state = "MANUAL";
+            auto switches = std::vector<esphome::switch_::Switch*>{ id(switchTP0), id(switchTP1), id(switchTP2), id(switchTP3), id(switchTP4), id(switchTP5), id(switchTP6), id(switchTP7) };
+
+            // Handle select button event: toggle mode or toggle TestPoint switch
+            if (int(id(numSelectEvents).state) > 0) {
+                if (int(id(numActiveScreen).state) == ${defControlPoints}) {
+                    // On info/control screen - toggle mode
+                    if (id(selectOperatingMode).state == "MANUAL") {
+                        state = "AUTO";
+                        id(numCountdownTimer).publish_state(0);
+                    }
+                }
+                else {
+                    // On TestPoint screen - toggle the corresponding switch
+                    switches[id(numActiveScreen).state]->toggle();
+                }
+                id(selectOperatingMode).publish_state(state); 
+                id(numSelectEvents).publish_state(0);
+            }
+
+
+# ------------------------------------------------------------------------------
+# Display Block
+# - Renders LCD content based on current screen and system state.
+# - Shows TestPoint data, countdown timers, and system info.
+#
+display:
+  - platform: lcd_pcf8574
+    id: screen
+    dimensions: 20x4
+    address: 0x27
+    lambda: |-
+        int index = int(id(numActiveScreen).state);
+        auto &testPoint = esphome::phb_test::phb_test::mGet();
+
+        if (index == ${defControlPoints}) {
+            // Info screen: show device metadata
+            it.printf(0, 0, "%s", id(textFriendlyName).state.c_str());
+            it.printf(0, 1, "FV: %s", id(textVersion).state.c_str());
+            it.printf(0, 2, "ID: %s", id(textNodeName).state.c_str());
+            it.printf(0, 3, "IP: %s", id(textIPAddress).state.c_str());
+        }
+        else {
+            // TestPoint screen: show TP data and status
+            it.printf(0, 0, "Test Point: TP%d", index);
+
+            if (testPoint.mIsEnabled(index)) {
+                it.printf(0, 1, "Frequency : %d Hz", int(testPoint.mGetFrequency(index)));
+                it.printf(0, 2, "Duty Cycle: %d %%", int(testPoint.mGetDutyCycle(index)));
+                it.printf(0, 3, "Input     : %s", testPoint.mGetInputState(index) ? "High" : "Low");
+            }
+            else {
+                it.printf(0, 2, "Status: Disabled");
+            }
+        }
+
+
+# ------------------------------------------------------------------------------
+# Interval (Timer Handler)
+# - Handles periodic screen updates and state transitions.
+# - Manages auto-scroll and inactivity timers for AUTO/MANUAL modes.
+#
+interval:
+  - interval: 1s
+    then:
+      - lambda: |-
+          // Array of enabled screens (last/info screen always enabled)
+          bool enabled[${defControlPoints} + 1] = { id(switchTP0).state, id(switchTP1).state, id(switchTP2).state, id(switchTP3).state, id(switchTP4).state, id(switchTP5).state, id(switchTP6).state, id(switchTP7).state, true };
+
+          // Decrement countdown timer
+          id(numCountdownTimer).publish_state(id(numCountdownTimer).state - 1); 
+
+          // Auto-scroll logic: advance to next enabled screen when timer expires
+          if (id(numCountdownTimer).state <= 0) {
+              int nextScreen = (int(id(numActiveScreen).state) + 1) % (${defControlPoints} + 1);
+              while (nextScreen != int(id(numActiveScreen).state)) {
+                  if (enabled[nextScreen]) {
+                      break;
+                  }
+                  nextScreen = (nextScreen + 1) % (${defControlPoints} + 1);
+              }
+              if (nextScreen != int(id(numActiveScreen).state)) {
+                  id(numActiveScreen).publish_state(nextScreen);
+              }
+              id(selectOperatingMode).publish_state("AUTO"); 
+          }

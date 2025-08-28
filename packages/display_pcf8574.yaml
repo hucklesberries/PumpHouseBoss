@@ -2,7 +2,7 @@
 #  File:         display_pcf8574.yaml
 #  File Type:    YAML File
 #  Purpose:      LCD display (PCF8574 I2C backpack) configuration fragment
-#  Version:      0.9.0d
+#  Version:      0.10.0d
 #  Date:         2025-08-08
 #  Author:       GitHub Copilot <your-email>
 #
@@ -18,11 +18,6 @@
 # ==============================================================================
 
 # ------------------------------------------------------------------------------
-#  YAML linter configuration
-#   - Disables quoted-strings rule for improved readability
-#   - Ensures that string values do not require unnecessary quotes, improving
-#     readability and maintainability of the YAML configuration.
-# ------------------------------------------------------------------------------
 # yamllint disable rule:quoted-strings
 
 
@@ -36,13 +31,13 @@
 #       lambda: Custom rendering logic for display content
 #   - Example usage:
 #       - Shows device name and firmware version centered on the display
-# ------------------------------------------------------------------------------
+#
 display:
   - platform: lcd_pcf8574
     dimensions: 20x4
     address: 0x27  # or 0x3F, check your module
     lambda: |-
-      it.print(0, 0, id(tsFriendlyName).state.c_str());
-      it.printf(0, 1, "FV: %s", id(tsVersion).state.c_str());
-      it.printf(0, 2, "ID: %s", id(tsNodeName).state.c_str());
-      it.printf(0, 3, "IP: %s", id(tsIPAddress).state.c_str());
+      it.print(0, 0, id(textFriendlyName).state.c_str());
+      it.printf(0, 1, "FV: %s", id(textVersion).state.c_str());
+      it.printf(0, 2, "ID: %s", id(textNodeName).state.c_str());
+      it.printf(0, 3, "IP: %s", id(textIPAddress).state.c_str());

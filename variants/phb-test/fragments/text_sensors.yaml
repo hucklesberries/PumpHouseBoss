@@ -1,0 +1,70 @@
+# ==============================================================================
+#  File:         text_sensors.yaml
+#  File Type:    YAML Fragment
+#  Purpose:      Text sensors for PumpHouseBoss Test Harness
+#  Version:      0.10.0d
+#  Date:         2025-08-22
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Contains all template text sensor definitions.
+#  Features:     - build variant
+#                - firmware version
+#                - network info
+#                - operating mode (SAFE or NORMAL)
+#                - boot diagnostics
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ==============================================================================
+
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+# System Text Sensors
+# 
+- platform: template
+  name: "System: Variant"
+  id: textFriendlyName
+  icon: "mdi:identifier"
+  update_interval: never
+  lambda: 'return {"__FRIENDLY_NAME__"};'
+
+- platform: template
+  name: "System: Firmware Version"
+  id: textVersion
+  icon: "mdi:label"
+  update_interval: never
+  lambda: 'return {"__VERSION__"};'
+
+- platform: template
+  name: "System: Network Name"
+  id: textNodeName
+  icon: "mdi:identifier"
+  update_interval: never
+  lambda: 'return {"__NODE_NAME__"};'
+
+- platform: template
+  name: "System: Network Address"
+  id: textIPAddress
+  icon: "mdi:ip"
+  update_interval: never
+  lambda: 'return {"No Connection"};'
+
+- platform: template
+  name: "System: Operating Mode"
+  id: textOperatingMode
+  icon: "mdi:cog"
+  update_interval: never
+  lambda: 'return {"Initializing"};'
+
+- platform: template
+  name: "System: Last Boot Code"
+  id: textResetReason
+  icon: "mdi:bootstrap"
+  update_interval: never
+  lambda: |-
+      return {"UNKNOWN"};

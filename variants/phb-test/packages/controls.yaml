@@ -1,0 +1,63 @@
+# ==============================================================================
+#  File:         controls.yaml
+#  File Type:    YAML Package
+#  Purpose:      Control logic for PumpHouseBoss Test Harness
+#  Version:      0.10.0d
+#  Date:         2025-08-22
+#  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
+#
+#  Description:  Contains timer logic for LED system status indications
+#
+#  License:      GNU General Public License v3.0
+#                SPDX-License-Identifier: GPL-3.0-or-later
+#  Copyright:    (c) 2025 Roland Tembo Hendel
+#                This program is free software: you can redistribute it and/or
+#                modify it under the terms of the GNU General Public License.
+# ==============================================================================
+
+# yamllint disable rule:quoted-strings
+
+
+# ------------------------------------------------------------------------------
+#  LED Logic:
+#    - White (Power/Status):
+#        * Blinks before system boot
+#        * Steady ON after boot
+#    - Green (WiFi):
+#        * ON if WiFi connected
+#        * Blinks if not connected
+#
+interval:
+  - interval: 500ms
+    then:
+    - lambda: |-
+        static bool whiteLEDState = false;
+        static bool greenLEDState = false;
+
+        // White LED (Power/Status): Blink before boot, steady ON after boot
+        if ((id(textOperatingMode).state == "NORMAL")) {
+            id(outputLEDWhite).turn_on();
+        }
+        else if (id(textOperatingMode).state == "SAFE") {
+            whiteLEDState = !whiteLEDState;
+            if (whiteLEDState) {
+                id(outputLEDWhite).turn_on();
+            }
+            else {
+                id(outputLEDWhite).turn_off();
+            }
+        }
+
+        // Green LED (WiFi): ON if connected, blink if not
+        if (id(bsWiFiConnected).state) {
+            id(outputLEDGreen).turn_on();
+        }
+        else {
+            greenLEDState = !greenLEDState;
+            if (greenLEDState) {
+                id(outputLEDGreen).turn_on();
+            }
+            else {
+                id(outputLEDGreen).turn_off();
+            }
+        }

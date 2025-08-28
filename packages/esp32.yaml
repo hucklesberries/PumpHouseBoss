@@ -2,7 +2,7 @@
 #  File:         esp32.yaml
 #  File Type:    YAML File
 #  Purpose:      ESP32 board and framework configuration
-#  Version:      0.9.0d
+#  Version:      0.10.0d
 #  Date:         2025-08-08
 #  Author:       GitHub Copilot <your-email>
 #
@@ -15,10 +15,6 @@
 #                modify it under the terms of the GNU General Public License.
 # ==============================================================================
 
-# ------------------------------------------------------------------------------
-#  YAML linter configuration
-#   - Disables quoted-strings rule for improved readability
-# ------------------------------------------------------------------------------
 # yamllint disable rule:quoted-strings
 
 
@@ -83,7 +79,7 @@
 #   - Parameters:
 #       board: Target board (e.g., esp32dev)
 #       framework.type: Framework type (e.g., arduino)
-# ------------------------------------------------------------------------------
+#
 esp32:
   board: esp32dev                 # board Target board: ESP32 Dev Module (ESP-WROOM-32)
   framework:

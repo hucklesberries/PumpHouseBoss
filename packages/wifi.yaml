@@ -2,7 +2,7 @@
 #  File:         wifi.yaml
 #  File Type:    YAML File
 #  Purpose:      Common ESPHome WiFi subsystem configuration
-#  Version:      0.9.0d
+#  Version:      0.10.0d
 #  Date:         2025-08-08
 #  Author:       GitHub Copilot <your-email>
 #
@@ -15,9 +15,6 @@
 #                modify it under the terms of the GNU General Public License.
 # ==============================================================================
 
-# ------------------------------------------------------------------------------
-#  YAML linter configuration
-#   - Disables quoted-strings rule for improved readability
 # ------------------------------------------------------------------------------
 # yamllint disable rule:quoted-strings
 
@@ -38,7 +35,7 @@
 #     ap:
 #       ssid: Fallback AP SSID
 #       password: Fallback AP password (from secrets.yaml)
-# ------------------------------------------------------------------------------
+#
 wifi:
   ssid: !secret wifi_ssid                # ssid Wi-Fi SSID (from secrets.yaml)
   password: !secret wifi_password        # password Wi-Fi password (from secrets.yaml)
@@ -49,16 +46,16 @@ wifi:
   on_connect:
     then:
       - text_sensor.template.publish:
-          id: tsIPAddress
+          id: textIPAddress
           state: !lambda 'return WiFi.localIP().toString().c_str();'
 
 
   # --------------------------------------------------------------------------
   #  Fallback Access Point when Wi-Fi fails
   #   - Provides a backup AP for device recovery if client connection fails
-  #   - AP SSID is auto-generated using node_name
+  #   - AP SSID is auto-generated using defNodeName
   #   - Password is stored in secrets.yaml
-  # --------------------------------------------------------------------------
+  #
   ap:
-    ssid: "${node_name} Fallback"        # ssid Auto-generated AP name using node_name
-    password: !secret fallback_password  # password Separate fallback password from secrets.yaml
+    ssid: "${defNodeName} Fallback"        # ssid Auto-generated AP name using defNodeName
+    password: !secret fallback_password    # password Separate fallback password from secrets.yaml

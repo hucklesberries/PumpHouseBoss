@@ -62,6 +62,7 @@ VARIANTS       = ["phb-std", "phb-pro", "phb-test"]
 # dynamic file lists (arrays) by type
 MAKEFILES      = []
 YAML_FILES     = []
+CPP_FILES      = []
 MD_FILES       = []
 PYTHON_SCRIPTS = []
 BASH_SCRIPTS   = []
@@ -96,7 +97,7 @@ def pcoInit():
     init()
 
     # Populate project file lists for PCO scripts.
-    global MAKEFILES, YAML_FILES, MD_FILES, PYTHON_SCRIPTS, BASH_SCRIPTS, ALL_FILES
+    global MAKEFILES, YAML_FILES, CPP_FILES, MD_FILES, PYTHON_SCRIPTS, BASH_SCRIPTS, ALL_FILES
     try:
         result = subprocess.run(
             ['git', 'ls-files', '--cached', '--others', '--exclude-standard'],
@@ -113,6 +114,7 @@ def pcoInit():
 
     MAKEFILES      = [str(f).strip() for f in all_files if f.name.lower().startswith('makefile') or f.suffix == '.mk']
     YAML_FILES     = [str(f).strip() for f in all_files if f.suffix in ['.yaml', '.yml']]
+    CPP_FILES      = [str(f).strip() for f in all_files if f.suffix in ['.c', '.h', '.cpp', '.hpp' ]]
     MD_FILES       = [str(f).strip() for f in all_files if f.suffix.lower() == '.md']
     PYTHON_SCRIPTS = [str(f).strip() for f in all_files if f.suffix.lower() =='.py']
     BASH_SCRIPTS   = [str(f).strip() for f in all_files if f.suffix in ['.sh', '.bash']]
@@ -120,11 +122,10 @@ def pcoInit():
     # Dedup and preserve order
     seen = set()
     ALL_FILES = []
-    for f in MAKEFILES + YAML_FILES + MD_FILES + PYTHON_SCRIPTS + BASH_SCRIPTS:
+    for f in MAKEFILES + YAML_FILES + CPP_FILES + MD_FILES + PYTHON_SCRIPTS + BASH_SCRIPTS:
         if f and f not in seen:
             ALL_FILES.append(f)
             seen.add(f)
-
 
 # -------------------------------------------------------------------------------
 #  Status Exit Functions

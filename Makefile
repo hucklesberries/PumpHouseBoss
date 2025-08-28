@@ -2,7 +2,7 @@
 #  File:         Makefile
 #  File Type:    Makefile
 #  Purpose:      Master Makefile for ESPHome-based device management
-#  Version:      0.9.0d
+#  Version:      0.10.0d
 #  Date:         2025-07-24
 #  Author:       Roland Tembo Hendel <rhendel@nexuslogic.com>
 #
@@ -70,10 +70,21 @@ endif
 
 # Project-wide variables and pre-compile defaults
 VARIANT_LIST           := phb-std phb-pro phb-test
-SRC_DIRS               := $(PROJECT_ROOT) $(PROJECT_ROOT)/common $(foreach v,$(VARIANT_LIST),$(PROJECT_ROOT)/variants/$(v))
+SRC_DIRS               := $(PROJECT_ROOT)
+SRC_DIRS               += $(PROJECT_ROOT)/components
+SRC_DIRS               += $(PROJECT_ROOT)/packages
+SRC_DIRS               += $(PROJECT_ROOT)/fragments
+SRC_DIRS               += $(foreach v,$(VARIANT_LIST),$(PROJECT_ROOT)/variants/$(v))
+SRC_DIRS               += $(foreach v,$(VARIANT_LIST),$(PROJECT_ROOT)/variants/$(v)/components)
+SRC_DIRS               += $(foreach v,$(VARIANT_LIST),$(PROJECT_ROOT)/variants/$(v)/packages)
+SRC_DIRS               += $(foreach v,$(VARIANT_LIST),$(PROJECT_ROOT)/variants/$(v)/fragments)
+SRC_DIRS               += $(shell find $(PROJECT_ROOT)/components -type d)
+SRC_DIRS               += $(foreach v,$(VARIANT_LIST),$(shell find $(PROJECT_ROOT)/variants/$(v)/components -type d))
 YAML_FILES             := $(strip $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.yaml)))
+CPP_FILES              := $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.[ch]) $(wildcard $(dir)/*.cpp) $(wildcard $(dir)/*.hpp))
+SRC_FILES              := $(YAML_FILES) $(CPP_FILES)
 MD_FILES               := $(strip $(foreach dir,$(SRC_DIRS),$(wildcard $(dir)/*.md)))
-SECRETS_FILE           := $(PROJECT_ROOT)/common/secrets.yaml
+SECRETS_FILE           := $(PROJECT_ROOT)/packages/secrets.yaml
 BUILD_DIR              := $(PROJECT_ROOT)/build/$(NODE_NAME)
 DOC_DIR                ?= $(PROJECT_ROOT)/docs
 DOC_SITE_MD_DIR        ?= $(DOC_DIR)/site-md
@@ -85,7 +96,7 @@ DOC_WIKI_STAGED_DIR    ?= $(DOC_DIR)/wiki-staged
 RUN_LOG                ?= $(PROJECT_ROOT)/logs/$(NODE_NAME)-$(shell date +%Y%m%d_%H%M%S).log
 
 # Files and directories to be protected from accidental deletion
-PROTECTED_DIRS         := / ~ ./ $(PROJECT_ROOT)/common $(PROJECT_ROOT)/variants/ $(PROJECT_ROOT)/config $(PROJECT_ROOT)/docs $(PROJECT_ROOT)/icons
+PROTECTED_DIRS         := / ~ ./ $(PROJECT_ROOT)/components $(PROJECT_ROOT)/packages $(PROJECT_ROOT)/fragments $(PROJECT_ROOT)/variants/ $(PROJECT_ROOT)/config $(PROJECT_ROOT)/docs $(PROJECT_ROOT)/icons
 
 # BUILD_TARGET is the YAML path relative to the project root
 #   IMPORTANT: Always use a relative path to the YAML file when calling ESPHome.
@@ -106,7 +117,7 @@ export VARIANT PLATFORM DEVICE_NAME NODE_NAME FRIENDLY_NAME COMM_PATH SECRETS_FI
 # ------------------------------------------------------------------------------
 # Build Target
 # ------------------------------------------------------------------------------
-$(BUILD_TARGET): $(YAML_FILES)
+$(BUILD_TARGET): $(SRC_FILES)
 	@echo "[START] Generating YAMLs with substitutions for $(NODE_NAME)..."
 	@$(MAKE) VARS_TO_VALIDATE="VARIANT PLATFORM DEVICE_NAME NODE_NAME FRIENDLY_NAME" _validate_vars
 	@$(MAKE) FILES_TO_VALIDATE="$(SECRETS_FILE)" _validate_files
@@ -116,6 +127,7 @@ $(BUILD_TARGET): $(YAML_FILES)
 	@echo "s|__VARIANT__|$(VARIANT)|g" >> .sedargs
 	@echo "s|__PLATFORM__|$(PLATFORM)|g" >> .sedargs
 	@echo "s|__DEVICE_NAME__|$(DEVICE_NAME)|g" >> .sedargs
+	@echo "s|__CONTROL_POINTS__|$(CONTROL_POINTS)|g" >> .sedargs
 	@echo "s|__NODE_NAME__|$(NODE_NAME)|g" >> .sedargs
 	@echo "s|__FRIENDLY_NAME__|$(FRIENDLY_NAME)|g" >> .sedargs
 	@echo "s|__STATIC_STATIC_IP__|$(STATIC_STATIC_IP)|g" >> .sedargs
@@ -123,7 +135,7 @@ $(BUILD_TARGET): $(YAML_FILES)
 	@echo "s|__STATIC_SUBNET__|$(STATIC_SUBNET)|g" >> .sedargs
 	@echo "s|__STATIC_DNS1__|$(STATIC_DNS1)|g" >> .sedargs
 	@echo "s|__STATIC_DNS2__|$(STATIC_DNS2)|g" >> .sedargs
-	@for f in $(YAML_FILES); do \
+	@for f in $(SRC_FILES); do \
 		relpath=$$(realpath --relative-to="$(PROJECT_ROOT)" "$$f"); \
 		out="$(BUILD_DIR)/$$relpath"; \
 		outdir=$$(dirname "$$out"); \
@@ -413,9 +425,10 @@ version:
 buildvars:
 	@echo "Variant........: $(if $(VARIANT), $(VARIANT), [ MISSING ])"
 	@echo "Platform.......: $(if $(PLATFORM), $(PLATFORM), [ MISSING ])"
-	@echo "Device name....: $(if $(DEVICE_NAME), $(DEVICE_NAME), [ MISSING ])"
-	@echo "Node name......: $(if $(NODE_NAME), $(NODE_NAME), [ MISSING ])"
-	@echo "Friendly name..: $(if $(FRIENDLY_NAME), $(FRIENDLY_NAME), [ MISSING ])"
+	@echo "Device Name....: $(if $(DEVICE_NAME), $(DEVICE_NAME), [ MISSING ])"
+	@echo "Control Points.: $(if $(CONTROL_POINTS), $(CONTROL_POINTS), [ MISSING ])"
+	@echo "Node Name......: $(if $(NODE_NAME), $(NODE_NAME), [ MISSING ])"
+	@echo "Friendly Name..: $(if $(FRIENDLY_NAME), $(FRIENDLY_NAME), [ MISSING ])"
 	@echo "WiFi IP........: $(if $(STATIC_STATIC_IP), $(STATIC_STATIC_IP), [ dynamic ])"
 	@echo "WiFi Gateway...: $(if $(STATIC_GATEWAY), $(STATIC_GATEWAY), [ dynamic ])"
 	@echo "WiFi Subnet....: $(if $(STATIC_SUBNET), $(STATIC_SUBNET), [ dynamic ])"
